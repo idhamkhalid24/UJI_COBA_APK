@@ -1,137 +1,1135 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0f172a" />
-  <title>Rocky Hijab Staff Ringan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080A0F" />
+  <title>Plank Serious</title>
   <style>
-    :root{--safe:env(safe-area-inset-bottom,0px)}
-    [data-theme="light"]{--bg:#eef2f7;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#dbe3ef;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--amber:#d97706;--soft:#f8fafc;--nav:#fff;--shadow:0 8px 22px rgba(15,23,42,.08)}
-    [data-theme="dark"]{--bg:#0b1220;--card:#111827;--text:#eef2ff;--muted:#94a3b8;--line:#243044;--blue:#60a5fa;--green:#4ade80;--red:#f87171;--amber:#fbbf24;--soft:#172033;--nav:#111827;--shadow:0 12px 30px rgba(0,0,0,.35)}
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}html,body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:14px}button,input{font:inherit}button{border:0;cursor:pointer}input{width:100%;min-height:40px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);padding:9px 10px;outline:none}input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.13)}.app{max-width:460px;min-height:100vh;margin:auto;background:var(--bg);position:relative}.page{padding:10px 10px 92px}.top{position:sticky;top:0;z-index:10;background:rgba(238,242,247,.94);margin:-10px -10px 10px;padding:10px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}[data-theme="dark"] .top{background:rgba(11,18,32,.94)}.brand{min-width:0}.title{font-size:18px;font-weight:950;letter-spacing:-.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sub{font-size:11px;color:var(--muted);margin-top:1px;line-height:1.35}.row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}.between{display:flex;align-items:center;justify-content:space-between;gap:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:11px;box-shadow:var(--shadow)}.hero{background:linear-gradient(135deg,#1d4ed8,#38bdf8);color:white;border-radius:18px;padding:14px;box-shadow:var(--shadow)}.hero .sub{color:rgba(255,255,255,.84)}.kicker{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:950;opacity:.85}.big{font-size:25px;font-weight:950;letter-spacing:-.04em;margin-top:3px;font-variant-numeric:tabular-nums}.stat{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:10px;min-height:76px}.stat-label{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:950}.stat-val{font-size:20px;font-weight:950;margin-top:6px;font-variant-numeric:tabular-nums}.stat-foot{font-size:10.5px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn{min-height:40px;border-radius:12px;padding:9px 11px;background:var(--card);border:1px solid var(--line);color:var(--text);font-weight:850;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}.btn:active{transform:scale(.98)}.primary{background:var(--blue);border-color:var(--blue);color:#fff}.danger{background:#fee2e2;border-color:#fecaca;color:var(--red)}[data-theme="dark"] .danger{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.25)}.success{background:#dcfce7;border-color:#bbf7d0;color:var(--green)}[data-theme="dark"] .success{background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.25)}.warn{background:#fef3c7;border-color:#fde68a;color:var(--amber)}[data-theme="dark"] .warn{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.25)}.block{width:100%}.sm{min-height:32px;border-radius:10px;padding:6px 8px;font-size:12px}.pill{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:10px;font-weight:950;color:var(--muted);background:var(--card);white-space:nowrap}.pill.green{background:#dcfce7;color:var(--green);border-color:#bbf7d0}.pill.red{background:#fee2e2;color:var(--red);border-color:#fecaca}.pill.blue{background:#dbeafe;color:var(--blue);border-color:#bfdbfe}.pill.amber{background:#fef3c7;color:#92400e;border-color:#fde68a}[data-theme="dark"] .pill.green{background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.25)}[data-theme="dark"] .pill.red{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.25)}[data-theme="dark"] .pill.blue{background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.25)}[data-theme="dark"] .pill.amber{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.25);color:var(--amber)}.list{display:flex;flex-direction:column;gap:7px}.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;display:flex;gap:8px;align-items:center}.main{min-width:0;flex:1}.item-title{font-weight:900;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.item-sub{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.3}.amount{font-weight:950;font-size:14px;text-align:right;font-variant-numeric:tabular-nums}.icon{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:950}.field{display:flex;flex-direction:column;gap:5px;margin-bottom:9px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:950}.hint{font-size:11px;color:var(--muted);line-height:1.35}.empty{padding:15px;border:1px dashed var(--line);border-radius:14px;text-align:center;color:var(--muted);font-size:12px;background:var(--soft)}.nav{position:fixed;left:50%;bottom:calc(8px + var(--safe));transform:translateX(-50%);width:min(444px,calc(100% - 14px));height:62px;background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:20px;display:none;z-index:20;padding:5px}.nav button{flex:1;border-radius:15px;background:transparent;color:var(--muted);font-size:10px;font-weight:950;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.nav button.active{background:#dbeafe;color:var(--blue)}[data-theme="dark"] .nav button.active{background:rgba(96,165,250,.14)}.nav svg{width:20px;height:20px;stroke:currentColor;stroke-width:2.25;fill:none;stroke-linecap:round;stroke-linejoin:round}.fab{position:fixed;right:max(14px,calc((100% - 460px)/2 + 14px));bottom:calc(78px + var(--safe));width:54px;height:54px;border-radius:18px;background:var(--blue);color:#fff;font-size:26px;box-shadow:0 12px 26px rgba(37,99,235,.35);display:none;z-index:22}.modal-wrap{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:40;display:none;align-items:flex-start;justify-content:center;padding:56px 10px 10px}.modal-wrap.show{display:flex}.modal{width:100%;max-width:430px;max-height:86vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:13px;box-shadow:0 24px 70px rgba(0,0,0,.28)}.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}.modal-title{font-size:17px;font-weight:950}.modal-actions{display:flex;gap:7px;margin-top:10px}.modal-actions>*{flex:1}.toast{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:80;background:#0f172a;color:#fff;border-radius:999px;padding:9px 13px;font-weight:850;font-size:12px;display:none;max-width:calc(100% - 18px);text-align:center}.toast.show{display:block}.loading{position:fixed;inset:0;z-index:60;background:rgba(255,255,255,.55);display:none;align-items:center;justify-content:center}[data-theme="dark"] .loading{background:rgba(0,0,0,.45)}.spin{width:36px;height:36px;border-radius:50%;border:4px solid #cbd5e1;border-top-color:var(--blue);animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}.login-card{width:100%;max-width:380px}.member{color:var(--blue)}.bonus-note{font-size:10.5px;color:var(--muted);margin-top:5px}.syncbar{margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:var(--card);display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}.syncbar b{color:var(--text)}.syncbar .btn{min-height:28px;padding:5px 8px;font-size:11px;border-radius:9px}.sync-pending{border-color:#fde68a;background:#fef3c7;color:#92400e}[data-theme="dark"] .sync-pending{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.25);color:var(--amber)}.pending-tag{display:inline-flex;margin-top:3px;border-radius:999px;padding:2px 6px;background:#fef3c7;color:#92400e;font-size:9px;font-weight:950;border:1px solid #fde68a}[data-theme="dark"] .pending-tag{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.25);color:var(--amber)}.fail-tag{display:inline-flex;margin-top:3px;border-radius:999px;padding:2px 6px;background:#fee2e2;color:var(--red);font-size:9px;font-weight:950;border:1px solid #fecaca}@media(max-width:360px){.page{padding-left:8px;padding-right:8px}.top{margin-left:-8px;margin-right:-8px}.big{font-size:22px}.stat-val{font-size:18px}.nav span{display:none}.nav{height:56px}.nav svg{width:22px;height:22px}.item{padding:9px}.title{font-size:16px}.row{gap:5px}.sm{font-size:11px;padding:5px 7px}}
+    :root {
+      --bg: #080A0F;
+      --panel: rgba(255,255,255,.075);
+      --panel-2: rgba(255,255,255,.11);
+      --line: rgba(255,255,255,.13);
+      --text: #F7F8FA;
+      --muted: rgba(247,248,250,.62);
+      --muted-2: rgba(247,248,250,.42);
+      --green: #38F28B;
+      --green-2: #1ED760;
+      --blue: #72A7FF;
+      --purple: #A78BFA;
+      --orange: #FFB86B;
+      --red: #FF5C7A;
+      --dark: #0D111A;
+      --shadow: 0 24px 80px rgba(0,0,0,.48);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --progress: 0deg;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 5%, rgba(56,242,139,.24), transparent 28%),
+        radial-gradient(circle at 92% 2%, rgba(114,167,255,.24), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(167,139,250,.20), transparent 38%),
+        var(--bg);
+      padding: max(18px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent 70%);
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 6px 0 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(56,242,139,.95), rgba(114,167,255,.95));
+      color: #06120B;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      box-shadow: 0 18px 35px rgba(56,242,139,.22);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -.9px;
+      line-height: 1.02;
+    }
+
+    .brand p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 260px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 12px;
+      border: 1px solid rgba(56,242,139,.25);
+      border-radius: 999px;
+      background: rgba(56,242,139,.12);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      background: linear-gradient(160deg, rgba(255,255,255,.105), rgba(255,255,255,.055));
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+      overflow: hidden;
+      position: relative;
+      padding: 18px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -130px;
+      top: -130px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(56,242,139,.22), transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+    }
+
+    .target-row {
+      margin-top: 6px;
+      display: flex;
+      align-items: end;
+      gap: 8px;
+    }
+
+    .target-row strong {
+      font-size: 46px;
+      line-height: .92;
+      letter-spacing: -2.4px;
+    }
+
+    .target-row span {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 800;
+      padding-bottom: 3px;
+    }
+
+    .day-chip {
+      padding: 9px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .timer-card {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 156px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 28px;
+      background: rgba(5,7,11,.58);
+      border: 1px solid rgba(255,255,255,.105);
+    }
+
+    .ring {
+      width: 156px;
+      height: 156px;
+      border-radius: 999px;
+      padding: 10px;
+      background:
+        conic-gradient(var(--green) var(--progress), rgba(255,255,255,.10) 0deg);
+      box-shadow: inset 0 0 25px rgba(255,255,255,.04), 0 18px 45px rgba(0,0,0,.32);
+    }
+
+    .ring-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 50% 28%, rgba(255,255,255,.12), transparent 38%),
+        #0A0E16;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .timer {
+      font-size: 34px;
+      font-weight: 950;
+      letter-spacing: -1.6px;
+      line-height: 1;
+    }
+
+    .timer small {
+      display: block;
+      margin-top: 8px;
+      font-size: 11px;
+      letter-spacing: .2px;
+      color: var(--muted);
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .session-info h2 {
+      margin: 0;
+      font-size: 19px;
+      letter-spacing: -.45px;
+    }
+
+    .session-info p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .set-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .set-dot {
+      min-height: 42px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.075);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .set-dot.done {
+      background: rgba(56,242,139,.16);
+      border-color: rgba(56,242,139,.34);
+      color: var(--green);
+    }
+
+    .set-dot.next {
+      background: rgba(114,167,255,.15);
+      border-color: rgba(114,167,255,.32);
+      color: #BBD2FF;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      min-height: 52px;
+      border-radius: 18px;
+      font-weight: 900;
+      letter-spacing: -.15px;
+      transition: transform .16s ease, filter .16s ease, opacity .16s ease;
+    }
+
+    .btn:active {
+      transform: scale(.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+      color: #061109;
+      box-shadow: 0 14px 30px rgba(56,242,139,.20);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text);
+    }
+
+    .btn-blue {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #060B16;
+    }
+
+    .btn-red {
+      background: rgba(255,92,122,.13);
+      border: 1px solid rgba(255,92,122,.24);
+      color: #FFC0CB;
+    }
+
+    .btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.065);
+      border-radius: 22px;
+      padding: 13px 10px;
+      min-height: 78px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: -.6px;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.066);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 55px rgba(0,0,0,.22);
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -.45px;
+    }
+
+    .panel-title small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+      text-align: right;
+    }
+
+    .mini-rule {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .rule-box {
+      padding: 13px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(0,0,0,.18);
+    }
+
+    .rule-box b {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .rule-box span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      display: block;
+    }
+
+    .schedule {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 9px;
+    }
+
+    .day {
+      min-height: 82px;
+      text-align: left;
+      border-radius: 18px;
+      padding: 10px;
+      background: rgba(255,255,255,.065);
+      border: 1px solid rgba(255,255,255,.105);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .day::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 4px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .day.min::after {
+      background: var(--orange);
+    }
+
+    .day.full::after {
+      background: var(--green);
+    }
+
+    .day.active {
+      border-color: rgba(114,167,255,.68);
+      background: rgba(114,167,255,.15);
+    }
+
+    .day.today {
+      box-shadow: inset 0 0 0 1px rgba(56,242,139,.28);
+    }
+
+    .day-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      margin-bottom: 9px;
+    }
+
+    .day-time {
+      font-size: 18px;
+      font-weight: 950;
+      letter-spacing: -.5px;
+    }
+
+    .day-set {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .forms {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    input, select {
+      width: 100%;
+      min-height: 49px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      padding: 0 13px;
+      outline: none;
+    }
+
+    select option {
+      color: #111;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .tips {
+      display: grid;
+      gap: 9px;
+    }
+
+    .tip {
+      display: flex;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.105);
+      border-radius: 18px;
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .tip b {
+      color: var(--text);
+    }
+
+    .tip-icon {
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: rgba(56,242,139,.13);
+      color: var(--green);
+      font-size: 14px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(28px);
+      background: rgba(247,248,250,.96);
+      color: #080A0F;
+      border-radius: 999px;
+      padding: 12px 17px;
+      font-weight: 900;
+      opacity: 0;
+      pointer-events: none;
+      transition: .23s ease;
+      box-shadow: 0 18px 48px rgba(0,0,0,.36);
+      z-index: 50;
+      white-space: nowrap;
+      max-width: calc(100vw - 28px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      body { padding-left: 13px; padding-right: 13px; }
+      .timer-card { grid-template-columns: 1fr; justify-items: center; }
+      .session-info { width: 100%; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .schedule { grid-template-columns: repeat(4, 1fr); }
+      .mini-rule { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .brand p { max-width: 200px; }
+      .pill { padding: 9px 10px; }
+    }
+
+    @media (max-width: 360px) {
+      .schedule { grid-template-columns: repeat(3, 1fr); }
+      .target-row strong { font-size: 40px; }
+      .topbar { align-items: flex-start; }
+      .pill { display: none; }
+    }
   </style>
 </head>
 <body>
-<div class="app">
-  <div id="loading" class="loading"><div class="spin"></div></div>
-  <div id="toast" class="toast"></div>
-  <div id="modal" class="modal-wrap"></div>
-  <main id="page" class="page"></main>
-  <button id="fab" class="fab" onclick="openTx()">+</button>
-  <nav id="nav" class="nav">
-    <button id="nav-home" onclick="go('home')" aria-label="Beranda"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg><span>Home</span></button>
-    <button id="nav-history" onclick="go('history')" aria-label="Riwayat"><svg viewBox="0 0 24 24"><path d="M7 3h10a2 2 0 0 1 2 2v16l-3-2-2 2-2-2-2 2-2-2-3 2V5a2 2 0 0 1 2-2Z"/><path d="M9 8h6"/><path d="M9 12h6"/><path d="M9 16h4"/></svg><span>Trx</span></button>
-  </nav>
-</div>
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, query, where, limit, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">🔥</div>
+        <div>
+          <h1>Plank Serious</h1>
+          <p>Minimal 1x sehari, target serius 3 set.</p>
+        </div>
+      </div>
+      <div class="pill">NO EXCUSE</div>
+    </header>
 
-const firebaseConfig={apiKey:'AIzaSyAqmTEKnLKOXcmOoR9RrXksNe5_Fix42w8',authDomain:'rocky-fd14b.firebaseapp.com',projectId:'rocky-fd14b',storageBucket:'rocky-fd14b.firebasestorage.app',messagingSenderId:'861954349314',appId:'1:861954349314:web:bb8384825daedb8d34ca1b'};
-const app=initializeApp(firebaseConfig), db=getFirestore(app);
-const OFFICE_LOC={lat:-6.786168,lng:106.780918};
-const RADIUS_LIMIT=200, MEMBER_URL='https://idhamkhalid24.github.io/kode-khusus-member/';
-const SESSION='rocky_staff_compact_manual_v1', PENDING_KEY='rocky_staff_pending_sync_v2', ADMIN=['admin'];
-const DEFAULT_BONUS={transactionBonusRate:.015,closingBonusPerMinute:100};
-const LIMITS={tx:260,att:180,manual:120,closings:120};
-const state={user:null,page:'home',pos:null,busy:false,lastSyncMs:0,syncing:false,syncError:'',data:{tx:[],att:[],closings:[],manual:[],bonus:{...DEFAULT_BONUS}}};
-const $=id=>document.getElementById(id), page=$('page');
+    <section class="hero">
+      <div class="hero-head">
+        <div>
+          <div class="eyebrow" id="todayLabel">Hari ini</div>
+          <div class="target-row">
+            <strong id="targetSeconds">20</strong>
+            <span>detik / set</span>
+          </div>
+        </div>
+        <button class="day-chip" id="todayBtn" type="button">Ke Hari Ini</button>
+      </div>
 
-function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function key(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_\-.]/g,'')}
-function rp(v){return Number(v||0).toLocaleString('id-ID')}
-function parts(d=new Date()){return Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(d).map(p=>[p.type,p.value]))}
-function todayKey(d=new Date()){const p=parts(d);return `${p.year}-${p.month}-${p.day}`}
-function monthKey(d=new Date()){return todayKey(d).slice(0,7)}
-function timeNow(){const p=parts();return `${p.hour}:${p.minute}`}
-function dateID(k){if(!k)return '-';const [y,m,d]=String(k).split('-');return `${d}/${m}/${y}`}
-function monthID(k){if(!k)return '-';const [y,m]=String(k).split('-');return `${m}/${y}`}
-function ms(r){const n=Number(r?.createdAtMs||r?.updatedAtMs||r?.deletedAtMs||0);if(n)return n;const t=r?.createdAt||r?.updatedAt||r?.deletedAt;if(t?.toMillis)return t.toMillis();if(t?.seconds)return t.seconds*1000;return 0}
-function timeID(m){if(!m)return '--:--';const p=parts(new Date(m));return `${p.hour}:${p.minute}`}
-function deleted(x){return x?.deleted===true||x?.deleted==='true'}
-function sortDesc(a){return [...(a||[])].sort((x,y)=>ms(y)-ms(x))}
-function isAdmin(u){return key(u?.role)==='admin'||ADMIN.includes(key(u?.username||u?.id))}
-function isDaily(){const r=key(state.user?.role);return r==='harian'||r==='daily'||r==='karyawan_harian'}
-function txDate(t){return String(t.dateKey||(ms(t)?todayKey(new Date(ms(t))):'')).slice(0,10)}
-function txMonth(t){return String(t.monthKey||txDate(t).slice(0,7))}
-function attDate(a){return String(a.dateKey||(ms(a)?todayKey(new Date(ms(a))):'')).slice(0,10)}
-function showLoad(v){state.busy=!!v;$('loading').style.display=v?'flex':'none'}
-function toast(msg){const t=$('toast');t.textContent=msg;t.className='toast show';setTimeout(()=>t.className='toast',2100)}
-function modal(title,body,actions=''){const r=$('modal');r.innerHTML=`<div class="modal"><div class="modal-head"><div><div class="modal-title">${esc(title)}</div></div><button class="icon" onclick="closeModal()">×</button></div>${body}${actions?`<div class="modal-actions">${actions}</div>`:''}</div>`;r.classList.add('show')}
-function closeModal(){const r=$('modal');r.classList.remove('show');r.innerHTML=''}
-function getTheme(){return localStorage.getItem('rocky_staff_theme')||'light'}
-function setTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('rocky_staff_theme',t)}
-function toggleTheme(){setTheme(getTheme()==='dark'?'light':'dark');render()}
-function pendingKey(){return PENDING_KEY+'_'+key(state.user?.username||'guest')}
-function getPending(){try{return JSON.parse(localStorage.getItem(pendingKey())||'[]')}catch(e){return []}}
-function setPending(list){localStorage.setItem(pendingKey(),JSON.stringify(list||[]))}
-function pendingForUser(){const u=key(state.user?.username);return getPending().filter(x=>!u||key(x.user)===u)}
-function addPending(item){const list=getPending().filter(x=>x.id!==item.id);list.push({...item,tries:Number(item.tries||0),lastTryMs:item.lastTryMs||0});setPending(list)}
-function removePending(id){setPending(getPending().filter(x=>x.id!==id))}
-function isPermissionError(e){return String(e?.code||e?.message||'').toLowerCase().includes('permission')}
-function localTxFromPending(p){return {id:p.id,...(p.payload||{}),pending:true}}
-function localAttFromPending(p){return {id:p.id,...(p.payload||{}),pending:true}}
-function applyPendingToState(){const p=pendingForUser();p.forEach(x=>{if(x.type==='tx_add'&&!state.data.tx.some(t=>String(t.id)===String(x.id)))state.data.tx.unshift(localTxFromPending(x));if(x.type==='att_add'&&!state.data.att.some(a=>String(a.id)===String(x.id)))state.data.att.unshift(localAttFromPending(x))})}
-function syncTimeText(){if(!state.lastSyncMs)return 'Belum sync';const diff=Math.max(0,Math.round((Date.now()-state.lastSyncMs)/1000));if(diff<60)return 'baru saja';if(diff<3600)return `${Math.floor(diff/60)} menit lalu`;return timeID(state.lastSyncMs)}
-function syncBar(){const pc=pendingForUser().length, cls=pc?'syncbar sync-pending':'syncbar';const msg=pc?`<b>${pc} data belum terkirim</b><span> akan dicoba otomatis</span>`:`<span>Sync terakhir: <b>${syncTimeText()}</b></span>`;const err=state.syncError?`<div class="hint" style="color:var(--red);margin-top:2px">${esc(state.syncError)}</div>`:'';return `<div class="${cls}"><div>${msg}${err}</div><button class="btn sm" onclick="retrySync()">Sync</button></div>`}
-function top(title,sub){const icon=getTheme()==='dark'?'☀':'☾';return `<div class="top"><div class="brand"><div class="title">${esc(title)}</div><div class="sub">${esc(sub||state.user?.name||'Staff')}</div></div><div class="row"><a class="btn sm member" href="${MEMBER_URL}" target="_blank" rel="noopener">Member</a><button class="btn sm" onclick="refresh()">Refresh</button><button class="btn sm" onclick="toggleTheme()">${icon}</button><button class="btn sm danger" onclick="logout()">Keluar</button></div></div>`}
-function nav(){const n=$('nav'),f=$('fab');if(!state.user){n.style.display='none';f.style.display='none';return}n.style.display='flex';f.style.display='block';document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));$(`nav-${state.page}`)?.classList.add('active')}
-function renderLogin(){nav();page.innerHTML=`<div class="login"><div class="login-card"><div class="hero" style="text-align:center"><div class="big">ROCKY HIJAB</div><div class="sub">Aplikasi Staff Ringan</div></div><div class="card" style="margin-top:10px"><div class="field"><div class="label">Username Staff</div><input id="lu" autocomplete="username" placeholder="username"></div><div class="field"><div class="label">PIN</div><input id="lp" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" placeholder="PIN"></div><button class="btn primary block" onclick="login()">Masuk</button></div><div class="hint" style="text-align:center;margin-top:12px">Khusus staff. Admin tidak dimuat supaya ringan. Tidak perlu ubah Firestore Rules.</div></div></div>`}
-function render(){if(!state.user)return renderLogin();nav();if(state.page==='history')return history();return home()}
-async function getQueryDocs(makePrimary,makeFallback){try{return await getDocs(makePrimary())}catch(e){console.warn('primary query fallback',e?.code||e);return await getDocs(makeFallback())}}
-async function loadStaffData(opts={}){if(!state.user)return;const u=key(state.user.username), m=monthKey(), silent=opts.silent===true;if(!silent)showLoad(true);try{const [tx,att,manual,closeGlobal,closeUser,bs]=await Promise.all([
-  getQueryDocs(()=>query(collection(db,'transactions'),where('user','==',u),where('monthKey','==',m),limit(LIMITS.tx)),()=>query(collection(db,'transactions'),where('user','==',u),limit(LIMITS.tx))),
-  getDocs(query(collection(db,'attendance'),where('user','==',u),limit(LIMITS.att))),
-  getQueryDocs(()=>query(collection(db,'manualBonuses'),where('user','==',u),where('monthKey','==',m),limit(LIMITS.manual)),()=>query(collection(db,'manualBonuses'),where('user','==',u),limit(LIMITS.manual))),
-  getQueryDocs(()=>query(collection(db,'closings'),where('monthKey','==',m),where('scope','==','global'),limit(LIMITS.closings)),()=>query(collection(db,'closings'),where('monthKey','==',m),limit(LIMITS.closings))),
-  getQueryDocs(()=>query(collection(db,'closings'),where('monthKey','==',m),where('user','==',u),limit(LIMITS.closings)),()=>query(collection(db,'closings'),where('user','==',u),limit(LIMITS.closings))),
-  getDoc(doc(db,'closings','__bonus_settings'))
-]);state.data.tx=sortDesc(tx.docs.map(d=>({id:d.id,...d.data()})));state.data.att=sortDesc(att.docs.map(d=>({id:d.id,...d.data()})));state.data.manual=sortDesc(manual.docs.map(d=>({id:d.id,...d.data()})));const closeMap=new Map();[...closeGlobal.docs,...closeUser.docs].forEach(d=>{if(d.id!=='__bonus_settings')closeMap.set(d.id,{id:d.id,...d.data()})});state.data.closings=[...closeMap.values()];state.data.bonus=bs.exists()?{...DEFAULT_BONUS,...bs.data()}:{...DEFAULT_BONUS};state.lastSyncMs=Date.now();state.syncError='';applyPendingToState()}catch(e){console.error(e);state.syncError='Gagal refresh data';if(!silent)toast('Gagal load data. Cek koneksi internet.');applyPendingToState()}if(!silent)showLoad(false);render();if(!opts.skipFlush)flushPending()}
-async function flushPending(){if(!state.user||state.syncing)return;let list=getPending();if(!list.length)return;state.syncing=true;state.syncError='';const remain=[];for(const item of list){if(key(item.user)!==key(state.user.username)){remain.push(item);continue}try{if(item.type==='tx_add')await setDoc(doc(db,'transactions',item.id),{...(item.payload||{}),createdAt:serverTimestamp(),syncedAt:serverTimestamp(),syncedAtMs:Date.now()},{merge:true});else if(item.type==='att_add')await setDoc(doc(db,'attendance',item.id),{...(item.payload||{}),createdAt:serverTimestamp(),syncedAt:serverTimestamp(),syncedAtMs:Date.now()},{merge:true});else remain.push(item)}catch(e){console.warn('pending sync failed',e?.code||e);item.tries=Number(item.tries||0)+1;item.lastTryMs=Date.now();remain.push(item);if(isPermissionError(e)){state.syncError='Akses Firebase ditolak. Data belum bisa sync.';break}else state.syncError='Koneksi belum stabil, sync akan dicoba lagi.'}}setPending(remain);state.syncing=false;applyPendingToState();render()}
-async function retrySync(){await flushPending();if(!pendingForUser().length){toast('Semua data sudah sync');await loadStaffData({silent:true,skipFlush:true})}else toast('Masih ada data menunggu sync')}
-function liveTx(){return state.data.tx.filter(t=>!deleted(t))}
-function todayTx(){const d=todayKey();return liveTx().filter(t=>txDate(t)===d)}
-function monthTx(){const m=monthKey();return liveTx().filter(t=>txMonth(t)===m)}
-function todayTotal(){return todayTx().reduce((s,t)=>s+Number(t.amount||0),0)}
-function monthTotal(){return monthTx().reduce((s,t)=>s+Number(t.amount||0),0)}
-function todayAtt(){const d=todayKey();return state.data.att.find(a=>!deleted(a)&&attDate(a)===d)}
-function monthAttendDays(){const m=monthKey(), set=new Set();state.data.att.forEach(a=>{if(!deleted(a)&&attDate(a).startsWith(m))set.add(attDate(a))});return set.size}
-function rate(){const u=state.user||{};const r=Number(u.dailyBonusRate);if(Number.isFinite(r)&&r>0)return r;const p=Number(u.dailyBonusPercent);if(Number.isFinite(p)&&p>0)return p/100;return Number(state.data.bonus.transactionBonusRate||DEFAULT_BONUS.transactionBonusRate)}
-function manualBonus(){const m=monthKey();return state.data.manual.filter(b=>!deleted(b)&&String(b.monthKey||txDate(b).slice(0,7))===m).reduce((s,b)=>s+Number(b.amount||0),0)}
-function activeClosings(){const m=monthKey();return state.data.closings.filter(c=>c&&c.closed===true&&c.canceled!==true&&!deleted(c)&&String(c.monthKey||c.dateKey||'').startsWith(m))}
-function closingBonusValue(c){const u=key(state.user?.username);const map=c.bonusByUser||{};if(map[u]!=null)return Number(map[u]||0);if(c.scope==='user'||c.user)return key(c.user)===u?Number(c.bonusPerUser||c.totalBonus||0):0;const per=Number(c.bonusPerUser||0)||(Number(c.staffCount||0)?Number(c.totalBonus||0)/Number(c.staffCount||1):0);return per}
-function closingBonus(){return activeClosings().reduce((s,c)=>s+closingBonusValue(c),0)}
-function closingCount(){return activeClosings().filter(c=>closingBonusValue(c)>0).length}
-function trxBonus(){return Math.round(monthTotal()*rate())}
-function totalBonus(){return trxBonus()+closingBonus()+manualBonus()}
-function isClosedToday(){const d=todayKey(), u=key(state.user?.username);return state.data.closings.some(c=>c&&c.closed===true&&c.canceled!==true&&!deleted(c)&&String(c.dateKey||'')===d&&((!c.user&&c.scope!=='user')||c.scope==='global'||key(c.user)===u))}
-function delayMin(tm=timeNow()){const m=String(tm).match(/^(\d{1,2}):(\d{2})$/);if(!m)return 0;return Math.max(0,Number(m[1])*60+Number(m[2])-1080)}
-function closingNotice(){const d=delayMin();if(!d||isClosedToday())return '';const est=d*Number(state.data.bonus.closingBonusPerMinute||0);return `<div class="card warn" style="margin-bottom:8px"><b>Estimasi bonus closing</b><div class="hint" style="margin-top:4px;color:inherit">Sudah lewat 18:00 WIB · ${d} menit · estimasi Rp ${rp(est)}</div></div>`}
-function canTx(){if(isClosedToday())return false;if(isDaily())return true;return !!todayAtt()}
-function statusPill(){if(isClosedToday())return `<span class="pill amber">Sudah closing</span>`;if(isDaily())return `<span class="pill blue">Karyawan harian</span>`;const a=todayAtt();return a?`<span class="pill green">Sudah absen · ${timeID(ms(a))}</span>`:`<span class="pill red">Belum absen</span>`}
-function locText(){if(!state.pos)return `<button class="pill blue" onclick="updateLocation()">Ambil GPS</button>`;const dist=distance(state.pos.lat,state.pos.lng,OFFICE_LOC.lat,OFFICE_LOC.lng);return dist<=RADIUS_LIMIT?`<span class="pill green">Radius · ${Math.round(dist)}m</span>`:`<span class="pill red">Diluar · ${Math.round(dist)}m</span>`}
-function txItem(t){const pending=t.pending===true;const tag=pending?'<span class="pending-tag">MENUNGGU SYNC</span>':'';return `<div class="item"><div class="main"><div class="item-title">${esc(t.note||'Transaksi')}</div><div class="item-sub">${dateID(txDate(t))} · ${timeID(ms(t))}</div>${tag}</div><div><div class="amount">Rp ${rp(t.amount)}</div>${txDate(t)===todayKey()&&!pending?`<button class="btn sm danger" style="margin-top:5px" onclick="delTx('${esc(t.id)}')">Hapus</button>`:''}</div></div>`}
-function home(){const tx=todayTx(), last=sortDesc(tx).slice(0,5), a=todayAtt();page.innerHTML=`${top('Bismillah Dulu',state.user?.name||'Staff')}${syncBar()}${closingNotice()}<div class="hero"><div class="kicker">Pendapatan Hari Ini</div><div class="big">Rp ${rp(todayTotal())}</div><div class="sub">${dateID(todayKey())} · ${tx.length} transaksi</div></div><div class="grid2" style="margin-top:8px"><div class="stat"><div class="stat-label">Absen Hari Ini</div><div class="stat-val">${a?timeID(ms(a)):'--:--'}</div><div class="stat-foot">${a?'sudah absen':'belum absen'}</div></div><div class="stat"><div class="stat-label">Hadir Bulan</div><div class="stat-val">${monthAttendDays()}x</div><div class="stat-foot">${monthID(monthKey())}</div></div><div class="stat"><div class="stat-label">Transaksi</div><div class="stat-val">${tx.length}</div><div class="stat-foot">hari ini</div></div><div class="stat"><div class="stat-label">Bonus ++</div><div class="stat-val">Rp ${rp(totalBonus())}</div><div class="stat-foot">bulan ini</div></div></div><div class="card" style="margin-top:8px"><div class="between"><div><div class="label">Status Transaksi</div>${statusPill()}</div><div>${locText()}</div></div>${(!isDaily()&&!a)?`<button class="btn success block" style="margin-top:10px" onclick="clockIn()">Absen Sekarang</button>`:''}</div><div class="card" style="margin-top:8px"><div class="label">Bonus ++ Bulan Ini</div><div class="big" style="color:var(--blue)">Rp ${rp(totalBonus())}</div><div class="bonus-note">Bonus ini sudah termasuk total bonus keseluruhan</div><div class="grid2" style="margin-top:9px"><div class="stat" style="min-height:auto"><div class="stat-label">Omzet Bulan</div><div class="stat-val" style="font-size:16px">Rp ${rp(monthTotal())}</div></div><div class="stat" style="min-height:auto"><div class="stat-label">Closing</div><div class="stat-val" style="font-size:16px">${closingCount()}x</div></div></div></div><div class="card" style="margin-top:8px"><div class="between"><b>Transaksi Terakhir</b><button class="btn sm" onclick="go('history')">Lihat</button></div><div class="list" style="margin-top:8px">${last.length?last.map(txItem).join(''):'<div class="empty">Belum ada transaksi hari ini.</div>'}</div></div>`}
-function history(){const items=sortDesc(todayTx());page.innerHTML=`${top('Riwayat Hari Ini',`${items.length} transaksi · Rp ${rp(todayTotal())}`)}${syncBar()}<div class="list">${items.length?items.map(txItem).join(''):'<div class="empty">Belum ada transaksi hari ini.</div>'}</div>`}
-async function pinAsk(msg='Masukkan PIN'){return new Promise(res=>{window.__pin=v=>{closeModal();delete window.__pin;res(String(v||''))};modal('Verifikasi PIN',`<div class="hint" style="margin-bottom:8px">${esc(msg)}</div><input id="pinx" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" placeholder="PIN" style="text-align:center;font-size:22px;font-weight:950">`,`<button class="btn" onclick="__pin('')">Batal</button><button class="btn primary" onclick="__pin(document.getElementById('pinx').value)">Lanjut</button>`);setTimeout(()=>$('pinx')?.focus(),60)})}
-function openTx(){if(!state.user)return;if(!canTx())return toast(isClosedToday()?'Transaksi sudah closing hari ini':'Absen dulu sebelum transaksi');modal('Tambah Transaksi',`<div class="field"><div class="label">Catatan</div><input id="txn" placeholder="Tulis manual..." autocomplete="off"></div><div class="field"><div class="label">Nominal</div><input id="txa" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="0" style="text-align:right;font-size:24px;font-weight:950"></div><div class="hint">Jika internet putus, transaksi disimpan lokal dan otomatis sync saat online.</div>`,`<button class="btn" onclick="closeModal()">Batal</button><button class="btn primary" onclick="saveTx()">Simpan</button>`)}
-async function saveTx(){const amount=Number(String($('txa')?.value||'').replace(/\D/g,'')), note=String($('txn')?.value||'').trim()||'Transaksi';if(!amount)return toast('Nominal wajib diisi');if(!canTx()){closeModal();return toast('Absen dulu sebelum transaksi')}const now=Date.now(), u=key(state.user.username), id='stafftx_'+u+'_'+now+'_'+Math.random().toString(36).slice(2,7);const payload={user:u,name:state.user.name||u,amount,note,dateKey:todayKey(),monthKey:monthKey(),deleted:false,createdAtMs:now,createdBy:u,clientId:id,source:'staff_ringan_no_rules_change'};const local={id,...payload,pending:true};closeModal();state.data.tx=[local,...state.data.tx];render();try{await setDoc(doc(db,'transactions',id),{...payload,createdAt:serverTimestamp(),syncedAt:serverTimestamp(),syncedAtMs:Date.now()},{merge:false});state.data.tx=state.data.tx.map(t=>t.id===id?{...t,pending:false}:t);removePending(id);toast('Transaksi tersimpan');render()}catch(e){console.error(e);if(isPermissionError(e)){state.data.tx=state.data.tx.filter(t=>t.id!==id);state.syncError='Akses Firebase menolak transaksi.';toast('Akses Firebase menolak transaksi')}else{addPending({type:'tx_add',id,user:u,payload,createdAtMs:now});toast('Koneksi gagal. Disimpan lokal & akan sync otomatis.')}render()}}
-async function delTx(id){const t=state.data.tx.find(x=>String(x.id)===String(id));if(!t)return toast('Transaksi tidak ditemukan');if(key(t.user)!==key(state.user.username))return toast('Tidak bisa hapus transaksi orang lain');const p=await pinAsk(`Hapus transaksi Rp ${rp(t.amount)}?`);if(!p)return;if(String(p)!==String(state.user.pin))return toast('PIN salah');showLoad(true);try{await setDoc(doc(db,'transactions',id),{deleted:true,deletedAt:serverTimestamp(),deletedAtMs:Date.now(),deletedBy:state.user.username,deletedByName:state.user.name},{merge:true});state.data.tx=state.data.tx.map(x=>String(x.id)===String(id)?{...x,deleted:true,deletedAtMs:Date.now()}:x);toast('Transaksi dihapus');await logAudit('staff_transaction_delete',{id,amount:Number(t.amount||0),note:t.note||''})}catch(e){console.error(e);toast(isPermissionError(e)?'Akses Firebase menolak hapus':'Gagal hapus transaksi')}showLoad(false);render()}
-function getPosition(){return new Promise((res,rej)=>{if(!navigator.geolocation)return rej(new Error('GPS tidak tersedia'));navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lng:p.coords.longitude,accuracy:p.coords.accuracy||0}),e=>rej(e),{enableHighAccuracy:true,timeout:12000,maximumAge:0})})}
-function distance(a,b,c,d){const R=6371000,rad=x=>x*Math.PI/180,da=rad(c-a),db=rad(d-b),x=Math.sin(da/2)**2+Math.cos(rad(a))*Math.cos(rad(c))*Math.sin(db/2)**2;return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}
-async function updateLocation(){try{state.pos=await getPosition();render()}catch(e){toast('GPS gagal / izin lokasi ditolak')}}
-async function clockIn(){if(todayAtt())return toast('Sudah absen hari ini');let pos=state.pos;try{if(!pos)pos=await getPosition();state.pos=pos}catch(e){return toast('GPS gagal / izin lokasi ditolak')}const dist=distance(pos.lat,pos.lng,OFFICE_LOC.lat,OFFICE_LOC.lng);if(dist>RADIUS_LIMIT)return toast(`Diluar radius (${Math.round(dist)}m)`);showLoad(true);const now=Date.now(),u=key(state.user.username),id='staffatt_'+u+'_'+todayKey()+'_'+now;const payload={user:u,name:state.user.name||u,dateKey:todayKey(),lat:pos.lat,lng:pos.lng,loc:pos,createdAtMs:now,deleted:false,clientId:id,source:'staff_ringan_no_rules_change'};try{const local={id,...payload,pending:true};state.data.att=[local,...state.data.att];render();await setDoc(doc(db,'attendance',id),{...payload,createdAt:serverTimestamp(),syncedAt:serverTimestamp(),syncedAtMs:Date.now()},{merge:false});state.data.att=state.data.att.map(a=>a.id===id?{...a,pending:false}:a);removePending(id);toast('Absen berhasil')}catch(e){console.error(e);if(isPermissionError(e)){state.data.att=state.data.att.filter(a=>a.id!==id);state.syncError='Akses Firebase menolak absen.';toast('Akses Firebase menolak absen')}else{addPending({type:'att_add',id,user:u,payload,createdAtMs:now});toast('Koneksi gagal. Absen disimpan lokal & akan sync otomatis.')}}showLoad(false);render()}
-async function logAudit(action,detail={}){try{await addDoc(collection(db,'audit_logs'),{action,detail,user:state.user?.username||'',name:state.user?.name||'',createdAt:serverTimestamp(),createdAtMs:Date.now()})}catch(e){console.warn('audit skipped',e?.code||e)}}
-async function login(){const u=key($('lu')?.value), p=String($('lp')?.value||'').trim();if(!u||!p)return toast('Isi username dan PIN');showLoad(true);try{const snap=await getDoc(doc(db,'users',u));if(!snap.exists())throw new Error('User tidak ditemukan');const data={id:snap.id,username:snap.data().username||snap.id,...snap.data()};if(isAdmin(data))throw new Error('Aplikasi ini khusus staff');if(data.active===false||deleted(data))throw new Error('User nonaktif');if(String(data.pin||'')!==p)throw new Error('PIN salah');state.user={username:key(data.username||u),name:data.name||u,pin:String(data.pin||''),role:data.role||'staff',dailyBonusRate:Number(data.dailyBonusRate||0),dailyBonusPercent:Number(data.dailyBonusPercent||0)};localStorage.setItem(SESSION,JSON.stringify({username:state.user.username,pin:p}));showLoad(false);await loadStaffData();toast(`Masuk: ${state.user.name}`)}catch(e){console.error(e);showLoad(false);toast(e.message||'Login gagal');renderLogin()}}
-async function boot(){setTheme(getTheme());try{const s=JSON.parse(localStorage.getItem(SESSION)||'null');if(s?.username&&s?.pin){const snap=await getDoc(doc(db,'users',key(s.username)));if(snap.exists()){const data={id:snap.id,username:snap.data().username||snap.id,...snap.data()};if(!isAdmin(data)&&data.active!==false&&!deleted(data)&&String(data.pin||'')===String(s.pin)){state.user={username:key(data.username||s.username),name:data.name||s.username,pin:String(data.pin||''),role:data.role||'staff',dailyBonusRate:Number(data.dailyBonusRate||0),dailyBonusPercent:Number(data.dailyBonusPercent||0)};await loadStaffData();return}}}}catch(e){console.warn(e)}renderLogin()}
-function logout(){localStorage.removeItem(SESSION);state.user=null;state.pos=null;state.syncError='';state.lastSyncMs=0;state.data={tx:[],att:[],closings:[],manual:[],bonus:{...DEFAULT_BONUS}};renderLogin()}
-function go(p){state.page=p;render()}
-async function refresh(){await flushPending();await loadStaffData({skipFlush:true});toast('Data diperbarui')}
-function setupAutoSync(){setInterval(()=>{if(state.user&&!document.hidden&&Date.now()-state.lastSyncMs>60000)loadStaffData({silent:true})},70000);window.addEventListener('online',()=>{if(state.user){toast('Online lagi, sync dicek');flushPending();loadStaffData({silent:true})}});window.addEventListener('focus',()=>{if(state.user&&Date.now()-state.lastSyncMs>30000)loadStaffData({silent:true})});document.addEventListener('visibilitychange',()=>{if(!document.hidden&&state.user&&Date.now()-state.lastSyncMs>30000)loadStaffData({silent:true})})}
-window.login=login;window.logout=logout;window.toggleTheme=toggleTheme;window.refresh=refresh;window.retrySync=retrySync;window.go=go;window.openTx=openTx;window.saveTx=saveTx;window.delTx=delTx;window.closeModal=closeModal;window.updateLocation=updateLocation;window.clockIn=clockIn;
-setupAutoSync();
-boot();
-</script>
+      <div class="timer-card">
+        <div class="ring" id="ring">
+          <div class="ring-inner">
+            <div class="timer">
+              <div id="timerText">00:20</div>
+              <small id="timerStatus">Siap mulai</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="session-info">
+          <h2 id="sessionTitle">Set 1 dari 3</h2>
+          <p id="sessionDesc">Selesaikan minimal 1 set hari ini. Kalau serius, gas sampai 3 set.</p>
+
+          <div class="set-track" id="setTrack"></div>
+
+          <div class="controls">
+            <button class="btn btn-primary" id="startBtn" type="button">Mulai</button>
+            <button class="btn btn-secondary" id="resetBtn" type="button">Reset</button>
+            <button class="btn btn-blue" id="finishSetBtn" type="button">Tandai Set Selesai</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards">
+      <div class="stat">
+        <strong id="minDays">0</strong>
+        <span>hari minimal 1x</span>
+      </div>
+      <div class="stat">
+        <strong id="fullDays">0</strong>
+        <span>hari target penuh</span>
+      </div>
+      <div class="stat">
+        <strong id="streak">0</strong>
+        <span>streak harian</span>
+      </div>
+      <div class="stat">
+        <strong id="totalTime">0m</strong>
+        <span>total plank</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>Aturan Harian</h2>
+        <small>Biar serius tapi gak tumbang</small>
+      </div>
+      <div class="mini-rule">
+        <div class="rule-box">
+          <b>Minimal</b>
+          <span>1 sesi sehari. Walau cuma 1 set, tetap dicatat biar kebiasaan gak putus.</span>
+        </div>
+        <div class="rule-box">
+          <b>Target serius</b>
+          <span>3 set sehari. Istirahat 30–60 detik antar set.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>Jadwal 30 Hari</h2>
+        <small>Tap kartu untuk pilih hari</small>
+      </div>
+      <div class="schedule" id="schedule"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>Pengaturan</h2>
+        <small>Progress tersimpan otomatis</small>
+      </div>
+
+      <div class="forms">
+        <div class="form-grid">
+          <div class="field">
+            <label for="startDate">Tanggal mulai</label>
+            <input type="date" id="startDate" />
+          </div>
+          <div class="field">
+            <label for="setGoal">Target set per hari</label>
+            <select id="setGoal">
+              <option value="1">1 set - minimal</option>
+              <option value="2">2 set - santai</option>
+              <option value="3">3 set - serius</option>
+              <option value="4">4 set - kuat</option>
+              <option value="5">5 set - barbar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-secondary" id="saveSettingsBtn" type="button">Simpan Setting</button>
+          <button class="btn btn-red" id="clearBtn" type="button">Reset Progress</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>Tips Form</h2>
+        <small>Jangan asal tahan</small>
+      </div>
+      <div class="tips">
+        <div class="tip"><div class="tip-icon">1</div><div><b>Perut dikunci.</b> Jangan pinggang turun, jangan pantat terlalu tinggi.</div></div>
+        <div class="tip"><div class="tip-icon">2</div><div><b>Napas tetap jalan.</b> Tarik pelan, buang pelan. Jangan tahan napas.</div></div>
+        <div class="tip"><div class="tip-icon">3</div><div><b>Stop kalau nyeri tajam.</b> Pegal otot normal, sakit pinggang tajam jangan dipaksa.</div></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Mantap bro!</div>
+
+  <script>
+    const plan = [
+      20, 20, 25, 25, 30, 30, 35, 35, 40, 40,
+      45, 45, 50, 50, 55, 60, 60, 65, 70, 75,
+      80, 85, 90, 95, 100, 105, 110, 115, 120, 120
+    ];
+
+    const $ = (id) => document.getElementById(id);
+
+    const els = {
+      todayLabel: $('todayLabel'),
+      targetSeconds: $('targetSeconds'),
+      todayBtn: $('todayBtn'),
+      ring: $('ring'),
+      timerText: $('timerText'),
+      timerStatus: $('timerStatus'),
+      sessionTitle: $('sessionTitle'),
+      sessionDesc: $('sessionDesc'),
+      setTrack: $('setTrack'),
+      startBtn: $('startBtn'),
+      resetBtn: $('resetBtn'),
+      finishSetBtn: $('finishSetBtn'),
+      minDays: $('minDays'),
+      fullDays: $('fullDays'),
+      streak: $('streak'),
+      totalTime: $('totalTime'),
+      schedule: $('schedule'),
+      startDate: $('startDate'),
+      setGoal: $('setGoal'),
+      saveSettingsBtn: $('saveSettingsBtn'),
+      clearBtn: $('clearBtn'),
+      toast: $('toast')
+    };
+
+    const todayISO = () => new Date().toISOString().slice(0, 10);
+
+    let data = JSON.parse(localStorage.getItem('plankSeriousData')) || {
+      startDate: todayISO(),
+      setGoal: 3,
+      records: {}
+    };
+
+    if (!data.records) data.records = {};
+    if (!data.setGoal) data.setGoal = 3;
+    if (!data.startDate) data.startDate = todayISO();
+
+    let selectedDay = getTodayProgramDay();
+    let target = plan[selectedDay - 1];
+    let timeLeft = target;
+    let running = false;
+    let timer = null;
+
+    function save() {
+      localStorage.setItem('plankSeriousData', JSON.stringify(data));
+    }
+
+    function getTodayProgramDay() {
+      const start = new Date(data.startDate + 'T00:00:00');
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const diff = Math.floor((today - start) / 86400000) + 1;
+      if (diff < 1) return 1;
+      if (diff > 30) return 30;
+      return diff;
+    }
+
+    function getRecord(day) {
+      const key = String(day);
+      if (!data.records[key]) {
+        data.records[key] = { sets: 0, seconds: 0, updated: null };
+      }
+      return data.records[key];
+    }
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60).toString().padStart(2, '0');
+      const s = Math.max(0, sec % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function formatTotal(sec) {
+      if (sec < 60) return sec + 's';
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return s ? `${m}m ${s}s` : `${m}m`;
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add('show');
+      setTimeout(() => els.toast.classList.remove('show'), 1800);
+    }
+
+    function vibrate(pattern = 60) {
+      if ('vibrate' in navigator) navigator.vibrate(pattern);
+    }
+
+    function beep() {
+      try {
+        const audio = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 760;
+        gain.gain.setValueAtTime(0.001, audio.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.16, audio.currentTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.22);
+        osc.connect(gain);
+        gain.connect(audio.destination);
+        osc.start();
+        osc.stop(audio.currentTime + 0.24);
+      } catch (err) {}
+    }
+
+    function stopTimer() {
+      running = false;
+      clearInterval(timer);
+      els.startBtn.textContent = 'Mulai';
+      els.timerStatus.textContent = 'Siap mulai';
+    }
+
+    function resetTimer() {
+      stopTimer();
+      target = plan[selectedDay - 1];
+      timeLeft = target;
+      updateTimerUI();
+      render();
+    }
+
+    function startTimer() {
+      if (running) {
+        stopTimer();
+        els.timerStatus.textContent = 'Pause';
+        return;
+      }
+
+      if (timeLeft <= 0) {
+        timeLeft = target;
+      }
+
+      running = true;
+      els.startBtn.textContent = 'Pause';
+      els.timerStatus.textContent = 'Sedang plank';
+
+      timer = setInterval(() => {
+        timeLeft -= 1;
+        updateTimerUI();
+
+        if (timeLeft <= 0) {
+          stopTimer();
+          finishSet(true);
+        }
+      }, 1000);
+    }
+
+    function finishSet(fromTimer = false) {
+      const record = getRecord(selectedDay);
+
+      if (record.sets >= data.setGoal) {
+        showToast('Hari ini sudah full bro 🔥');
+        return;
+      }
+
+      record.sets += 1;
+      record.seconds += target;
+      record.updated = new Date().toISOString();
+      save();
+
+      beep();
+      vibrate([60, 40, 80]);
+
+      const full = record.sets >= data.setGoal;
+      if (full) {
+        showToast('Target harian full. Gokil bro 🔥');
+      } else if (record.sets === 1) {
+        showToast('Minimal harian aman. Lanjut gas!');
+      } else {
+        showToast(`Set ${record.sets} selesai. Dikit lagi!`);
+      }
+
+      timeLeft = target;
+      updateTimerUI();
+      render();
+
+      if (!fromTimer) stopTimer();
+    }
+
+    function updateTimerUI() {
+      els.timerText.textContent = formatTime(timeLeft);
+      const doneDeg = Math.max(0, Math.min(360, ((target - timeLeft) / target) * 360));
+      document.documentElement.style.setProperty('--progress', doneDeg + 'deg');
+    }
+
+    function renderSetTrack(record) {
+      els.setTrack.innerHTML = '';
+
+      for (let i = 1; i <= data.setGoal; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'set-dot';
+        if (i <= record.sets) dot.classList.add('done');
+        if (i === record.sets + 1 && record.sets < data.setGoal) dot.classList.add('next');
+        dot.textContent = i <= record.sets ? '✓' : `Set ${i}`;
+        els.setTrack.appendChild(dot);
+      }
+    }
+
+    function renderStats() {
+      let minDays = 0;
+      let fullDays = 0;
+      let total = 0;
+
+      for (let i = 1; i <= 30; i++) {
+        const record = data.records[String(i)];
+        const sets = record ? record.sets : 0;
+        if (sets >= 1) minDays++;
+        if (sets >= data.setGoal) fullDays++;
+        if (record) total += record.seconds || 0;
+      }
+
+      let streak = 0;
+      const today = getTodayProgramDay();
+      for (let i = today; i >= 1; i--) {
+        const record = data.records[String(i)];
+        if (record && record.sets >= 1) streak++;
+        else break;
+      }
+
+      els.minDays.textContent = minDays;
+      els.fullDays.textContent = fullDays;
+      els.streak.textContent = streak;
+      els.totalTime.textContent = formatTotal(total);
+    }
+
+    function renderSchedule() {
+      const today = getTodayProgramDay();
+      els.schedule.innerHTML = '';
+
+      plan.forEach((seconds, index) => {
+        const day = index + 1;
+        const record = data.records[String(day)] || { sets: 0 };
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'day';
+
+        if (day === selectedDay) btn.classList.add('active');
+        if (day === today) btn.classList.add('today');
+        if (record.sets >= 1) btn.classList.add('min');
+        if (record.sets >= data.setGoal) btn.classList.add('full');
+
+        btn.innerHTML = `
+          <div class="day-top">
+            <span>H${day}</span>
+            <span>${day === today ? 'TODAY' : ''}</span>
+          </div>
+          <div class="day-time">${seconds}s</div>
+          <div class="day-set">${record.sets || 0}/${data.setGoal} set</div>
+        `;
+
+        btn.addEventListener('click', () => {
+          selectedDay = day;
+          target = plan[selectedDay - 1];
+          timeLeft = target;
+          stopTimer();
+          updateTimerUI();
+          render();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        els.schedule.appendChild(btn);
+      });
+    }
+
+    function render() {
+      const today = getTodayProgramDay();
+      const record = getRecord(selectedDay);
+      target = plan[selectedDay - 1];
+
+      els.startDate.value = data.startDate;
+      els.setGoal.value = String(data.setGoal);
+      els.targetSeconds.textContent = target;
+      els.todayLabel.textContent = selectedDay === today
+        ? `Hari ini · Hari ke-${selectedDay}`
+        : `Dipilih · Hari ke-${selectedDay}`;
+
+      const nextSet = Math.min(record.sets + 1, data.setGoal);
+      els.sessionTitle.textContent = record.sets >= data.setGoal
+        ? `Target ${data.setGoal} set selesai`
+        : `Set ${nextSet} dari ${data.setGoal}`;
+
+      if (record.sets >= data.setGoal) {
+        els.sessionDesc.textContent = 'Mantap. Target harian sudah full. Kalau mau tambah, naikkan target set di pengaturan.';
+        els.finishSetBtn.textContent = 'Target Hari Ini Selesai ✓';
+        els.finishSetBtn.disabled = true;
+      } else if (record.sets >= 1) {
+        els.sessionDesc.textContent = `Minimal 1x sudah aman. Sisa ${data.setGoal - record.sets} set untuk target serius.`;
+        els.finishSetBtn.textContent = 'Tandai Set Selesai';
+        els.finishSetBtn.disabled = false;
+      } else {
+        els.sessionDesc.textContent = 'Selesaikan minimal 1 set hari ini. Kalau serius, gas sampai target penuh.';
+        els.finishSetBtn.textContent = 'Tandai Set Selesai';
+        els.finishSetBtn.disabled = false;
+      }
+
+      renderSetTrack(record);
+      renderStats();
+      renderSchedule();
+      updateTimerUI();
+    }
+
+    els.startBtn.addEventListener('click', startTimer);
+    els.resetBtn.addEventListener('click', resetTimer);
+    els.finishSetBtn.addEventListener('click', () => finishSet(false));
+
+    els.todayBtn.addEventListener('click', () => {
+      selectedDay = getTodayProgramDay();
+      target = plan[selectedDay - 1];
+      timeLeft = target;
+      stopTimer();
+      render();
+      showToast('Balik ke jadwal hari ini');
+    });
+
+    els.saveSettingsBtn.addEventListener('click', () => {
+      const oldGoal = data.setGoal;
+      data.startDate = els.startDate.value || todayISO();
+      data.setGoal = Number(els.setGoal.value || 3);
+
+      if (data.setGoal !== oldGoal) {
+        showToast(`Target diubah jadi ${data.setGoal} set/hari`);
+      } else {
+        showToast('Setting disimpan');
+      }
+
+      selectedDay = getTodayProgramDay();
+      target = plan[selectedDay - 1];
+      timeLeft = target;
+      stopTimer();
+      save();
+      render();
+    });
+
+    els.clearBtn.addEventListener('click', () => {
+      const ok = confirm('Yakin reset semua progress plank?');
+      if (!ok) return;
+      data.records = {};
+      save();
+      selectedDay = getTodayProgramDay();
+      target = plan[selectedDay - 1];
+      timeLeft = target;
+      stopTimer();
+      render();
+      showToast('Progress sudah direset');
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && running) {
+        stopTimer();
+        showToast('Timer dipause saat aplikasi ditinggal');
+      }
+    });
+
+    render();
+  </script>
 </body>
 </html>
