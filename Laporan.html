@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes" />
+  <meta name="theme-color" content="#00a878" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>DataBase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root{--bg:#f3f6f8;--card:#fff;--text:#263238;--muted:#6f7a85;--line:#e3e9ed;--green:#00a878;--green2:#007f5f;--soft:#e8fff6;--red:#e85d5d;--amber:#e6a700;--blue:#2563eb;--shadow:0 2px 10px rgba(20,35,45,.07);--num:'Inter',system-ui,sans-serif}
+    [data-theme="dark"]{--bg:#0b1220;--card:#121b2d;--text:#e5eef8;--muted:#92a4b8;--line:rgba(148,163,184,.20);--green:#12b981;--green2:#5eead4;--soft:rgba(18,185,129,.13);--red:#fb7185;--amber:#fbbf24;--blue:#60a5fa;--shadow:0 10px 28px rgba(0,0,0,.28)}
+    *{box-sizing:border-box;margin:0;padding:0} body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh} button,input,select{font-family:inherit}.app{max-width:1180px;margin:0 auto;padding:18px 14px 92px}.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.brand{display:flex;gap:12px;align-items:center}.logo{width:46px;height:46px;border-radius:14px;background:var(--green);color:white;display:grid;place-items:center;font-weight:900;box-shadow:0 10px 24px rgba(0,168,120,.24)}h1{font-size:22px;line-height:1.1} .sub{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.35}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:10px 12px;font-size:12px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;box-shadow:var(--shadow)}.btn:active{transform:scale(.98)}.btn.primary{background:var(--green);border-color:var(--green);color:white}.btn.success{background:var(--green);border-color:var(--green);color:white}.btn.danger{background:rgba(232,93,93,.10);border-color:rgba(232,93,93,.25);color:var(--red)}.btn.ghost{box-shadow:none}.tabs{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:30;width:calc(100% - 24px);max-width:620px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:7px;box-shadow:0 -8px 28px rgba(15,40,50,.10);display:grid;grid-template-columns:repeat(6,1fr);gap:5px}.tab{border:0;background:transparent;color:var(--muted);border-radius:13px;padding:9px 5px;font-size:10px;font-weight:900;display:flex;flex-direction:column;gap:4px;align-items:center;cursor:pointer}.tab i{font-size:17px}.tab.active{background:var(--green);color:white}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:14px}.hero{border-top:4px solid var(--green)}.klabel{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:6px}.kvalue{font-family:var(--num);font-size:24px;font-weight:900;line-height:1.1}.muted{color:var(--muted)}.small{font-size:11px;line-height:1.4}.input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 11px;color:var(--text);font-size:13px;outline:none}.input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,168,120,.12)}.section{display:none}.section.active{display:block}.toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--shadow)}table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left;font-size:12px;white-space:nowrap}th{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:rgba(127,127,127,.04)}td.num{text-align:right;font-variant-numeric:tabular-nums}.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900;border:1px solid var(--line);background:var(--card);color:var(--muted)}.pill.ok{background:var(--soft);border-color:rgba(0,168,120,.25);color:var(--green2)}.pill.warn{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.25);color:var(--amber)}.status{font-size:12px;line-height:1.45;margin-top:10px;color:var(--muted)}.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}.file{display:none}@media(max-width:760px){.app{padding:14px 10px 92px}.top{flex-direction:column}.actions{width:100%;justify-content:stretch}.actions .btn{flex:1}.grid,.grid2,.split{grid-template-columns:1fr 1fr}h1{font-size:20px}.kvalue{font-size:20px}.card{padding:12px}.tabs{grid-template-columns:repeat(6,1fr)}.tab span{font-size:9px}.toolbar{align-items:stretch}.toolbar>div{width:100%}}@media(max-width:420px){.grid,.grid2,.split{grid-template-columns:1fr}.actions{display:grid;grid-template-columns:1fr 1fr}.btn{padding:10px 9px}.top{gap:9px}}
+
+    .filters{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.2fr 1.2fr;gap:8px;margin-bottom:10px}
+    .row-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.btn.mini{padding:7px 8px;font-size:11px;border-radius:8px;box-shadow:none}.detailbox{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.detailitem{background:rgba(127,127,127,.05);border:1px solid var(--line);border-radius:10px;padding:10px}.detailitem b{display:block;font-size:10px;color:var(--muted);margin-bottom:4px}.modal{position:fixed;inset:0;background:rgba(2,6,23,.55);z-index:80;display:none;align-items:center;justify-content:center;padding:14px}.modal.show{display:flex}.modal-card{width:min(820px,100%);max-height:92vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.28);padding:16px}.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}.textarea{width:100%;min-height:260px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;line-height:1.45;resize:vertical}.danger-zone{margin-top:10px;padding:10px;border:1px solid rgba(232,93,93,.25);background:rgba(232,93,93,.08);border-radius:12px}.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.chip{font-size:11px;font-weight:800;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 9px;color:var(--muted)}
+    @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.detailbox{grid-template-columns:1fr}.row-actions{justify-content:flex-start}.tabs{grid-template-columns:repeat(6,1fr)}}@media(max-width:420px){.filters{grid-template-columns:1fr}.tab i{font-size:15px}.tab span{font-size:8px}}
+
+
+    .report-list{display:grid;gap:10px}.report-card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}.report-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;background:rgba(127,127,127,.035);border-bottom:1px solid var(--line)}.report-name{font-weight:900;font-size:13px}.report-role{font-size:11px;color:var(--muted);margin-top:2px}.report-lines{display:grid;grid-template-columns:1fr 1fr}.report-line{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px}.report-line:nth-child(odd){border-right:1px solid var(--line)}.report-line b{font-variant-numeric:tabular-nums}.report-line.total{background:var(--soft);color:var(--green2);font-weight:900}.report-empty{text-align:center;color:var(--muted);padding:24px}.month-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}.month-card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}.month-title{padding:11px 12px;font-weight:900;border-bottom:1px solid var(--line);background:rgba(127,127,127,.035)}.month-row{display:flex;justify-content:space-between;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:11.5px}.month-row:last-child,.report-line:last-child{border-bottom:0}.sync-month-box{border:1px solid rgba(0,168,120,.25);background:var(--soft);border-radius:12px;padding:12px;margin-top:10px}.danger-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}@media(max-width:760px){.month-cards{grid-template-columns:1fr 1fr}.report-lines{grid-template-columns:1fr}.report-line:nth-child(odd){border-right:0}.danger-actions{grid-template-columns:1fr}}@media(max-width:420px){.month-cards{grid-template-columns:1fr}.report-head{align-items:flex-start;flex-direction:column}}
+
+  
+    /* === V1.2.3: GRAFIK BULANAN DI HOME === */
+    .chart-card{margin:0 0 10px!important;overflow:hidden}
+    .chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .chart-title{font-size:13px;font-weight:900;color:var(--text);line-height:1.2}
+    .chart-sub{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35}
+    .chart-bars{height:188px;display:grid;grid-template-columns:repeat(12,minmax(34px,1fr));gap:7px;align-items:end;border-top:1px solid var(--line);padding:13px 2px 4px;overflow-x:auto;scrollbar-width:thin}
+    .chart-col{height:100%;min-width:34px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}
+    .chart-bar-wrap{height:120px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+    .chart-bar{width:100%;max-width:34px;min-height:5px;border-radius:999px 999px 4px 4px;background:linear-gradient(180deg,var(--green),var(--green2));box-shadow:0 8px 18px rgba(0,168,120,.16)}
+    .chart-month{font-size:9px;font-weight:900;color:var(--muted);text-transform:uppercase;line-height:1}
+    .chart-value{font-size:9px;color:var(--muted);line-height:1.15;text-align:center;white-space:nowrap}
+    .chart-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .chart-legend .pill{font-size:10px;padding:4px 8px}
+    @media(max-width:760px){.chart-bars{grid-template-columns:repeat(12,42px)}.chart-head{flex-direction:column}.chart-head .input{max-width:none!important}}
+
+
+    /* === V1.2.4: UI ANDROID RESPONSIVE CLEAN === */
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--bg)}
+    body{touch-action:manipulation;overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;padding-top:env(safe-area-inset-top,0px)}
+    .btn,.tab,input,select,textarea{min-height:44px}
+    .btn{white-space:nowrap;line-height:1.1}
+    .card,.report-card,.month-card,.tablewrap,.modal-card{backdrop-filter:saturate(1.08)}
+    .section{animation:androidFade .14s ease both}
+    @keyframes androidFade{from{opacity:.86;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+    @media(max-width:760px){
+      body{background:linear-gradient(180deg,rgba(0,168,120,.08),var(--bg) 145px)!important}
+      .app{max-width:430px!important;margin:0 auto!important;padding:12px 10px calc(92px + env(safe-area-inset-bottom,0px))!important}
+      .top{position:sticky;top:0;z-index:20;margin:-12px -10px 12px;padding:12px 10px 10px;background:linear-gradient(180deg,var(--bg) 0%,rgba(243,246,248,.96) 76%,rgba(243,246,248,0));backdrop-filter:blur(14px)}
+      [data-theme="dark"] .top{background:linear-gradient(180deg,var(--bg) 0%,rgba(11,18,32,.96) 76%,rgba(11,18,32,0))}
+      .brand{gap:10px;align-items:center;width:100%}
+      .logo{width:42px;height:42px;min-width:42px;border-radius:14px;font-size:16px;box-shadow:0 10px 22px rgba(0,168,120,.20)}
+      h1{font-size:18px!important;letter-spacing:-.02em;line-height:1.08}
+      .sub{font-size:10.8px!important;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .actions{display:grid!important;grid-template-columns:1fr 1.3fr!important;gap:7px!important;width:100%}
+      .actions .btn{width:100%;padding:10px 8px!important;border-radius:12px;font-size:11.5px}
+      .toolbar{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;margin-bottom:10px!important}
+      .toolbar h2{font-size:17px;line-height:1.1}
+      .toolbar .sub{display:block;-webkit-line-clamp:unset;font-size:11px!important}
+      .toolbar .input,.toolbar button{max-width:none!important;width:100%!important}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+      .grid2,.split{grid-template-columns:1fr!important;gap:9px!important}
+      .card{border-radius:14px!important;padding:12px!important;box-shadow:0 4px 18px rgba(20,35,45,.06)!important}
+      .hero.card,.hero{border-top-width:0!important;border-left:4px solid var(--green)!important}
+      .klabel{font-size:10px!important;margin-bottom:5px!important;line-height:1.2;display:flex;align-items:center;gap:5px}
+      .kvalue{font-size:18.5px!important;line-height:1.12;letter-spacing:-.02em;word-break:break-word}
+      .small{font-size:10.6px!important;line-height:1.45}
+      .pill{font-size:10px!important;padding:5px 8px!important;min-height:28px}
+      .input{font-size:13px!important;border-radius:12px!important;padding:11px 12px!important;background:var(--card)!important}
+      input[type="month"],input[type="date"],input[type="number"],select.input{min-height:44px!important}
+
+      .chart-card{border-radius:16px!important;margin-bottom:9px!important}
+      .chart-head{gap:8px!important;margin-bottom:8px!important}
+      .chart-title{font-size:12.5px!important}
+      .chart-sub{font-size:10.5px!important;display:block!important;-webkit-line-clamp:unset!important}
+      .chart-bars{height:166px!important;grid-template-columns:repeat(12,38px)!important;gap:7px!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch;padding:11px 2px 5px!important;scroll-snap-type:x proximity}
+      .chart-col{scroll-snap-align:start;min-width:38px!important}
+      .chart-bar-wrap{height:104px!important}
+      .chart-bar{max-width:30px!important;border-radius:12px 12px 4px 4px!important}
+      .chart-month{font-size:8.5px!important}
+      .chart-value{font-size:8px!important}
+      .chart-legend{gap:5px!important;overflow-x:auto;padding-bottom:1px;-webkit-overflow-scrolling:touch}
+
+      .report-list{gap:9px!important}
+      .report-card{border-radius:15px!important;overflow:hidden!important}
+      .report-head{padding:12px!important;gap:8px!important;background:linear-gradient(180deg,rgba(0,168,120,.055),rgba(127,127,127,.02))!important}
+      .report-name{font-size:13px!important;line-height:1.15}
+      .report-role{font-size:10.5px!important}
+      .report-lines{grid-template-columns:1fr!important}
+      .report-line{padding:10px 12px!important;border-right:0!important;font-size:11.4px!important;align-items:center}
+      .report-line span{color:var(--muted)}
+      .report-line b{font-size:12px;text-align:right;max-width:52%;overflow:hidden;text-overflow:ellipsis}
+      .report-line.total{background:linear-gradient(90deg,var(--soft),rgba(0,168,120,.03))!important}
+
+      .month-cards{grid-template-columns:1fr!important;gap:9px!important}
+      .month-card{border-radius:15px!important}
+      .month-title{padding:12px!important;font-size:13px!important}
+      .month-row{padding:10px 12px!important;font-size:11.3px!important}
+      .danger-actions{grid-template-columns:1fr!important}
+      .sync-month-box{border-radius:15px!important;padding:12px!important;margin-top:9px!important}
+
+      .filters{grid-template-columns:1fr 1fr!important;gap:7px!important;margin-bottom:9px!important}
+      .filters select,.filters input{min-width:0!important}
+      .filters input[placeholder*="Cari"],.filters input[value]{grid-column:auto}
+      .tablewrap{border-radius:15px!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch;box-shadow:0 4px 18px rgba(20,35,45,.06)!important}
+      table{min-width:690px!important}
+      th,td{padding:9px 10px!important;font-size:11.2px!important}
+      th{font-size:9px!important}
+      .row-actions{gap:5px!important;justify-content:flex-start!important}
+      .btn.mini{min-height:36px!important;padding:7px 8px!important;font-size:10.3px!important;border-radius:10px!important}
+      .detailbox{grid-template-columns:1fr!important;gap:7px!important}
+      .detailitem{border-radius:13px!important;padding:10px!important}
+      .chips{overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px;-webkit-overflow-scrolling:touch}.chip{white-space:nowrap}
+
+      .tabs{bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;width:calc(100% - 16px)!important;max-width:430px!important;border-radius:22px!important;padding:7px!important;gap:4px!important;box-shadow:0 -10px 30px rgba(15,40,50,.15)!important;background:rgba(255,255,255,.96)!important;backdrop-filter:blur(18px)!important}
+      [data-theme="dark"] .tabs{background:rgba(18,27,45,.94)!important}
+      .tab{min-height:58px!important;border-radius:17px!important;padding:7px 3px!important;gap:4px!important}
+      .tab i{font-size:18px!important;line-height:1}
+      .tab span{font-size:8.6px!important;line-height:1.05;max-width:62px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      .tab.active{box-shadow:0 8px 20px rgba(0,168,120,.18)!important}
+      .modal{align-items:flex-end!important;padding:0!important;background:rgba(2,6,23,.50)!important}
+      .modal-card{width:100%!important;max-height:88vh!important;border-radius:22px 22px 0 0!important;padding:14px 12px calc(16px + env(safe-area-inset-bottom,0px))!important;border-left:0!important;border-right:0!important;border-bottom:0!important}
+      .modal-head{position:sticky;top:0;z-index:1;background:var(--card);padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+      .modal-head h2{font-size:17px}.modal-head .btn{min-width:88px}
+      .textarea{min-height:220px!important;font-size:11px!important;border-radius:14px!important}
+    }
+
+
+
+
+
+    /* === V1.2.7: LAPORAN KEUANGAN + GRAFIK PENGELUARAN === */
+    .finance-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+    .finance-card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+    .finance-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:12px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(0,168,120,.055),rgba(127,127,127,.02))}
+    .finance-title{font-size:13px;font-weight:900;line-height:1.2}.finance-sub{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+    .finance-row{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:11.4px;align-items:center}
+    .finance-row:last-child{border-bottom:0}.finance-row span{color:var(--muted);min-width:0}.finance-row b{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+    .finance-row.in b{color:var(--green2)}.finance-row.out b{color:var(--red)}.finance-row.net{background:linear-gradient(90deg,var(--soft),rgba(0,168,120,.025));font-weight:900}.finance-row.clean{background:rgba(37,99,235,.06);font-weight:900}.finance-row.clean b{color:var(--blue)}
+    .expense-chart .chart-bar{background:linear-gradient(180deg,var(--red),#b91c1c);box-shadow:0 8px 18px rgba(232,93,93,.18)}
+    .expense-chart .chart-title i{color:var(--red)}
+    .month-card.bengkak{border-color:rgba(232,93,93,.36);box-shadow:0 8px 22px rgba(232,93,93,.10)}
+    .month-card.bengkak .month-title{background:rgba(232,93,93,.08);color:var(--red)}
+    @media(max-width:760px){.finance-grid{grid-template-columns:1fr!important;gap:9px!important}.finance-card{border-radius:16px!important}.finance-head{padding:12px!important}.finance-row{padding:10px 12px!important;font-size:11.2px!important}.finance-row b{max-width:54%;overflow:hidden;text-overflow:ellipsis}}
+
+    .finance-page{display:grid;gap:10px}
+    .finance-page .data-hero{border-left-color:var(--blue);background:linear-gradient(135deg,var(--card),rgba(37,99,235,.07))}
+    .finance-page .data-stat-card:after{background:rgba(37,99,235,.10)}
+    .finance-page .data-stat-card .stat-icon{background:rgba(37,99,235,.10);color:var(--blue)}
+
+
+
+    /* === V1.2.8: GRAFIK HOME GABUNGAN OMSET + PENGELUARAN === */
+    .chart-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+    .chart-actions .input{max-width:118px}
+    .dual-chart .chart-bar-wrap{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:4px;width:100%;max-width:42px;margin:0 auto}
+    .dual-chart .chart-bar{width:100%;max-width:18px;justify-self:center}
+    .dual-chart .chart-bar.expense{background:linear-gradient(180deg,var(--red),#b91c1c);box-shadow:0 8px 18px rgba(232,93,93,.18)}
+    .dual-chart .chart-bar.empty{min-height:0!important;box-shadow:none;opacity:.20}
+    .dual-chart .chart-value{font-size:8px;white-space:normal;line-height:1.2;min-height:20px}
+    .legend-dot{display:inline-block;width:8px;height:8px;border-radius:999px;margin-right:5px;vertical-align:middle;background:var(--green)}
+    .legend-dot.red{background:var(--red)}
+    @media(max-width:760px){.chart-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}.chart-actions .input,.chart-actions .btn{width:100%!important;max-width:none!important}.dual-chart .chart-bars{grid-template-columns:repeat(12,44px)!important}.dual-chart .chart-bar-wrap{max-width:38px;gap:3px}.dual-chart .chart-bar{max-width:16px}}
+
+    @media(max-width:390px){
+      .app{padding-left:8px!important;padding-right:8px!important}
+      .top{margin-left:-8px;margin-right:-8px;padding-left:8px;padding-right:8px}
+      .grid{gap:7px!important}
+      .card{padding:10px!important}
+      .kvalue{font-size:17px!important}
+      .klabel{font-size:9.4px!important}
+      .filters{grid-template-columns:1fr!important}
+      .actions .btn{font-size:10.8px!important}
+      .tabs{width:calc(100% - 10px)!important;padding:6px!important;border-radius:20px!important}
+      .tab{min-height:55px!important;padding:6px 2px!important}
+      .tab i{font-size:17px!important}.tab span{font-size:8px!important;max-width:54px}
+      .report-line{font-size:10.8px!important}.report-line b{font-size:11.3px!important}
+      table{min-width:650px!important}
+    }
+
+    @media(min-width:761px){
+      .app{padding-bottom:105px}
+      .tabs{max-width:760px}
+    }
+
+
+    /* === V1.2.5: HALAMAN DATA CLEAN CARD + ANDROID RESPONSIVE === */
+    .data-page{display:grid;gap:10px}
+    .data-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:linear-gradient(135deg,var(--card),rgba(0,168,120,.07));border:1px solid var(--line);border-left:4px solid var(--green);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+    .data-hero h2{font-size:20px;line-height:1.12;letter-spacing:-.02em;margin:0}
+    .data-hero .sub{max-width:680px}
+    .data-filter-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow)}
+    .data-filters{display:grid;grid-template-columns:1.05fr .85fr .85fr 1fr 1.25fr;gap:8px;margin:0}
+    .field{display:grid;gap:6px;min-width:0}
+    .field label{font-size:10px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    .field .input{min-width:0}
+    .data-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .data-stat-card{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+    .data-stat-card:after{content:"";position:absolute;right:-28px;top:-28px;width:82px;height:82px;border-radius:999px;background:rgba(0,168,120,.10)}
+    .data-stat-card .stat-icon{width:36px;height:36px;border-radius:12px;background:var(--soft);color:var(--green2);display:grid;place-items:center;margin-bottom:10px}
+    .data-stat-card .stat-label{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+    .data-stat-card .stat-value{font-size:24px;font-weight:900;line-height:1.1;letter-spacing:-.025em;margin-top:4px;word-break:break-word}
+    .data-stat-card .stat-sub{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.35}
+    .data-result-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:2px}
+    .data-result-head .klabel{margin-bottom:0}
+    .data-card-list{display:none;gap:10px}
+    .data-record-card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+    .data-record-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:13px;background:linear-gradient(180deg,rgba(0,168,120,.055),rgba(127,127,127,.018));border-bottom:1px solid var(--line)}
+    .data-record-title{font-size:13px;font-weight:900;line-height:1.22;margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .data-record-type{font-size:10px;font-weight:900;color:var(--green2);text-transform:uppercase;letter-spacing:.06em}
+    .data-record-meta{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.35;word-break:break-all}
+    .data-record-date{white-space:nowrap;max-width:40%;justify-content:center}
+    .data-record-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--line)}
+    .data-record-item{padding:10px 12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}
+    .data-record-item:nth-child(even){border-right:0}
+    .data-record-item:nth-last-child(-n+2){border-bottom:0}
+    .data-record-item span{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-bottom:3px}
+    .data-record-item b{display:block;font-size:12px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .data-record-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;background:rgba(127,127,127,.025)}
+    .data-empty-card{background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:24px 14px;text-align:center;color:var(--muted);box-shadow:var(--shadow)}
+    .data-empty-card i{font-size:24px;color:var(--green);margin-bottom:8px}
+    .data-table-desktop{display:block}
+
+    @media(max-width:900px){
+      .data-filters{grid-template-columns:1fr 1fr}
+      .data-filters .field:last-child{grid-column:1 / -1}
+    }
+    @media(max-width:760px){
+      .data-page{gap:9px!important}
+      .data-hero{border-radius:18px!important;padding:13px!important;flex-direction:column;background:linear-gradient(135deg,rgba(0,168,120,.10),var(--card) 70%)!important}
+      .data-hero h2{font-size:18px!important}
+      .data-hero .sub{font-size:11px!important;display:block!important;-webkit-line-clamp:unset!important}
+      .data-hero .btn{width:100%!important;border-radius:13px!important}
+      .data-filter-card{border-radius:18px!important;padding:12px!important}
+      .data-filters{grid-template-columns:1fr 1fr!important;gap:8px!important}
+      .data-filters .field:first-child,.data-filters .field:nth-child(4),.data-filters .field:nth-child(5){grid-column:1 / -1}
+      .field label{font-size:9.5px!important}
+      .data-summary-grid{grid-template-columns:1fr 1fr!important;gap:8px!important}
+      .data-stat-card{border-radius:18px!important;padding:12px!important;min-height:118px}
+      .data-stat-card .stat-icon{width:32px;height:32px;border-radius:11px;margin-bottom:8px}
+      .data-stat-card .stat-label{font-size:9.5px!important}
+      .data-stat-card .stat-value{font-size:18px!important}
+      .data-stat-card .stat-sub{font-size:10.2px!important}
+      .data-result-head{align-items:flex-start;flex-direction:column;gap:6px}
+      .data-table-desktop{display:none!important}
+      .data-card-list{display:grid!important}
+      .data-record-card{border-radius:18px!important}
+      .data-record-top{padding:12px!important}
+      .data-record-title{font-size:13px!important}
+      .data-record-date{max-width:46%;font-size:9.8px!important;min-height:30px!important;padding:5px 8px!important}
+      .data-record-grid{grid-template-columns:1fr 1fr!important}
+      .data-record-item{padding:9px 11px!important}
+      .data-record-item b{font-size:11.5px!important}
+      .data-record-actions{padding:11px!important;gap:7px!important}
+      .data-record-actions .btn{width:100%!important;min-height:40px!important}
+      #manage .status{font-size:10.6px!important;line-height:1.45;margin-top:0!important}
+    }
+
+
+
+
+    /* === V1.2.8: GRAFIK HOME GABUNGAN OMSET + PENGELUARAN === */
+    .chart-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+    .chart-actions .input{max-width:118px}
+    .dual-chart .chart-bar-wrap{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:4px;width:100%;max-width:42px;margin:0 auto}
+    .dual-chart .chart-bar{width:100%;max-width:18px;justify-self:center}
+    .dual-chart .chart-bar.expense{background:linear-gradient(180deg,var(--red),#b91c1c);box-shadow:0 8px 18px rgba(232,93,93,.18)}
+    .dual-chart .chart-bar.empty{min-height:0!important;box-shadow:none;opacity:.20}
+    .dual-chart .chart-value{font-size:8px;white-space:normal;line-height:1.2;min-height:20px}
+    .legend-dot{display:inline-block;width:8px;height:8px;border-radius:999px;margin-right:5px;vertical-align:middle;background:var(--green)}
+    .legend-dot.red{background:var(--red)}
+    @media(max-width:760px){.chart-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}.chart-actions .input,.chart-actions .btn{width:100%!important;max-width:none!important}.dual-chart .chart-bars{grid-template-columns:repeat(12,44px)!important}.dual-chart .chart-bar-wrap{max-width:38px;gap:3px}.dual-chart .chart-bar{max-width:16px}}
+
+    @media(max-width:390px){
+      .data-filters{grid-template-columns:1fr!important}
+      .data-filters .field{grid-column:auto!important}
+      .data-summary-grid{grid-template-columns:1fr!important}
+      .data-record-grid{grid-template-columns:1fr!important}
+      .data-record-item,.data-record-item:nth-child(even){border-right:0!important}
+      .data-record-item:nth-last-child(2){border-bottom:1px solid var(--line)!important}
+      .data-record-actions{grid-template-columns:1fr!important}
+      .data-record-date{max-width:50%}
+    }
+
+
+    /* === V1.2.6: HALAMAN PENGELUARAN KASM === */
+    .expense-page{display:grid;gap:10px}
+    .expense-page .data-hero{border-left-color:var(--red);background:linear-gradient(135deg,var(--card),rgba(232,93,93,.07))}
+    .expense-page .data-stat-card:after{background:rgba(232,93,93,.10)}
+    .expense-page .data-stat-card .stat-icon{background:rgba(232,93,93,.10);color:var(--red)}
+    .expense-filter-grid{display:grid;grid-template-columns:1fr .75fr 1.2fr auto;gap:8px;align-items:end}
+    .expense-flow-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .expense-day-card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+    .expense-day-head{display:flex;flex-direction:column;gap:5px;padding:9px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(232,93,93,.055),rgba(127,127,127,.018))}
+    .expense-day-title{font-size:11px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .expense-day-sub{font-size:9px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .expense-day-total{font-size:11px;font-weight:900;color:var(--red);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+    .expense-mini-row{display:flex;justify-content:space-between;gap:5px;padding:6px 9px;border-bottom:1px solid var(--line);font-size:9.5px}
+    .expense-mini-row:last-child{border-bottom:0}
+    .expense-mini-row span{color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .expense-mini-row b{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--red)}
+    .expense-detail-list{display:grid;gap:9px}
+    .expense-detail-card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+    .expense-detail-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:12px;border-bottom:1px solid var(--line)}
+    .expense-detail-title{font-weight:900;font-size:13px;line-height:1.22;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .expense-detail-meta{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.35}
+    .expense-amount{font-weight:900;color:var(--red);white-space:nowrap;font-variant-numeric:tabular-nums}
+    .expense-tag-row{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px;background:rgba(127,127,127,.025)}
+    .expense-tag{font-size:10px;font-weight:900;border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:var(--muted);background:var(--bg)}
+    .expense-tag.ops{background:#fff8e8;border-color:rgba(230,167,0,.28);color:var(--amber)}
+    .expense-note{border:1px solid rgba(232,93,93,.18);background:rgba(232,93,93,.06);border-radius:16px;padding:12px;color:var(--muted);font-size:11px;line-height:1.45}
+    @media(max-width:760px){
+      .tabs{grid-template-columns:repeat(6,1fr)!important}
+      .expense-filter-grid{grid-template-columns:1fr 1fr!important}
+      .expense-filter-grid .field:nth-child(3),.expense-filter-grid .btn{grid-column:1 / -1}
+      .expense-flow-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}
+      .expense-page .data-hero{background:linear-gradient(135deg,rgba(232,93,93,.10),var(--card) 70%)!important}
+      .expense-detail-top{padding:12px!important}
+      .expense-amount{font-size:12px!important}
+    }
+
+
+
+
+    /* === V1.2.8: GRAFIK HOME GABUNGAN OMSET + PENGELUARAN === */
+    .chart-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+    .chart-actions .input{max-width:118px}
+    .dual-chart .chart-bar-wrap{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:4px;width:100%;max-width:42px;margin:0 auto}
+    .dual-chart .chart-bar{width:100%;max-width:18px;justify-self:center}
+    .dual-chart .chart-bar.expense{background:linear-gradient(180deg,var(--red),#b91c1c);box-shadow:0 8px 18px rgba(232,93,93,.18)}
+    .dual-chart .chart-bar.empty{min-height:0!important;box-shadow:none;opacity:.20}
+    .dual-chart .chart-value{font-size:8px;white-space:normal;line-height:1.2;min-height:20px}
+    .legend-dot{display:inline-block;width:8px;height:8px;border-radius:999px;margin-right:5px;vertical-align:middle;background:var(--green)}
+    .legend-dot.red{background:var(--red)}
+    @media(max-width:760px){.chart-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}.chart-actions .input,.chart-actions .btn{width:100%!important;max-width:none!important}.dual-chart .chart-bars{grid-template-columns:repeat(12,44px)!important}.dual-chart .chart-bar-wrap{max-width:38px;gap:3px}.dual-chart .chart-bar{max-width:16px}}
+
+    @media(max-width:390px){
+      .expense-filter-grid{grid-template-columns:1fr!important}
+      .expense-filter-grid .field,.expense-filter-grid .btn{grid-column:auto!important}
+    }
+
+
+    /* === CLEAN UPDATE: Pengeluaran lebih ramping === */
+    .expense-flow-grid.compact-flow{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .expense-day-card.compact{min-width:0}
+    .expense-day-card.compact .expense-mini-row{padding:5px 8px;font-size:9.3px}
+    .expense-day-card.compact .expense-mini-row b{max-width:58%;overflow:hidden;text-overflow:ellipsis}
+    @media(max-width:420px){
+      .expense-flow-grid,.expense-flow-grid.compact-flow{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+      .expense-day-head{padding:8px 7px!important;gap:4px!important}
+      .expense-day-title{font-size:10px!important}
+      .expense-day-sub{font-size:8.2px!important}
+      .expense-day-total{font-size:10px!important}
+      .expense-mini-row{padding:5px 7px!important;font-size:8.5px!important}
+    }
+
+  
+    /* === ANDROID APK: Tombol cetak struk laporan keuangan bulanan === */
+    .finance-head .btn.mini.primary{background:var(--green);border-color:var(--green);color:#fff;min-height:32px;padding:7px 9px}
+    @media(max-width:760px){.finance-head .btn.mini.primary{width:auto!important;min-height:34px!important}}
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="top">
+      <div class="brand">
+        <div class="logo"><i class="fas fa-chart-line"></i></div>
+        <div>
+          <h1>DataBase</h1>
+          
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="toggleTheme()"><i class="fas fa-moon"></i> Tema</button>
+        <button id="btn-sync-all-manual" class="btn primary" onclick="syncAllManual()"><i class="fas fa-rotate"></i> Sync Semua</button>
+      </div>
+    </div>
+
+    <section id="dash" class="section active"></section>
+    <section id="monthly" class="section"></section>
+    <section id="yearly" class="section"></section>
+    <section id="expenses" class="section"></section>
+    <section id="finance" class="section"></section>
+    <section id="manage" class="section"></section>
+    <section id="backup" class="section"></section>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" onclick="showTab('dash',this)"><i class="fas fa-house"></i><span>Home</span></button>
+    <button class="tab" onclick="showTab('monthly',this)"><i class="fas fa-calendar-days"></i><span>Bulanan</span></button>
+    <button class="tab" onclick="showTab('yearly',this)"><i class="fas fa-chart-column"></i><span>Tahunan</span></button>
+    <button class="tab" onclick="showTab('manage',this)"><i class="fas fa-magnifying-glass"></i><span>Cari</span></button>
+    <button class="tab" onclick="showTab('expenses',this)"><i class="fas fa-receipt"></i><span>Pengeluaran</span></button>
+    <button class="tab" onclick="showTab('finance',this)"><i class="fas fa-scale-balanced"></i><span>Keuangan</span></button>
+  </nav>
+
+  <input id="manual-file" class="file" type="file" accept=".json,application/json" onchange="importManualFile(event)">
+
+  <div id="record-modal" class="modal" onclick="if(event.target===this) closeRecordModal()">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h2 id="record-modal-title">Detail Data</h2>
+          <div id="record-modal-sub" class="sub"></div>
+        </div>
+        <button class="btn ghost" onclick="closeRecordModal()"><i class="fas fa-xmark"></i> Tutup</button>
+      </div>
+      <div id="record-detail"></div>
+      <div class="klabel" style="margin-top:12px">Edit data JSON</div>
+      <textarea id="record-json-editor" class="textarea" spellcheck="false"></textarea>
+      <div class="row-actions" style="margin-top:10px">
+        <button class="btn success" onclick="saveCurrentRecord()"><i class="fas fa-floppy-disk"></i> Simpan Edit</button>
+        <button class="btn danger" onclick="deleteCurrentRecord()"><i class="fas fa-trash"></i> Hapus Data Ini</button>
+      </div>
+      <div class="danger-zone small muted">Catatan: edit/hapus di sini hanya mengubah arsip offline SQLite. Data online Firebase tidak ikut berubah.</div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module">
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAqmTEKnLKOXcmOoR9RrXksNe5_Fix42w8",
+  authDomain: "rocky-fd14b.firebaseapp.com",
+  projectId: "rocky-fd14b",
+  storageBucket: "rocky-fd14b.firebasestorage.app",
+  messagingSenderId: "861954349314",
+  appId: "1:861954349314:web:bb8384825daedb8d34ca1b"
+};
+const INBOX_COLLECTION = 'offlineBackupInbox';
+// === PUSAT ORIGINAL: sumber utama pendapatan/laporan admin (READ ONLY) ===
+const PUSAT_SUPABASE_URL = 'https://ismjupxoiywttkrekmfg.supabase.co';
+const PUSAT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbWp1cHhvaXl3dHRrcmVrbWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzc4MDEsImV4cCI6MjA5NDg1MzgwMX0.WVwqEdkPQ_x9NWR8QXTm85mIAvN8d9V2FaMJ2NiAMC0';
+const PUSAT_TABLES = ['users','transactions','attendance','closings','manualBonuses'];
+let pusatSupabaseClient = null;
+const KASM_SUPABASE_URL = 'https://myxrvipyodadnldtomzs.supabase.co';
+const KASM_SUPABASE_ANON_KEY = 'sb_publishable_aG-kyasJNCEk2U9fN5T4qg_GfY0FpPH';
+const KASM_OWNER_ID = 'rocky-hijab';
+let kasmSupabaseClient = null;
+const COLLECTIONS = ['users','attendance','transactions','closings','manualBonuses','import_logs','kasm_expenses'];
+const state = { users: [], attendance: [], transactions: [], closings: [], manualBonuses: [], import_logs: [], kasm_expenses: [], month: new Date().toISOString().slice(0,7), year: String(new Date().getFullYear()), inbox: [], active: 'dash', manage: { collection:'transactions', dateFrom:'', dateTo:'', user:'', q:'' }, expenses: { month: new Date().toISOString().slice(0,7), year: String(new Date().getFullYear()), q: '', rows: [], loadedYear: '', status: 'Belum dimuat. Klik Sync Semua di atas kalau mau update data terbaru', busy: false }, finance: { month: new Date().toISOString().slice(0,7), year: String(new Date().getFullYear()) }, currentRecord:null, syncMonth: new Date().toISOString().slice(0,7) };
+window.state = state;
+let firebaseSdkPromise = null;
+
+function $(id){ return document.getElementById(id); }
+function esc(v){ return String(v ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;'); }
+function rupiah(n){ return Number(n||0).toLocaleString('id-ID'); }
+function num(n){ return Number(n||0).toLocaleString('id-ID'); }
+function toast(msg){ console.log(msg); }
+function sanitize(v){ return String(v||'').trim().toLowerCase().replace(/^@+/, ''); }
+function roleOf(v){ const r = sanitize(v); return r === 'harian' ? 'harian' : (r === 'admin' ? 'admin' : 'staff'); }
+function isDailyRole(v){ return roleOf(v) === 'harian'; }
+function isDeleted(r){ return r?.deleted === true || r?.deleted === 'true'; }
+function isCanceled(r){ return r?.canceled === true || r?.canceled === 'true'; }
+function asMs(v){ if(!v) return 0; if(typeof v === 'number') return v; if(typeof v === 'string'){ const t = Date.parse(v); return Number.isFinite(t)?t:0; } if(v.seconds) return Number(v.seconds)*1000; return 0; }
+function localDateKeyFromMs(ms){
+  ms=Number(ms||0);
+  if(!Number.isFinite(ms)||ms<=0) return '';
+  try{
+    return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms));
+  }catch(_){
+    return new Date(ms).toISOString().slice(0,10);
+  }
+}
+function normalizedDateString(v){
+  const s=String(v||'').trim();
+  const direct=s.slice(0,10);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(direct)) return direct;
+  const parsed=Date.parse(s.replace(' ','T'));
+  return Number.isFinite(parsed)?localDateKeyFromMs(parsed):'';
+}
+function dateKey(r){
+  const direct = normalizedDateString(r?.dateKey) || normalizedDateString(r?.date) || normalizedDateString(r?.time) || normalizedDateString(r?.createdAt);
+  if(direct) return direct;
+  const ms = Number(r?.createdAtMs || r?.updatedAtMs || r?.timestamp || 0) || asMs(r?.createdAt) || asMs(r?.updatedAt);
+  if(ms) return localDateKeyFromMs(ms);
+  const m = String(r?.monthKey || '').slice(0,7);
+  return /^\d{4}-\d{2}$/.test(m) ? m + '-01' : '';
+}
+function monthKey(r){ const sm = String(r?.offlineSnapshotMonthKey || r?._offlineSnapshotMonthKey || '').slice(0,7); if(/^\d{4}-\d{2}$/.test(sm)) return sm; const m = String(r?.monthKey || '').slice(0,7); if(/^\d{4}-\d{2}$/.test(m)) return m; const d = dateKey(r); return d ? d.slice(0,7) : ''; }
+function sourceAdminDateFromCreatedAt(v){
+  if(!v) return '';
+  if(typeof v==='string') return normalizedDateString(v);
+  if(v && typeof v.toDate==='function') return localDateKeyFromMs(v.toDate().getTime());
+  if(v && v.seconds) return localDateKeyFromMs(Number(v.seconds)*1000);
+  return '';
+}
+// Logika tanggal transaksi sengaja disamakan dengan aplikasi sumber admin:
+// dateKey → time → createdAt → createdAtMs. Field date, timestamp, dan updatedAtMs
+// tidak dipakai untuk omzet supaya total offline sama dengan panel sumber.
+function sourceTransactionDateKey(r){
+  if(!r) return '';
+  const dk=String(r.dateKey||'').slice(0,10);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(dk)) return dk;
+  const time=String(r.time||'').slice(0,10);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(time)) return time;
+  const createdText=typeof r.createdAt==='string' ? String(r.createdAt).slice(0,10) : '';
+  if(/^\d{4}-\d{2}-\d{2}$/.test(createdText)) return createdText;
+  const createdObj=sourceAdminDateFromCreatedAt(r.createdAt);
+  if(createdObj) return createdObj;
+  if(r.createdAtMs) return localDateKeyFromMs(Number(r.createdAtMs));
+  return '';
+}
+function sourceTransactionMonthKey(r){
+  if(!r) return '';
+  const mk=String(r.monthKey||'').slice(0,7);
+  if(/^\d{4}-\d{2}$/.test(mk)) return mk;
+  const d=sourceTransactionDateKey(r);
+  return d ? d.slice(0,7) : '';
+}
+function matchesMonth(r,m){ return monthKey(r) === m || dateKey(r).startsWith(m); }
+function matchesYear(r,y){ return monthKey(r).startsWith(y) || dateKey(r).startsWith(y); }
+function matchesTransactionMonth(r,m){ return sourceTransactionMonthKey(r) === m || sourceTransactionDateKey(r).startsWith(m); }
+function matchesTransactionYear(r,y){ return sourceTransactionDateKey(r).startsWith(String(y).slice(0,4)); }
+function getAmount(r){ return Number(r?.amount ?? r?.total ?? r?.value ?? 0) || 0; }
+function getUserName(username){ const u = state.users.find(x => sanitize(x.username || x.id) === sanitize(username)); return u?.name || username || '-'; }
+function getUserRole(username, fallback='staff'){ const u = state.users.find(x => sanitize(x.username || x.id) === sanitize(username)); return roleOf(u?.role || fallback); }
+function validUser(username){ const u = sanitize(username); return u && u !== 'admin'; }
+function userKey(r){ return sanitize(r?.user || r?.username || r?.uid || r?.id || ''); }
+function sourceTextKey(v){ return String(v||'').trim().toLowerCase().replace(/\s+/g,' '); }
+function transactionUniqueKey(r={}){
+  const doc=String(r.docId||r._docId||r.firestoreId||'').trim();
+  if(doc) return 'doc:'+doc;
+  const id=String(r.id||'').trim();
+  const looksGenerated=/^(transactions?|attendance|manualBonuses|closings|kasm_expenses)_/i.test(id);
+  if(id && !looksGenerated) return 'id:'+id;
+  const date=sourceTransactionDateKey(r) || dateKey(r);
+  const user=userKey(r);
+  const amount=String(getAmount(r));
+  const note=sourceTextKey(r.note||r.description||r.productName||r.name||'');
+  const payment=sourceTextKey(r.paymentMethod||r.paymentLabel||r.metodePembayaran||'');
+  const ms=String(Number(r.createdAtMs||r.timestamp||0) || asMs(r.createdAt) || '');
+  return ['sig',user,date,ms,amount,note,payment].join('|');
+}
+function dedupeTransactions(rows=[]){
+  const map=new Map();
+  for(const r of rows||[]){
+    const key=transactionUniqueKey(r);
+    const prev=map.get(key);
+    if(!prev){ map.set(key,r); continue; }
+    const prevDirect=!!String(prev.docId||prev._docId||prev.firestoreId||'').trim();
+    const curDirect=!!String(r.docId||r._docId||r.firestoreId||'').trim();
+    const prevSync=Number(prev.syncedFromAdminDirectAtMs||prev.importedToOfflineAtMs||0);
+    const curSync=Number(r.syncedFromAdminDirectAtMs||r.importedToOfflineAtMs||0);
+    if((curDirect&&!prevDirect) || (curSync>prevSync)) map.set(key,r);
+  }
+  return Array.from(map.values());
+}
+function activeReportUsers(){
+  const map = new Map();
+  for(const u of state.users){ const id = sanitize(u.username || u.id); if(validUser(id) && roleOf(u.role) !== 'admin' && u.active !== false) map.set(id,{user:id,name:u.name||id,role:roleOf(u.role||'staff')}); }
+  for(const r of [...state.transactions,...state.attendance,...state.manualBonuses]){ const id = userKey(r); if(validUser(id) && !map.has(id)) map.set(id,{user:id,name:r.name||id,role:getUserRole(id,r.userRole||r.role||'staff')}); }
+  for(const c of state.closings){ const by=c.bonusByUser||{}; Object.keys(by).forEach(id=>{id=sanitize(id); if(validUser(id)&&!map.has(id)) map.set(id,{user:id,name:getUserName(id),role:getUserRole(id,'staff')});}); }
+  return Array.from(map.values()).sort((a,b)=>String(a.name).localeCompare(String(b.name)));
+}
+function transactionRate(t){ const direct = Number(t.bonusAmount ?? t.transactionBonusAmount ?? t.calculatedBonus); if(Number.isFinite(direct) && direct > 0) return {direct}; const rate = Number(t.bonusRate ?? t.transactionBonusRate); if(Number.isFinite(rate) && rate >= 0) return {rate}; const pct = Number(t.bonusPercent ?? t.transactionBonusPercent); if(Number.isFinite(pct) && pct >= 0) return {rate:pct/100}; const user = state.users.find(u=>sanitize(u.username||u.id)===userKey(t)); const ur = Number(user?.transactionBonusRate); if(Number.isFinite(ur) && ur>=0) return {rate:ur}; const up = Number(user?.transactionBonusPercent); if(Number.isFinite(up)&&up>=0) return {rate:up/100}; return {rate:0}; }
+function transactionBonus(t){ const r=transactionRate(t); if(Number.isFinite(r.direct)) return Math.round(r.direct); return Math.round(getAmount(t) * Number(r.rate||0)); }
+function closingBonus(c, username=null){ if(!c || c.closed !== true || isDeleted(c)) return 0; const by=c.bonusByUser||{}; const keys=Object.keys(by); if(username){ const v=Number(by[sanitize(username)]||0); return Number.isFinite(v)?v:0; } if(keys.length) return keys.reduce((s,k)=>s+Number(by[k]||0),0); return Number(c.totalBonus || c.bonusPerUser || 0) || 0; }
+
+function normalizeTimeLabel(value){
+  const s=String(value||'').trim().replace('.',':');
+  const m=s.match(/(\d{1,2}):(\d{2})/);
+  if(!m) return '';
+  const h=Math.max(0,Math.min(23,Number(m[1])));
+  const mn=Math.max(0,Math.min(59,Number(m[2])));
+  return `${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}`;
+}
+function minutesToTimeLabel(value){
+  const n=Number(value);
+  if(!Number.isFinite(n)) return '';
+  const minutes=((Math.round(n)%1440)+1440)%1440;
+  return `${String(Math.floor(minutes/60)).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}`;
+}
+function timeLabelToMinutes(value){
+  const s=normalizeTimeLabel(value);
+  if(!s) return null;
+  const [h,m]=s.split(':').map(Number);
+  return h*60+m;
+}
+function closingDeadlineSnapshot(row={}){
+  const deadlineText=normalizeTimeLabel(row.deadlineTime || row.closingDeadlineTime || row.deadline || row.deadlineLabel || row.deadlineSnapshot);
+  const deadlineMinutesRaw=Number(row.deadlineMinutes ?? row.closingDeadlineMinutes ?? row.closingDeadlineMinuteOfDay);
+  let minutes=Number.isFinite(deadlineMinutesRaw) ? Math.round(deadlineMinutesRaw) : null;
+  let time=deadlineText;
+  if(!time && minutes!==null) time=minutesToTimeLabel(minutes);
+  if(time && minutes===null) minutes=timeLabelToMinutes(time);
+  // Data closing lama dulu memang memakai deadline tetap 18:00. Kalau arsip lama belum punya snapshot,
+  // tampilkan 18:00 sebagai fallback agar laporan tetap selaras dengan logika historis.
+  if(!time){ time='18:00'; minutes=1080; }
+  return { time, minutes, hour: Math.floor(Number(minutes||0)/60), minute: Number(minutes||0)%60 };
+}
+function normalizeClosingDeadlineSnapshot(row={}){
+  if(!row || typeof row!=='object') return row;
+  const snap=closingDeadlineSnapshot(row);
+  if(!row.deadlineTime) row.deadlineTime=snap.time;
+  if(!row.closingDeadlineTime) row.closingDeadlineTime=snap.time;
+  if(!Number.isFinite(Number(row.deadlineMinutes))) row.deadlineMinutes=snap.minutes;
+  if(!Number.isFinite(Number(row.deadlineHour))) row.deadlineHour=snap.hour;
+  if(!Number.isFinite(Number(row.deadlineMinute))) row.deadlineMinute=snap.minute;
+  return row;
+}
+function closingTimeDisplay(row={}){
+  const direct=normalizeTimeLabel(row.manualClosingTime || row.closingTime || row.actualClosingTime || row.closedTime);
+  if(direct) return direct;
+  const ms=Number(row.closedAtMs||row.createdAtMs||row.updatedAtMs||0) || asMs(row.closedAt) || asMs(row.createdAt);
+  if(!ms) return '';
+  try{return new Intl.DateTimeFormat('id-ID',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(ms)).replace('.',':');}catch(_){return '';}
+}
+function closingDelayMinutes(row={}){
+  const direct=Number(row.delayMinutes ?? row.lateMinutes ?? row.closingDelayMinutes);
+  if(Number.isFinite(direct)) return Math.max(0,Math.round(direct));
+  const close=closingTimeDisplay(row), deadline=closingDeadlineSnapshot(row).time;
+  const closeMin=timeLabelToMinutes(close), deadlineMin=timeLabelToMinutes(deadline);
+  if(closeMin===null || deadlineMin===null) return 0;
+  return Math.max(0,closeMin-deadlineMin);
+}
+
+function periodRows(type,key){
+  const pred = type==='year' ? (r)=>matchesYear(r,key) : (r)=>matchesMonth(r,key);
+  const txPred = type==='year' ? (r)=>matchesTransactionYear(r,key) : (r)=>matchesTransactionMonth(r,key);
+  const tx = dedupeTransactions((state.transactions||[]).filter(r=>!isDeleted(r)&&txPred(r)));
+  return {
+    transactions: tx,
+    attendance: (state.attendance||[]).filter(r=>!isDeleted(r)&&pred(r)),
+    closings: (state.closings||[]).filter(r=>pred(r)&&r.closed===true&&!isDeleted(r)&&!isCanceled(r)),
+    manualBonuses: (state.manualBonuses||[]).filter(r=>!isDeleted(r)&&pred(r))
+  };
+}
+function buildReport(type,key){
+  const p = periodRows(type,key);
+  const map = new Map();
+  const ensure=(u,name='',role='staff')=>{
+    u=sanitize(u);
+    if(!validUser(u)) return null;
+    if(!map.has(u)) map.set(u,{user:u,name:getUserName(u)||name||u,role:getUserRole(u,role),omzet:0,transaksi:0,days:new Set(),hadirSet:new Set(),trxBonus:0,dailySalary:0,closingBonus:0,manualBonus:0,totalBonus:0});
+    return map.get(u);
+  };
+
+  // Acuan mengikuti file desktop FIX load error:
+  // total omzet + jumlah transaksi dihitung dari SEMUA transaksi bulan/tahun yang tidak deleted,
+  // bukan dari hasil penjumlahan per user. Jadi transaksi yang user-nya kosong/data lama tetap masuk total.
+  activeReportUsers().forEach(u=>ensure(u.user,u.name,u.role));
+
+  let unassignedTransactionCount = 0;
+  let unassignedTransactionOmzet = 0;
+
+  for(const t of p.transactions){
+    const u=ensure(t.user,t.name,t.userRole||t.role||'staff');
+    if(!u){
+      unassignedTransactionCount++;
+      unassignedTransactionOmzet += getAmount(t);
+      continue;
+    }
+    u.omzet += getAmount(t);
+    u.transaksi++;
+    const d=sourceTransactionDateKey(t);
+    if(d) u.days.add(d);
+    const role=getUserRole(u.user,t.userRole||t.role||u.role);
+    if(isDailyRole(role)) u.dailySalary += transactionBonus(t); else u.trxBonus += transactionBonus(t);
+  }
+  for(const a of p.attendance){ const u=ensure(a.user,a.name,'staff'); const d=dateKey(a); if(u&&d) u.hadirSet.add(d); }
+  for(const b of p.manualBonuses){ const u=ensure(b.user,b.name,b.userRole||b.role||'staff'); if(u) u.manualBonus += getAmount(b); }
+  for(const c of p.closings){ const by=c.bonusByUser||{}; Object.keys(by).forEach(k=>{ const u=ensure(k,getUserName(k),'staff'); if(u) u.closingBonus += Number(by[k]||0); }); }
+
+  const users = Array.from(map.values()).map(u=>{
+    u.hadir = u.hadirSet.size;
+    u.hariTransaksi = u.days.size;
+    u.totalBonus = u.trxBonus + u.dailySalary + u.closingBonus + u.manualBonus;
+    return u;
+  }).filter(u=>u.omzet||u.transaksi||u.hadir||u.totalBonus).sort((a,b)=>b.omzet-a.omzet || b.totalBonus-a.totalBonus || a.name.localeCompare(b.name));
+
+  const userTotals = users.reduce((a,u)=>{ a.userOmzet+=u.omzet; a.userTransaksi+=u.transaksi; a.userHadir+=u.hadir; a.trxBonus+=u.trxBonus; a.dailySalary+=u.dailySalary; a.closingBonus+=u.closingBonus; a.manualBonus+=u.manualBonus; a.totalBonus+=u.totalBonus; return a; },{userOmzet:0,userTransaksi:0,userHadir:0,trxBonus:0,dailySalary:0,closingBonus:0,manualBonus:0,totalBonus:0});
+  const uniqueAttendance = new Set(p.attendance.map(a=>`${sanitize(a.user||a.username||'')}-${dateKey(a)}`).filter(v=>v && !v.startsWith('-') && !v.endsWith('-'))).size;
+  const totals = {
+    omzet: p.transactions.reduce((sum,t)=>sum+getAmount(t),0),
+    transaksi: p.transactions.length,
+    hadir: uniqueAttendance || userTotals.userHadir,
+    trxBonus: userTotals.trxBonus,
+    dailySalary: userTotals.dailySalary,
+    closingBonus: userTotals.closingBonus,
+    manualBonus: userTotals.manualBonus,
+    totalBonus: userTotals.totalBonus,
+    userCount: users.length,
+    userOmzet: userTotals.userOmzet,
+    userTransaksi: userTotals.userTransaksi,
+    userHadir: userTotals.userHadir,
+    unassignedTransactionCount,
+    unassignedTransactionOmzet
+  };
+  return { ...p, users, totals };
+}
+function reportMismatchNotice(r){
+  const diff = Number(r?.totals?.unassignedTransactionCount||0);
+  if(!diff) return '';
+  return `<div class="card" style="border-color:rgba(255,196,107,.35);background:var(--warn-soft);margin-bottom:10px"><div class="klabel"><i class="fas fa-circle-info"></i> Catatan data lama</div><div class="small">Ada <b>${num(diff)}</b> transaksi tanpa user valid/data lama. Transaksi ini tetap dihitung ke total omzet agar sama dengan aplikasi online, tapi tidak masuk rincian per user.</div></div>`;
+}
+function monthName(m){ try{return new Date(m+'-01T00:00:00').toLocaleDateString('id-ID',{month:'long',year:'numeric'});}catch{return m;} }
+const MOBILE_DB_NAME='rocky_offline_lite_hp_v1';
+function mobileOpenDb(){ return new Promise((resolve,reject)=>{ const req=indexedDB.open(MOBILE_DB_NAME,1); req.onupgradeneeded=()=>{ const db=req.result; if(!db.objectStoreNames.contains('records')) db.createObjectStore('records',{keyPath:'key'}); }; req.onsuccess=()=>resolve(req.result); req.onerror=()=>reject(req.error); }); }
+function mobileTx(mode='readonly'){ return mobileOpenDb().then(db=>({db,tx:db.transaction('records',mode),store:db.transaction?null:null})); }
+async function mobileGetAll(collection){ const db=await mobileOpenDb(); return await new Promise((resolve,reject)=>{ const tx=db.transaction('records','readonly'); const store=tx.objectStore('records'); const req=store.getAll(); req.onsuccess=()=>resolve((req.result||[]).filter(x=>x.collection===collection).map(x=>x.data)); req.onerror=()=>reject(req.error); tx.oncomplete=()=>db.close(); }); }
+async function mobileGet(collection,id){ const db=await mobileOpenDb(); return await new Promise((resolve,reject)=>{ const tx=db.transaction('records','readonly'); const req=tx.objectStore('records').get(`${collection}/${id}`); req.onsuccess=()=>resolve(req.result?.data||null); req.onerror=()=>reject(req.error); tx.oncomplete=()=>db.close(); }); }
+async function mobilePut(collection,id,data){ const db=await mobileOpenDb(); return await new Promise((resolve,reject)=>{ const tx=db.transaction('records','readwrite'); tx.objectStore('records').put({key:`${collection}/${id}`,collection,id,data:{...data,id},updatedAtMs:Date.now()}); tx.oncomplete=()=>{db.close();resolve({ok:true,id,record:{...data,id}})}; tx.onerror=()=>reject(tx.error); }); }
+async function mobileBulkPut(collection,rows){
+  rows=Array.isArray(rows)?rows:[];
+  if(!rows.length) return {ok:true,total:0,inserted:0,updated:0};
+  const db=await mobileOpenDb();
+  return await new Promise((resolve,reject)=>{
+    const tx=db.transaction('records','readwrite');
+    const store=tx.objectStore('records');
+    const keysReq=store.getAllKeys();
+    keysReq.onsuccess=()=>{
+      const existing=new Set((keysReq.result||[]).map(String));
+      let inserted=0,updated=0;
+      const now=Date.now();
+      for(const row of rows){
+        const id=String(row.id);
+        const key=`${collection}/${id}`;
+        if(existing.has(key)) updated++; else inserted++;
+        store.put({key,collection,id,data:{...row,id},updatedAtMs:now});
+      }
+      tx.oncomplete=()=>{db.close();resolve({ok:true,total:rows.length,inserted,updated});};
+    };
+    keysReq.onerror=()=>reject(keysReq.error);
+    tx.onerror=()=>{try{db.close();}catch(_){} reject(tx.error);};
+  });
+}
+async function mobileDelete(collection,id){ const db=await mobileOpenDb(); return await new Promise((resolve,reject)=>{ const tx=db.transaction('records','readwrite'); tx.objectStore('records').delete(`${collection}/${id}`); tx.oncomplete=()=>{db.close();resolve({ok:true})}; tx.onerror=()=>reject(tx.error); }); }
+function stableHash(input){ const text=String(input||''); let h=2166136261; for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);} return (h>>>0).toString(36); }
+function normalizeBackupContainer(payload={}){ if(payload&&payload.backup&&payload.backup.data) return payload.backup; if(payload&&payload.data) return payload; if(payload&&(payload.users||payload.transactions||payload.attendance||payload.closings||payload.manualBonuses)) return {version:'raw-data-wrapper',exportedAt:new Date().toISOString(),data:payload}; return {version:'empty',exportedAt:new Date().toISOString(),data:{}}; }
+function fallbackRecordId(collection,row={},index=0){ const direct=row.id||row.username||row.userId||row.uid||row.docId; if(direct) return String(direct); const key=JSON.stringify([collection,row.user||row.username||'',row.dateKey||row.date||row.monthKey||'',row.createdAtMs||row.createdAt||'',row.amount||'',row.note||'',index]); return `${collection}_${stableHash(key)}`; }
+async function mobileDeleteByMonth(month){ const collections=['attendance','transactions','closings','manualBonuses','kasm_expenses']; let deleted=0; for(const c of collections){ const rows=await mobileGetAll(c); for(const r of rows){ if(monthKey(r)===month){ await mobileDelete(c,r.id); deleted++; } } } return deleted; }
+async function mobileDeleteAll(){ const db=await mobileOpenDb(); return await new Promise((resolve,reject)=>{ let count=0; const tx=db.transaction('records','readwrite'); const store=tx.objectStore('records'); const all=store.getAllKeys(); all.onsuccess=()=>{ count=(all.result||[]).length; store.clear(); }; tx.oncomplete=()=>{db.close();resolve(count)}; tx.onerror=()=>reject(tx.error); }); }
+async function mobileImportBackup(payload={}){
+  const backup=normalizeBackupContainer(payload);
+  const data=backup.data||{};
+  const stats={ok:true,total:0,inserted:0,updated:0,skipped:0,deletedBeforeImport:0,byCollection:{},version:backup.version||'',exportedAt:backup.exportedAt||'',syncMode:backup.syncMode||'',monthKey:backup.monthKey||'',inboxJobId:String(payload.inboxJobId||backup.inboxJobId||''),fromFirebaseInbox:payload.fromFirebaseInbox===true,appendOnly:payload.appendOnly===true};
+  // Backup sink harus append/update only: jangan pernah hapus arsip lama saat import/sync,
+  // meskipun file sumber membawa syncMode replace_month. Ini menjaga data bulan lama tetap aman
+  // saat data pusat/KasPribadi dibersihkan per bulan.
+  if(false && (backup.syncMode==='replace_month'||backup.replaceMonth===true)&&/^[0-9]{4}-[0-9]{2}$/.test(String(backup.monthKey||''))) stats.deletedBeforeImport=await mobileDeleteByMonth(backup.monthKey);
+  const importStamp=new Date().toISOString();
+  const importMs=Date.now();
+  for(const c of ['users','attendance','transactions','closings','manualBonuses','kasm_expenses']){
+    const rows=Array.isArray(data[c])?data[c]:[];
+    const seen=new Set();
+    const ready=[];
+    for(let i=0;i<rows.length;i++){
+      const row=JSON.parse(JSON.stringify(rows[i]||{}));
+      if(c==='closings') normalizeClosingDeadlineSnapshot(row);
+      const id=fallbackRecordId(c,row,i);
+      if(seen.has(id)){stats.skipped++;continue;}
+      seen.add(id);
+      ready.push({...row,id,importedToOfflineAt:importStamp,importedToOfflineAtMs:importMs,offlineImportSource:'mobile_html'});
+    }
+    if(ready.length){
+      const r=await mobileBulkPut(c,ready);
+      stats.total+=ready.length;
+      stats.inserted+=Number(r.inserted||0);
+      stats.updated+=Number(r.updated||0);
+      stats.byCollection[c]=(stats.byCollection[c]||0)+ready.length;
+    }
+  }
+  const logId=`sync_${Date.now()}_${stableHash(JSON.stringify(stats))}`;
+  await mobilePut('import_logs',logId,{id:logId,type:backup.reportLite?'mobile_report_lite':'mobile_import',importedAt:new Date().toISOString(),importedAtMs:Date.now(),sourceVersion:backup.version||'',exportedAt:backup.exportedAt||'',total:stats.total,inserted:stats.inserted,updated:stats.updated,skipped:stats.skipped,deletedBeforeImport:stats.deletedBeforeImport,syncMode:stats.syncMode,monthKey:stats.monthKey,inboxJobId:stats.inboxJobId,fromFirebaseInbox:stats.fromFirebaseInbox,appendOnly:stats.appendOnly,byCollection:stats.byCollection});
+  return stats;
+}
+async function api(path, opts={}){ const method=String(opts.method||'GET').toUpperCase(); const body=opts.body?JSON.parse(opts.body):{}; let m=path.match(/^\/api\/store\/([^/]+)(?:\/([^/]+))?/); if(m){ const collection=decodeURIComponent(m[1]); const id=m[2]?decodeURIComponent(m[2]):''; if(method==='GET') return id?{ok:true,record:await mobileGet(collection,id)}:{ok:true,records:await mobileGetAll(collection)}; if(method==='POST') return await mobilePut(collection,id,body.data||{}); if(method==='DELETE') return await mobileDelete(collection,id); } if(path==='/api/import-backup'&&method==='POST') return await mobileImportBackup(body); if((path==='/api/delete-all'||path==='/api/reset-all')&&(method==='POST'||method==='DELETE')){ const deleted=await mobileDeleteAll(); return {ok:true,deleted}; } if(path==='/api/delete-month'&&method==='POST'){ const deleted=await mobileDeleteByMonth(String(body.monthKey||'').slice(0,7)); return {ok:true,monthKey:body.monthKey,deleted}; } throw new Error('Endpoint lokal HP tidak dikenal: '+path); }
+async function loadLocalData(){ for(const c of COLLECTIONS){ try{ const r=await api('/api/store/'+c); state[c]=r.records||[]; }catch(e){ state[c]=[]; } } state.transactions=dedupeTransactions(state.transactions||[]); renderAll(); }
+function card(label,value,sub='',icon='fa-chart-line'){ return `<div class="card"><div class="klabel"><i class="fas ${icon}"></i> ${esc(label)}</div><div class="kvalue">${value}</div>${sub?`<div class="small muted" style="margin-top:5px">${sub}</div>`:''}</div>`; }
+function userReportCards(rows){
+  if(!rows.length) return `<div class="report-list"><div class="report-card"><div class="report-empty">Belum ada data pada periode ini.</div></div></div>`;
+  return `<div class="report-list">${rows.map(u=>`<div class="report-card"><div class="report-head"><div><div class="report-name">${esc(u.name)}</div><div class="report-role">@${esc(u.user)} · ${esc(u.role)}</div></div><span class="pill ok">Total Bonus Rp ${rupiah(u.totalBonus)}</span></div><div class="report-lines"><div class="report-line"><span>Omzet</span><b>Rp ${rupiah(u.omzet)}</b></div><div class="report-line"><span>Transaksi</span><b>${num(u.transaksi)}</b></div><div class="report-line"><span>Total Absen</span><b>${num(u.hadir)}</b></div><div class="report-line"><span>Bonus Transaksi</span><b>Rp ${rupiah(u.trxBonus)}</b></div><div class="report-line"><span>Bonus Harian</span><b>Rp ${rupiah(u.dailySalary)}</b></div><div class="report-line"><span>Bonus Closing</span><b>Rp ${rupiah(u.closingBonus)}</b></div><div class="report-line"><span>Bonus Manual</span><b>Rp ${rupiah(u.manualBonus)}</b></div><div class="report-line total"><span>Total Bonus</span><b>Rp ${rupiah(u.totalBonus)}</b></div></div></div>`).join('')}</div>`;
+}
+function userTable(rows){ return userReportCards(rows); }
+function monthBreakdownCards(months){
+  return `<div class="month-cards">${months.map(m=>{const x=buildReport('month',m).totals;return `<div class="month-card"><div class="month-title">${esc(monthName(m))}</div><div class="month-row"><span>Omzet</span><b>Rp ${rupiah(x.omzet)}</b></div><div class="month-row"><span>Transaksi</span><b>${num(x.transaksi)}</b></div><div class="month-row"><span>Absen</span><b>${num(x.hadir)}</b></div><div class="month-row"><span>Bonus</span><b>Rp ${rupiah(x.totalBonus)}</b></div></div>`}).join('')}</div>`;
+}
+
+const COLLECTION_LABELS = { transactions:'Transaksi', attendance:'Absen', manualBonuses:'Bonus Manual', closings:'Closing', users:'User', kasm_expenses:'Pengeluaran' };
+function collectionLabel(c){ return COLLECTION_LABELS[c] || c; }
+function collectionRows(c){ return Array.isArray(state[c]) ? state[c] : []; }
+function recordUser(r){ return r?.user || r?.username || r?.uid || r?.createdBy || r?.id || ''; }
+function recordTitle(r,c){ if(c==='users') return r.name || r.username || r.id || '-'; if(c==='attendance') return r.status || r.type || 'Absen'; if(c==='manualBonuses') return r.note || r.reason || 'Bonus manual'; if(c==='closings'){ const scope=r.scope || (r.user?'user':'global'); const time=closingTimeDisplay(r); return `Closing ${scope}${time?' · '+time:''}`; } if(c==='kasm_expenses') return cleanKasmExpenseDesc(r.description || r.note || 'Pengeluaran'); return r.note || r.name || r.productName || r.description || 'Transaksi'; }
+function recordAmount(r,c){ if(c==='attendance' || c==='users') return ''; if(c==='closings'){ const bonus=closingBonus(r); const fallback=Number(r?.totalBonus ?? r?.bonusPerUser ?? 0); const value=Number(bonus||fallback||0); return value ? value : ''; } return getAmount(r); }
+function recordSearchText(r,c){ return [c, collectionLabel(c), r.id, recordUser(r), getUserName(recordUser(r)), recordTitle(r,c), r.description, r.note, r.reason, r.name, r.paymentMethod, r.paymentLabel, r.status, r.role, r.userRole, c==='kasm_expenses'?expenseCategory(r):'', JSON.stringify(r)].join(' ').toLowerCase(); }
+function filteredManageRows(){ const f=state.manage; const c=f.collection; let rows=collectionRows(c).filter(r=>!isDeleted(r)); const from=f.dateFrom||''; const to=f.dateTo||''; const u=sanitize(f.user); const q=String(f.q||'').trim().toLowerCase(); rows=rows.filter(r=>{ const d=dateKey(r); if(from && (!d || d<from)) return false; if(to && (!d || d>to)) return false; if(u && c!=='kasm_expenses' && !(sanitize(recordUser(r)).includes(u) || sanitize(getUserName(recordUser(r))).includes(u))) return false; if(q && !recordSearchText(r,c).includes(q)) return false; return true; }); return rows.sort((a,b)=>(dateKey(b)||'').localeCompare(dateKey(a)||'') || Number(b.createdAtMs||0)-Number(a.createdAtMs||0)); }
+function closingDetailExtraHtml(r,c){
+  if(c!=='closings') return '';
+  const snap=closingDeadlineSnapshot(r);
+  const close=closingTimeDisplay(r) || '-';
+  const delay=closingDelayMinutes(r);
+  const bonus=closingBonus(r) || Number(r?.totalBonus||0);
+  return `${close?`<div class="detailitem"><b>Jam Closing</b>${esc(close)}</div>`:''}<div class="detailitem"><b>Deadline Snapshot</b>${esc(snap.time)} WIB</div><div class="detailitem"><b>Terlambat</b>${num(delay)} menit</div>${bonus?`<div class="detailitem"><b>Total Bonus Closing</b>Rp ${rupiah(bonus)}</div>`:''}`;
+}
+function closingDetailChipsHtml(r,c){
+  if(c!=='closings') return '';
+  const snap=closingDeadlineSnapshot(r);
+  const chips=[];
+  chips.push(`<span class="chip"><i class="fas fa-clock"></i> Deadline ${esc(snap.time)} WIB</span>`);
+  chips.push(`<span class="chip">Delay: ${num(closingDelayMinutes(r))} menit</span>`);
+  if(Number(r.bonusPerMinute||0)) chips.push(`<span class="chip">Bonus/menit: Rp ${rupiah(r.bonusPerMinute)}</span>`);
+  if(r.bonusLogicVersion) chips.push(`<span class="chip">Logic v${esc(r.bonusLogicVersion)}</span>`);
+  return chips.join('');
+}
+function transactionDetailHtml(r,c){ const u=recordUser(r); const amount=recordAmount(r,c); return `<div class="detailbox"><div class="detailitem"><b>Jenis</b>${esc(collectionLabel(c))}</div><div class="detailitem"><b>Tanggal</b>${esc(dateKey(r)||'-')}</div><div class="detailitem"><b>User</b>${esc(getUserName(u))} <span class="muted">@${esc(u||'-')}</span></div>${amount!==''?`<div class="detailitem"><b>Nominal</b>Rp ${rupiah(amount)}</div>`:''}<div class="detailitem"><b>Detail</b>${esc(recordTitle(r,c))}</div><div class="detailitem"><b>ID</b>${esc(r.id||'-')}</div>${closingDetailExtraHtml(r,c)}</div><div class="chips">${r.paymentLabel||r.paymentMethod?`<span class="chip"><i class="fas fa-credit-card"></i> ${esc(r.paymentLabel||r.paymentMethod)}</span>`:''}${r.status?`<span class="chip">Status: ${esc(r.status)}</span>`:''}${r.userRole||r.role?`<span class="chip">Role: ${esc(r.userRole||r.role)}</span>`:''}${closingDetailChipsHtml(r,c)}${r.importedToOfflineAt?`<span class="chip">Sync: ${esc(String(r.importedToOfflineAt).slice(0,19).replace('T',' '))}</span>`:''}</div>`; }
+function dataStatCard(label,value,sub='',icon='fa-chart-line'){
+  return `<div class="data-stat-card"><div class="stat-icon"><i class="fas ${icon}"></i></div><div class="stat-label">${esc(label)}</div><div class="stat-value">${value}</div>${sub?`<div class="stat-sub">${sub}</div>`:''}</div>`;
+}
+function manageRecordCards(rows,f){
+  if(!rows.length) return `<div class="data-card-list"><div class="data-empty-card"><i class="fas fa-folder-open"></i><div><b>Data tidak ditemukan</b></div><div class="small" style="margin-top:4px">Coba ubah filter tanggal, user, atau kata kunci.</div></div></div>`;
+  return `<div class="data-card-list">${rows.slice(0,500).map(r=>{ const u=recordUser(r); const amount=recordAmount(r,f.collection); const id=String(r.id||''); return `<div class="data-record-card"><div class="data-record-top"><div style="min-width:0"><div class="data-record-type">${esc(collectionLabel(f.collection))}</div><div class="data-record-title">${esc(recordTitle(r,f.collection))}</div><div class="data-record-meta">ID: ${esc(id||'-')}</div></div><span class="pill ok data-record-date"><i class="fas fa-calendar-day"></i> ${esc(dateKey(r)||'-')}</span></div><div class="data-record-grid"><div class="data-record-item"><span>User</span><b>${esc(getUserName(u))}</b></div><div class="data-record-item"><span>Username</span><b>@${esc(u||'-')}</b></div><div class="data-record-item"><span>Nominal</span><b>${amount!==''?'Rp '+rupiah(amount):'-'}</b></div><div class="data-record-item"><span>Bulan</span><b>${esc(monthKey(r)||'-')}</b></div></div><div class="data-record-actions"><button class="btn mini" onclick="openRecordModal('${encodeURIComponent(f.collection)}','${encodeURIComponent(id)}')"><i class="fas fa-eye"></i> Detail/Edit</button><button class="btn mini danger" onclick="deleteRecordById('${encodeURIComponent(f.collection)}','${encodeURIComponent(id)}')"><i class="fas fa-trash"></i> Hapus</button></div></div>`; }).join('')}</div>`;
+}
+function renderManage(){
+  const rows=filteredManageRows();
+  const f=state.manage;
+  const total=rows.reduce((s,r)=>s+(Number(recordAmount(r,f.collection))||0),0);
+  const visibleRows=rows.slice(0,500);
+  const tableRows = visibleRows.length ? visibleRows.map(r=>`<tr><td><b>${esc(dateKey(r)||'-')}</b><br><span class="muted">${esc(monthKey(r)||'')}</span></td><td>${esc(getUserName(recordUser(r)))}<br><span class="muted">@${esc(recordUser(r)||'-')}</span></td><td><b>${esc(recordTitle(r,f.collection))}</b><br><span class="muted">ID: ${esc(r.id||'-')}</span></td><td class="num">${recordAmount(r,f.collection)!==''?'Rp '+rupiah(recordAmount(r,f.collection)):'-'}</td><td><div class="row-actions"><button class="btn mini" onclick="openRecordModal('${encodeURIComponent(f.collection)}','${encodeURIComponent(String(r.id||''))}')"><i class="fas fa-eye"></i> Detail/Edit</button><button class="btn mini danger" onclick="deleteRecordById('${encodeURIComponent(f.collection)}','${encodeURIComponent(String(r.id||''))}')"><i class="fas fa-trash"></i> Hapus</button></div></td></tr>`).join('') : `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Data tidak ditemukan.</td></tr>`;
+  $('manage').innerHTML=`<div class="data-page"><div class="data-hero"><div><h2>Cari / Edit Data Offline</h2><div class="sub">Cari per tanggal, user, detail transaksi, dan sekarang termasuk <b>Pengeluaran</b>. Sync/refresh sekarang cukup pakai tombol <b>Sync Semua</b> di atas.</div></div><span class="pill"><i class="fas fa-magnifying-glass"></i> Mode Cari</span></div><div class="data-filter-card"><div class="data-filters"><div class="field"><label>Jenis data</label><select class="input" onchange="state.manage.collection=this.value;renderAll()"><option value="transactions" ${f.collection==='transactions'?'selected':''}>Transaksi</option><option value="attendance" ${f.collection==='attendance'?'selected':''}>Absen</option><option value="manualBonuses" ${f.collection==='manualBonuses'?'selected':''}>Bonus Manual</option><option value="closings" ${f.collection==='closings'?'selected':''}>Closing</option><option value="users" ${f.collection==='users'?'selected':''}>User</option><option value="kasm_expenses" ${f.collection==='kasm_expenses'?'selected':''}>Pengeluaran</option></select></div><div class="field"><label>Dari</label><input class="input" type="date" value="${esc(f.dateFrom)}" onchange="state.manage.dateFrom=this.value;renderAll()"></div><div class="field"><label>Sampai</label><input class="input" type="date" value="${esc(f.dateTo)}" onchange="state.manage.dateTo=this.value;renderAll()"></div><div class="field"><label>User / nama</label><input class="input" value="${esc(f.user)}" oninput="state.manage.user=this.value;renderAll()" placeholder="Contoh: rocky"></div><div class="field"><label>Catatan / detail</label><input class="input" value="${esc(f.q)}" oninput="state.manage.q=this.value;renderAll()" placeholder="Cari detail transaksi"></div></div></div><div class="data-summary-grid">${dataStatCard('Hasil',num(rows.length),collectionLabel(f.collection),'fa-magnifying-glass')}${dataStatCard('Total Nominal','Rp '+rupiah(total),'untuk hasil yang tampil','fa-calculator')}</div><div class="data-result-head"><div class="klabel"><i class="fas fa-list-check"></i> Daftar Data</div><span class="pill">${num(visibleRows.length)} / ${num(rows.length)} ditampilkan</span></div>${manageRecordCards(rows,f)}<div class="tablewrap data-table-desktop"><table><thead><tr><th>Tanggal</th><th>User</th><th>Detail</th><th class="num">Nominal</th><th>Aksi</th></tr></thead><tbody>${tableRows}</tbody></table></div><div class="status">Maksimal 500 data ditampilkan supaya aplikasi tetap ringan. Gunakan filter tanggal/user kalau data banyak.</div></div>`;
+}
+
+window.openRecordModal=function(collection,id){ collection=decodeURIComponent(collection); id=decodeURIComponent(id); const row=collectionRows(collection).find(r=>String(r.id)===String(id)); if(!row) return alert('Data tidak ditemukan'); state.currentRecord={collection,id}; $('record-modal-title').textContent=`Detail ${collectionLabel(collection)}`; $('record-modal-sub').textContent=`ID: ${id}`; $('record-detail').innerHTML=transactionDetailHtml(row,collection); $('record-json-editor').value=JSON.stringify(row,null,2); $('record-modal').classList.add('show'); };
+window.closeRecordModal=function(){ $('record-modal').classList.remove('show'); state.currentRecord=null; };
+window.saveCurrentRecord=async function(){ if(!state.currentRecord) return; const {collection,id}=state.currentRecord; try{ const data=JSON.parse($('record-json-editor').value||'{}'); const saveId=String(data.id||id); data.id=saveId; await api('/api/store/'+encodeURIComponent(collection)+'/'+encodeURIComponent(saveId),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({data,merge:false})}); if(saveId!==id) await api('/api/store/'+encodeURIComponent(collection)+'/'+encodeURIComponent(id),{method:'DELETE'}); closeRecordModal(); await loadLocalData(); alert('Data berhasil disimpan.'); }catch(e){ alert('Gagal simpan edit:\n\n'+(e.message||e)); } };
+window.deleteCurrentRecord=async function(){ if(!state.currentRecord) return; const {collection,id}=state.currentRecord; if(!confirm(`Hapus data ${collectionLabel(collection)} ini dari arsip offline?\n\nID: ${id}`)) return; await api('/api/store/'+encodeURIComponent(collection)+'/'+encodeURIComponent(id),{method:'DELETE'}); closeRecordModal(); await loadLocalData(); alert('Data berhasil dihapus dari offline.'); };
+window.deleteRecordById=async function(collection,id){ collection=decodeURIComponent(collection); id=decodeURIComponent(id); if(!id) return; if(!confirm(`Hapus data ${collectionLabel(collection)} ini dari arsip offline?\n\nID: ${id}`)) return; try{ await api('/api/store/'+encodeURIComponent(collection)+'/'+encodeURIComponent(id),{method:'DELETE'}); await loadLocalData(); }catch(e){ alert('Gagal hapus:\n\n'+(e.message||e)); } };
+
+function monthShort(m){ try{return new Date(m+'-01T00:00:00').toLocaleDateString('id-ID',{month:'short'}).replace('.','');}catch{return m.slice(5,7);} }
+function yearlyChartCard(year=state.year){
+  const y = String(year || new Date().getFullYear()).slice(0,4);
+  const rows = Array.from({length:12},(_,i)=>{
+    const m = `${y}-${String(i+1).padStart(2,'0')}`;
+    const totals = buildReport('month',m).totals;
+    const expenseItems = expenseRowsForMonth(m);
+    return {
+      m,
+      label: monthShort(m),
+      omzet: Number(totals.omzet||0),
+      transaksi: Number(totals.transaksi||0),
+      pengeluaran: expenseTotal(expenseItems),
+      expenseCount: expenseItems.length
+    };
+  });
+  const max = Math.max(1, ...rows.map(r=>Math.max(r.omzet,r.pengeluaran)));
+  const totalOmzet = rows.reduce((a,b)=>a+b.omzet,0);
+  const totalPengeluaran = rows.reduce((a,b)=>a+b.pengeluaran,0);
+  const totalTrx = rows.reduce((a,b)=>a+b.transaksi,0);
+  const best = rows.reduce((a,b)=> b.omzet > a.omzet ? b : a, rows[0] || {label:'-',omzet:0});
+  const bengkak = rows.reduce((a,b)=> b.pengeluaran > a.pengeluaran ? b : a, rows[0] || {label:'-',pengeluaran:0});
+  return `<div class="card chart-card dual-chart">
+    <div class="chart-head">
+      <div><div class="chart-title"><i class="fas fa-chart-column"></i> Grafik Omzet & Pengeluaran ${esc(y)}</div><div class="chart-sub">Hijau = omset bulanan dari laporan. Merah = pengeluaran KASM dari arsip lokal terakhir. Update data dilakukan manual lewat tombol <b>Sync Semua</b> di atas agar tidak boros read.</div></div>
+      <div class="chart-actions"><input class="input" type="number" value="${esc(y)}" onchange="state.year=String(this.value||new Date().getFullYear()).slice(0,4);state.finance.year=state.year;if(!state.finance.month.startsWith(state.year))state.finance.month=state.year+'-01';renderAll()"><span class="pill warn"><i class="fas fa-database"></i> Manual dari Sync Semua</span></div>
+    </div>
+    <div class="chart-bars">${rows.map(r=>{
+      const ho = r.omzet>0 ? Math.max(5, Math.round((r.omzet / max) * 120)) : 0;
+      const hp = r.pengeluaran>0 ? Math.max(5, Math.round((r.pengeluaran / max) * 120)) : 0;
+      return `<div class="chart-col" title="${esc(monthName(r.m))}: Omset Rp ${rupiah(r.omzet)} · Pengeluaran Rp ${rupiah(r.pengeluaran)}"><div class="chart-bar-wrap"><div class="chart-bar ${r.omzet?'':'empty'}" style="height:${ho}px"></div><div class="chart-bar expense ${r.pengeluaran?'':'empty'}" style="height:${hp}px"></div></div><div class="chart-month">${esc(r.label)}</div><div class="chart-value">O ${num(r.transaksi)} · P ${num(r.expenseCount)}</div></div>`;
+    }).join('')}</div>
+    <div class="chart-legend"><span class="pill ok"><span class="legend-dot"></span>Omset Rp ${rupiah(totalOmzet)}</span><span class="pill warn"><span class="legend-dot red"></span>Pengeluaran Rp ${rupiah(totalPengeluaran)}</span><span class="pill">${num(totalTrx)} transaksi</span><span class="pill warn">Bengkak ${esc(bengkak.label)} · Rp ${rupiah(bengkak.pengeluaran)}</span><span class="pill ok">Omset tertinggi ${esc(best.label)} · Rp ${rupiah(best.omzet)}</span></div>
+  </div>`;
+}
+
+
+// =====================================================
+// HALAMAN PENGELUARAN — sumber data dari kasm.html
+// Diambil dari tabel Supabase transactions milik kasm.html:
+// owner_id rocky-hijab, type expense, periode bulan/tahun.
+// Cash Out QRIS/Tabungan dikecualikan mengikuti alur kasm.html,
+// karena di sana cash out hanya pindah cash, bukan pengeluaran bisnis.
+// =====================================================
+
+function getPusatSupabase(){
+  if(pusatSupabaseClient) return pusatSupabaseClient;
+  if(!window.supabase || typeof window.supabase.createClient !== 'function') throw new Error('Supabase client belum siap untuk Pusat Original');
+  pusatSupabaseClient = window.supabase.createClient(PUSAT_SUPABASE_URL, PUSAT_SUPABASE_ANON_KEY);
+  return pusatSupabaseClient;
+}
+function getKasmSupabase(){
+  if(kasmSupabaseClient) return kasmSupabaseClient;
+  if(!window.supabase || !window.supabase.createClient) throw new Error('Library Supabase belum termuat. Coba online lalu refresh halaman.');
+  kasmSupabaseClient = window.supabase.createClient(KASM_SUPABASE_URL, KASM_SUPABASE_ANON_KEY);
+  return kasmSupabaseClient;
+}
+function kasmDate(t){ return String(t?.date || '').slice(0,10); }
+function kasmMonth(t){ const d=kasmDate(t); return d ? d.slice(0,7) : ''; }
+function isKasmCashOut(t){ return t && String(t.type||'') === 'expense' && String(t.description||'').startsWith('[CASHOUT:'); }
+function isKasmOpsExpense(t){ return t && String(t.description||'').startsWith('[OPS] '); }
+function cleanKasmExpenseDesc(v){ return String(v||'Pengeluaran').replace(/^\[OPS\]\s*/,'').replace(/^\[CASHOUT:[^\]]+\]\s*/,'').trim() || 'Pengeluaran'; }
+function normalizeKasmExpense(row={}){ return { id:Number(row.id||0), date:kasmDate(row), description:String(row.description||''), amount:Number(row.amount||0), type:String(row.type||'expense') }; }
+function expenseCategory(t){ return isKasmOpsExpense(t) ? 'Operasional Toko' : 'Pengeluaran Lainnya'; }
+function allKasmExpenseRows(){ return (Array.isArray(state.kasm_expenses) && state.kasm_expenses.length ? state.kasm_expenses : (state.expenses.rows||[])).map(normalizeKasmExpense).filter(t=>t.date && t.type==='expense' && !isKasmCashOut(t)); }
+function expenseRowsForYear(year=state.expenses.year){ const y=String(year||'').slice(0,4); return allKasmExpenseRows().filter(t=>kasmDate(t).startsWith(y)); }
+function expenseRowsForMonth(month=state.expenses.month){ const m=String(month||'').slice(0,7); return allKasmExpenseRows().filter(t=>kasmDate(t).startsWith(m)); }
+function filterExpenseRows(rows){ const q=String(state.expenses.q||'').trim().toLowerCase(); if(!q) return rows; return rows.filter(t=>[cleanKasmExpenseDesc(t.description), expenseCategory(t), t.date, t.id, t.amount].join(' ').toLowerCase().includes(q)); }
+function expenseTotal(rows){ return rows.reduce((s,t)=>s+Number(t.amount||0),0); }
+function expenseMonthLabel(month){ return monthName(month); }
+function expenseStat(label,value,sub='',icon='fa-receipt'){ return dataStatCard(label,value,sub,icon); }
+function expenseEmpty(message='Belum ada pengeluaran pada periode ini.'){ return `<div class="data-empty-card"><i class="fas fa-receipt"></i><div><b>${esc(message)}</b></div><div class="small" style="margin-top:4px">Klik tombol Sync Semua di atas untuk mengambil data terbaru dari kasm.html.</div></div>`; }
+function expenseDailyFlowCards(rows){
+  if(!rows.length) return expenseEmpty('Belum ada alur pengeluaran bulan ini.');
+  const map=new Map();
+  rows.forEach(t=>{ const d=kasmDate(t)||'-'; if(!map.has(d)) map.set(d,{date:d,total:0,count:0,ops:0,other:0,items:[]}); const x=map.get(d); x.total+=Number(t.amount||0); x.count++; if(isKasmOpsExpense(t)) x.ops+=Number(t.amount||0); else x.other+=Number(t.amount||0); x.items.push(t); });
+  const days=Array.from(map.values()).sort((a,b)=>b.date.localeCompare(a.date));
+  return `<div class="expense-flow-grid compact-flow">${days.map(d=>`<div class="expense-day-card compact"><div class="expense-day-head"><div><div class="expense-day-title">${esc(String(d.date).slice(8,10)+'/'+String(d.date).slice(5,7))}</div><div class="expense-day-sub">${num(d.count)} data</div></div><div class="expense-day-total">Rp ${rupiah(d.total)}</div></div><div class="expense-mini-row"><span>Ops</span><b>Rp ${rupiah(d.ops)}</b></div><div class="expense-mini-row"><span>Lainnya</span><b>Rp ${rupiah(d.other)}</b></div></div>`).join('')}</div>`;
+}
+
+function expenseYearMonthCards(year=state.expenses.year){
+  const y=String(year||new Date().getFullYear()).slice(0,4);
+  const months=Array.from({length:12},(_,i)=>`${y}-${String(i+1).padStart(2,'0')}`);
+  const totals=months.map(m=>({m,total:expenseTotal(expenseRowsForMonth(m))}));
+  const highest=totals.reduce((a,b)=>b.total>a.total?b:a,totals[0]||{m:'',total:0});
+  return `<div class="month-cards">${months.map(m=>{ const rows=expenseRowsForMonth(m); const total=expenseTotal(rows); const ops=expenseTotal(rows.filter(isKasmOpsExpense)); const other=total-ops; const bengkak=highest.total>0&&m===highest.m; return `<div class="month-card ${bengkak?'bengkak':''}"><div class="month-title">${esc(expenseMonthLabel(m))}${bengkak?' · Bengkak':''}</div><div class="month-row"><span>Total</span><b>Rp ${rupiah(total)}</b></div><div class="month-row"><span>Data</span><b>${num(rows.length)}</b></div><div class="month-row"><span>Ops toko</span><b>Rp ${rupiah(ops)}</b></div><div class="month-row"><span>Lainnya</span><b>Rp ${rupiah(other)}</b></div></div>`; }).join('')}</div>`;
+}
+
+function expenseYearChartCard(year=state.expenses.year){
+  const y=String(year||new Date().getFullYear()).slice(0,4);
+  const rows=Array.from({length:12},(_,i)=>{ const m=`${y}-${String(i+1).padStart(2,'0')}`; const items=expenseRowsForMonth(m); return {m,label:monthShort(m),total:expenseTotal(items),count:items.length}; });
+  const max=Math.max(1,...rows.map(r=>r.total));
+  const total=rows.reduce((a,b)=>a+b.total,0);
+  const peak=rows.reduce((a,b)=>b.total>a.total?b:a,rows[0]||{label:'-',total:0,count:0});
+  return `<div class="card chart-card expense-chart"><div class="chart-head"><div><div class="chart-title"><i class="fas fa-chart-column"></i> Grafik Pengeluaran ${esc(y)}</div><div class="chart-sub">Bar merah menunjukkan pengeluaran per bulan. Bulan tertinggi ditandai sebagai pengeluaran bengkak.</div></div><span class="pill warn">Bengkak: ${esc(peak.label)} · Rp ${rupiah(peak.total)}</span></div><div class="chart-bars">${rows.map(r=>{ const h=Math.max(5,Math.round((r.total/max)*120)); return `<div class="chart-col" title="${esc(monthName(r.m))}: Rp ${rupiah(r.total)} · ${num(r.count)} data"><div class="chart-bar-wrap"><div class="chart-bar" style="height:${h}px"></div></div><div class="chart-month">${esc(r.label)}</div><div class="chart-value">Rp ${rupiah(r.total)}</div></div>`; }).join('')}</div><div class="chart-legend"><span class="pill warn">Total Rp ${rupiah(total)}</span><span class="pill">${num(rows.reduce((a,b)=>a+b.count,0))} data</span><span class="pill ${peak.total>0?'warn':''}">Tertinggi ${esc(peak.label)}</span></div></div>`;
+}
+function financeData(type,key){
+  const isYear=type==='year';
+  const report=buildReport(isYear?'year':'month',key);
+  const pendapatan=Number(report?.totals?.omzet||0);
+  const pengeluaran=expenseTotal(isYear?expenseRowsForYear(key):expenseRowsForMonth(key));
+  const omsetKotor=pendapatan-pengeluaran;
+  const omsetBersih=Math.round(pendapatan*0.20)-pengeluaran;
+  const limit20=Math.round(pendapatan*0.20);
+  return {pendapatan,pengeluaran,omsetKotor,omsetBersih,limit20};
+}
+function receiptPad(label,value,width=32){
+  label=String(label||'').slice(0,18);
+  value=String(value||'');
+  const gap=Math.max(1,width-label.length-value.length);
+  return label+' '.repeat(gap)+value;
+}
+function buildFinanceMonthReceipt(){
+  const month=String(state.finance?.month || state.expenses?.month || new Date().toISOString().slice(0,7)).slice(0,7);
+  const data=financeData('month',month);
+  const status=data.omsetBersih<0?'MINUS':'AMAN';
+  const printedAt=new Date().toLocaleString('id-ID',{timeZone:'Asia/Jakarta'});
+  const line='-'.repeat(32);
+  return [
+    'ROCKY LAPORAN KEUANGAN',
+    'LAPORAN BULANAN',
+    line,
+    'Periode : '+expenseMonthLabel(month),
+    'Cetak   : '+printedAt,
+    'Printer : RPPO2N-F557',
+    line,
+    receiptPad('Pendapatan','Rp '+rupiah(data.pendapatan)),
+    receiptPad('Pengeluaran','Rp '+rupiah(data.pengeluaran)),
+    receiptPad('Omset Kotor','Rp '+rupiah(data.omsetKotor)),
+    receiptPad('Omset Bersih','Rp '+rupiah(data.omsetBersih)),
+    receiptPad('Limit 20%','Rp '+rupiah(data.limit20)),
+    line,
+    'Status  : '+status,
+    '',
+    'Terima kasih',
+    '',
+    '',
+    ''
+  ].join('\n');
+}
+window.printMonthlyFinanceReport=function(){
+  const text=buildFinanceMonthReceipt();
+  if(window.RockyPrinter && typeof window.RockyPrinter.printReceipt === 'function'){
+    window.RockyPrinter.printReceipt(text);
+  }else{
+    alert('Mode browser: fitur cetak Bluetooth aktif setelah aplikasi dibuka dari APK Android.\n\nPreview struk:\n\n'+text);
+  }
+};
+window.pickRockyPrinter=function(){
+  if(window.RockyPrinter && typeof window.RockyPrinter.showPrinterPicker === 'function'){
+    window.RockyPrinter.showPrinterPicker();
+  }else{
+    alert('Mode browser: pilih printer hanya aktif setelah aplikasi dibuka dari APK Android.');
+  }
+};
+function financeCard(title,sub,data){
+  const cleanClass=data.omsetBersih<0?'out':'clean';
+  const isMonthly=String(title||'').toLowerCase().includes('bulanan');
+  const printBtn=isMonthly?`<button class="btn mini primary" onclick="printMonthlyFinanceReport()"><i class="fas fa-print"></i> Cetak Struk</button>`:'';
+  return `<div class="finance-card"><div class="finance-head"><div><div class="finance-title">${esc(title)}</div><div class="finance-sub">${esc(sub)}</div></div><div style="display:flex;gap:7px;align-items:flex-start;flex-wrap:wrap;justify-content:flex-end"><span class="pill ${data.omsetBersih<0?'warn':'ok'}">${data.omsetBersih<0?'Minus':'Aman'}</span>${printBtn}</div></div><div class="finance-row in"><span>Pendapatan</span><b>Rp ${rupiah(data.pendapatan)}</b></div><div class="finance-row out"><span>Total Pengeluaran</span><b>Rp ${rupiah(data.pengeluaran)}</b></div><div class="finance-row net"><span>Omset Kotor<br><small>Pendapatan - Pengeluaran</small></span><b>Rp ${rupiah(data.omsetKotor)}</b></div><div class="finance-row ${cleanClass}"><span>Omset Bersih<br><small>20% Pendapatan - Pengeluaran</small></span><b>Rp ${rupiah(data.omsetBersih)}</b></div><div class="finance-row"><span>Limit 20% dari Pendapatan</span><b>Rp ${rupiah(data.limit20)}</b></div></div>`;
+}
+function financeReportCards(month=state.expenses.month,year=state.expenses.year){
+  const safeMonth=String(month || state.finance?.month || state.expenses?.month || new Date().toISOString().slice(0,7)).slice(0,7);
+  const safeYear=String(year || state.finance?.year || safeMonth.slice(0,4) || new Date().getFullYear()).slice(0,4);
+  const mData=financeData('month',safeMonth);
+  const yData=financeData('year',safeYear);
+  return `<div class="finance-grid">${financeCard('Laporan Keuangan Bulanan',`${expenseMonthLabel(safeMonth)} · mengikuti bulan detail`,mData)}${financeCard('Laporan Keuangan Tahunan',`Tahun ${safeYear} · akumulasi 12 bulan`,yData)}</div>`;
+}
+
+function expenseDetailCards(rows){
+  rows=filterExpenseRows(rows).sort((a,b)=>kasmDate(b).localeCompare(kasmDate(a)) || Number(b.id||0)-Number(a.id||0));
+  if(!rows.length) return `<div class="expense-detail-list">${expenseEmpty('Detail pengeluaran tidak ditemukan.')}</div>`;
+  return `<div class="expense-detail-list">${rows.slice(0,300).map(t=>`<div class="expense-detail-card"><div class="expense-detail-top"><div style="min-width:0"><div class="expense-detail-title">${esc(cleanKasmExpenseDesc(t.description))}</div><div class="expense-detail-meta">${esc(kasmDate(t)||'-')} · ID ${esc(t.id||'-')}</div></div><div class="expense-amount">Rp ${rupiah(t.amount)}</div></div><div class="expense-tag-row"><span class="expense-tag ${isKasmOpsExpense(t)?'ops':''}">${esc(expenseCategory(t))}</span><span class="expense-tag">Bulan ${esc(kasmMonth(t)||'-')}</span>${isKasmOpsExpense(t)?'<span class="expense-tag ops">Masuk pengeluaran bulanan</span>':''}</div></div>`).join('')}${rows.length>300?`<div class="data-empty-card">Ditampilkan 300 dari ${num(rows.length)} data. Pakai pencarian agar lebih spesifik.</div>`:''}</div>`;
+}
+window.loadKasmExpenses=async function(force=false){
+  const y=String(state.expenses.year || state.expenses.month.slice(0,4) || new Date().getFullYear()).slice(0,4);
+  state.expenses.year=y;
+  if(!/^\d{4}-\d{2}$/.test(String(state.expenses.month||''))) state.expenses.month = y + '-01';
+  if(!force && state.expenses.loadedYear===y){ renderExpenses(); if(state.active==='finance') renderFinance(); return; }
+  state.expenses.busy=true;
+  state.expenses.status=`Sync Pengeluaran tahun ${y} sedang berjalan...`;
+  renderExpenses();
+  renderBackup();
+  if(state.active==='finance') renderFinance();
+  try{
+    const supa=getKasmSupabase();
+    const from=`${y}-01-01`, to=`${y}-12-31`;
+    const {data,error}=await supa.from('transactions').select('id,date,description,amount,type').eq('owner_id',KASM_OWNER_ID).eq('type','expense').gte('date',from).lte('date',to).order('date',{ascending:false}).order('id',{ascending:false});
+    if(error) throw error;
+    const syncStamp=new Date().toISOString();
+    const syncMs=Date.now();
+    const rows=(data||[]).map(normalizeKasmExpense).filter(t=>t.date && t.type==='expense' && !isKasmCashOut(t));
+    await mobileBulkPut('kasm_expenses', rows.map(row=>({...row,id:String(row.id),source:'kasm.html',syncedFromKasmAt:syncStamp,syncedFromKasmAtMs:syncMs})));
+    state.kasm_expenses=await mobileGetAll('kasm_expenses');
+    state.expenses.rows=expenseRowsForYear(y);
+    state.expenses.loadedYear=y;
+    state.expenses.status=`${num(rows.length)} data pengeluaran tahun ${y} berhasil di-sync dari KasPribadi/KASM. Data lama di arsip HP tidak dihapus.`;
+  }catch(e){
+    console.error(e);
+    state.expenses.status='Gagal Sync Pengeluaran dari kasm.html: '+(e.message||e);
+  }finally{
+    state.expenses.busy=false;
+    renderExpenses();
+    renderBackup();
+    if(state.active==='finance') renderFinance();
+    renderDashboard();
+  }
+};
+function renderExpenses(){
+  const box=$('expenses');
+  if(!box) return;
+  const ex=state.expenses;
+  const month=String(ex.month||new Date().toISOString().slice(0,7)).slice(0,7);
+  const year=String(ex.year||month.slice(0,4)).slice(0,4);
+  const monthRows=expenseRowsForMonth(month);
+  const searchedRows=filterExpenseRows(monthRows);
+  const monthTotal=expenseTotal(monthRows);
+  const refreshIcon=ex.busy?'fa-spinner fa-spin':'fa-rotate';
+  box.innerHTML=`<div class="expense-page"><div class="data-filter-card"><div class="expense-filter-grid"><div class="field"><label>Bulan detail</label><input class="input" type="month" value="${esc(month)}" onchange="state.expenses.month=this.value;state.expenses.year=this.value.slice(0,4);renderExpenses();renderDashboard()"></div><div class="field"><label>Tahun alur</label><input class="input" type="number" value="${esc(year)}" onchange="state.expenses.year=String(this.value||new Date().getFullYear()).slice(0,4);if(!state.expenses.month.startsWith(state.expenses.year))state.expenses.month=state.expenses.year+'-01';renderExpenses();renderDashboard()"></div><div class="field"><label>Cari detail</label><input class="input" value="${esc(ex.q)}" oninput="state.expenses.q=this.value;renderExpenses()" placeholder="Cari bensin, plastik, dll"></div><button class="btn" onclick="renderExpenses()"><i class="fas fa-magnifying-glass"></i> Terapkan</button></div></div><div class="expense-note"><b>Status:</b> ${esc(ex.status)}<br>Data yang diambil: transaksi pengeluaran dengan <b>type = expense</b> dari KasPribadi/KASM, kecuali Cash Out QRIS/Tabungan. Sync Pengeluaran hanya menambah/update arsip lokal, tidak menghapus data lama.</div><div class="data-result-head"><div class="klabel"><i class="fas fa-calendar-days"></i> Alur Pengeluaran Bulanan</div><span class="pill warn">${num(monthRows.length)} data · Rp ${rupiah(monthTotal)}</span></div>${expenseDailyFlowCards(monthRows)}<div class="data-result-head"><div class="klabel"><i class="fas fa-list"></i> Detail Pengeluaran Bulan</div><span class="pill">${num(searchedRows.length)} / ${num(monthRows.length)} ditampilkan</span></div>${expenseDetailCards(monthRows)}</div>`;
+}
+
+window.loadFinanceExpenses=async function(force=false){
+  state.expenses.year=String(state.finance.year||new Date().getFullYear()).slice(0,4);
+  state.expenses.month=String(state.finance.month||state.expenses.year+'-01').slice(0,7);
+  if(!/^\d{4}-\d{2}$/.test(state.expenses.month)) state.expenses.month=state.expenses.year+'-01';
+  if(!force){
+    renderFinance();
+    renderDashboard();
+    return;
+  }
+  state.expenses.busy=true;
+  state.expenses.status=`Memuat data pengeluaran kasm tahun ${state.expenses.year}...`;
+  renderFinance();
+  renderDashboard();
+  await window.loadKasmExpenses(true);
+  renderFinance();
+  renderDashboard();
+};
+
+function financePeakInfo(year=state.finance.year){
+  const y=String(year||new Date().getFullYear()).slice(0,4);
+  const rows=Array.from({length:12},(_,i)=>{ const m=`${y}-${String(i+1).padStart(2,'0')}`; const items=expenseRowsForMonth(m); return {m,label:monthShort(m),total:expenseTotal(items),count:items.length}; });
+  const peak=rows.reduce((a,b)=>b.total>a.total?b:a,rows[0]||{m:'',label:'-',total:0,count:0});
+  const total=rows.reduce((a,b)=>a+b.total,0);
+  return {rows,peak,total,avg:Math.round(total/12)};
+}
+
+function renderFinance(){
+  const box=$('finance');
+  if(!box) return;
+  const f=state.finance || (state.finance={month:new Date().toISOString().slice(0,7),year:String(new Date().getFullYear())});
+  const month=String(f.month||new Date().toISOString().slice(0,7)).slice(0,7);
+  const year=String(f.year||month.slice(0,4)).slice(0,4);
+  f.month=month; f.year=year;
+  const mData=financeData('month',month);
+  box.innerHTML=`<div class="finance-page"><div class="data-hero"><div><h2>Laporan Keuangan</h2><div class="sub">Halaman khusus laporan keuangan. Grafik pengeluaran sudah digabung di <b>Home</b> bersama grafik omset: hijau omset, merah pengeluaran. Rumus: <b>Omset Kotor = Pendapatan - Pengeluaran</b>, <b>Omset Bersih = 20% Pendapatan - Pengeluaran</b>. Update pengeluaran ada di tombol <b>Sync Semua</b> di atas.</div></div><span class="pill ok"><i class="fas fa-calculator"></i> Hitung Lokal</span></div><div class="data-filter-card"><div class="expense-filter-grid"><div class="field"><label>Bulan laporan</label><input class="input" type="month" value="${esc(month)}" onchange="state.finance.month=this.value;state.finance.year=this.value.slice(0,4);renderFinance()"></div><div class="field"><label>Tahun laporan</label><input class="input" type="number" value="${esc(year)}" onchange="state.finance.year=String(this.value||new Date().getFullYear()).slice(0,4);if(!state.finance.month.startsWith(state.finance.year))state.finance.month=state.finance.year+'-01';renderFinance()"></div><div class="field"><label>Status data KASM</label><input class="input" value="${esc(state.expenses.status)}" readonly></div><button class="btn" onclick="renderFinance()"><i class="fas fa-calculator"></i> Hitung Lokal</button></div></div><div class="data-result-head"><div class="klabel"><i class="fas fa-scale-balanced"></i> Laporan Keuangan Bulanan & Tahunan</div><span class="pill ${mData.omsetBersih<0?'warn':'ok'}">${mData.omsetBersih<0?'Bersih minus':'Bersih aman'}</span></div>${financeReportCards(month,year)}<div class="expense-note"><b>Catatan read:</b> halaman ini menghitung dari data lokal. Klik <b>Sync Semua</b> di atas hanya saat mau update data terbaru dari aplikasi kasm.</div>${expenseYearMonthCards(year)}</div>`;
+}
+
+function renderDashboard(){ const m=buildReport('month',state.month); const y=buildReport('year',state.year); const last=(state.import_logs||[]).sort((a,b)=>Number(b.importedAtMs||0)-Number(a.importedAtMs||0))[0]; $('dash').innerHTML=`<div class="grid hero" style="margin-bottom:10px">${card('Omzet Bulan Ini','Rp '+rupiah(m.totals.omzet),monthName(state.month),'fa-wallet')}${card('Bonus Bulan Ini','Rp '+rupiah(m.totals.totalBonus),'Total dibayarkan','fa-hand-holding-dollar')}${card('Absen Bulan Ini',num(m.totals.hadir),'Total user-hari','fa-user-check')}${card('Omzet Tahun Ini','Rp '+rupiah(y.totals.omzet),state.year,'fa-chart-column')}</div>${yearlyChartCard(state.year)}<div class="split"><div class="card"><div class="klabel">Status Data Lokal</div><div class="small">User: <b>${num(state.users.length)}</b><br>Transaksi: <b>${num(state.transactions.length)}</b><br>Absen: <b>${num(state.attendance.length)}</b><br>Closing: <b>${num(state.closings.length)}</b><br>Bonus manual: <b>${num(state.manualBonuses.length)}</b></div></div><div class="card"><div class="klabel">Import Terakhir</div><div class="small">${last?`<b>${esc(last.importedAt||'-')}</b><br>Total: ${num(last.total)} · Baru: ${num(last.inserted)} · Update: ${num(last.updated)}`:'Belum ada riwayat import.'}</div></div></div>`; }
+function renderMonthly(){ const r=buildReport('month',state.month); $('monthly').innerHTML=`<div class="toolbar"><div><h2>Laporan Bulanan</h2><div class="sub">Total laporan dan bonus user per bulan.</div></div><input class="input" type="month" style="max-width:180px" value="${esc(state.month)}" onchange="state.month=this.value;renderAll()"></div><div class="grid2" style="margin-bottom:10px">${card('Omzet','Rp '+rupiah(r.totals.omzet),`${num(r.totals.transaksi)} transaksi`,'fa-wallet')}${card('Total Bonus','Rp '+rupiah(r.totals.totalBonus),'bonus transaksi + harian + closing + manual','fa-hand-holding-dollar')}</div>${userTable(r.users)}`; }
+function renderYearly(){ const r=buildReport('year',state.year); const months=Array.from({length:12},(_,i)=>`${state.year}-${String(i+1).padStart(2,'0')}`); $('yearly').innerHTML=`<div class="toolbar"><div><h2>Laporan Tahunan</h2><div class="sub">Ringkasan per tahun dan breakdown per bulan.</div></div><input class="input" type="number" style="max-width:130px" value="${esc(state.year)}" onchange="state.year=String(this.value||new Date().getFullYear()).slice(0,4);renderAll()"></div><div class="grid" style="margin-bottom:10px">${card('Omzet Tahunan','Rp '+rupiah(r.totals.omzet),`${num(r.totals.transaksi)} transaksi`,'fa-wallet')}${card('Absen Tahunan',num(r.totals.hadir),'user-hari hadir','fa-user-check')}${card('Bonus Tahunan','Rp '+rupiah(r.totals.totalBonus),'total bonus/gaji','fa-hand-holding-dollar')}${card('User Aktif',num(r.totals.userCount),'muncul di laporan','fa-users')}</div>${monthBreakdownCards(months)}${userTable(r.users)}`; }
+function renderBackup(){
+  const last=(state.import_logs||[]).sort((a,b)=>Number(b.importedAtMs||0)-Number(a.importedAtMs||0))[0];
+  const y=String(state.expenses?.year || state.year || new Date().getFullYear()).slice(0,4);
+  const localExpenseRows=expenseRowsForYear(y);
+  const localExpenseTotal=expenseTotal(localExpenseRows);
+  const busy=!!state.expenses.busy;
+  $('backup').innerHTML=`
+    <div class="grid2" style="margin-bottom:10px">
+      <div class="card">
+        <div class="klabel"><i class="fas fa-inbox"></i> Sync Laporan Pusat Original</div>
+        <div class="small muted">Halaman lama ini hanya cadangan. Sync utama sekarang ada di tombol Sync Semua di header. Sync Semua membaca pendapatan/laporan dari Pusat Original dan pengeluaran dari KasPribadi/KASM. Data lama tetap aman sebagai arsip.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+          <button class="btn" onclick="checkInbox()"><i class="fas fa-magnifying-glass"></i> Cek Semua</button>
+          <button class="btn success" onclick="syncInbox()"><i class="fas fa-rotate"></i> Sync Semua</button>
+        </div>
+        <div class="sync-month-box">
+          <div class="klabel"><i class="fas fa-calendar-check"></i> Sync Per Bulan Akurat</div>
+          <div class="small muted">Pilih bulan lalu sync inbox lama jika masih dipakai. Mode backup sekarang tidak menghapus arsip offline lama, meskipun sumber bulan itu sudah dibersihkan.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px">
+            <input class="input" type="month" value="${esc(state.syncMonth)}" onchange="state.syncMonth=this.value">
+            <button class="btn" onclick="checkInbox(state.syncMonth)"><i class="fas fa-magnifying-glass"></i> Cek Bulan</button>
+            <button class="btn success" onclick="syncInbox(state.syncMonth)"><i class="fas fa-rotate"></i> Sync Bulan</button>
+          </div>
+        </div>
+        <div id="inbox-status" class="status">Belum dicek.</div>
+      </div>
+
+      <div class="card" style="border-color:rgba(232,93,93,.25);background:linear-gradient(135deg,var(--card),rgba(232,93,93,.06))">
+        <div class="klabel"><i class="fas fa-money-bill-wave"></i> Sync Pengeluaran</div>
+        <div class="small muted">Ambil manual data pengeluaran dari kasm.html / database KASM. Tidak otomatis jalan saat buka aplikasi, jadi lebih hemat read.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+          <input class="input" type="number" value="${esc(y)}" onchange="state.expenses.year=String(this.value||new Date().getFullYear()).slice(0,4);state.expenses.month=state.expenses.year+'-01';renderBackup();renderExpenses();renderFinance();renderDashboard()" placeholder="Tahun">
+          <button class="btn danger" ${busy?'disabled':''} onclick="loadKasmExpenses(true)"><i class="fas ${busy?'fa-spinner fa-spin':'fa-rotate'}"></i> Sync Pengeluaran</button>
+        </div>
+        <div class="status"><b>Data lokal ${esc(y)}:</b> ${num(localExpenseRows.length)} data · Rp ${rupiah(localExpenseTotal)}<br>${esc(state.expenses.status||'Belum pernah sync pengeluaran.')}</div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-bottom:10px">
+      <div class="card">
+        <div class="klabel"><i class="fas fa-database"></i> Backup Data Offline</div>
+        <div class="small muted">Export/import semua arsip lokal ke JSON. Termasuk data pengeluaran KASM dan field closing terbaru seperti deadlineTime/deadlineMinutes.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+          <button class="btn primary" onclick="downloadBackup()"><i class="fas fa-download"></i> Export JSON</button>
+          <button class="btn" onclick="document.getElementById('manual-file').click()"><i class="fas fa-file-import"></i> Import JSON</button>
+        </div>
+        <div class="danger-zone">
+          <div class="klabel"><i class="fas fa-triangle-exclamation"></i> Hapus Data Offline</div>
+          <div class="small muted">Hapus bulan dipilih ikut menghapus: transaksi, absen, closing, bonus manual, dan pengeluaran KASM di bulan itu. Data online Pusat/KasPribadi tidak ikut terhapus.</div>
+          <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px">
+            <input class="input" type="month" value="${esc(state.syncMonth)}" onchange="state.syncMonth=this.value">
+          </div>
+          <div class="danger-actions">
+            <button class="btn danger" onclick="deleteMonthData()"><i class="fas fa-calendar-xmark"></i> Hapus Bulan Dipilih</button>
+            <button class="btn danger" onclick="deleteAllOfflineData()"><i class="fas fa-trash-can"></i> Hapus Semua Data</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="klabel">Riwayat Import</div>
+        ${last?`<div class="small">Terakhir: <b>${esc(last.importedAt)}</b><br>Total: ${num(last.total)} · Baru: ${num(last.inserted)} · Update: ${num(last.updated)} · Hapus otomatis: ${num(last.deletedBeforeImport||0)}<br>Mode: ${esc(last.syncMode||'-')} ${last.monthKey?`· Bulan: ${esc(last.monthKey)}`:''}<br>Versi sumber: ${esc(last.sourceVersion||'-')}</div>`:'<div class="small muted">Belum ada import.</div>'}
+      </div>
+    </div>`;
+}
+function renderAll(){ renderDashboard(); renderMonthly(); renderYearly(); renderExpenses(); renderFinance(); renderManage(); renderBackup(); }
+function findTabButton(id){ return Array.from(document.querySelectorAll('.tab')).find(b=>String(b.getAttribute('onclick')||'').includes("'"+id+"'")); }
+function activateTabOnly(id,btn){ state.active=id; document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id)); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); (btn||findTabButton(id))?.classList.add('active'); if(id==='expenses') renderExpenses(); if(id==='finance') renderFinance(); }
+state.navStack = state.navStack || ['dash'];
+window.showTab=function(id,btn,fromBack=false){
+  if(!state.navStack) state.navStack=['dash'];
+  if(!fromBack && state.active!==id){
+    const last=state.navStack[state.navStack.length-1];
+    if(last!==id) state.navStack.push(id);
+    if(state.navStack.length>20) state.navStack=state.navStack.slice(-20);
+  }
+  activateTabOnly(id,btn);
+};
+window.appBack=function(){
+  try{
+    const modal=document.getElementById('record-modal');
+    if(modal && modal.classList.contains('show')){ closeRecordModal(); return true; }
+    if(!state.navStack) state.navStack=[state.active||'dash'];
+    if(state.navStack.length>1){
+      state.navStack.pop();
+      const prev=state.navStack[state.navStack.length-1] || 'dash';
+      activateTabOnly(prev,findTabButton(prev));
+      return true;
+    }
+    if(state.active && state.active!=='dash'){
+      state.navStack=['dash'];
+      activateTabOnly('dash',findTabButton('dash'));
+      return true;
+    }
+  }catch(e){ console.warn('appBack gagal',e); }
+  return false;
+};
+window.toggleTheme=function(){ const h=document.documentElement; h.dataset.theme=h.dataset.theme==='dark'?'light':'dark'; localStorage.setItem('rocky_lite_theme',h.dataset.theme); };
+async function getFirebaseSdk(){ if(firebaseSdkPromise) return firebaseSdkPromise; firebaseSdkPromise=(async()=>{ const appMod=await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js'); const fsMod=await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js'); const name='rocky-lite-offline-inbox'; const existing=appMod.getApps().find(a=>a.name===name); const app=existing||appMod.initializeApp(FIREBASE_CONFIG,name); return {fsMod,db:fsMod.getFirestore(app)}; })(); return firebaseSdkPromise; }
+function setInboxStatus(msg,err=false){ const el=$('inbox-status'); if(el){ el.style.color=err?'var(--red)':'var(--muted)'; el.innerHTML=msg; } }
+function getInboxJobTime(j={}){
+  return Number(j.readyAtMs||j.createdAtMs||j.sentAtMs||j.updatedAtMs||j.importedAtMs||0) || asMs(j.readyAt) || asMs(j.createdAt) || asMs(j.sentAt) || 0;
+}
+function localImportedInboxJobIds(){
+  return new Set((state.import_logs||[])
+    .map(l=>String(l.inboxJobId||l.inboxId||l.jobId||'').trim())
+    .filter(Boolean));
+}
+function isSyncableInboxJob(j={}, importedIds=localImportedInboxJobIds()){
+  const status=String(j.status||'pending').toLowerCase().trim();
+  if(['deleted','cancelled','canceled'].includes(status)) return false;
+  if(status==='writing') return false;
+  if(['imported','done','finished','complete','completed'].includes(status)){
+    // Job lama dari aplikasi admin yang pernah di-import oleh file offline versi lain
+    // tetap boleh ditarik sekali di file ini. Sesudah masuk import_logs lokal, job dilewati.
+    return !importedIds.has(String(j.id||''));
+  }
+  // pending, syncing, failed/error, dan status kosong dicoba ulang.
+  return true;
+}
+async function getInboxSnapshot(fsMod,db){
+  const col=fsMod.collection(db,INBOX_COLLECTION);
+  const queries=[];
+  try{ queries.push(fsMod.query(col,fsMod.orderBy('readyAtMs','desc'),fsMod.limit(INBOX_SCAN_LIMIT))); }catch(_){ }
+  try{ queries.push(fsMod.query(col,fsMod.orderBy('createdAtMs','desc'),fsMod.limit(INBOX_SCAN_LIMIT))); }catch(_){ }
+  queries.push(fsMod.query(col,fsMod.limit(INBOX_SCAN_LIMIT)));
+  let lastErr=null;
+  for(const q of queries){
+    try{
+      if(typeof fsMod.getDocsFromServer==='function') return await fsMod.getDocsFromServer(q);
+      return await fsMod.getDocs(q);
+    }catch(e){ lastErr=e; }
+  }
+  if(lastErr) throw lastErr;
+  return await fsMod.getDocs(queries[queries.length-1]);
+}
+async function pendingJobs(monthKey=''){
+  const {fsMod,db}=await getFirebaseSdk();
+  const snap=await getInboxSnapshot(fsMod,db);
+  const month=String(monthKey||'').slice(0,7);
+  const importedIds=localImportedInboxJobIds();
+  const jobs=snap.docs
+    .map(d=>({id:d.id,...(d.data()||{})}))
+    .filter(j=>j.reportLite===true || String(j.type||'').includes('rocky_report_lite') || String(j.source||'').includes('online_firebase_admin') || j.chunkCount)
+    .filter(j=>isSyncableInboxJob(j,importedIds))
+    .filter(j=>!month || String(j.monthKey || j.summary?.monthKey || '').slice(0,7)===month)
+    .sort((a,b)=>getInboxJobTime(b)-getInboxJobTime(a));
+  return jobs;
+}
+function jobSummary(j){ const s=j.summary||{}; const parts=[]; if(s.monthKey) parts.push(`bulan ${s.monthKey}`); if(s.transactions) parts.push(`${s.transactions} transaksi`); if(s.attendance) parts.push(`${s.attendance} absen`); if(s.closings) parts.push(`${s.closings} closing`); if(s.manualBonuses) parts.push(`${s.manualBonuses} bonus`); if(s.users) parts.push(`${s.users} user`); if(j.syncMode==='replace_month'||s.syncMode==='replace_month') parts.push('mode akurat'); return parts.join(', ') || `${j.chunkCount||0} bagian`; }
+window.checkInbox=async function(monthKey=''){ const month=String(monthKey||'').slice(0,7); setInboxStatus('<i class=\"fas fa-spinner fa-spin\"></i> Mengecek inbox'+(month?' bulan '+esc(month):'')+'...'); try{ const jobs=await pendingJobs(month); state.inbox=jobs; if(!jobs.length){ setInboxStatus('<i class=\"fas fa-circle-check\"></i> Inbox '+(month?'bulan '+esc(month):'')+' kosong.'); return; } setInboxStatus(`<i class=\"fas fa-inbox\"></i> Ada <b>${jobs.length}</b> data menunggu sync${month?' untuk bulan '+esc(month):''}:<br>${jobs.slice(0,8).map(j=>`• ${esc(j.id)} · ${esc(jobSummary(j))}`).join('<br>')}`); }catch(e){ setInboxStatus('<i class=\"fas fa-triangle-exclamation\"></i> Gagal cek inbox: '+esc(e.message||e),true); }};
+async function readJob(j){ const {fsMod,db}=await getFirebaseSdk(); const snap=await fsMod.getDocs(fsMod.query(fsMod.collection(db,INBOX_COLLECTION,j.id,'chunks'),fsMod.orderBy('index','asc'))); const chunks=snap.docs.map(d=>d.data()||{}).sort((a,b)=>Number(a.index||0)-Number(b.index||0)); if(Number(j.chunkCount||0)&&chunks.length<Number(j.chunkCount)) throw new Error(`Chunk belum lengkap ${chunks.length}/${j.chunkCount}`); const raw=chunks.map(c=>String(c.text||'')).join(''); if(!raw) throw new Error('Isi backup kosong'); return JSON.parse(raw); }
+async function markJob(id,patch){ const {fsMod,db}=await getFirebaseSdk(); await fsMod.setDoc(fsMod.doc(db,INBOX_COLLECTION,id),patch,{merge:true}); }
+
+function makeAppendOnlyBackup(raw){
+  const b = normalizeBackupContainer(raw || {});
+  return { ...b, syncMode:'merge', replaceMonth:false, data:b.data || {} };
+}
+async function syncInboxAppendOnly(monthKey=''){
+  const month=String(monthKey||'').slice(0,7);
+  const allJobs=await pendingJobs(month);
+  const jobs=allJobs.slice(0,INBOX_SYNC_LIMIT);
+  if(!jobs.length) return {jobs:0,total:0,inserted:0,updated:0,deletedBeforeImport:0,remaining:0};
+  let total=0,inserted=0,updated=0,deletedBeforeImport=0;
+  for(const j of jobs){
+    await markJob(j.id,{status:'syncing',syncingAt:new Date().toISOString(),syncingAtMs:Date.now(),appendOnly:true,importedByLiteApp:true});
+    const backup=makeAppendOnlyBackup(await readJob(j));
+    const res=await api('/api/import-backup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({backup,fromFirebaseInbox:true,inboxJobId:j.id,appendOnly:true})});
+    await markJob(j.id,{status:'imported',importedAt:new Date().toISOString(),importedAtMs:Date.now(),importedStats:res,appendOnly:true,importedByLiteApp:true});
+    total+=Number(res.total||0);
+    inserted+=Number(res.inserted||0);
+    updated+=Number(res.updated||0);
+    deletedBeforeImport+=Number(res.deletedBeforeImport||0);
+  }
+  await loadLocalData();
+  return {jobs:jobs.length,total,inserted,updated,deletedBeforeImport,remaining:Math.max(0,allJobs.length-jobs.length)};
+}
+
+const PUSAT_DIRECT_SYNC_LIMIT = 10000;
+function pusatDirectSyncYearRange(year){
+  const y=String(year||new Date().getFullYear()).slice(0,4);
+  return { year:y, start:`${y}-01-01`, end:`${y}-12-31`, monthStart:`${y}-01`, monthEnd:`${y}-12` };
+}
+function normalizePusatOriginalRow(collectionName, supabaseId, data){
+  const row={...(data||{})};
+  const originalId=String(row.id||'').trim();
+  const docId=String(supabaseId||row.docId||row.firestoreId||row._docId||originalId||'').trim();
+  // Struktur Pusat Original menyimpan data di kolom JSON `data` dengan id tabel terpisah.
+  // Untuk transaksi/absen/closing/bonus, key offline harus memakai id dokumen sumber agar tidak saling timpa.
+  if(collectionName==='users'){
+    row.id=String(row.username||row.userId||row.uid||originalId||docId||'').trim();
+    if(!row.username) row.username=row.id;
+  }else{
+    row.sourceId=originalId;
+    row.id=docId || originalId;
+  }
+  row.docId=docId || row.id;
+  row.firestoreId=row.docId;
+  row.pusatSupabaseId=row.docId;
+  const d=normalizedDateString(row.dateKey) || (collectionName==='transactions' ? '' : normalizedDateString(row.date)) || normalizedDateString(row.time) || normalizedDateString(row.createdAt);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(d) && !row.dateKey) row.dateKey=d;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(d) && !row.monthKey) row.monthKey=d.slice(0,7);
+  if(!row.createdAtMs && row.createdAt && row.createdAt.seconds) row.createdAtMs=Number(row.createdAt.seconds)*1000;
+  if(!row.updatedAtMs && row.updatedAt && row.updatedAt.seconds) row.updatedAtMs=Number(row.updatedAt.seconds)*1000;
+  if(collectionName==='closings') normalizeClosingDeadlineSnapshot(row);
+  row.syncedFromPusatOriginalAt=new Date().toISOString();
+  row.syncedFromPusatOriginalAtMs=Date.now();
+  row.offlineImportSource='pusat_original_supabase';
+  return row;
+}
+async function fetchPusatOriginalCollection(collectionName,year){
+  const supa=getPusatSupabase();
+  const rows=[];
+  const pageSize=1000;
+  for(let from=0; from<PUSAT_DIRECT_SYNC_LIMIT; from+=pageSize){
+    const to=from+pageSize-1;
+    const {data,error}=await supa.from(collectionName).select('id,data').range(from,to);
+    if(error) throw error;
+    const part=(data||[]).map(r=>normalizePusatOriginalRow(collectionName,r.id,r.data||{}));
+    rows.push(...part);
+    if(part.length<pageSize) break;
+  }
+  if(collectionName==='users') return rows;
+  return rows.filter(row=>{
+    const y=String(year).slice(0,4);
+    const isTx=row && (collectionName==='transactions' || row.amount!==undefined);
+    const d=isTx ? sourceTransactionDateKey(row) : dateKey(row);
+    const m=isTx ? sourceTransactionMonthKey(row) : monthKey(row);
+    if(d && d.startsWith(y)) return true;
+    if(m && m.startsWith(y)) return true;
+    const ms=Number(row.createdAtMs||0) || asMs(row.createdAt);
+    if(ms) return localDateKeyFromMs(ms).startsWith(y);
+    return false;
+  });
+}
+async function syncPusatOriginalDirect(year=''){
+  const y=String(year || state.year || new Date().getFullYear()).slice(0,4);
+  const data={users:[],transactions:[],attendance:[],closings:[],manualBonuses:[]};
+  for(const c of PUSAT_TABLES){
+    data[c]=await fetchPusatOriginalCollection(c,y);
+  }
+  const backup={
+    version:'rocky-pusat-original-supabase-readonly-v1',
+    exportedAt:new Date().toISOString(),
+    syncMode:'merge',
+    replaceMonth:false,
+    directSync:true,
+    readOnlySource:true,
+    appendOnly:true,
+    year:y,
+    data
+  };
+  const res=await api('/api/import-backup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({backup,directPusatOriginal:true,appendOnly:true,readOnlySource:true})});
+  await loadLocalData();
+  return {year:y,...res,byCollection:res.byCollection||{},counts:{users:data.users.length,transactions:data.transactions.length,attendance:data.attendance.length,closings:data.closings.length,manualBonuses:data.manualBonuses.length}};
+}
+window.syncAllManual=async function(){
+  const btn=$('btn-sync-all-manual');
+  const oldHtml=btn?btn.innerHTML:'';
+  if(btn&&btn.disabled) return;
+  const y=String(state.expenses?.year || state.year || new Date().getFullYear()).slice(0,4);
+  const result={firebase:null,expenseOk:false,firebaseError:null,expenseError:null};
+  try{
+    if(btn){ btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sync...'; }
+    state.year=y;
+    state.expenses.year=y;
+    state.finance.year=y;
+    if(!/^\d{4}-\d{2}$/.test(String(state.expenses.month||''))) state.expenses.month=y+'-01';
+    if(!/^\d{4}-\d{2}$/.test(String(state.finance.month||''))) state.finance.month=y+'-01';
+
+    // Sync pendapatan/laporan sekarang READ ONLY dari Pusat Original Supabase.
+    // Polanya sama seperti Sync Pengeluaran: baca sumber data -> merge ke arsip offline -> data lama tidak dihapus.
+    try{
+      result.firebase=await syncPusatOriginalDirect(y);
+    }catch(e){
+      console.error('Sync Pusat Original gagal:',e);
+      result.firebaseError=e;
+    }
+
+    try{
+      await window.loadKasmExpenses(true);
+      result.expenseOk=true;
+    }catch(e){
+      console.error('Sync Pengeluaran gagal:',e);
+      result.expenseError=e;
+    }
+
+    const expRows=expenseRowsForYear(y);
+    const lines=[`Sync Semua tahun ${y} selesai dicek.`,''];
+    if(result.firebaseError){
+      lines.push('Pusat Original: GAGAL - '+(result.firebaseError.message||result.firebaseError));
+    }else{
+      const f=result.firebase||{total:0,inserted:0,updated:0,counts:{}};
+      const c=f.counts||{};
+      lines.push(`Pusat Original: ${num(f.total)} data. Baru ${num(f.inserted)}, update ${num(f.updated)}.`);
+      lines.push(`Rincian: ${num(c.transactions||0)} transaksi, ${num(c.attendance||0)} absen, ${num(c.closings||0)} closing, ${num(c.manualBonuses||0)} bonus, ${num(c.users||0)} user.`);
+    }
+    if(result.expenseError){
+      lines.push('Pengeluaran: GAGAL - '+(result.expenseError.message||result.expenseError));
+    }else{
+      lines.push(`Pengeluaran ${y}: ${num(expRows.length)} data lokal · Rp ${rupiah(expenseTotal(expRows))}.`);
+    }
+    lines.push('');
+    lines.push('Mode: READ ONLY dari Pusat Original + KasPribadi/KASM, tambah/update saja. Arsip offline lama tidak dihapus walau sumber dibersihkan bulanan.');
+    alert(lines.join('\n'));
+  }finally{
+    if(btn){ btn.disabled=false; btn.innerHTML=oldHtml || '<i class="fas fa-rotate"></i> Sync Semua'; }
+  }
+};
+
+window.syncInbox=async function(monthKey=''){ const month=String(monthKey||'').slice(0,7); setInboxStatus('<i class=\"fas fa-spinner fa-spin\"></i> Sync inbox'+(month?' bulan '+esc(month):'')+'...'); try{ const jobs=await pendingJobs(month); if(!jobs.length){ setInboxStatus('<i class=\"fas fa-circle-check\"></i> Inbox '+(month?'bulan '+esc(month):'')+' kosong.'); await loadLocalData(); return; } let total=0,inserted=0,updated=0,deletedBeforeImport=0; for(const j of jobs){ setInboxStatus(`<i class=\"fas fa-spinner fa-spin\"></i> Sync ${esc(j.id)}...`); await markJob(j.id,{status:'syncing',syncingAt:new Date().toISOString(),syncingAtMs:Date.now()}); const backup=await readJob(j); const res=await api('/api/import-backup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({backup,fromFirebaseInbox:true,inboxJobId:j.id})}); await markJob(j.id,{status:'imported',importedAt:new Date().toISOString(),importedAtMs:Date.now(),importedStats:res}); total+=Number(res.total||0); inserted+=Number(res.inserted||0); updated+=Number(res.updated||0); deletedBeforeImport+=Number(res.deletedBeforeImport||0); } setInboxStatus(`<i class=\"fas fa-circle-check\"></i> Sync selesai: ${num(total)} data. Baru ${num(inserted)}, update ${num(updated)}, hapus otomatis ${num(deletedBeforeImport)}.`); await loadLocalData(); }catch(e){ console.error(e); setInboxStatus('<i class=\"fas fa-triangle-exclamation\"></i> Gagal sync: '+esc(e.message||e),true); alert('Gagal sync inbox:\n\n'+(e.message||e)); }};
+window.downloadBackup=function(){ const payload={version:'rocky-offline-lite-report-backup-v2-closing-deadline',exportedAt:new Date().toISOString(),note:'Export laporan menyimpan closings lengkap termasuk deadlineTime, deadlineHour, deadlineMinute, deadlineMinutes, dan closingDeadlineTime bila ada.',data:{users:state.users,attendance:state.attendance,transactions:state.transactions,closings:state.closings,manualBonuses:state.manualBonuses,kasm_expenses:state.kasm_expenses,importLogs:state.import_logs}}; const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='rocky-laporan-offline-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); };
+
+window.deleteMonthData=async function(){
+  const month = String(state.syncMonth || state.month || '').slice(0,7);
+  if(!/^\d{4}-\d{2}$/.test(month)) return alert('Pilih bulan dulu.');
+  const ok = confirm(`Hapus SEMUA data laporan bulan ${month} dari arsip offline HP?\n\nYang dihapus: transaksi, absen, closing, bonus manual, dan pengeluaran KASM bulan itu.\nUser tidak dihapus. Data online Pusat/KasPribadi tidak ikut terhapus.`);
+  if(!ok) return;
+  try{
+    const res = await api('/api/delete-month',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({monthKey:month})});
+    await loadLocalData();
+    alert(`Data bulan ${month} berhasil dihapus.\nTotal terhapus: ${num(res.deleted||0)}`);
+  }catch(e){ alert('Gagal hapus data bulan:\n\n'+(e.message||e)); }
+};
+window.deleteAllOfflineData=async function(){
+  const ok1 = confirm('Hapus SEMUA data offline di HP ini?\n\nData online Firebase dan database KASM tidak ikut terhapus.');
+  if(!ok1) return;
+  const typed = prompt('Ketik HAPUS untuk konfirmasi hapus semua data offline:');
+  if(String(typed||'').trim().toUpperCase() !== 'HAPUS') return alert('Dibatalkan. Konfirmasi tidak sesuai.');
+  try{
+    const res = await api('/api/delete-all',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirm:'HAPUS'})});
+    await loadLocalData();
+    alert(`Semua data offline berhasil dihapus.\nTotal terhapus: ${num(res.deleted||0)}`);
+  }catch(e){ alert('Gagal hapus semua data:\n\n'+(e.message||e)); }
+};
+window.importManualFile=async function(ev){ const f=ev.target.files?.[0]; if(!f) return; try{ const text=await f.text(); const backup=JSON.parse(text); const res=await api('/api/import-backup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({backup,manualFile:true})}); alert(`Import selesai\nTotal: ${res.total}\nBaru: ${res.inserted}\nUpdate: ${res.updated}`); await loadLocalData(); }catch(e){ alert('Gagal import file:\n\n'+(e.message||e)); } finally { ev.target.value=''; } };
+window.renderAll = renderAll;
+window.loadLocalData = loadLocalData;
+try{ document.documentElement.dataset.theme=localStorage.getItem('rocky_lite_theme')||'light'; }catch{}
+await loadLocalData();
+// Tidak auto cek/sync supaya hemat read. Semua sync/refresh manual ada di tombol Sync Semua di sebelah Tema.
+</script>
+</body>
+</html>
