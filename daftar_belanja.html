@@ -1,0 +1,6036 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>List Belanja Toko Hijab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* =====================================================
+       CSS VARIABLES — LIGHT & DARK MODE
+    ===================================================== */
+    :root {
+      /* Brand */
+      --primary: #e11d6a;
+      --primary-dark: #be185d;
+      --primary-light: #fce7f3;
+      --primary-muted: rgba(225,29,106,0.12);
+
+      /* Surfaces */
+      --bg: #f8f4f6;
+      --bg-2: #fff0f6;
+      --card: #ffffff;
+      --card-2: #fdf6fa;
+      --border: #f0dde9;
+      --border-strong: #e4c4d8;
+
+      /* Text */
+      --text: #1e0e1a;
+      --text-2: #4a2d42;
+      --muted: #8a6880;
+      --muted-light: #c4a3b8;
+
+      /* Status */
+      --green: #16a34a;
+      --green-bg: #dcfce7;
+      --green-text: #14532d;
+      --red: #dc2626;
+      --red-bg: #fee2e2;
+      --red-text: #991b1b;
+      --yellow-bg: #fef3c7;
+      --yellow-text: #78350f;
+      --blue-bg: #e0f2fe;
+      --blue-text: #0c4a6e;
+      --purple-bg: #f3e8ff;
+      --purple-text: #581c87;
+      --orange-bg: #ffedd5;
+      --orange-text: #7c2d12;
+
+      /* Effects */
+      --shadow-sm: 0 1px 3px rgba(120,30,80,0.08), 0 1px 2px rgba(120,30,80,0.06);
+      --shadow-md: 0 4px 12px rgba(120,30,80,0.10), 0 2px 4px rgba(120,30,80,0.06);
+      --shadow-lg: 0 10px 28px rgba(120,30,80,0.13), 0 4px 8px rgba(120,30,80,0.07);
+      --shadow-xl: 0 20px 48px rgba(120,30,80,0.16), 0 8px 16px rgba(120,30,80,0.08);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-xl: 28px;
+      --radius-full: 999px;
+
+      /* Nav */
+      --nav-bg: rgba(255,255,255,0.96);
+      --nav-border: rgba(240,221,233,0.8);
+      --nav-inactive: #9d6e8a;
+    }
+
+    /* DARK MODE */
+    html.dark {
+      --bg: #120a10;
+      --bg-2: #1a0f17;
+      --card: #1e1118;
+      --card-2: #241520;
+      --border: #3a1f30;
+      --border-strong: #4e2a3f;
+
+      --text: #f5eef3;
+      --text-2: #d4b8ca;
+      --muted: #9a7289;
+      --muted-light: #6b4d60;
+
+      --primary: #f43f8f;
+      --primary-dark: #e11d6a;
+      --primary-light: #3a1030;
+      --primary-muted: rgba(244,63,143,0.15);
+
+      --green: #22c55e;
+      --green-bg: #052e16;
+      --green-text: #86efac;
+      --red: #f87171;
+      --red-bg: #450a0a;
+      --red-text: #fca5a5;
+      --yellow-bg: #1c1405;
+      --yellow-text: #fcd34d;
+      --blue-bg: #082032;
+      --blue-text: #7dd3fc;
+      --purple-bg: #1e0b38;
+      --purple-text: #c4b5fd;
+      --orange-bg: #2d1200;
+      --orange-text: #fdba74;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.35);
+      --shadow-lg: 0 10px 28px rgba(0,0,0,0.4);
+      --shadow-xl: 0 20px 48px rgba(0,0,0,0.5);
+
+      --nav-bg: rgba(30,17,24,0.97);
+      --nav-border: rgba(58,31,48,0.8);
+      --nav-inactive: #7a5068;
+    }
+
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    /* =====================================================
+       APP LAYOUT
+    ===================================================== */
+    .app {
+      width: min(720px, 100%);
+      margin: 0 auto;
+      padding: 12px 14px 148px;
+    }
+
+    /* =====================================================
+       HERO SECTION
+    ===================================================== */
+    .hero {
+      background: linear-gradient(135deg, #7c1d4f 0%, #c2185b 45%, #e91e7c 75%, #f06292 100%);
+      color: #fff;
+      border-radius: var(--radius-xl);
+      padding: 18px 16px 14px;
+      box-shadow: var(--shadow-xl);
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hero title row — judul + tanggal sejajar */
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(22px, 6vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      flex-shrink: 0;
+    }
+
+    .today {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.22);
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    /* Hero actions row — semua tombol di baris bawah */
+    .hero-actions-row {
+      display: flex;
+      align-items: stretch;
+      gap: 7px;
+    }
+
+    /* Tombol ikon kecil (Refresh, Print, Reset, Dark) */
+    .hero-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      border: 1.5px solid rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+      border-radius: 12px;
+      width: 52px;
+      height: 52px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .hero-icon-btn:active {
+      transform: scale(0.93);
+      background: rgba(255,255,255,0.24);
+    }
+
+    .hero-btn-icon {
+      font-size: 18px;
+      line-height: 1;
+      display: block;
+    }
+
+    .refresh-logo-btn .hero-btn-icon {
+      font-size: 21px;
+    }
+
+    .hero-btn-label {
+      font-size: 9px;
+      font-weight: 700;
+      line-height: 1;
+      display: block;
+      letter-spacing: 0.02em;
+    }
+
+    /* Tombol Hapus Data — melar mengisi sisa ruang */
+    .hero-danger-btn {
+      flex: 1;
+      height: 52px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      background: rgba(254,202,202,0.9);
+      color: #7f1d1d;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      box-shadow: 0 2px 8px rgba(127,29,29,0.18);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      min-width: 0;
+    }
+
+    .hero-danger-btn:active {
+      transform: scale(0.97);
+      background: rgba(252,165,165,0.95);
+    }
+
+    /* Sembunyikan class lama yang tidak dipakai lagi */
+    .hero-top, .hero-control-stack, .hero-clear-data-btn,
+    .printer-logo-btn, .reset-top, .dark-toggle { display: none; }
+
+    /* =====================================================
+       SUMMARY STATS
+    ===================================================== */
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 11px 10px;
+      box-shadow: var(--shadow-sm);
+      min-width: 0;
+      transition: box-shadow 0.15s;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      overflow-wrap: anywhere;
+      color: var(--text);
+    }
+
+    /* =====================================================
+       CARDS
+    ===================================================== */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .card-header {
+      padding: 14px 14px 0;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .card-header p {
+      display: none;
+    }
+
+    /* =====================================================
+       FORM
+    ===================================================== */
+    form {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      letter-spacing: 0.01em;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      color: var(--text);
+      outline: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      background: var(--card);
+      box-shadow: 0 0 0 3px var(--primary-muted);
+    }
+
+    input[readonly] {
+      color: var(--primary);
+      font-weight: 700;
+      background: var(--primary-light);
+      border-color: var(--border);
+      cursor: default;
+    }
+
+    input[readonly]:focus {
+      box-shadow: none;
+      border-color: var(--border);
+    }
+
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%239a7289' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+    .btn {
+      border: 0;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 44px;
+      transition: opacity 0.15s, transform 0.1s, box-shadow 0.15s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+      opacity: 0.88;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(225,29,106,0.28);
+    }
+
+    .btn-primary:active {
+      background: var(--primary-dark);
+      box-shadow: 0 2px 8px rgba(225,29,106,0.2);
+    }
+
+    .btn-light {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .btn-danger {
+      background: var(--red-bg);
+      color: var(--red-text);
+    }
+
+    .btn-green {
+      background: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .btn-row, .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-row.single-action {
+      grid-template-columns: 1fr;
+    }
+
+    /* =====================================================
+       HOME ACTIONS
+    ===================================================== */
+    .home-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 0 14px 14px;
+    }
+
+    /* =====================================================
+       VARIANT BOX
+    ===================================================== */
+    .variant-box {
+      border: 1.5px solid var(--border);
+      background: var(--card-2);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      overflow: visible;
+    }
+
+    .form-card {
+      overflow: visible;
+    }
+
+    .variant-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .variant-head strong {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-2);
+    }
+
+    .variant-list {
+      display: grid;
+      gap: 8px;
+      overflow: visible;
+    }
+
+    .variant-row {
+      display: grid;
+      grid-template-columns: 1fr 82px 38px;
+      gap: 6px;
+      align-items: end;
+      scroll-margin-top: 120px;
+      scroll-margin-bottom: 120px;
+    }
+
+    .variant-row label {
+      margin-bottom: 4px;
+      font-size: 11px;
+    }
+
+    .remove-variant {
+      border: 0;
+      border-radius: var(--radius-sm);
+      height: 44px;
+      background: var(--red-bg);
+      color: var(--red-text);
+      font-weight: 800;
+      font-size: 18px;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .remove-variant:active {
+      opacity: 0.8;
+      transform: scale(0.96);
+    }
+
+    .small-btn {
+      border: 0;
+      border-radius: var(--radius-full);
+      padding: 7px 12px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .small-btn:active {
+      transform: scale(0.96);
+    }
+
+    .hint { display: none; }
+
+    .saved-wrap { margin-top: 6px; }
+
+    .saved-toggle {
+      border: 0;
+      border-radius: var(--radius-full);
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 7px 12px;
+      cursor: pointer;
+    }
+
+    .saved-panel {
+      display: none;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px;
+      margin-top: 7px;
+      padding: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--card-2);
+      max-height: 90px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: relative;
+      z-index: 3;
+      width: 100%;
+    }
+
+    .saved-panel.show {
+      display: grid;
+    }
+
+    .saved-chip {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 8px;
+      cursor: pointer;
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: left;
+      line-height: 1.2;
+      transition: background 0.12s;
+    }
+
+    .saved-chip:active {
+      background: var(--primary-light);
+    }
+
+    .saved-empty {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .variant-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .variant-tools {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 6px;
+      margin: 0 0 8px;
+    }
+
+    .add-color-btn {
+      min-height: 38px;
+      border-radius: var(--radius-full);
+      padding: 7px 12px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .add-color-btn:active {
+      background: #fbcfe8;
+      transform: scale(0.99);
+    }
+
+    .saved-color-btn {
+      grid-column: 2 / 4;
+      min-height: 44px;
+      border-radius: var(--radius-sm);
+      padding: 10px 9px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* =====================================================
+       TOOLBAR / SEARCH
+    ===================================================== */
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 110px;
+      gap: 7px;
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .quick-actions {
+      padding: 0 10px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* =====================================================
+       LIST AREA
+    ===================================================== */
+    .list {
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      background: var(--bg-2);
+      min-height: 160px;
+    }
+
+    /* =====================================================
+       SUPPLIER CARD
+    ===================================================== */
+    .supplier-card {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: var(--radius-md);
+      padding: 12px 13px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.15s, transform 0.1s, border-color 0.15s;
+    }
+
+    .supplier-card:active {
+      transform: scale(0.99);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+
+    .supplier-card strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 3px;
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    .supplier-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .supplier-arrow {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 15px;
+      align-self: center;
+      flex-shrink: 0;
+    }
+
+    /* =====================================================
+       LIST CARD HEADER
+    ===================================================== */
+    .list-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 14px 10px !important;
+    }
+
+    .list-card-title {
+      min-width: 0;
+    }
+
+    .list-clear-btn {
+      flex: 0 0 auto;
+      min-height: 36px;
+      border-radius: var(--radius-full);
+      padding: 0 13px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       DETAIL PAGE
+    ===================================================== */
+    .detail-top {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-btn {
+      width: fit-content;
+      border: 0;
+      border-radius: var(--radius-full);
+      padding: 7px 14px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .back-btn:active {
+      transform: scale(0.97);
+    }
+
+    .detail-title h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .detail-title p { display: none; }
+
+    .detail-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .detail-mini-stat {
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 10px;
+    }
+
+    .detail-mini-stat span {
+      display: block;
+      font-size: 9.5px;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+
+    .detail-mini-stat strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+      color: var(--text);
+    }
+
+    .simple-detail {
+      display: grid;
+      gap: 8px;
+    }
+
+    .simple-row {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .simple-product-head {
+      padding: 11px 12px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .simple-product-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+
+    .simple-product-head strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      overflow-wrap: anywhere;
+      color: var(--text);
+    }
+
+    .simple-product-head.with-total {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .product-total-pill {
+      justify-self: end;
+      align-self: start;
+      background: var(--primary-light);
+      border: 1px solid var(--border);
+      color: var(--primary);
+      border-radius: var(--radius-full);
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .simple-variant-row {
+      display: grid;
+      grid-template-columns: 34px 34px minmax(0, 1fr) 0.8fr;
+      border-bottom: 1px solid var(--border);
+      align-items: stretch;
+    }
+
+    .simple-variant-row.variant-done .simple-cell strong {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .simple-variant-row:last-child {
+      border-bottom: 0;
+    }
+
+    .variant-check-wrap {
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .variant-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border-strong);
+      background: var(--card);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .variant-check.done {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .simple-cell {
+      padding: 9px 10px;
+      border-right: 1px solid var(--border);
+      min-width: 0;
+    }
+
+    .simple-cell:last-child {
+      border-right: 0;
+    }
+
+    .simple-cell span {
+      display: block;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+
+    .simple-cell strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+      color: var(--text);
+    }
+
+    .simple-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      padding: 8px;
+      background: var(--card-2);
+      border-top: 1px solid var(--border);
+    }
+
+
+
+    /* =====================================================
+       STAFF REQUEST INBOX
+    ===================================================== */
+    .staff-inbox-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 5px;
+    }
+
+    .staff-actions-bar {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding: 10px 14px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    @media (max-width: 360px) {
+      .staff-actions-bar { grid-template-columns: 1fr; }
+    }
+
+    .staff-card .simple-product-head strong {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .staff-meta {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+      margin-top: 4px;
+    }
+
+    .staff-note {
+      margin: 9px 12px 0;
+      padding: 9px 10px;
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-sm);
+      background: var(--card-2);
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .staff-card .simple-actions {
+      grid-template-columns: 1.2fr 1fr 1fr;
+    }
+
+    /* =====================================================
+       ITEM CARD
+    ===================================================== */
+    .item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: start;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .check {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border-strong);
+      background: var(--card);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      margin-top: 2px;
+      flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .item.done .check {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .item-main h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .item.done h3 {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .meta, .variant-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
+    }
+
+    .badge {
+      border-radius: var(--radius-full);
+      padding: 4px 9px;
+      font-size: 11.5px;
+      font-weight: 600;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .badge.qty    { background: var(--orange-bg); color: var(--orange-text); }
+    .badge.color  { background: var(--purple-bg); color: var(--purple-text); }
+    .badge.supplier { background: var(--blue-bg); color: var(--blue-text); }
+    .badge.high   { background: var(--red-bg);    color: var(--red-text); }
+    .badge.medium { background: var(--yellow-bg); color: var(--yellow-text); }
+    .badge.low    { background: var(--green-bg);  color: var(--green-text); }
+
+    .note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .item-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      border: 0;
+      border-radius: 8px;
+      padding: 7px 9px;
+      cursor: pointer;
+      background: var(--card-2);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 11.5px;
+      min-width: 48px;
+      transition: background 0.15s, transform 0.1s;
+      border: 1px solid var(--border);
+    }
+
+    .icon-btn:active {
+      transform: scale(0.96);
+    }
+
+    .icon-btn.danger {
+      background: var(--red-bg);
+      color: var(--red-text);
+      border-color: transparent;
+    }
+
+    .icon-btn[disabled] {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* =====================================================
+       EMPTY STATE
+    ===================================================== */
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px 12px;
+      line-height: 1.6;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 100px;
+      transform: translateX(-50%) translateY(16px);
+      opacity: 0;
+      background: var(--text);
+      color: var(--bg);
+      padding: 11px 18px;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-lg);
+      font-size: 13px;
+      font-weight: 700;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      z-index: 1000;
+      width: max-content;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .db-info { display: none; }
+
+    /* =====================================================
+       BOTTOM NAV
+    ===================================================== */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      width: min(720px, calc(100% - 20px));
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      background: var(--nav-bg);
+      border: 1px solid var(--nav-border);
+      border-radius: var(--radius-xl);
+      padding: 10px;
+      box-shadow: var(--shadow-xl);
+      z-index: 999;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .nav-btn {
+      border: 0;
+      border-radius: var(--radius-md);
+      padding: 10px 6px;
+      background: transparent;
+      color: var(--nav-inactive);
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 60px;
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    }
+
+    .nav-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(225,29,106,0.28);
+    }
+
+    .nav-icon {
+      display: block;
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .nav-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    /* =====================================================
+       PAGE VISIBILITY
+    ===================================================== */
+    .page { display: none; }
+    .page.active { display: block; }
+    .page-detail { touch-action: pan-y; }
+
+    /* =====================================================
+       PIN MODAL
+    ===================================================== */
+    .pin-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(15,5,12,0.55);
+      z-index: 1400;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .pin-modal.show {
+      display: flex;
+    }
+
+    .pin-dialog {
+      width: min(380px, 94vw);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      padding: 22px 20px;
+      text-align: center;
+      animation: pinPop 0.18s cubic-bezier(.22,.68,0,1.2);
+    }
+
+    @keyframes pinPop {
+      from { opacity: 0; transform: translateY(14px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .pin-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, var(--primary-light), var(--orange-bg));
+      color: var(--primary);
+      font-size: 26px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .pin-dialog h3 {
+      margin: 0 0 6px;
+      color: var(--text);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .pin-dialog p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .pin-input {
+      width: 100%;
+      min-height: 56px;
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.3em;
+      color: var(--primary);
+      background: var(--card-2);
+      border: 2px solid var(--border);
+      outline: none;
+      -webkit-text-security: disc;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .pin-input:focus {
+      background: var(--card);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-muted);
+    }
+
+    .pin-error {
+      min-height: 18px;
+      margin: 8px 0 2px;
+      color: var(--red);
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    .pin-actions {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    body.pin-lock {
+      overflow: hidden;
+    }
+
+    /* =====================================================
+       PRINT MODAL
+    ===================================================== */
+    .print-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 0 14px 14px;
+      background: var(--card);
+    }
+
+    .print-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      background: rgba(15,5,12,0.5);
+      z-index: 1200;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .print-modal.show {
+      display: flex;
+    }
+
+    .print-dialog {
+      width: min(520px, 96vw);
+      max-height: 86vh;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+
+    .print-head {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card-2);
+    }
+
+    .print-head h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .print-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height: 1.4;
+    }
+
+    .print-preview {
+      margin: 0;
+      padding: 14px;
+      overflow: auto;
+      background: var(--card);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .print-line {
+      display: block;
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .print-line.supplier {
+      font-size: 19px;
+      line-height: 1.25;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-top: 4px;
+    }
+
+    .print-line.product {
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    .print-line.variant {
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 600;
+      padding-left: 2px;
+    }
+
+    .print-line.variant-check {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 600;
+      padding-left: 2px;
+    }
+
+    .print-line.check-box {
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      justify-self: end;
+    }
+
+    .print-line.separator {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .print-line.gap {
+      height: 10px;
+    }
+
+    .print-select-box {
+      display: grid;
+      gap: 8px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .print-select-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .print-select-head strong {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .print-select-info {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .print-choice-list {
+      display: grid;
+      gap: 5px;
+      max-height: 170px;
+      overflow: auto;
+      padding: 6px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--card-2);
+    }
+
+    .print-choice-row {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      align-items: start;
+      gap: 7px;
+      margin: 0;
+      padding: 8px 9px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--card);
+      cursor: pointer;
+    }
+
+    .print-choice-row input {
+      width: 18px;
+      height: 18px;
+      min-height: 18px;
+      margin: 1px 0 0;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .print-choice-main {
+      min-width: 0;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .print-choice-main span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .print-choice-empty {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .print-footer {
+      display: grid;
+      grid-template-columns: 0.8fr 1fr 1fr;
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      background: var(--card-2);
+    }
+
+    /* =====================================================
+       MASTER DATA MANAGER
+    ===================================================== */
+    .master-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      background: rgba(15,5,12,0.5);
+      z-index: 1250;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      overflow: hidden;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
+    }
+
+    .master-modal.show { display: flex; }
+
+    .master-dialog {
+      width: min(560px, 96vw);
+      height: min(86vh, 720px);
+      max-height: calc(100vh - 28px);
+      max-height: calc(100dvh - 28px);
+      min-height: 0;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+
+    .master-head {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card-2);
+    }
+
+    .master-head h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .master-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height: 1.4;
+    }
+
+    .master-body {
+      min-height: 0;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
+      padding: 12px;
+      display: block;
+      background: var(--bg-2);
+    }
+
+    body.master-open {
+      overflow: hidden;
+    }
+
+    .master-section {
+      min-height: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 12px;
+    }
+
+    .master-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .master-section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--card-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .master-section-head strong {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .master-section-head span {
+      font-size: 10.5px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .master-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .master-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 6px;
+      align-items: center;
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .master-row:last-child { border-bottom: 0; }
+
+    .master-name {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+
+    .master-action {
+      border: 0;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      min-height: 32px;
+    }
+
+    .master-action.edit {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .master-action.delete {
+      background: var(--red-bg);
+      color: var(--red-text);
+    }
+
+    .master-empty {
+      padding: 13px 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .master-footer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      background: var(--card-2);
+    }
+
+    /* =====================================================
+       BULK ACTIONS
+    ===================================================== */
+    .bulk-actions {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+      padding: 8px;
+      margin-bottom: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .bulk-count {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .bulk-count small {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .bulk-actions .icon-btn {
+      min-width: 0;
+      min-height: 36px;
+      padding: 7px 6px;
+      border-radius: 8px;
+      font-size: 11px;
+    }
+
+    .simple-variant-row.variant-selected {
+      background: var(--primary-light);
+      box-shadow: inset 3px 0 0 var(--primary);
+    }
+
+    .select-check-wrap {
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .select-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 2px solid var(--border-strong);
+      background: var(--card);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      line-height: 1;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .select-check.selected {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* =====================================================
+       BUDGET PAGE
+    ===================================================== */
+    .budget-box {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .budget-actions {
+      display: grid;
+      grid-template-columns: 1fr 0.7fr;
+      gap: 8px;
+    }
+
+    .budget-note {
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height: 1.45;
+      font-weight: 500;
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 11px;
+    }
+
+    .budget-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .budget-mini-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 10px;
+    }
+
+    .budget-mini-stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+
+    .budget-mini-stat strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+      color: var(--text);
+    }
+
+    .budget-action-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .budget-result-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .budget-result-card strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+      color: var(--text);
+    }
+
+    .budget-result-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.35;
+      margin-top: 3px;
+      overflow-wrap: anywhere;
+    }
+
+    .budget-price {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       SPECIAL FIX: detail page
+    ===================================================== */
+    #pageDetail .detail-summary {
+      display: none !important;
+    }
+
+    body.detail-supplier-clean .summary {
+      display: none !important;
+    }
+
+    #pageDetail .detail-top {
+      padding-bottom: 12px;
+    }
+
+    /* =====================================================
+       PRINT CSS
+    ===================================================== */
+    @media print {
+      body { background: #fff; color: #000; }
+      .hero, .bottom-nav, .page-home, .page-list, .page-pending,
+      .toolbar, .quick-actions, .item-actions, .db-info,
+      .toast, .back-btn { display: none !important; }
+      .page-detail { display: block !important; }
+      .app { width: 100%; padding: 0; }
+      .card, .stat, .item { box-shadow: none; }
+      .list { background: #fff; }
+    }
+
+    /* =====================================================
+       RESPONSIVE — TABLET (≤620px)
+    ===================================================== */
+    @media (max-width: 620px) {
+      .app { width: 94%; padding-top: 12px; }
+      .hero { padding: 16px; }
+      .summary { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .stat { padding: 12px 10px; }
+      .stat strong { font-size: 20px; }
+      .row, .btn-row, .toolbar, .quick-actions { grid-template-columns: 1fr; }
+      .variant-row { grid-template-columns: 1fr 92px 42px; }
+      .detail-summary { grid-template-columns: repeat(3, 1fr); }
+      .simple-variant-row { grid-template-columns: 34px 34px 1fr 0.7fr; }
+      .simple-cell { border-right: 0; border-bottom: 1px solid var(--border); }
+      .simple-cell:last-child { border-bottom: 0; }
+      .simple-actions { grid-template-columns: repeat(3, 1fr); }
+      .item { grid-template-columns: auto 1fr; }
+      .item-actions { grid-column: 1 / -1; flex-direction: row; }
+      .icon-btn { flex: 1; }
+    }
+
+    /* =====================================================
+       RESPONSIVE — MOBILE (≤480px)
+    ===================================================== */
+    @media screen and (max-width: 480px) {
+      html, body {
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      .app {
+        width: 100%;
+        padding: 8px 10px 156px;
+      }
+
+      .hero {
+        border-radius: var(--radius-lg);
+        padding: 12px;
+        margin-bottom: 10px;
+      }
+
+      .hero h1 {
+        font-size: 19px;
+      }
+
+      .hero-title-row {
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .today {
+        font-size: 10.5px;
+        padding: 3px 9px;
+      }
+
+      .hero-actions-row {
+        gap: 5px;
+      }
+
+      .hero-icon-btn {
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+      }
+
+      .hero-btn-icon {
+        font-size: 16px;
+      }
+
+      .refresh-logo-btn .hero-btn-icon {
+        font-size: 18px;
+      }
+
+      .hero-btn-label {
+        font-size: 8.5px;
+      }
+
+      .hero-danger-btn {
+        height: 46px;
+        font-size: 11.5px;
+        border-radius: 10px;
+      }
+
+      .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 7px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .stat {
+        border-radius: var(--radius-sm) !important;
+        padding: 10px 9px !important;
+      }
+
+      .stat span {
+        font-size: 8.5px !important;
+        margin-bottom: 3px !important;
+        white-space: nowrap !important;
+      }
+
+      .stat strong {
+        font-size: 17px !important;
+        line-height: 1.15 !important;
+      }
+
+      .card {
+        border-radius: var(--radius-md);
+        margin-bottom: 10px;
+      }
+
+      .card-header {
+        padding: 11px 11px 0;
+      }
+
+      .card-header h2 {
+        font-size: 14px;
+      }
+
+      form {
+        padding: 11px;
+        gap: 8px;
+      }
+
+      label {
+        font-size: 11px;
+        margin-bottom: 3px;
+      }
+
+      input, select, textarea {
+        border-radius: 9px;
+        padding: 9px 11px;
+        font-size: 14px;
+        min-height: 40px;
+      }
+
+      textarea {
+        min-height: 50px;
+      }
+
+      .row {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      .btn-row, .quick-actions {
+        gap: 6px;
+      }
+
+      .btn {
+        min-height: 40px;
+        border-radius: 9px;
+        padding: 9px 11px;
+        font-size: 13px;
+      }
+
+      .home-actions {
+        padding: 0 11px 11px;
+      }
+
+      .variant-box {
+        border-radius: var(--radius-sm);
+        padding: 9px;
+      }
+
+      .variant-head {
+        gap: 5px;
+        margin-bottom: 6px;
+      }
+
+      .variant-head strong {
+        font-size: 11px;
+      }
+
+      .variant-tools {
+        gap: 5px;
+        margin-bottom: 6px;
+      }
+
+      .add-color-btn {
+        min-height: 38px;
+        font-size: 11px;
+      }
+
+      .small-btn, .saved-toggle, .saved-chip {
+        font-size: 10.5px;
+        padding: 6px 8px;
+      }
+
+      .variant-list { gap: 6px; }
+
+      .variant-row {
+        grid-template-columns: minmax(0, 1fr) 64px 32px;
+        gap: 5px;
+      }
+
+      .variant-row label {
+        font-size: 10.5px;
+        margin-bottom: 2px;
+      }
+
+      .variant-qty {
+        text-align: center;
+        padding-left: 6px;
+        padding-right: 6px;
+      }
+
+      .remove-variant {
+        height: 40px;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+
+      .saved-wrap { margin-top: 5px; }
+
+      .saved-panel {
+        gap: 4px;
+        margin-top: 5px;
+        padding: 6px;
+        border-radius: 9px;
+        max-height: 76px;
+      }
+
+      .saved-chip {
+        font-size: 10px;
+        padding: 5px 6px;
+        border-radius: 7px;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr 90px;
+        gap: 5px;
+        padding: 8px;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 8px 8px;
+      }
+
+      .list {
+        gap: 5px;
+        padding: 8px;
+        min-height: 120px;
+      }
+
+      .supplier-card {
+        border-radius: var(--radius-sm);
+        padding: 10px 11px;
+        gap: 6px;
+      }
+
+      .supplier-card strong {
+        font-size: 13px;
+        margin-bottom: 1px;
+      }
+
+      .supplier-card span {
+        font-size: 10px;
+      }
+
+      .supplier-arrow {
+        width: 22px;
+        height: 22px;
+        font-size: 14px;
+      }
+
+      .detail-top {
+        gap: 7px;
+        padding: 10px;
+      }
+
+      .back-btn {
+        padding: 6px 11px;
+        font-size: 11px;
+      }
+
+      .detail-title h2 {
+        font-size: 15px;
+      }
+
+      .detail-summary {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+      }
+
+      .detail-mini-stat {
+        border-radius: 8px;
+        padding: 7px 8px;
+      }
+
+      .detail-mini-stat span {
+        font-size: 8px;
+        margin-bottom: 2px;
+        white-space: nowrap;
+      }
+
+      .detail-mini-stat strong {
+        font-size: 12px;
+        line-height: 1.15;
+      }
+
+      .simple-detail { gap: 6px; }
+
+      .simple-row {
+        border-radius: var(--radius-sm);
+      }
+
+      .simple-product-head {
+        padding: 9px 10px;
+      }
+
+      .simple-product-head span {
+        font-size: 8px;
+        margin-bottom: 2px;
+      }
+
+      .simple-product-head strong {
+        font-size: 13px;
+        line-height: 1.2;
+      }
+
+      .simple-product-head.with-total {
+        gap: 6px;
+      }
+
+      .product-total-pill {
+        padding: 5px 8px;
+        font-size: 10px;
+        max-width: 112px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .simple-variant-row {
+        grid-template-columns: 28px 28px minmax(0, 1fr) 68px !important;
+      }
+
+      .variant-check {
+        width: 18px;
+        height: 18px;
+        font-size: 10px;
+        border-width: 1.5px;
+      }
+
+      .simple-cell {
+        padding: 7px 8px;
+      }
+
+      .simple-cell span {
+        font-size: 8px;
+        margin-bottom: 2px;
+      }
+
+      .simple-cell strong {
+        font-size: 12px;
+        line-height: 1.2;
+      }
+
+      .simple-actions {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px;
+        padding: 7px;
+      }
+
+      .icon-btn {
+        border-radius: 8px;
+        padding: 7px 8px;
+        font-size: 11px;
+        min-height: 34px;
+      }
+
+      .empty {
+        padding: 18px 10px;
+        font-size: 12px;
+      }
+
+      .bottom-nav {
+        width: calc(100% - 16px) !important;
+        bottom: 10px !important;
+        padding: 9px !important;
+        gap: 6px !important;
+        border-radius: var(--radius-xl) !important;
+      }
+
+      .nav-btn {
+        min-height: 58px !important;
+        border-radius: var(--radius-md) !important;
+        padding: 8px 3px !important;
+        gap: 3px;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+      }
+
+      .nav-label {
+        font-size: 10.5px;
+      }
+
+      .toast {
+        bottom: 86px;
+        padding: 10px 14px;
+        font-size: 12px;
+      }
+
+      .bulk-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 5px;
+        padding: 7px;
+        border-radius: var(--radius-sm);
+      }
+
+      .bulk-actions .icon-btn {
+        min-height: 34px;
+        font-size: 10.5px;
+        padding: 6px 5px;
+      }
+
+      .bulk-count { font-size: 10.5px; }
+      .bulk-count small { font-size: 9.5px; }
+
+      .select-check {
+        width: 18px;
+        height: 18px;
+        border-radius: 6px;
+        border-width: 1.5px;
+        font-size: 10px;
+      }
+
+      .budget-box {
+        padding: 10px;
+        gap: 8px;
+      }
+
+      .budget-actions {
+        grid-template-columns: 1fr 0.65fr;
+        gap: 6px;
+      }
+
+      .budget-summary {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+      }
+
+      .budget-mini-stat {
+        border-radius: 8px;
+        padding: 7px 7px;
+      }
+
+      .budget-mini-stat span {
+        font-size: 8px;
+        margin-bottom: 2px;
+        white-space: nowrap;
+      }
+
+      .budget-mini-stat strong {
+        font-size: 11px;
+      }
+
+      .budget-result-card {
+        border-radius: 9px;
+        padding: 8px 10px;
+        gap: 6px;
+      }
+
+      .budget-result-card strong { font-size: 12px; }
+      .budget-result-card span { font-size: 9.5px; }
+      .budget-price { font-size: 11px; }
+
+      .pin-modal { padding: 12px; }
+
+      .pin-dialog {
+        width: 100%;
+        border-radius: var(--radius-lg);
+        padding: 16px;
+      }
+
+      .pin-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 15px;
+        font-size: 22px;
+      }
+
+      .pin-dialog h3 { font-size: 18px; }
+      .pin-dialog p { font-size: 11.5px; }
+
+      .pin-input {
+        min-height: 52px;
+        border-radius: var(--radius-sm);
+        font-size: 24px;
+      }
+
+      .pin-actions { grid-template-columns: 1fr 1fr; }
+
+      .print-dialog {
+        width: 100%;
+        max-height: 88vh;
+        border-radius: var(--radius-md);
+      }
+
+      .print-head { padding: 11px; }
+      .print-head h3 { font-size: 14px; }
+      .print-head p { font-size: 10.5px; }
+      .print-preview { padding: 11px; font-size: 11px; }
+
+      .print-select-box { padding: 9px 10px; gap: 7px; }
+      .print-choice-list { max-height: 150px; padding: 5px; }
+      .print-choice-row { padding: 7px 8px; gap: 6px; }
+      .print-choice-main { font-size: 11px; }
+      .print-choice-main span { font-size: 9.5px; }
+
+      .print-footer {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        padding: 10px;
+      }
+
+      .master-modal {
+        align-items: stretch;
+        justify-content: center;
+        height: 100vh;
+        height: 100dvh;
+        padding: 10px;
+      }
+
+      .master-dialog {
+        width: 100%;
+        height: calc(100vh - 20px);
+        max-height: calc(100vh - 20px);
+        height: calc(100dvh - 20px);
+        max-height: calc(100dvh - 20px);
+        min-height: 0;
+        border-radius: var(--radius-md);
+      }
+
+      .master-head { padding: 11px; }
+      .master-head h3 { font-size: 14px; }
+      .master-head p { font-size: 10.5px; }
+      .master-body {
+        padding: 9px;
+        display: block;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+      }
+      .master-section { margin-bottom: 9px; }
+      .master-section:last-child { margin-bottom: 0; }
+      .master-section-head { padding: 9px 10px; }
+      .master-section-head strong { font-size: 12px; }
+      .master-row {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        gap: 5px;
+        padding: 8px;
+      }
+      .master-name { font-size: 12px; }
+      .master-action { padding: 6px 8px; font-size: 10.5px; min-height: 30px; }
+      .master-footer { padding: 10px; }
+
+      .list-card-header {
+        gap: 10px;
+        padding: 11px 11px 9px !important;
+      }
+
+      .list-card-header h2 { font-size: 14px; }
+
+      .list-clear-btn {
+        min-height: 34px;
+        padding: 0 11px;
+        font-size: 10.5px;
+      }
+
+      .hero-control-stack {
+        max-width: unset;
+      }
+    }
+
+    /* =====================================================
+       RESPONSIVE — SMALL (≤360px)
+    ===================================================== */
+    @media screen and (max-width: 360px) {
+      .hero p { display: none; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+      .stat strong { font-size: 15px; }
+
+      .variant-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .variant-actions { width: 100%; justify-content: flex-start; }
+
+      .toolbar { grid-template-columns: 1fr; }
+
+      .simple-variant-row {
+        grid-template-columns: 27px 27px minmax(0, 1fr) 62px !important;
+      }
+
+      .bottom-nav .nav-btn {
+        min-height: 56px !important;
+      }
+
+      .nav-icon { font-size: 19px; }
+      .nav-label { font-size: 9.5px; }
+
+      .hero-danger-btn {
+        padding-left: 8px;
+        padding-right: 8px;
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <!-- Baris 1: Judul + Tanggal -->
+      <div class="hero-title-row">
+        <h1>List Belanja</h1>
+        <div class="today" id="todayText">Hari ini</div>
+      </div>
+      <!-- Baris 2: Semua tombol aksi -->
+      <div class="hero-actions-row">
+        <button class="hero-icon-btn refresh-logo-btn" type="button" id="refreshBtn" aria-label="Refresh Data" title="Refresh Data">
+          <span class="hero-btn-icon">↻</span>
+          <span class="hero-btn-label">Refresh</span>
+        </button>
+        <button class="hero-icon-btn hero-print-btn" type="button" id="printerBtn" aria-label="Cetak List Belanja" title="Cetak List Belanja">
+          <span class="hero-btn-icon">🖨️</span>
+          <span class="hero-btn-label">Cetak</span>
+        </button>
+        <button class="hero-icon-btn hero-reset-btn" type="button" id="resetBtn">
+          <span class="hero-btn-icon">✕</span>
+          <span class="hero-btn-label">Reset</span>
+        </button>
+        <button class="hero-icon-btn hero-dark-btn" type="button" id="darkToggleBtn" aria-label="Toggle dark mode" title="Ganti mode terang/gelap">
+          <span class="hero-btn-icon">🌙</span>
+          <span class="hero-btn-label">Mode</span>
+        </button>
+        <button class="hero-danger-btn" type="button" id="clearDataKeepMasterBtn">
+          🗑️ Hapus Data
+        </button>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="stat"><span>Model</span><strong id="totalCount">0</strong></div>
+      <div class="stat"><span>Belum</span><strong id="pendingCount">0</strong></div>
+      <div class="stat"><span>Total Pcs</span><strong id="totalPcsCount">0</strong></div>
+      <div class="stat"><span>Total Modal</span><strong id="totalModalCount">Rp0</strong></div>
+    </section>
+
+    <section class="page page-home active" id="pageHome">
+      <section class="card form-card">
+        <div class="card-header">
+          <h2 id="formTitle">Tambah Barang Hijab</h2>
+          <p>Input dibuat simpel: isi model, supplier, harga kodian, warna, dan jumlah pcs.</p>
+        </div>
+
+        <form id="itemForm">
+          <input type="hidden" id="editId" />
+          <datalist id="itemNameOptions"></datalist>
+          <datalist id="supplierOptions"></datalist>
+          <datalist id="colorOptions"></datalist>
+
+          <div>
+            <label for="name">Nama Barang / Model</label>
+            <input id="name" type="text" placeholder="" autocomplete="off" required />
+            <div class="saved-panel smart-suggest" id="itemNameSavedPanel"></div>
+          </div>
+
+          <div>
+            <label for="supplierName">Nama Supplier</label>
+            <input id="supplierName" type="text" placeholder="" autocomplete="off" />
+            <div class="saved-panel smart-suggest" id="supplierSavedPanel"></div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="kodiPrice">Harga Kodian</label>
+              <input id="kodiPrice" type="text" inputmode="numeric" placeholder="" />
+            </div>
+            <div>
+              <label for="pcsPricePreview">Harga per Pcs</label>
+              <input id="pcsPricePreview" type="text" value="Rp0" readonly />
+            </div>
+          </div>
+
+          <div class="variant-box">
+            <div class="variant-head">
+              <strong>Warna dan Jumlah Pcs</strong>
+            </div>
+
+            <div class="variant-tools">
+              <button class="small-btn add-color-btn" type="button" id="addVariantBtn">+ Warna</button>
+            </div>
+
+            <div class="saved-panel" id="colorSavedPanel"></div>
+            <div class="variant-list" id="variantList"></div>
+          </div>
+
+          <div>
+            <label for="priority">Kebutuhan Stok</label>
+            <select id="priority">
+              <option value="Tinggi">Stok Habis</option>
+              <option value="Sedang" selected>Stok Menipis</option>
+              <option value="Rendah">Tambahan</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="note">Catatan</label>
+            <textarea id="note" placeholder=""></textarea>
+          </div>
+
+          <div class="btn-row single-action">
+            <button class="btn btn-primary" type="submit" id="submitBtn">+ Tambah ke List</button>
+          </div>
+        </form>
+
+        <div class="home-actions">
+          <button class="btn btn-green" type="button" id="goListBtn">Lihat List Belanja</button>
+          <button class="btn btn-light" type="button" id="manageMasterBtn">Edit / Hapus Data Tersimpan</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="page page-staff" id="pageStaff">
+      <section class="card">
+        <div class="detail-top">
+          <div class="detail-title">
+            <h2>Kiriman Staff</h2>
+            <div class="staff-inbox-note">Barang kosong dari aplikasi Stafku dan Risma masuk ke sini dulu. Tekan <b>Tambahkan ke Keranjang</b> kalau mau masuk ke list belanja manual.</div>
+          </div>
+          <div class="detail-summary" id="staffSummary"></div>
+        </div>
+        <div class="staff-actions-bar">
+          <button class="btn btn-light" type="button" id="refreshStaffRequestsBtn">↻ Refresh Kiriman</button>
+          <button class="btn btn-light" type="button" id="printStaffInboxBtn">🖨 Cetak Inbox</button>
+          <button class="btn btn-green" type="button" id="addAllStaffRequestsBtn">+ Tambahkan Semua</button>
+        </div>
+        <div class="list" id="staffRequestList"></div>
+      </section>
+    </section>
+
+    <section class="page page-list" id="pageList">
+      <section class="card">
+        <div class="card-header">
+          <h2>List Belanja per Supplier</h2>
+          <p>Klik nama supplier untuk masuk ke halaman detail belanja supplier tersebut.</p>
+        </div>
+
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="Cari supplier, hijab, warna..." />
+          <select id="statusFilter">
+            <option value="all">Semua</option>
+            <option value="pending">Belum dibeli</option>
+            <option value="done">Sudah dibeli</option>
+          </select>
+        </div>
+        <div class="list" id="supplierList"></div>
+      </section>
+    </section>
+
+    <section class="page page-pending" id="pagePending">
+      <section class="card">
+        <div class="detail-top">
+          <div class="detail-title">
+            <h2>Barang Belum Selesai</h2>
+          </div>
+          <div class="detail-summary" id="pendingSummary"></div>
+        </div>
+        <div class="list" id="pendingItemList"></div>
+      </section>
+    </section>
+
+    <section class="page page-budget" id="pageBudget">
+      <section class="card">
+        <div class="card-header">
+          <h2>Kalkulator Budget</h2>
+          <p>Filter daftar belanja yang paling mendekati budget.</p>
+        </div>
+        <div class="budget-box">
+          <div>
+            <label for="budgetInput">Budget Belanja</label>
+            <input id="budgetInput" type="text" inputmode="numeric" placeholder="Contoh: 3000000" autocomplete="off" />
+          </div>
+          <div class="budget-actions">
+            <button class="btn btn-primary" type="button" id="calculateBudgetBtn">Hitung Budget</button>
+            <button class="btn btn-light" type="button" id="clearBudgetBtn">Reset</button>
+          </div>
+          <div class="budget-note">Hitungan memakai nominal pojok kanan card barang dari data yang belum dibeli.</div>
+        </div>
+        <div class="list budget-list" id="budgetResultList"></div>
+      </section>
+    </section>
+
+    <section class="page page-detail" id="pageDetail">
+      <section class="card">
+        <div class="detail-top">
+          <div class="detail-title">
+            <h2 id="detailSupplierName">Supplier</h2>
+          </div>
+          <div class="detail-summary" id="detailSummary"></div>
+        </div>
+        <div class="list" id="detailItemList"></div>
+      </section>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" type="button" data-page="home">
+      <span class="nav-icon" aria-hidden="true">🏠</span>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-btn" type="button" data-page="staff">
+      <span class="nav-icon" aria-hidden="true">📥</span>
+      <span class="nav-label">Inbox</span>
+    </button>
+    <button class="nav-btn" type="button" data-page="list">
+      <span class="nav-icon" aria-hidden="true">🏬</span>
+      <span class="nav-label">Supplier</span>
+    </button>
+    <button class="nav-btn" type="button" data-page="pending">
+      <span class="nav-icon" aria-hidden="true">⏳</span>
+      <span class="nav-label">Pending</span>
+    </button>
+    <button class="nav-btn" type="button" data-page="budget">
+      <span class="nav-icon" aria-hidden="true">🧮</span>
+      <span class="nav-label">Budget</span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast">Tersimpan</div>
+
+  <div class="pin-modal" id="pinModal" role="dialog" aria-modal="true" aria-labelledby="pinModalTitle">
+    <div class="pin-dialog">
+      <div class="pin-icon" aria-hidden="true">🔐</div>
+      <h3 id="pinModalTitle">Masukkan PIN</h3>
+      <p id="pinActionText">Konfirmasi aksi ini pakai PIN.</p>
+      <input
+        class="pin-input"
+        id="pinInput"
+        type="tel"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        maxlength="12"
+        autocomplete="off"
+        aria-label="PIN aplikasi"
+      />
+      <div class="pin-error" id="pinError" aria-live="polite"></div>
+      <div class="pin-actions">
+        <button class="btn btn-light" type="button" id="pinCancelBtn">Batal</button>
+        <button class="btn btn-primary" type="button" id="pinConfirmBtn">Lanjut</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-modal" id="printModal" role="dialog" aria-modal="true" aria-labelledby="printModalTitle">
+    <div class="print-dialog">
+      <div class="print-head">
+        <h3 id="printModalTitle">Preview List Belanja</h3>
+        <p id="printerStatus">Printer Android: RPP02N-FF57</p>
+      </div>
+      <div class="print-select-box" id="printSelectBox">
+        <div class="print-select-head">
+          <strong>Pilih yang mau dicetak</strong>
+          <button class="small-btn" type="button" id="printToggleAllBtn">Batal Semua</button>
+        </div>
+        <div class="print-select-info" id="printSelectedInfo">Default: cetak semua.</div>
+        <div class="print-choice-list" id="printChoiceList"></div>
+      </div>
+      <div class="print-preview" id="printPreviewText"></div>
+      <div class="print-footer">
+        <button class="btn btn-light" type="button" id="closePrintBtn">Tutup</button>
+        <button class="btn btn-green" type="button" id="selectPrinterBtn">Cek Printer</button>
+        <button class="btn btn-primary" type="button" id="sendPrintBtn">Cetak</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="master-modal" id="masterModal" role="dialog" aria-modal="true" aria-labelledby="masterModalTitle">
+    <div class="master-dialog">
+      <div class="master-head">
+        <h3 id="masterModalTitle">Edit / Hapus Data Tersimpan</h3>
+        <p>Atur nama barang, nama supplier, dan warna yang muncul di saran input.</p>
+      </div>
+      <div class="master-body" id="masterBody"></div>
+      <div class="master-footer">
+        <button class="btn btn-light" type="button" id="closeMasterBtn">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =====================================================
+       DARK MODE TOGGLE (UI ONLY — tidak menyentuh logika)
+    ===================================================== */
+    (function() {
+      const saved = localStorage.getItem('hijab_theme');
+      if (saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.getElementById('darkToggleBtn');
+      if (!btn) return;
+      function updateIcon() {
+        const isDark = document.documentElement.classList.contains('dark');
+        const iconEl = btn.querySelector('.hero-btn-icon');
+        if (iconEl) iconEl.textContent = isDark ? '☀️' : '🌙';
+        else btn.textContent = isDark ? '☀️' : '🌙';
+      }
+      updateIcon();
+      btn.addEventListener('click', function() {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('hijab_theme', isDark ? 'dark' : 'light');
+        updateIcon();
+      });
+    });
+  </script>
+
+  <script>
+    const DB_NAME = "belanja_toko_hijab_android_db";
+    const DB_VERSION = 1;
+    const STORE_NAME = "items";
+    const MASTER_DATA_KEY = "belanja_toko_hijab_master_saran_v1";
+    const STAFF_BRIDGE_KEY = "stafku_to_belanjaku_barang_kosong_v1";
+    const TOKO_BRIDGE_KEY = "toko_to_belanjaku_barang_kosong_v1";
+    const STAFF_BRIDGE_KEYS = [STAFF_BRIDGE_KEY, TOKO_BRIDGE_KEY];
+    const DEFAULT_UNIT = "pcs";
+    const UNSET_SUPPLIER = "Supplier belum diisi";
+    const APP_PIN = "123";
+    const PRINTER_NAME = "RPP02N-FF57";
+
+    /* =====================================================
+       SUPABASE CONFIG
+       Catatan penting: pakai ANON PUBLIC saja di HTML/APK.
+       Jangan pernah taruh sb_secret/service_role di aplikasi client.
+    ===================================================== */
+    const SUPABASE_URL = "https://phuzgriglgovzcwgbehr.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBodXpncmlnbGdvdnpjd2diZWhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1OTQ3ODUsImV4cCI6MjA5NDE3MDc4NX0.gf-cfo8Vos8uYgZRHG0KUB4xMhXAld2oTYv-wNiKneE";
+    const SUPABASE_ITEMS_TABLE = "belanja_items";
+    const SUPABASE_MASTER_TABLE = "belanja_master_data";
+    const SUPABASE_ENABLED = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY && !SUPABASE_URL.includes("GANTI"));
+    let supabaseWarned = false;
+
+    const pageHome = document.getElementById("pageHome");
+    const pageStaff = document.getElementById("pageStaff");
+    const pageList = document.getElementById("pageList");
+    const pagePending = document.getElementById("pagePending");
+    const pageBudget = document.getElementById("pageBudget");
+    const pageDetail = document.getElementById("pageDetail");
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const goListBtn = document.getElementById("goListBtn");
+    const clearDataKeepMasterBtn = document.getElementById("clearDataKeepMasterBtn");
+    const backToListBtn = document.getElementById("backToListBtn");
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    const form = document.getElementById("itemForm");
+    const editId = document.getElementById("editId");
+    const formTitle = document.getElementById("formTitle");
+    const submitBtn = document.getElementById("submitBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const nameInput = document.getElementById("name");
+    const supplierInput = document.getElementById("supplierName");
+    const kodiPriceInput = document.getElementById("kodiPrice");
+    const pcsPricePreview = document.getElementById("pcsPricePreview");
+    const variantList = document.getElementById("variantList");
+    const addVariantBtn = document.getElementById("addVariantBtn");
+    const priorityInput = document.getElementById("priority");
+    const noteInput = document.getElementById("note");
+    const itemNameOptions = document.getElementById("itemNameOptions");
+    const supplierOptions = document.getElementById("supplierOptions");
+    const colorOptions = document.getElementById("colorOptions");
+    const itemNameSavedPanel = document.getElementById("itemNameSavedPanel");
+    const supplierSavedPanel = document.getElementById("supplierSavedPanel");
+    const colorSavedPanel = document.getElementById("colorSavedPanel");
+    const manageMasterBtn = document.getElementById("manageMasterBtn");
+    const masterModal = document.getElementById("masterModal");
+    const masterBody = document.getElementById("masterBody");
+    const closeMasterBtn = document.getElementById("closeMasterBtn");
+    const savedToggleButtons = document.querySelectorAll("[data-saved-target]");
+
+    const supplierList = document.getElementById("supplierList");
+    const staffRequestList = document.getElementById("staffRequestList");
+    const staffSummary = document.getElementById("staffSummary");
+    const refreshStaffRequestsBtn = document.getElementById("refreshStaffRequestsBtn");
+    const printStaffInboxBtn = document.getElementById("printStaffInboxBtn");
+    const addAllStaffRequestsBtn = document.getElementById("addAllStaffRequestsBtn");
+    const pendingItemList = document.getElementById("pendingItemList");
+    const pendingSummary = document.getElementById("pendingSummary");
+    const detailItemList = document.getElementById("detailItemList");
+    const detailSupplierName = document.getElementById("detailSupplierName");
+    const detailSupplierNote = document.getElementById("detailSupplierNote");
+    const detailSummary = document.getElementById("detailSummary");
+    const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
+    const budgetInput = document.getElementById("budgetInput");
+    const calculateBudgetBtn = document.getElementById("calculateBudgetBtn");
+    const clearBudgetBtn = document.getElementById("clearBudgetBtn");
+    const budgetResultList = document.getElementById("budgetResultList");
+    const totalCount = document.getElementById("totalCount");
+    const pendingCount = document.getElementById("pendingCount");
+    const totalPcsCount = document.getElementById("totalPcsCount");
+    const totalModalCount = document.getElementById("totalModalCount");
+    const todayText = document.getElementById("todayText");
+    const toast = document.getElementById("toast");
+    const printerBtn = document.getElementById("printerBtn");
+    const printModalTitle = document.getElementById("printModalTitle");
+    const printModal = document.getElementById("printModal");
+    const printPreviewText = document.getElementById("printPreviewText");
+    const printerStatus = document.getElementById("printerStatus");
+    const printSelectBox = document.getElementById("printSelectBox");
+    const printChoiceList = document.getElementById("printChoiceList");
+    const printToggleAllBtn = document.getElementById("printToggleAllBtn");
+    const printSelectedInfo = document.getElementById("printSelectedInfo");
+    const closePrintBtn = document.getElementById("closePrintBtn");
+    const selectPrinterBtn = document.getElementById("selectPrinterBtn");
+    const sendPrintBtn = document.getElementById("sendPrintBtn");
+    const pinModal = document.getElementById("pinModal");
+    const pinInput = document.getElementById("pinInput");
+    const pinActionText = document.getElementById("pinActionText");
+    const pinError = document.getElementById("pinError");
+    const pinCancelBtn = document.getElementById("pinCancelBtn");
+    const pinConfirmBtn = document.getElementById("pinConfirmBtn");
+
+    let db = null;
+    let items = [];
+    let selectedSupplier = "";
+    let activeColorInput = null;
+    let currentPageName = "home";
+    let selectedVariantKeys = new Set();
+    let printSelectedVariantKeys = new Set();
+    let printUseSelection = false;
+    let printMode = "cart";
+    let bluetoothDevice = null;
+    let printerCharacteristic = null;
+
+    todayText.textContent = new Date().toLocaleDateString("id-ID", {
+      weekday: "long", day: "2-digit", month: "long", year: "numeric"
+    });
+
+    function showPage(pageName, pushHistory = true) {
+      pageHome.classList.toggle("active", pageName === "home");
+      if (pageStaff) pageStaff.classList.toggle("active", pageName === "staff");
+      pageList.classList.toggle("active", pageName === "list");
+      pagePending.classList.toggle("active", pageName === "pending");
+      if (pageBudget) pageBudget.classList.toggle("active", pageName === "budget");
+      pageDetail.classList.toggle("active", pageName === "detail");
+      document.body.classList.toggle("detail-supplier-clean", pageName === "detail");
+      const topSummary = document.querySelector(".summary");
+      if (topSummary) topSummary.hidden = pageName === "detail";
+      currentPageName = pageName;
+
+      navButtons.forEach(button => {
+        const activeName = pageName === "detail" ? "list" : pageName;
+        button.classList.toggle("active", button.dataset.page === activeName);
+      });
+
+      if (pushHistory && window.history && history.pushState) {
+        const state = { page: pageName, supplier: selectedSupplier || "" };
+        const hash = pageName === "detail"
+          ? `#detail-${encodeURIComponent(selectedSupplier || "supplier")}`
+          : `#${pageName}`;
+        if (location.hash !== hash) {
+          history.pushState(state, "", hash);
+        } else {
+          history.replaceState(state, "", hash);
+        }
+      }
+
+      if (pageName === "budget") renderBudgetPage(false);
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    navButtons.forEach(button => button.addEventListener("click", () => showPage(button.dataset.page)));
+    goListBtn.addEventListener("click", () => showPage("list"));
+    if (backToListBtn) backToListBtn.addEventListener("click", () => showPage("list"));
+
+    if (window.history && history.replaceState) {
+      history.replaceState({ page: "home", supplier: "" }, "", "#home");
+    }
+
+    window.addEventListener("popstate", event => {
+      const state = event.state || { page: "home", supplier: "" };
+      if (state.page === "detail" && state.supplier) {
+        selectedSupplier = state.supplier;
+        renderSupplierDetail(selectedSupplier);
+      }
+      showPage(state.page || "home", false);
+    });
+
+    document.addEventListener("touchstart", event => {
+      if (!pageDetail.classList.contains("active")) return;
+      const touch = event.changedTouches[0];
+      touchStartX = touch.screenX;
+      touchStartY = touch.screenY;
+    }, { passive: true });
+
+    document.addEventListener("touchend", event => {
+      if (!pageDetail.classList.contains("active")) return;
+      const touch = event.changedTouches[0];
+      touchEndX = touch.screenX;
+      touchEndY = touch.screenY;
+
+      const diffX = touchEndX - touchStartX;
+      const diffY = Math.abs(touchEndY - touchStartY);
+      const isHorizontalSwipe = Math.abs(diffX) > 70 && diffY < 70;
+
+      if (isHorizontalSwipe) {
+        showPage("list");
+      }
+    }, { passive: true });
+
+    function isSupabaseReady() {
+      return SUPABASE_ENABLED && typeof fetch === "function";
+    }
+
+    function cleanSupabaseUrl(path = "") {
+      return `${SUPABASE_URL.replace(/\/$/, "")}${path}`;
+    }
+
+    async function supabaseRequest(path, options = {}) {
+      if (!isSupabaseReady()) throw new Error("Supabase belum aktif.");
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+      const headers = {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        ...(options.headers || {})
+      };
+
+      try {
+        const response = await fetch(cleanSupabaseUrl(path), {
+          ...options,
+          headers,
+          signal: controller.signal
+        });
+
+        const text = await response.text();
+        let body = null;
+        if (text) {
+          try { body = JSON.parse(text); }
+          catch (_) { body = text; }
+        }
+
+        if (!response.ok) {
+          const message = typeof body === "string" ? body : (body && (body.message || body.details || body.hint)) || response.statusText;
+          throw new Error(`Supabase ${response.status}: ${message}`);
+        }
+
+        return body;
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+
+    function warnSupabase(error, fallbackMessage = "Mode offline: data disimpan lokal dulu") {
+      console.warn("Supabase error:", error);
+      if (!supabaseWarned) {
+        supabaseWarned = true;
+        showToast(fallbackMessage);
+      }
+    }
+
+    function encodeFilterValue(value) {
+      return encodeURIComponent(String(value || ""));
+    }
+
+    function rowToItem(row) {
+      const data = row && row.data && typeof row.data === "object" ? row.data : row;
+      return normalizeItem({ ...(data || {}), id: (data && data.id) || (row && row.id) || makeId() });
+    }
+
+    async function supabaseGetItems() {
+      const rows = await supabaseRequest(`/rest/v1/${SUPABASE_ITEMS_TABLE}?select=id,data,updated_at&order=updated_at.desc`, {
+        method: "GET"
+      });
+      return Array.isArray(rows) ? rows.map(rowToItem) : [];
+    }
+
+    async function supabaseUpsertItem(rawItem) {
+      const item = normalizeItem(rawItem);
+      await supabaseRequest(`/rest/v1/${SUPABASE_ITEMS_TABLE}?on_conflict=id`, {
+        method: "POST",
+        headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+        body: JSON.stringify({
+          id: item.id,
+          data: item,
+          updated_at: item.updatedAt || new Date().toISOString()
+        })
+      });
+      return item;
+    }
+
+    async function supabaseDeleteItem(id) {
+      if (!id) return;
+      await supabaseRequest(`/rest/v1/${SUPABASE_ITEMS_TABLE}?id=eq.${encodeFilterValue(id)}`, {
+        method: "DELETE",
+        headers: { Prefer: "return=minimal" }
+      });
+    }
+
+    async function supabaseSaveMasterData(data) {
+      if (!isSupabaseReady()) return;
+      await supabaseRequest(`/rest/v1/${SUPABASE_MASTER_TABLE}?on_conflict=id`, {
+        method: "POST",
+        headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+        body: JSON.stringify({
+          id: "master",
+          data,
+          updated_at: new Date().toISOString()
+        })
+      });
+    }
+
+    async function supabaseGetMasterData() {
+      const rows = await supabaseRequest(`/rest/v1/${SUPABASE_MASTER_TABLE}?select=data&id=eq.master&limit=1`, {
+        method: "GET"
+      });
+      if (Array.isArray(rows) && rows[0] && rows[0].data) return rows[0].data;
+      return null;
+    }
+
+    function getLocalAllItems() {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readonly");
+        const store = tx.objectStore(STORE_NAME);
+        const request = store.getAll();
+        request.onsuccess = () => resolve(request.result || []);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function localSaveItem(item) {
+      return runStore("readwrite", store => store.put(item));
+    }
+
+    function localRemoveItemById(id) {
+      return runStore("readwrite", store => store.delete(id));
+    }
+
+    function localClearAllItems() {
+      return runStore("readwrite", store => store.clear());
+    }
+
+    async function replaceLocalCache(newItems) {
+      await localClearAllItems();
+      for (const item of newItems) {
+        await localSaveItem(normalizeItem(item));
+      }
+    }
+
+    async function pushLocalCacheToSupabase(localItems) {
+      if (!isSupabaseReady() || !Array.isArray(localItems) || !localItems.length) return;
+      for (const rawItem of localItems) {
+        await supabaseUpsertItem(rawItem);
+      }
+    }
+
+    async function refreshMasterFromSupabase() {
+      if (!isSupabaseReady()) return;
+      try {
+        const remoteData = await supabaseGetMasterData();
+        if (remoteData) writeStoredSavedData(remoteData, false);
+      } catch (error) {
+        warnSupabase(error, "Saran input pakai data lokal dulu");
+      }
+    }
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        if (!window.indexedDB) return reject(new Error("IndexedDB tidak didukung."));
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onupgradeneeded = event => {
+          const database = event.target.result;
+          if (!database.objectStoreNames.contains(STORE_NAME)) {
+            const store = database.createObjectStore(STORE_NAME, { keyPath: "id" });
+            store.createIndex("createdAt", "createdAt", { unique: false });
+            store.createIndex("done", "done", { unique: false });
+          }
+        };
+        request.onsuccess = event => resolve(event.target.result);
+        request.onerror = event => reject(event.target.error);
+      });
+    }
+
+    function runStore(mode, callback) {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, mode);
+        const store = tx.objectStore(STORE_NAME);
+        let result;
+        try { result = callback(store); }
+        catch (error) { reject(error); return; }
+        tx.oncomplete = () => resolve(result);
+        tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(tx.error);
+      });
+    }
+
+    async function getAllItems() {
+      const localItems = (await getLocalAllItems()).map(normalizeItem);
+
+      if (isSupabaseReady()) {
+        try {
+          // Migrasi otomatis: data lama IndexedDB dikirim ke Supabase dulu.
+          await pushLocalCacheToSupabase(localItems);
+          const remoteItems = await supabaseGetItems();
+          await replaceLocalCache(remoteItems);
+          supabaseWarned = false;
+          return remoteItems;
+        } catch (error) {
+          warnSupabase(error);
+        }
+      }
+
+      return localItems;
+    }
+
+    async function saveItem(item) {
+      const normalized = normalizeItem(item);
+      await localSaveItem(normalized);
+
+      if (isSupabaseReady()) {
+        try {
+          await supabaseUpsertItem(normalized);
+          supabaseWarned = false;
+        } catch (error) {
+          warnSupabase(error, "Tersimpan lokal, Supabase belum tersambung");
+        }
+      }
+    }
+
+
+    function readStaffBridgeQueue() {
+      const out = [];
+      (STAFF_BRIDGE_KEYS || [STAFF_BRIDGE_KEY]).forEach(key => {
+        try {
+          const raw = JSON.parse(localStorage.getItem(key) || "[]");
+          if (Array.isArray(raw)) out.push(...raw.filter(Boolean));
+        } catch (error) {
+          console.warn("Gagal baca kiriman aplikasi", key, error);
+        }
+      });
+      return out;
+    }
+
+    function clearStaffBridgeQueue() {
+      (STAFF_BRIDGE_KEYS || [STAFF_BRIDGE_KEY]).forEach(key => {
+        try { localStorage.removeItem(key); }
+        catch (error) { console.warn("Gagal bersihkan kiriman aplikasi", key, error); }
+      });
+    }
+
+    function normalizeBridgeVariants(raw) {
+      const source = Array.isArray(raw.variants) && raw.variants.length
+        ? raw.variants
+        : (Array.isArray(raw.colors) && raw.colors.length ? raw.colors : [{ colorName: raw.colorName || raw.color || "", qty: raw.qty || 1, done: false }]);
+      const merged = [];
+      const seen = new Map();
+      source.forEach(entry => {
+        const isObj = entry && typeof entry === "object";
+        const colorName = cleanNameValue(isObj ? (entry.colorName || entry.color || entry.name || entry.motif || "") : entry);
+        if (!colorName) return;
+        const qty = Math.max(1, Number(isObj ? (entry.qty || entry.quantity || entry.jumlah || 1) : 1) || 1);
+        const done = Boolean(isObj && entry.done);
+        const key = sameNameKey(colorName);
+        if (seen.has(key)) {
+          const existing = seen.get(key);
+          existing.qty += qty;
+          existing.done = existing.done && done;
+        } else {
+          const variant = { colorName, qty, done };
+          seen.set(key, variant);
+          merged.push(variant);
+        }
+      });
+      if (!merged.length) merged.push({ colorName: cleanNameValue(raw.colorName || raw.color || "Tanpa warna"), qty: Math.max(1, Number(raw.qty) || 1), done: false });
+      return merged;
+    }
+
+    function normalizeStaffBridgeItem(rawItem) {
+      const now = new Date().toISOString();
+      const raw = rawItem && typeof rawItem === "object" ? rawItem : {};
+      const variants = normalizeBridgeVariants(raw);
+      const item = normalizeItem({
+        id: raw.id || makeId(),
+        name: raw.name || raw.itemName || raw.productName || "",
+        supplierName: raw.supplierName || raw.supplier || "",
+        kodiPrice: Number(raw.kodiPrice) || 0,
+        variants,
+        unit: DEFAULT_UNIT,
+        priority: raw.priority || "Tinggi",
+        note: raw.note || "Dari aplikasi - barang kosong",
+        done: false,
+        source: raw.source || "stafku_barang_kosong",
+        staffStatus: raw.staffStatus || "inbox",
+        staffRequest: raw.staffRequest !== false,
+        createdBy: raw.createdBy || "staff",
+        createdByName: raw.createdByName || raw.staffName || (String(raw.source || "").includes("toko") ? "Risma" : "Staff"),
+        createdAt: raw.createdAt || now,
+        updatedAt: raw.updatedAt || now
+      });
+      return item.name ? item : null;
+    }
+
+    async function importStaffBridgeQueue(showMessage = false) {
+      if (!db) return 0;
+      const queue = readStaffBridgeQueue();
+      if (!queue.length) return 0;
+
+      let imported = 0;
+      try {
+        for (const rawItem of queue) {
+          const item = normalizeStaffBridgeItem(rawItem);
+          if (!item) continue;
+          rememberSavedFromItem(item);
+          await saveItem(item);
+          imported += 1;
+        }
+        clearStaffBridgeQueue();
+        if (imported) {
+          await refreshItems();
+          updateSuggestions();
+          if (showMessage) showToast(`${imported} barang dari aplikasi masuk halaman Kiriman`);
+        }
+      } catch (error) {
+        console.warn("Gagal impor kiriman aplikasi", error);
+        if (showMessage) showToast("Kiriman aplikasi belum masuk, coba refresh");
+      }
+      return imported;
+    }
+
+    async function removeItemById(id) {
+      await localRemoveItemById(id);
+
+      if (isSupabaseReady()) {
+        try {
+          await supabaseDeleteItem(id);
+          supabaseWarned = false;
+        } catch (error) {
+          warnSupabase(error, "Dihapus lokal, Supabase belum tersambung");
+        }
+      }
+    }
+
+    async function clearAllItems() {
+      const ids = new Set(items.map(item => normalizeItem(item).id));
+      (await getLocalAllItems()).map(normalizeItem).forEach(item => ids.add(item.id));
+      await localClearAllItems();
+
+      if (isSupabaseReady()) {
+        try {
+          for (const id of ids) await supabaseDeleteItem(id);
+          supabaseWarned = false;
+        } catch (error) {
+          warnSupabase(error, "Data lokal dihapus, Supabase belum tersambung");
+        }
+      }
+    }
+
+    async function clearDoneVariants() {
+      for (const rawItem of items) {
+        const item = normalizeItem(rawItem);
+        const hasDone = item.variants.some(variant => variant.done);
+        if (!hasDone) continue;
+
+        const remainingVariants = item.variants.filter(variant => !variant.done);
+        if (!remainingVariants.length) {
+          await removeItemById(item.id);
+        } else {
+          await saveItem({
+            ...item,
+            variants: remainingVariants,
+            done: false,
+            updatedAt: new Date().toISOString()
+          });
+        }
+      }
+    }
+
+    function makeId() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return "id_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+    }
+
+    function safeText(value) {
+      return String(value || "").replace(/[<>]/g, "").trim();
+    }
+
+    function cleanNameValue(value) {
+      return safeText(value).replace(/\s+/g, " ").trim();
+    }
+
+    function sameNameKey(value) {
+      return cleanNameValue(value).toLocaleLowerCase("id-ID");
+    }
+
+    function casingScore(value) {
+      const clean = cleanNameValue(value);
+      const letters = clean.replace(/[^A-Za-zÀ-ÿ]/g, "");
+      if (!letters) return 0;
+      if (letters === letters.toLocaleUpperCase("id-ID")) return 3;
+      if (/[A-ZÀ-Ý]/.test(clean)) return 2;
+      return 1;
+    }
+
+    function chooseBetterName(oldValue, newValue) {
+      const oldClean = cleanNameValue(oldValue);
+      const newClean = cleanNameValue(newValue);
+      if (!oldClean) return newClean;
+      if (!newClean) return oldClean;
+
+      const oldScore = casingScore(oldClean);
+      const newScore = casingScore(newClean);
+      if (newScore > oldScore) return newClean;
+      if (oldScore > newScore) return oldClean;
+
+      // Kalau key sama dan kualitas huruf sama, input terbaru menang.
+      // Contoh: simpan DASYA setelah Dasya => tampil DASYA, tapi tetap 1 data.
+      if (sameNameKey(newClean) === sameNameKey(oldClean)) return newClean;
+      return oldClean;
+    }
+
+    function cleanSavedList(values) {
+      const map = new Map();
+      (Array.isArray(values) ? values : []).forEach(value => {
+        const clean = cleanNameValue(value);
+        if (!clean) return;
+        const key = sameNameKey(clean);
+        map.set(key, map.has(key) ? chooseBetterName(map.get(key), clean) : clean);
+      });
+      return [...map.values()].sort((a, b) => a.localeCompare(b, "id-ID"));
+    }
+
+    function withoutSameName(values, targetValue) {
+      const targetKey = sameNameKey(targetValue);
+      return cleanSavedList((Array.isArray(values) ? values : []).filter(value => sameNameKey(value) !== targetKey));
+    }
+
+    function removeHiddenMatches(hiddenValues, visibleValues) {
+      const visibleKeys = new Set(cleanSavedList(visibleValues).map(sameNameKey));
+      if (!visibleKeys.size) return cleanSavedList(hiddenValues);
+      return cleanSavedList((Array.isArray(hiddenValues) ? hiddenValues : []).filter(value => !visibleKeys.has(sameNameKey(value))));
+    }
+
+    function upsertName(values, newValue) {
+      // Hapus dulu value lama yang key-nya sama, lalu masukkan value baru.
+      // Jadi dasya/Dasya/DASYA tidak jadi data dobel, tapi kapital terbaru tetap tersimpan.
+      return cleanSavedList([...withoutSameName(values, newValue), newValue]);
+    }
+
+    function getStoredSavedData() {
+      try {
+        const raw = localStorage.getItem(MASTER_DATA_KEY);
+        const data = raw ? JSON.parse(raw) : {};
+        return {
+          itemNames: cleanSavedList(data.itemNames),
+          suppliers: cleanSavedList(data.suppliers),
+          colors: cleanSavedList(data.colors),
+          hiddenItemNames: cleanSavedList(data.hiddenItemNames),
+          hiddenSuppliers: cleanSavedList(data.hiddenSuppliers),
+          hiddenColors: cleanSavedList(data.hiddenColors)
+        };
+      } catch (error) {
+        console.warn("Gagal baca data master saran", error);
+        return { itemNames: [], suppliers: [], colors: [], hiddenItemNames: [], hiddenSuppliers: [], hiddenColors: [] };
+      }
+    }
+
+    function writeStoredSavedData(data, syncRemote = true) {
+      const nextData = {
+        itemNames: cleanSavedList((data && data.itemNames) || []),
+        suppliers: cleanSavedList((data && data.suppliers) || []),
+        colors: cleanSavedList((data && data.colors) || []),
+        hiddenItemNames: cleanSavedList((data && data.hiddenItemNames) || []),
+        hiddenSuppliers: cleanSavedList((data && data.hiddenSuppliers) || []),
+        hiddenColors: cleanSavedList((data && data.hiddenColors) || [])
+      };
+
+      try {
+        localStorage.setItem(MASTER_DATA_KEY, JSON.stringify(nextData));
+      } catch (error) {
+        console.warn("Gagal simpan data master saran", error);
+      }
+
+      if (syncRemote && isSupabaseReady()) {
+        supabaseSaveMasterData(nextData).catch(error => warnSupabase(error, "Saran input tersimpan lokal dulu"));
+      }
+
+      return nextData;
+    }
+
+    function saveStoredSavedData(data) {
+      const oldData = getStoredSavedData();
+      const newItemNames = cleanSavedList((data && data.itemNames) || []);
+      const newSuppliers = cleanSavedList((data && data.suppliers) || []);
+      const newColors = cleanSavedList((data && data.colors) || []);
+
+      const nextData = {
+        itemNames: cleanSavedList([...(oldData.itemNames || []), ...newItemNames]),
+        suppliers: cleanSavedList([...(oldData.suppliers || []), ...newSuppliers]),
+        colors: cleanSavedList([...(oldData.colors || []), ...newColors]),
+        // Kalau user pernah hapus "Dasya" dari saran, lalu dia input "DASYA" lagi,
+        // data itu harus muncul kembali dan tidak dianggap hidden.
+        hiddenItemNames: removeHiddenMatches(oldData.hiddenItemNames, newItemNames),
+        hiddenSuppliers: removeHiddenMatches(oldData.hiddenSuppliers, newSuppliers),
+        hiddenColors: removeHiddenMatches(oldData.hiddenColors, newColors)
+      };
+
+      return writeStoredSavedData(nextData);
+    }
+
+    function visibleSavedList(values, hiddenValues) {
+      const hidden = new Set(cleanSavedList(hiddenValues).map(sameNameKey));
+      return cleanSavedList(values).filter(value => !hidden.has(sameNameKey(value)));
+    }
+
+    function rememberSavedFromItem(rawItem) {
+      const item = normalizeItem(rawItem);
+      saveStoredSavedData({
+        itemNames: item.name ? [item.name] : [],
+        suppliers: item.supplierName ? [item.supplierName] : [],
+        colors: item.variants.map(variant => variant.colorName).filter(Boolean)
+      });
+    }
+
+    function formatRupiah(value) {
+      const number = Number(value) || 0;
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency", currency: "IDR", maximumFractionDigits: 0
+      }).format(number);
+    }
+
+    function parseRupiah(value) {
+      return Number(String(value || "").replace(/[^0-9]/g, "")) || 0;
+    }
+
+    function formatKodiPriceInput() {
+      const value = parseRupiah(kodiPriceInput.value);
+      kodiPriceInput.value = value ? formatRupiah(value) : "";
+      updatePricePreview();
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1500);
+    }
+
+    let pinResolve = null;
+
+    function closePinModal(result) {
+      if (pinModal) pinModal.classList.remove("show");
+      document.body.classList.remove("pin-lock");
+      if (pinInput) pinInput.value = "";
+      if (pinError) pinError.textContent = "";
+
+      const resolver = pinResolve;
+      pinResolve = null;
+      if (resolver) resolver(Boolean(result));
+    }
+
+    function confirmPinModal() {
+      const pin = String(pinInput ? pinInput.value : "").replace(/\D/g, "");
+      if (pin !== APP_PIN) {
+        if (pinError) pinError.textContent = "PIN salah bro.";
+        if (pinInput) {
+          pinInput.value = "";
+          pinInput.focus({ preventScroll: true });
+        }
+        return;
+      }
+      closePinModal(true);
+    }
+
+    function focusPinInput() {
+      if (!pinInput) return;
+      pinInput.focus({ preventScroll: true });
+      if (typeof pinInput.click === "function") pinInput.click();
+    }
+
+    function requirePin(actionText) {
+      if (!pinModal || !pinInput || !pinConfirmBtn || !pinCancelBtn) {
+        const pin = prompt(`Masukkan PIN untuk ${actionText}:`);
+        if (pin === null) return Promise.resolve(false);
+        if (pin !== APP_PIN) {
+          alert("PIN salah bro.");
+          return Promise.resolve(false);
+        }
+        return Promise.resolve(true);
+      }
+
+      return new Promise(resolve => {
+        pinResolve = resolve;
+        if (pinActionText) pinActionText.textContent = `Konfirmasi untuk ${actionText}. Keyboard angka akan otomatis muncul.`;
+        if (pinError) pinError.textContent = "";
+        pinInput.value = "";
+        pinModal.classList.add("show");
+        document.body.classList.add("pin-lock");
+        focusPinInput();
+        setTimeout(focusPinInput, 80);
+      });
+    }
+
+    if (pinInput) {
+      pinInput.addEventListener("input", () => {
+        pinInput.value = pinInput.value.replace(/\D/g, "");
+        if (pinError) pinError.textContent = "";
+      });
+
+      pinInput.addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          confirmPinModal();
+        }
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closePinModal(false);
+        }
+      });
+    }
+
+    if (pinConfirmBtn) pinConfirmBtn.addEventListener("click", confirmPinModal);
+    if (pinCancelBtn) pinCancelBtn.addEventListener("click", () => closePinModal(false));
+    if (pinModal) pinModal.addEventListener("click", event => {
+      if (event.target === pinModal) closePinModal(false);
+    });
+
+    function updatePrinterStatus(message) {
+      if (printerStatus) printerStatus.textContent = message;
+    }
+
+
+    function priorityClass(priority) {
+      if (priority === "Tinggi") return "high";
+      if (priority === "Rendah") return "low";
+      return "medium";
+    }
+
+    function priorityLabel(priority) {
+      if (priority === "Tinggi") return "Stok Habis";
+      if (priority === "Rendah") return "Tambahan";
+      return "Stok Menipis";
+    }
+
+    function normalizeItem(item) {
+      item = item && typeof item === "object" ? item : {};
+      const oldItemDone = Boolean(item.done);
+      const rawVariants = Array.isArray(item.variants) && item.variants.length
+        ? item.variants
+        : [{ colorName: item.colorName || item.color || "", qty: item.qty || 1, done: oldItemDone }];
+      const variants = rawVariants.map(v => {
+        const raw = v && typeof v === "object" ? v : { colorName: v, qty: 1 };
+        return {
+          colorName: cleanNameValue(raw.colorName || raw.color || raw.name || raw.motif || ""),
+          qty: Math.max(1, Number(raw.qty || raw.quantity || raw.jumlah) || 1),
+          done: Boolean(raw.done) || oldItemDone
+        };
+      }).filter((variant, index, arr) => variant.colorName || arr.length === 1);
+
+      return {
+        ...item,
+        id: item.id || makeId(),
+        name: safeText(item.name),
+        supplierName: safeText(item.supplierName),
+        kodiPrice: Math.max(0, Number(item.kodiPrice) || 0),
+        variants,
+        unit: DEFAULT_UNIT,
+        priority: item.priority || "Sedang",
+        note: safeText(item.note),
+        done: variants.length ? variants.every(variant => variant.done) : oldItemDone,
+        createdAt: item.createdAt || new Date().toISOString()
+      };
+    }
+
+    function getSupplierKey(item) { return normalizeItem(item).supplierName || UNSET_SUPPLIER; }
+    function getSupplierMatchKey(item) { return sameNameKey(getSupplierKey(item)); }
+    function getTotalQty(item) { return normalizeItem(item).variants.reduce((sum, variant) => sum + variant.qty, 0); }
+    function getPendingQty(item) { return normalizeItem(item).variants.filter(variant => !variant.done).reduce((sum, variant) => sum + variant.qty, 0); }
+    function getDoneQty(item) { return normalizeItem(item).variants.filter(variant => variant.done).reduce((sum, variant) => sum + variant.qty, 0); }
+    function hasDoneVariant(item) { return normalizeItem(item).variants.some(variant => variant.done); }
+    function hasPendingVariant(item) { return normalizeItem(item).variants.some(variant => !variant.done); }
+    function getPcsPrice(item) { const data = normalizeItem(item); return data.kodiPrice > 0 ? data.kodiPrice / 20 : 0; }
+    function getTotalNominal(item) { return getTotalQty(item) * getPcsPrice(item); }
+    function getPendingNominal(item) { return getPendingQty(item) * getPcsPrice(item); }
+
+    function updatePricePreview() {
+      pcsPricePreview.value = formatRupiah(parseRupiah(kodiPriceInput.value) / 20);
+    }
+
+    function addVariantRow(colorName = "", qty = 1) {
+      const row = document.createElement("div");
+      row.className = "variant-row";
+
+      const colorWrap = document.createElement("div");
+      const colorLabel = document.createElement("label");
+      colorLabel.textContent = "Warna / Motif";
+      const color = document.createElement("input");
+      color.className = "variant-color";
+      color.type = "text";
+      color.placeholder = "";
+      color.autocomplete = "off";
+      color.value = safeText(colorName);
+      color.addEventListener("focus", () => {
+        activeColorInput = color;
+      });
+      color.addEventListener("click", () => {
+        activeColorInput = color;
+      });
+      colorWrap.append(colorLabel, color);
+
+      const qtyWrap = document.createElement("div");
+      const qtyLabel = document.createElement("label");
+      qtyLabel.textContent = "Qty";
+      const qtyInput = document.createElement("input");
+      qtyInput.className = "variant-qty";
+      qtyInput.type = "number";
+      qtyInput.min = "1";
+      qtyInput.step = "1";
+      qtyInput.inputMode = "numeric";
+      qtyInput.value = Math.max(1, Number(qty) || 1);
+      qtyWrap.append(qtyLabel, qtyInput);
+
+      const remove = document.createElement("button");
+      remove.className = "remove-variant";
+      remove.type = "button";
+      remove.textContent = "×";
+      remove.addEventListener("click", () => {
+        const rows = variantList.querySelectorAll(".variant-row");
+        if (rows.length <= 1) {
+          color.value = "";
+          qtyInput.value = 1;
+        } else {
+          row.remove();
+        }
+      });
+
+      row.append(colorWrap, qtyWrap, remove);
+      variantList.appendChild(row);
+      return row;
+    }
+
+    function setVariantRows(variants) {
+      variantList.innerHTML = "";
+      const list = Array.isArray(variants) && variants.length ? variants : [{ colorName: "", qty: 1 }];
+      list.forEach(variant => addVariantRow(variant.colorName, variant.qty));
+    }
+
+    function getFormVariants() {
+      const variants = [...variantList.querySelectorAll(".variant-row")].map(row => ({
+        colorName: cleanNameValue(row.querySelector(".variant-color")?.value),
+        qty: Math.max(1, Number(row.querySelector(".variant-qty")?.value) || 1)
+      })).filter(variant => variant.colorName);
+      return variants;
+    }
+
+    function makeSavedChip(text, onClick) {
+      const chip = document.createElement("button");
+      chip.className = "saved-chip";
+      chip.type = "button";
+      chip.textContent = text;
+      chip.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        onClick();
+      });
+      return chip;
+    }
+
+    function getSavedData() {
+      const stored = getStoredSavedData();
+      const itemNames = [...stored.itemNames];
+      const suppliers = [...stored.suppliers];
+      const colors = [...stored.colors];
+
+      items.forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        if (item.name) itemNames.push(item.name);
+        if (item.supplierName) suppliers.push(item.supplierName);
+        item.variants.forEach(variant => {
+          if (variant.colorName) colors.push(variant.colorName);
+        });
+      });
+
+      return {
+        itemNames: visibleSavedList(itemNames, stored.hiddenItemNames).sort((a, b) => a.localeCompare(b, "id-ID")),
+        suppliers: visibleSavedList(suppliers, stored.hiddenSuppliers).sort((a, b) => a.localeCompare(b, "id-ID")),
+        colors: visibleSavedList(colors, stored.hiddenColors).sort((a, b) => a.localeCompare(b, "id-ID"))
+      };
+    }
+
+    function prefixFilter(values, keyword) {
+      const clean = sameNameKey(keyword);
+      if (!clean) return values;
+      return values.filter(value => sameNameKey(value).startsWith(clean));
+    }
+
+    function fillSavedPanel(panel, values, onClick, emptyText) {
+      if (!panel) return;
+      panel.innerHTML = "";
+      const limitedValues = values.slice(0, 8);
+      if (!limitedValues.length) {
+        const empty = document.createElement("span");
+        empty.className = "saved-empty";
+        empty.textContent = emptyText;
+        panel.appendChild(empty);
+        return;
+      }
+      limitedValues.forEach(value => panel.appendChild(makeSavedChip(value, () => onClick(value))));
+    }
+
+    function renderSavedPanels() {
+      const saved = getSavedData();
+
+      fillSavedPanel(
+        itemNameSavedPanel,
+        prefixFilter(saved.itemNames, nameInput.value),
+        value => {
+          nameInput.value = value;
+          if (itemNameSavedPanel) itemNameSavedPanel.classList.remove("show");
+        },
+        "Belum ada nama tersimpan."
+      );
+
+      fillSavedPanel(
+        supplierSavedPanel,
+        prefixFilter(saved.suppliers, supplierInput.value),
+        value => {
+          supplierInput.value = value;
+          if (supplierSavedPanel) supplierSavedPanel.classList.remove("show");
+        },
+        "Belum ada supplier tersimpan."
+      );
+
+      const activeValue = activeColorInput ? activeColorInput.value : "";
+      fillSavedPanel(
+        colorSavedPanel,
+        prefixFilter(saved.colors, activeValue),
+        value => {
+          const target = activeColorInput || variantList.querySelector(".variant-color");
+          if (target) target.value = value;
+          colorSavedPanel.classList.remove("show");
+        },
+        "Belum ada warna tersimpan."
+      );
+    }
+
+    function updateSuggestions() {
+      const saved = getSavedData();
+
+      itemNameOptions.innerHTML = "";
+      saved.itemNames.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        itemNameOptions.appendChild(option);
+      });
+
+      supplierOptions.innerHTML = "";
+      saved.suppliers.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        supplierOptions.appendChild(option);
+      });
+
+      colorOptions.innerHTML = "";
+      saved.colors.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        colorOptions.appendChild(option);
+      });
+
+      renderSavedPanels();
+    }
+
+
+    function getMasterConfig(type) {
+      if (type === "itemNames") return { label: "Nama Barang", listKey: "itemNames", hiddenKey: "hiddenItemNames" };
+      if (type === "suppliers") return { label: "Nama Supplier", listKey: "suppliers", hiddenKey: "hiddenSuppliers" };
+      return { label: "Warna", listKey: "colors", hiddenKey: "hiddenColors" };
+    }
+
+    function syncMasterUi() {
+      updateSuggestions();
+      renderMasterManager();
+    }
+
+    function editMasterValue(type, oldValue) {
+      const config = getMasterConfig(type);
+      const nextValue = cleanNameValue(prompt(`Edit ${config.label}:`, oldValue));
+      if (!nextValue || nextValue === oldValue) return;
+
+      const data = getStoredSavedData();
+      data[config.listKey] = upsertName(withoutSameName(data[config.listKey] || [], oldValue), nextValue);
+      data[config.hiddenKey] = withoutSameName(data[config.hiddenKey] || [], nextValue);
+      writeStoredSavedData(data);
+      syncMasterUi();
+      showToast(`${config.label} diperbarui`);
+    }
+
+    function deleteMasterValue(type, value) {
+      const config = getMasterConfig(type);
+      if (!confirm(`Hapus ${config.label} ini dari saran input?\n\n${value}`)) return;
+
+      const data = getStoredSavedData();
+      data[config.listKey] = withoutSameName(data[config.listKey] || [], value);
+      data[config.hiddenKey] = upsertName(data[config.hiddenKey] || [], value);
+      writeStoredSavedData(data);
+      syncMasterUi();
+      showToast(`${config.label} dihapus dari saran`);
+    }
+
+    function renderMasterSection(type, values) {
+      const config = getMasterConfig(type);
+      const section = document.createElement("section");
+      section.className = "master-section";
+
+      const head = document.createElement("div");
+      head.className = "master-section-head";
+      const title = document.createElement("strong");
+      title.textContent = config.label;
+      const count = document.createElement("span");
+      count.textContent = `${values.length} data`;
+      head.append(title, count);
+
+      const list = document.createElement("div");
+      list.className = "master-list";
+
+      if (!values.length) {
+        const empty = document.createElement("div");
+        empty.className = "master-empty";
+        empty.textContent = `Belum ada ${config.label.toLowerCase()} tersimpan.`;
+        list.appendChild(empty);
+      } else {
+        values.forEach(value => {
+          const row = document.createElement("div");
+          row.className = "master-row";
+
+          const name = document.createElement("div");
+          name.className = "master-name";
+          name.textContent = value;
+
+          const edit = document.createElement("button");
+          edit.type = "button";
+          edit.className = "master-action edit";
+          edit.textContent = "Edit";
+          edit.addEventListener("click", () => editMasterValue(type, value));
+
+          const del = document.createElement("button");
+          del.type = "button";
+          del.className = "master-action delete";
+          del.textContent = "Hapus";
+          del.addEventListener("click", () => deleteMasterValue(type, value));
+
+          row.append(name, edit, del);
+          list.appendChild(row);
+        });
+      }
+
+      section.append(head, list);
+      return section;
+    }
+
+    function renderMasterManager() {
+      if (!masterBody) return;
+      const saved = getSavedData();
+      masterBody.innerHTML = "";
+      masterBody.append(
+        renderMasterSection("itemNames", saved.itemNames),
+        renderMasterSection("suppliers", saved.suppliers),
+        renderMasterSection("colors", saved.colors)
+      );
+    }
+
+    function openMasterManager() {
+      renderMasterManager();
+      if (masterBody) {
+        masterBody.scrollTop = 0;
+        masterBody.style.overflowY = "auto";
+        masterBody.style.webkitOverflowScrolling = "touch";
+      }
+      document.body.classList.add("master-open");
+      if (masterModal) masterModal.classList.add("show");
+    }
+
+    function closeMasterManager() {
+      if (masterModal) masterModal.classList.remove("show");
+      document.body.classList.remove("master-open");
+    }
+
+    if (masterBody) {
+      masterBody.addEventListener("touchmove", event => {
+        event.stopPropagation();
+      }, { passive: true });
+    }
+
+    document.addEventListener("click", event => {
+      const toggle = event.target.closest("[data-saved-target]");
+      if (!toggle) return;
+      event.preventDefault();
+      event.stopPropagation();
+
+      const target = document.getElementById(toggle.dataset.savedTarget);
+      if (!target) return;
+
+      renderSavedPanels();
+      document.querySelectorAll(".saved-panel").forEach(panel => {
+        if (panel !== target) panel.classList.remove("show");
+      });
+      target.classList.toggle("show");
+    });
+
+    document.addEventListener("click", event => {
+      const isSuggestClick = event.target.closest(".saved-panel, [data-saved-target], #name, #supplierName, .variant-color");
+      if (isSuggestClick) return;
+      document.querySelectorAll(".saved-panel").forEach(panel => panel.classList.remove("show"));
+    });
+
+    nameInput.addEventListener("focus", () => {
+      renderSavedPanels();
+      if (nameInput.value.trim() && itemNameSavedPanel) itemNameSavedPanel.classList.add("show");
+    });
+
+    supplierInput.addEventListener("focus", () => {
+      renderSavedPanels();
+      if (supplierInput.value.trim() && supplierSavedPanel) supplierSavedPanel.classList.add("show");
+    });
+
+    nameInput.addEventListener("input", () => {
+      renderSavedPanels();
+      if (nameInput.value.trim() && itemNameSavedPanel) itemNameSavedPanel.classList.add("show");
+    });
+
+    supplierInput.addEventListener("input", () => {
+      renderSavedPanels();
+      if (supplierInput.value.trim() && supplierSavedPanel) supplierSavedPanel.classList.add("show");
+    });
+
+    variantList.addEventListener("input", event => {
+      if (!event.target.classList.contains("variant-color")) return;
+      activeColorInput = event.target;
+      renderSavedPanels();
+      if (event.target.value.trim()) colorSavedPanel.classList.add("show");
+    });
+
+    addVariantBtn.addEventListener("click", () => {
+      const row = addVariantRow();
+      const colorInput = row ? row.querySelector(".variant-color") : null;
+      if (colorInput) {
+        activeColorInput = colorInput;
+        colorInput.focus({ preventScroll: true });
+      }
+      setTimeout(() => {
+        if (row && row.scrollIntoView) {
+          row.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 180);
+    });
+    kodiPriceInput.addEventListener("input", formatKodiPriceInput);
+    kodiPriceInput.addEventListener("blur", formatKodiPriceInput);
+
+    function resetForm() {
+      editId.value = "";
+      form.reset();
+      priorityInput.value = "Sedang";
+      kodiPriceInput.value = "";
+      updatePricePreview();
+      setVariantRows([{ colorName: "", qty: 1 }]);
+      formTitle.textContent = "Tambah Barang Hijab";
+      submitBtn.textContent = "+ Tambah ke List";
+      nameInput.focus();
+    }
+
+    function sortItems(data) {
+      const rank = { Tinggi: 1, Sedang: 2, Rendah: 3 };
+      return [...data].sort((a, b) => {
+        if (a.done !== b.done) return a.done ? 1 : -1;
+        if (rank[a.priority] !== rank[b.priority]) return rank[a.priority] - rank[b.priority];
+        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+      });
+    }
+
+
+    function isStaffInboxItem(rawItem) {
+      const item = normalizeItem(rawItem || {});
+      const source = String(item.source || "");
+      const status = String(item.staffStatus || "").toLowerCase();
+      const inboxSource = source === "stafku_barang_kosong" || source === "toko_barang_kosong";
+      return inboxSource && status !== "added" && !item.staffAddedAt;
+    }
+
+    function getCartItems() {
+      return items.filter(item => !isStaffInboxItem(item));
+    }
+
+    function getStaffRequestItems() {
+      return sortItems(items.filter(isStaffInboxItem));
+    }
+
+    function getFilteredItems() {
+      const keyword = searchInput.value.toLowerCase().trim();
+      const status = statusFilter.value;
+      return sortItems(getCartItems()).filter(rawItem => {
+        const item = normalizeItem(rawItem);
+        const colorText = item.variants.map(variant => variant.colorName).join(" ");
+        const qtyText = item.variants.map(variant => variant.qty).join(" ");
+        const matchKeyword = [item.name, colorText, qtyText, item.supplierName, item.note, item.unit, item.kodiPrice]
+          .join(" ").toLowerCase().includes(keyword);
+        const matchStatus = status === "all" || (status === "done" && hasDoneVariant(item)) || (status === "pending" && hasPendingVariant(item));
+        return matchKeyword && matchStatus;
+      });
+    }
+
+    function renderSummary() {
+      const pendingItems = getCartItems().filter(item => hasPendingVariant(item));
+      totalCount.textContent = getCartItems().length;
+      pendingCount.textContent = pendingItems.length;
+      totalPcsCount.textContent = pendingItems.reduce((sum, item) => sum + getPendingQty(item), 0);
+      totalModalCount.textContent = formatRupiah(pendingItems.reduce((sum, item) => sum + getPendingNominal(item), 0));
+    }
+
+    function createBadge(text, className) {
+      const span = document.createElement("span");
+      span.className = `badge ${className}`;
+      span.textContent = text;
+      return span;
+    }
+
+
+    function getVariantSelectionKey(item, variantIndex) {
+      const data = normalizeItem(item);
+      return `${data.id}::${variantIndex}`;
+    }
+
+    function getVisibleVariantKeys(itemList, pendingOnly = false) {
+      const keys = [];
+      itemList.forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        item.variants.forEach((variant, variantIndex) => {
+          if (pendingOnly && variant.done) return;
+          keys.push(getVariantSelectionKey(item, variantIndex));
+        });
+      });
+      return keys;
+    }
+
+    function getSelectedVisibleKeys(itemList, pendingOnly = false) {
+      return getVisibleVariantKeys(itemList, pendingOnly).filter(key => selectedVariantKeys.has(key));
+    }
+
+    function pruneSelectedVariantKeys() {
+      const validKeys = new Set();
+      getCartItems().forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        item.variants.forEach((variant, variantIndex) => validKeys.add(getVariantSelectionKey(item, variantIndex)));
+      });
+      selectedVariantKeys.forEach(key => {
+        if (!validKeys.has(key)) selectedVariantKeys.delete(key);
+      });
+    }
+
+    function toggleVariantSelection(item, variantIndex) {
+      const key = getVariantSelectionKey(item, variantIndex);
+      if (selectedVariantKeys.has(key)) {
+        selectedVariantKeys.delete(key);
+      } else {
+        selectedVariantKeys.add(key);
+      }
+      renderList();
+    }
+
+    function createBulkActions(itemList, options = {}) {
+      const pendingOnly = Boolean(options.pendingOnly);
+      const visibleKeys = getVisibleVariantKeys(itemList, pendingOnly);
+      const selectedKeys = visibleKeys.filter(key => selectedVariantKeys.has(key));
+      const selectedCount = selectedKeys.length;
+      const allSelected = visibleKeys.length > 0 && selectedCount === visibleKeys.length;
+
+      const bar = document.createElement("div");
+      bar.className = "bulk-actions";
+
+      const count = document.createElement("div");
+      count.className = "bulk-count";
+      const title = document.createElement("span");
+      title.textContent = `Dipilih: ${selectedCount} data`;
+      const hint = document.createElement("small");
+      hint.textContent = "Pilih warna dulu, lalu aksi massal.";
+      count.append(title, hint);
+
+      const selectAllBtn = document.createElement("button");
+      selectAllBtn.className = "icon-btn";
+      selectAllBtn.type = "button";
+      selectAllBtn.textContent = allSelected ? "Batal Semua" : "Pilih Semua";
+      selectAllBtn.disabled = !visibleKeys.length;
+      selectAllBtn.addEventListener("click", () => {
+        if (allSelected) {
+          visibleKeys.forEach(key => selectedVariantKeys.delete(key));
+        } else {
+          visibleKeys.forEach(key => selectedVariantKeys.add(key));
+        }
+        renderList();
+      });
+
+      const clearBtn = document.createElement("button");
+      clearBtn.className = "icon-btn";
+      clearBtn.type = "button";
+      clearBtn.textContent = "Reset Pilih";
+      clearBtn.disabled = !selectedCount;
+      clearBtn.addEventListener("click", () => {
+        visibleKeys.forEach(key => selectedVariantKeys.delete(key));
+        renderList();
+      });
+
+      const doneBtn = document.createElement("button");
+      doneBtn.className = "icon-btn";
+      doneBtn.type = "button";
+      doneBtn.textContent = "Ceklis Dipilih";
+      doneBtn.disabled = !selectedCount;
+      doneBtn.addEventListener("click", () => markSelectedVariantsDone(itemList, pendingOnly));
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "icon-btn danger";
+      deleteBtn.type = "button";
+      deleteBtn.textContent = "Hapus Dipilih";
+      deleteBtn.disabled = !selectedCount;
+      deleteBtn.addEventListener("click", () => deleteSelectedVariants(itemList, pendingOnly));
+
+      bar.append(count, selectAllBtn, clearBtn, doneBtn, deleteBtn);
+      return bar;
+    }
+
+    async function markSelectedVariantsDone(itemList, pendingOnly = false) {
+      const selectedKeys = new Set(getSelectedVisibleKeys(itemList, pendingOnly));
+      if (!selectedKeys.size) return showToast("Pilih data dulu bro");
+
+      try {
+        let changedCount = 0;
+        const saves = [];
+        itemList.forEach(rawItem => {
+          const data = normalizeItem(rawItem);
+          let changed = false;
+          data.variants = data.variants.map((variant, variantIndex) => {
+            const key = getVariantSelectionKey(data, variantIndex);
+            if (!selectedKeys.has(key)) return variant;
+            if (variant.done) return variant;
+            changed = true;
+            changedCount += 1;
+            return { ...variant, done: true };
+          });
+          if (!changed) return;
+          data.done = data.variants.every(variant => variant.done);
+          data.updatedAt = new Date().toISOString();
+          saves.push(saveItem(data));
+        });
+
+        await Promise.all(saves);
+        selectedKeys.forEach(key => selectedVariantKeys.delete(key));
+        await refreshItems();
+        showToast(changedCount ? `${changedCount} data diceklis` : "Data dipilih sudah terceklis");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal ceklis massal bro. Coba refresh lalu ulangi.");
+      }
+    }
+
+    async function deleteSelectedVariants(itemList, pendingOnly = false) {
+      const selectedKeys = new Set(getSelectedVisibleKeys(itemList, pendingOnly));
+      if (!selectedKeys.size) return showToast("Pilih data dulu bro");
+      if (!(await requirePin("hapus massal"))) return;
+
+      const ok = confirm(`Hapus ${selectedKeys.size} data yang dipilih? Nama barang, supplier, dan warna tetap disimpan untuk saran input.`);
+      if (!ok) return;
+
+      try {
+        saveStoredSavedData(getSavedData());
+        const jobs = [];
+        let deletedCount = 0;
+
+        itemList.forEach(rawItem => {
+          const data = normalizeItem(rawItem);
+          const remainingVariants = [];
+
+          data.variants.forEach((variant, variantIndex) => {
+            const key = getVariantSelectionKey(data, variantIndex);
+            if (selectedKeys.has(key)) {
+              deletedCount += 1;
+              return;
+            }
+            remainingVariants.push(variant);
+          });
+
+          if (remainingVariants.length === data.variants.length) return;
+
+          if (!remainingVariants.length) {
+            jobs.push(removeItemById(data.id));
+          } else {
+            jobs.push(saveItem({
+              ...data,
+              variants: remainingVariants,
+              done: remainingVariants.every(variant => variant.done),
+              updatedAt: new Date().toISOString()
+            }));
+          }
+        });
+
+        await Promise.all(jobs);
+        selectedKeys.forEach(key => selectedVariantKeys.delete(key));
+        await refreshItems();
+        showToast(`${deletedCount} data dihapus`);
+      } catch (error) {
+        console.error(error);
+        alert("Gagal hapus massal bro. Coba refresh lalu ulangi.");
+      }
+    }
+
+    async function deleteItem(item) {
+      if (!(await requirePin("hapus barang"))) return;
+      const ok = confirm(`Hapus "${item.name}" dari list belanja?`);
+      if (!ok) return;
+      try {
+        await removeItemById(item.id);
+        await refreshItems();
+        if (selectedSupplier) renderSupplierDetail(selectedSupplier);
+        showToast("Barang dihapus");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal menghapus barang bro. Coba refresh lalu ulangi.");
+      }
+    }
+
+    async function toggleVariantDone(item, variantIndex) {
+      const data = normalizeItem(item);
+      data.variants = data.variants.map((variant, index) => {
+        if (index !== variantIndex) return variant;
+        return { ...variant, done: !variant.done };
+      });
+      data.done = data.variants.every(variant => variant.done);
+      data.updatedAt = new Date().toISOString();
+
+      try {
+        await saveItem(data);
+        await refreshItems();
+        if (selectedSupplier) renderSupplierDetail(selectedSupplier);
+        showToast(data.variants[variantIndex].done ? "Warna ditandai sudah dibeli" : "Warna dikembalikan belum dibeli");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal mengubah status warna bro.");
+      }
+    }
+
+    async function toggleDone(item) {
+      const data = normalizeItem(item);
+      const nextDone = !data.done;
+      data.variants = data.variants.map(variant => ({ ...variant, done: nextDone }));
+      data.done = nextDone;
+      data.updatedAt = new Date().toISOString();
+
+      try {
+        await saveItem(data);
+        await refreshItems();
+        if (selectedSupplier) renderSupplierDetail(selectedSupplier);
+        showToast(nextDone ? "Semua warna ditandai sudah dibeli" : "Semua warna dikembalikan belum dibeli");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal mengubah status bro.");
+      }
+    }
+
+    function editItem(item) {
+      const data = normalizeItem(item);
+      editId.value = data.id;
+      nameInput.value = data.name;
+      supplierInput.value = data.supplierName || "";
+      kodiPriceInput.value = data.kodiPrice ? formatRupiah(data.kodiPrice) : "";
+      updatePricePreview();
+      setVariantRows(data.variants);
+      priorityInput.value = data.priority;
+      noteInput.value = data.note;
+      formTitle.textContent = "Edit Barang Hijab";
+      submitBtn.textContent = "Simpan Perubahan";
+      showPage("home");
+      setTimeout(() => nameInput.focus(), 350);
+    }
+
+    function createItemElement(rawItem) {
+      const item = normalizeItem(rawItem);
+      const el = document.createElement("div");
+      el.className = "item" + (item.done ? " done" : "");
+
+      const check = document.createElement("button");
+      check.className = "check";
+      check.type = "button";
+      check.textContent = item.done ? "✓" : "";
+      check.addEventListener("click", () => toggleDone(item));
+
+      const main = document.createElement("div");
+      main.className = "item-main";
+      const title = document.createElement("h3");
+      title.textContent = item.name;
+      main.appendChild(title);
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.appendChild(createBadge(`Total ${getTotalQty(item)} ${item.unit}`, "qty"));
+      meta.appendChild(createBadge(`Kodi ${formatRupiah(item.kodiPrice)}`, "qty"));
+      meta.appendChild(createBadge(`Pcs ${formatRupiah(getPcsPrice(item))}`, "qty"));
+      meta.appendChild(createBadge(`Modal ${formatRupiah(getTotalNominal(item))}`, "qty"));
+      meta.appendChild(createBadge(priorityLabel(item.priority), priorityClass(item.priority)));
+      main.appendChild(meta);
+
+      const variantBadges = document.createElement("div");
+      variantBadges.className = "variant-badges";
+      item.variants.forEach(variant => {
+        variantBadges.appendChild(createBadge(`${variant.colorName || "Tanpa warna"}: ${variant.qty} ${item.unit}`, "color"));
+      });
+      main.appendChild(variantBadges);
+
+      if (item.note) {
+        const note = document.createElement("p");
+        note.className = "note";
+        note.textContent = item.note;
+        main.appendChild(note);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "item-actions";
+      const edit = document.createElement("button");
+      edit.className = "icon-btn";
+      edit.type = "button";
+      edit.textContent = "Edit";
+      edit.addEventListener("click", () => editItem(item));
+
+      const del = document.createElement("button");
+      del.className = "icon-btn danger";
+      del.type = "button";
+      del.textContent = "Hapus";
+      del.addEventListener("click", () => deleteItem(item));
+
+      actions.append(edit, del);
+      el.append(check, main, actions);
+      return el;
+    }
+
+    function getSupplierGroups() {
+      const groups = new Map();
+      getFilteredItems().forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        const supplier = getSupplierKey(item);
+        const key = getSupplierMatchKey(item);
+        if (!groups.has(key)) groups.set(key, { supplierName: supplier, items: [] });
+        const group = groups.get(key);
+        group.supplierName = chooseBetterName(group.supplierName, supplier);
+        group.items.push(item);
+      });
+      return [...groups.values()]
+        .map(group => [group.supplierName, group.items])
+        .sort((a, b) => a[0].localeCompare(b[0], "id-ID"));
+    }
+
+    function renderSupplierList() {
+      updateSuggestions();
+      renderSummary();
+      supplierList.innerHTML = "";
+      const groups = getSupplierGroups();
+
+      if (!groups.length) {
+        supplierList.innerHTML = `
+          <div class="empty">
+            Belum ada supplier di list.<br />
+            Tambahkan stok hijab dari halaman Home dulu bro.
+          </div>
+        `;
+        return;
+      }
+
+      groups.forEach(([supplierName, supplierItems]) => {
+        const pendingItems = supplierItems.filter(item => !item.done);
+        const totalPcs = pendingItems.reduce((sum, item) => sum + getPendingQty(item), 0);
+        const totalModal = pendingItems.reduce((sum, item) => sum + getPendingNominal(item), 0);
+
+        const card = document.createElement("button");
+        card.className = "supplier-card";
+        card.type = "button";
+        card.style.pointerEvents = "auto";
+
+        const content = document.createElement("div");
+        const name = document.createElement("strong");
+        name.textContent = supplierName;
+        const info = document.createElement("span");
+        info.textContent = `${supplierItems.length} model • ${pendingItems.length} belum dibeli • ${totalPcs} pcs • ${formatRupiah(totalModal)}`;
+        content.append(name, info);
+
+        const arrow = document.createElement("div");
+        arrow.className = "supplier-arrow";
+        arrow.textContent = "›";
+
+        card.append(content, arrow);
+        card.addEventListener("click", () => openSupplierDetail(supplierName));
+        supplierList.appendChild(card);
+      });
+    }
+
+    function getItemsForSupplier(supplierName) {
+      const targetKey = sameNameKey(supplierName || UNSET_SUPPLIER);
+      return sortItems(getCartItems()).filter(item => sameNameKey(getSupplierKey(item)) === targetKey);
+    }
+
+    function openSupplierDetail(supplierName) {
+      selectedSupplier = supplierName;
+      renderSupplierDetail(supplierName);
+      showPage("detail");
+    }
+
+    function renderSupplierDetail(supplierName) {
+      const supplierItems = getItemsForSupplier(supplierName);
+      const pendingItems = supplierItems.filter(item => hasPendingVariant(item));
+      const totalPcs = pendingItems.reduce((sum, item) => sum + getPendingQty(item), 0);
+      const totalModal = pendingItems.reduce((sum, item) => sum + getPendingNominal(item), 0);
+
+      detailSupplierName.textContent = supplierName || UNSET_SUPPLIER;
+      if (detailSupplierNote) detailSupplierNote.textContent = "";
+      if (detailSummary) detailSummary.innerHTML = "";
+
+      detailItemList.innerHTML = "";
+      if (!supplierItems.length) {
+        detailItemList.innerHTML = `<div class="empty">Barang untuk supplier ini sudah tidak ada bro.</div>`;
+        return;
+      }
+
+      detailItemList.appendChild(createBulkActions(supplierItems, { pendingOnly: false }));
+
+      const simpleList = document.createElement("div");
+      simpleList.className = "simple-detail";
+
+      supplierItems.forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        const row = document.createElement("div");
+        row.className = "simple-row";
+
+        const head = document.createElement("div");
+        head.className = "simple-product-head with-total";
+        const headText = document.createElement("div");
+        const headLabel = document.createElement("span");
+        headLabel.textContent = "Barang";
+        const headValue = document.createElement("strong");
+        headValue.textContent = item.name;
+        headText.append(headLabel, headValue);
+        const headTotal = document.createElement("div");
+        headTotal.className = "product-total-pill";
+        headTotal.textContent = formatRupiah(getTotalNominal(item));
+        head.append(headText, headTotal);
+        row.appendChild(head);
+
+        item.variants.forEach((variant, variantIndex) => {
+          const variantRow = document.createElement("div");
+          const selectionKey = getVariantSelectionKey(item, variantIndex);
+          const isSelected = selectedVariantKeys.has(selectionKey);
+          variantRow.className = "simple-variant-row" + (variant.done ? " variant-done" : "") + (isSelected ? " variant-selected" : "");
+
+          const selectWrap = document.createElement("div");
+          selectWrap.className = "select-check-wrap";
+          const selectBtn = document.createElement("button");
+          selectBtn.className = "select-check" + (isSelected ? " selected" : "");
+          selectBtn.type = "button";
+          selectBtn.textContent = isSelected ? "✓" : "";
+          selectBtn.title = isSelected ? "Batalkan pilihan" : "Pilih data";
+          selectBtn.addEventListener("click", () => toggleVariantSelection(item, variantIndex));
+          selectWrap.appendChild(selectBtn);
+
+          const checkWrap = document.createElement("div");
+          checkWrap.className = "variant-check-wrap";
+          const checkBtn = document.createElement("button");
+          checkBtn.className = "variant-check" + (variant.done ? " done" : "");
+          checkBtn.type = "button";
+          checkBtn.textContent = variant.done ? "✓" : "";
+          checkBtn.title = variant.done ? "Sudah dibeli" : "Belum dibeli";
+          checkBtn.addEventListener("click", () => toggleVariantDone(item, variantIndex));
+          checkWrap.appendChild(checkBtn);
+
+          const warna = document.createElement("div");
+          warna.className = "simple-cell";
+          const warnaLabel = document.createElement("span");
+          warnaLabel.textContent = "Warna";
+          const warnaValue = document.createElement("strong");
+          warnaValue.textContent = variant.colorName || "Tanpa warna";
+          warna.append(warnaLabel, warnaValue);
+
+          const jumlah = document.createElement("div");
+          jumlah.className = "simple-cell";
+          const jumlahLabel = document.createElement("span");
+          jumlahLabel.textContent = "Jumlah";
+          const jumlahValue = document.createElement("strong");
+          jumlahValue.textContent = `${variant.qty} pcs`;
+          jumlah.append(jumlahLabel, jumlahValue);
+
+          variantRow.append(selectWrap, checkWrap, warna, jumlah);
+          row.appendChild(variantRow);
+        });
+
+        const actions = document.createElement("div");
+        actions.className = "simple-actions";
+        actions.style.gridTemplateColumns = "1fr 1fr";
+
+        const editBtn = document.createElement("button");
+        editBtn.className = "icon-btn";
+        editBtn.type = "button";
+        editBtn.textContent = "Edit";
+        editBtn.addEventListener("click", () => editItem(item));
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "icon-btn danger";
+        deleteBtn.type = "button";
+        deleteBtn.textContent = "Hapus";
+        deleteBtn.addEventListener("click", () => deleteItem(item));
+
+        actions.append(editBtn, deleteBtn);
+        row.appendChild(actions);
+        simpleList.appendChild(row);
+      });
+
+      detailItemList.appendChild(simpleList);
+    }
+
+
+
+
+    function getBudgetRows() {
+      const rows = [];
+      sortItems(getCartItems()).forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        const pendingVariants = item.variants
+          .map((variant, variantIndex) => ({ variant, variantIndex }))
+          .filter(entry => !entry.variant.done);
+
+        if (!pendingVariants.length) return;
+
+        const pcsPrice = getPcsPrice(item);
+        const amount = Math.round(getPendingNominal(item));
+        const qty = getPendingQty(item);
+        const colors = pendingVariants
+          .map(entry => entry.variant.colorName || "Tanpa warna")
+          .join(", ");
+        const keys = pendingVariants.map(entry => getVariantSelectionKey(item, entry.variantIndex));
+
+        rows.push({
+          key: item.id,
+          keys,
+          itemId: item.id,
+          supplier: getSupplierKey(item),
+          name: item.name || "Tanpa nama",
+          color: colors || "Tanpa warna",
+          qty,
+          pcsPrice,
+          amount,
+          priority: item.priority || "Sedang"
+        });
+      });
+      return rows;
+    }
+
+    function findBestBudgetCombination(rows, budget) {
+      const pricedRows = rows.filter(row => row.amount > 0 && row.amount <= budget);
+      const skippedNoPrice = rows.filter(row => row.amount <= 0).length;
+      if (!pricedRows.length || budget <= 0) {
+        return { rows: [], total: 0, remaining: budget, skippedNoPrice, step: 1 };
+      }
+
+      const step = Math.max(100, Math.ceil((budget / 12000) / 100) * 100);
+      const capacity = Math.max(1, Math.floor(budget / step));
+      const dp = Array(capacity + 1).fill(null);
+      dp[0] = { indexes: [], actualTotal: 0, totalQty: 0 };
+
+      pricedRows.forEach((row, index) => {
+        const costUnit = Math.max(1, Math.ceil(row.amount / step));
+        if (costUnit > capacity) return;
+
+        for (let current = capacity - costUnit; current >= 0; current--) {
+          const state = dp[current];
+          if (!state) continue;
+
+          const nextUnit = current + costUnit;
+          const nextActualTotal = state.actualTotal + row.amount;
+          if (nextActualTotal > budget) continue;
+
+          const nextQty = state.totalQty + row.qty;
+          const existing = dp[nextUnit];
+          const shouldReplace = !existing
+            || nextActualTotal > existing.actualTotal
+            || (nextActualTotal === existing.actualTotal && nextQty > existing.totalQty);
+
+          if (shouldReplace) {
+            dp[nextUnit] = {
+              indexes: state.indexes.concat(index),
+              actualTotal: nextActualTotal,
+              totalQty: nextQty
+            };
+          }
+        }
+      });
+
+      let best = dp[0];
+      dp.forEach(state => {
+        if (!state) return;
+        if (state.actualTotal > best.actualTotal) best = state;
+      });
+
+      const selectedRows = best.indexes.map(index => pricedRows[index]);
+      return {
+        rows: selectedRows,
+        total: best.actualTotal,
+        remaining: Math.max(0, budget - best.actualTotal),
+        skippedNoPrice,
+        step
+      };
+    }
+
+    function createBudgetMiniStat(label, value) {
+      const box = document.createElement("div");
+      box.className = "budget-mini-stat";
+      const span = document.createElement("span");
+      span.textContent = label;
+      const strong = document.createElement("strong");
+      strong.textContent = value;
+      box.append(span, strong);
+      return box;
+    }
+
+    function selectBudgetRecommendation(rows) {
+      if (!rows.length) return showToast("Belum ada rekomendasi budget");
+      selectedVariantKeys.clear();
+      rows.forEach(row => {
+        if (Array.isArray(row.keys) && row.keys.length) {
+          row.keys.forEach(key => selectedVariantKeys.add(key));
+        } else if (row.key) {
+          selectedVariantKeys.add(row.key);
+        }
+      });
+      renderList();
+      showPage("pending");
+      showToast(`${rows.length} barang budget sudah dipilih`);
+    }
+
+    function renderBudgetPage(forceCalculate = true) {
+      if (!budgetResultList || !budgetInput) return;
+      const budget = parseRupiah(budgetInput.value);
+      budgetResultList.innerHTML = "";
+
+      if (!budget) {
+        budgetResultList.innerHTML = `<div class="empty">Masukkan budget dulu bro, contoh 3000000 untuk cari kombinasi belanja yang paling mendekati Rp3 juta.</div>`;
+        return;
+      }
+
+      if (!forceCalculate && !budgetResultList.dataset.calculated) {
+        budgetResultList.innerHTML = `<div class="empty">Klik Hitung Budget untuk mulai menyaring daftar belanja.</div>`;
+        return;
+      }
+
+      budgetResultList.dataset.calculated = "1";
+      const rows = getBudgetRows();
+      if (!rows.length) {
+        budgetResultList.innerHTML = `<div class="empty">Belum ada barang pending untuk dihitung bro.</div>`;
+        return;
+      }
+
+      const result = findBestBudgetCombination(rows, budget);
+      if (!result.rows.length) {
+        budgetResultList.innerHTML = `<div class="empty">Belum ada barang yang bisa masuk budget ini. Cek harga kodian atau naikkan budget.</div>`;
+        return;
+      }
+
+      const totalPcs = result.rows.reduce((sum, row) => sum + row.qty, 0);
+      const summary = document.createElement("div");
+      summary.className = "budget-summary";
+      summary.append(
+        createBudgetMiniStat("Budget", formatRupiah(budget)),
+        createBudgetMiniStat("Terpakai", formatRupiah(result.total)),
+        createBudgetMiniStat("Sisa", formatRupiah(result.remaining))
+      );
+      budgetResultList.appendChild(summary);
+
+      const actionRow = document.createElement("div");
+      actionRow.className = "budget-action-row";
+      const info = document.createElement("div");
+      info.className = "budget-note";
+      info.textContent = `Rekomendasi: ${result.rows.length} barang, total ${totalPcs} pcs. Patokan budget memakai nominal pojok kanan card barang. ${result.skippedNoPrice ? result.skippedNoPrice + " barang tanpa harga kodian dilewati." : ""}`;
+      const selectBtn = document.createElement("button");
+      selectBtn.className = "btn btn-green";
+      selectBtn.type = "button";
+      selectBtn.textContent = "Pilih Rekomendasi di Halaman Belum";
+      selectBtn.addEventListener("click", () => selectBudgetRecommendation(result.rows));
+      actionRow.append(info, selectBtn);
+      budgetResultList.appendChild(actionRow);
+
+      result.rows
+        .sort((a, b) => a.supplier.localeCompare(b.supplier, "id-ID") || a.name.localeCompare(b.name, "id-ID"))
+        .forEach(row => {
+          const card = document.createElement("div");
+          card.className = "budget-result-card";
+
+          const main = document.createElement("div");
+          const title = document.createElement("strong");
+          title.textContent = row.name;
+          const desc = document.createElement("span");
+          desc.textContent = `${row.supplier} • ${row.color} • ${row.qty} pcs • nominal card barang`;
+          main.append(title, desc);
+
+          const price = document.createElement("div");
+          price.className = "budget-price";
+          price.textContent = formatRupiah(row.amount);
+
+          card.append(main, price);
+          budgetResultList.appendChild(card);
+        });
+    }
+
+
+    function renderMiniStats(target, stats) {
+      target.innerHTML = "";
+      stats.forEach(([label, value]) => {
+        const box = document.createElement("div");
+        box.className = "detail-mini-stat";
+        const span = document.createElement("span");
+        span.textContent = label;
+        const strong = document.createElement("strong");
+        strong.textContent = value;
+        box.append(span, strong);
+        target.appendChild(box);
+      });
+    }
+
+
+    async function addStaffRequestToCart(rawItem, options = {}) {
+      const item = normalizeItem(rawItem);
+      const now = new Date().toISOString();
+      const nextItem = {
+        ...item,
+        staffStatus: "added",
+        staffAddedAt: now,
+        updatedAt: now,
+        priority: item.priority || "Tinggi",
+        done: item.variants.length ? item.variants.every(variant => variant.done) : false
+      };
+      try {
+        rememberSavedFromItem(nextItem);
+        await saveItem(nextItem);
+        await refreshItems();
+        updateSuggestions();
+        if (options.openList !== false) showPage("list");
+        if (options.toast !== false) showToast("Masuk ke keranjang Belanjaku");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal menambahkan ke keranjang bro. Coba refresh lalu ulangi.");
+      }
+    }
+
+    async function addAllStaffRequestsToCart() {
+      const requests = getStaffRequestItems();
+      if (!requests.length) {
+        showToast("Belum ada kiriman staff");
+        return;
+      }
+      const ok = confirm(`Tambahkan ${requests.length} kiriman staff ke keranjang/list belanja?`);
+      if (!ok) return;
+      try {
+        const now = new Date().toISOString();
+        for (const rawItem of requests) {
+          const item = normalizeItem(rawItem);
+          const nextItem = {
+            ...item,
+            staffStatus: "added",
+            staffAddedAt: now,
+            updatedAt: now,
+            priority: item.priority || "Tinggi",
+            done: item.variants.length ? item.variants.every(variant => variant.done) : false
+          };
+          rememberSavedFromItem(nextItem);
+          await saveItem(nextItem);
+        }
+        await refreshItems();
+        updateSuggestions();
+        showPage("list");
+        showToast(`${requests.length} kiriman masuk keranjang`);
+      } catch (error) {
+        console.error(error);
+        alert("Gagal menambahkan semua kiriman bro. Coba refresh lalu ulangi.");
+      }
+    }
+
+    function editStaffRequest(rawItem) {
+      const item = normalizeItem(rawItem);
+      editItem(item);
+      showToast("Lengkapi data, lalu Simpan Perubahan");
+    }
+
+    async function deleteStaffRequest(rawItem) {
+      const item = normalizeItem(rawItem);
+      const ok = confirm(`Hapus kiriman staff "${item.name}"?`);
+      if (!ok) return;
+      try {
+        await removeItemById(item.id);
+        await refreshItems();
+        showToast("Kiriman staff dihapus");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal hapus kiriman staff bro.");
+      }
+    }
+
+    async function refreshStaffRequests() {
+      try {
+        await checkStaffBridgeQueue();
+        await refreshItems();
+        showToast("Kiriman staff diperbarui");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal refresh kiriman staff bro.");
+      }
+    }
+
+    function renderStaffRequestsPage() {
+      if (!staffRequestList || !staffSummary) return;
+      const requests = getStaffRequestItems();
+      const totalPcs = requests.reduce((sum, item) => sum + getTotalQty(item), 0);
+      const latest = requests[0] ? new Date(requests[0].createdAt || Date.now()).toLocaleDateString("id-ID", { day: "2-digit", month: "short" }) : "-";
+
+      renderMiniStats(staffSummary, [
+        ["Kiriman", requests.length],
+        ["Total Pcs", totalPcs],
+        ["Terbaru", latest]
+      ]);
+
+      staffRequestList.innerHTML = "";
+      if (!requests.length) {
+        staffRequestList.innerHTML = `<div class="empty">Belum ada barang kosong dari staff/Risma bro.</div>`;
+        return;
+      }
+
+      const simpleList = document.createElement("div");
+      simpleList.className = "simple-detail";
+
+      requests.forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        const row = document.createElement("div");
+        row.className = "simple-row staff-card";
+
+        const head = document.createElement("div");
+        head.className = "simple-product-head with-total";
+        const headText = document.createElement("div");
+        const headLabel = document.createElement("span");
+        const sourceLabel = "Staff";
+        headLabel.textContent = `Barang dari ${sourceLabel}`;
+        const headValue = document.createElement("strong");
+        headValue.textContent = item.name || "Tanpa nama";
+        const meta = document.createElement("div");
+        meta.className = "staff-meta";
+        const staffName = item.createdByName || item.createdBy || sourceLabel;
+        const supplierText = getSupplierKey(item) || UNSET_SUPPLIER;
+        const dateText = item.createdAt ? new Date(item.createdAt).toLocaleString("id-ID", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "baru saja";
+        meta.textContent = `${staffName} • ${supplierText} • ${dateText}`;
+        headText.append(headLabel, headValue, meta);
+        const headTotal = document.createElement("div");
+        headTotal.className = "product-total-pill";
+        headTotal.textContent = `${getTotalQty(item)} pcs`;
+        head.append(headText, headTotal);
+        row.appendChild(head);
+
+        item.variants.forEach(variant => {
+          const variantRow = document.createElement("div");
+          variantRow.className = "simple-variant-row";
+
+          const statusWrap = document.createElement("div");
+          statusWrap.className = "select-check-wrap";
+          const statusDot = document.createElement("button");
+          statusDot.className = "select-check selected";
+          statusDot.type = "button";
+          statusDot.textContent = "!";
+          statusDot.title = "Kiriman staff";
+          statusWrap.appendChild(statusDot);
+
+          const checkWrap = document.createElement("div");
+          checkWrap.className = "variant-check-wrap";
+          const cartDot = document.createElement("button");
+          cartDot.className = "variant-check";
+          cartDot.type = "button";
+          cartDot.textContent = "";
+          cartDot.title = "Belum masuk keranjang";
+          checkWrap.appendChild(cartDot);
+
+          const warna = document.createElement("div");
+          warna.className = "simple-cell";
+          const warnaLabel = document.createElement("span");
+          warnaLabel.textContent = "Warna";
+          const warnaValue = document.createElement("strong");
+          warnaValue.textContent = variant.colorName || "Tanpa warna";
+          warna.append(warnaLabel, warnaValue);
+
+          const jumlah = document.createElement("div");
+          jumlah.className = "simple-cell";
+          const jumlahLabel = document.createElement("span");
+          jumlahLabel.textContent = "Jumlah";
+          const jumlahValue = document.createElement("strong");
+          jumlahValue.textContent = `${variant.qty} pcs`;
+          jumlah.append(jumlahLabel, jumlahValue);
+
+          variantRow.append(statusWrap, checkWrap, warna, jumlah);
+          row.appendChild(variantRow);
+        });
+
+        if (item.note) {
+          const note = document.createElement("div");
+          note.className = "staff-note";
+          note.textContent = item.note;
+          row.appendChild(note);
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "simple-actions";
+        const addBtn = document.createElement("button");
+        addBtn.className = "btn btn-green";
+        addBtn.type = "button";
+        addBtn.textContent = item.variants.length > 1 ? "+ Tambahkan Semua Warna" : "+ Tambahkan ke Keranjang";
+        addBtn.addEventListener("click", () => addStaffRequestToCart(item));
+
+        const editBtn = document.createElement("button");
+        editBtn.className = "icon-btn";
+        editBtn.type = "button";
+        editBtn.textContent = "Edit Dulu";
+        editBtn.addEventListener("click", () => editStaffRequest(item));
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "icon-btn danger";
+        deleteBtn.type = "button";
+        deleteBtn.textContent = "Hapus";
+        deleteBtn.addEventListener("click", () => deleteStaffRequest(item));
+
+        actions.append(addBtn, editBtn, deleteBtn);
+        row.appendChild(actions);
+        simpleList.appendChild(row);
+      });
+
+      staffRequestList.appendChild(simpleList);
+    }
+
+    function renderPendingPage() {
+      if (!pendingItemList || !pendingSummary) return;
+      const pendingItems = sortItems(getCartItems()).filter(item => hasPendingVariant(item));
+      const totalPcs = pendingItems.reduce((sum, item) => sum + getPendingQty(item), 0);
+      const totalModal = pendingItems.reduce((sum, item) => sum + getPendingNominal(item), 0);
+
+      renderMiniStats(pendingSummary, [
+        ["Model", pendingItems.length],
+        ["Belum Pcs", totalPcs],
+        ["Modal", formatRupiah(totalModal)]
+      ]);
+
+      pendingItemList.innerHTML = "";
+      if (!pendingItems.length) {
+        pendingItemList.innerHTML = `<div class="empty">Semua barang sudah selesai bro.</div>`;
+        return;
+      }
+
+      pendingItemList.appendChild(createBulkActions(pendingItems, { pendingOnly: true }));
+
+      const simpleList = document.createElement("div");
+      simpleList.className = "simple-detail";
+
+      pendingItems.forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        const row = document.createElement("div");
+        row.className = "simple-row";
+
+        const head = document.createElement("div");
+        head.className = "simple-product-head with-total";
+        const headText = document.createElement("div");
+        const headLabel = document.createElement("span");
+        headLabel.textContent = "Barang";
+        const headValue = document.createElement("strong");
+        headValue.textContent = item.name;
+        headText.append(headLabel, headValue);
+        const headTotal = document.createElement("div");
+        headTotal.className = "product-total-pill";
+        headTotal.textContent = formatRupiah(getPendingNominal(item));
+        head.append(headText, headTotal);
+        row.appendChild(head);
+
+        item.variants.forEach((variant, variantIndex) => {
+          if (variant.done) return;
+
+          const variantRow = document.createElement("div");
+          const selectionKey = getVariantSelectionKey(item, variantIndex);
+          const isSelected = selectedVariantKeys.has(selectionKey);
+          variantRow.className = "simple-variant-row" + (isSelected ? " variant-selected" : "");
+
+          const selectWrap = document.createElement("div");
+          selectWrap.className = "select-check-wrap";
+          const selectBtn = document.createElement("button");
+          selectBtn.className = "select-check" + (isSelected ? " selected" : "");
+          selectBtn.type = "button";
+          selectBtn.textContent = isSelected ? "✓" : "";
+          selectBtn.title = isSelected ? "Batalkan pilihan" : "Pilih data";
+          selectBtn.addEventListener("click", () => toggleVariantSelection(item, variantIndex));
+          selectWrap.appendChild(selectBtn);
+
+          const checkWrap = document.createElement("div");
+          checkWrap.className = "variant-check-wrap";
+          const checkBtn = document.createElement("button");
+          checkBtn.className = "variant-check";
+          checkBtn.type = "button";
+          checkBtn.textContent = "";
+          checkBtn.title = "Tandai sudah selesai";
+          checkBtn.addEventListener("click", () => toggleVariantDone(item, variantIndex));
+          checkWrap.appendChild(checkBtn);
+
+          const warna = document.createElement("div");
+          warna.className = "simple-cell";
+          const warnaLabel = document.createElement("span");
+          warnaLabel.textContent = "Warna";
+          const warnaValue = document.createElement("strong");
+          warnaValue.textContent = variant.colorName || "Tanpa warna";
+          warna.append(warnaLabel, warnaValue);
+
+          const jumlah = document.createElement("div");
+          jumlah.className = "simple-cell";
+          const jumlahLabel = document.createElement("span");
+          jumlahLabel.textContent = "Jumlah";
+          const jumlahValue = document.createElement("strong");
+          jumlahValue.textContent = `${variant.qty} pcs`;
+          jumlah.append(jumlahLabel, jumlahValue);
+
+          variantRow.append(selectWrap, checkWrap, warna, jumlah);
+          row.appendChild(variantRow);
+        });
+
+        const actions = document.createElement("div");
+        actions.className = "simple-actions";
+        actions.style.gridTemplateColumns = "1fr";
+
+        const editBtn = document.createElement("button");
+        editBtn.className = "icon-btn";
+        editBtn.type = "button";
+        editBtn.textContent = "Edit";
+        editBtn.addEventListener("click", () => editItem(item));
+
+        actions.append(editBtn);
+        row.appendChild(actions);
+        simpleList.appendChild(row);
+      });
+
+      pendingItemList.appendChild(simpleList);
+    }
+
+
+
+    function getPendingPrintRows(options = {}) {
+      const selectedKeys = options && options.selectedKeys instanceof Set ? options.selectedKeys : null;
+      const rows = [];
+      sortItems(getCartItems()).forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        item.variants.forEach((variant, variantIndex) => {
+          if (variant.done) return;
+          const key = getVariantSelectionKey(item, variantIndex);
+          if (selectedKeys && !selectedKeys.has(key)) return;
+          rows.push({
+            key,
+            itemId: item.id,
+            variantIndex,
+            supplier: getSupplierKey(item),
+            name: item.name || "Tanpa nama",
+            color: variant.colorName || "Tanpa warna",
+            qty: variant.qty,
+            source: "cart"
+          });
+        });
+      });
+      return rows;
+    }
+
+    function getStaffInboxPrintRows(options = {}) {
+      const selectedKeys = options && options.selectedKeys instanceof Set ? options.selectedKeys : null;
+      const rows = [];
+      sortItems(getStaffRequestItems()).forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        item.variants.forEach((variant, variantIndex) => {
+          const key = getVariantSelectionKey(item, variantIndex);
+          if (selectedKeys && !selectedKeys.has(key)) return;
+          rows.push({
+            key,
+            itemId: item.id,
+            variantIndex,
+            supplier: getSupplierKey(item),
+            name: item.name || "Tanpa nama",
+            color: variant.colorName || "Tanpa warna",
+            qty: variant.qty,
+            source: "staffInbox",
+            createdByName: item.createdByName || item.createdBy || "Staff"
+          });
+        });
+      });
+      return rows;
+    }
+
+    function getPrintRows(options = {}) {
+      return printMode === "staffInbox" ? getStaffInboxPrintRows(options) : getPendingPrintRows(options);
+    }
+
+    function getActivePrintRows() {
+      return getPrintRows(printUseSelection ? { selectedKeys: printSelectedVariantKeys } : {});
+    }
+
+    function getEmptyPrintMessage() {
+      return getPrintRows().length ? "Belum ada data dipilih." : (printMode === "staffInbox" ? "Inbox kiriman staff kosong." : "Semua barang sudah selesai.");
+    }
+
+    function initPrintSelection() {
+      const allRows = getPrintRows();
+      printSelectedVariantKeys = new Set(allRows.map(row => row.key));
+      printUseSelection = true;
+    }
+
+    function padLine(text = "", width = 32) {
+      const clean = String(text).replace(/\s+/g, " ").trim();
+      if (clean.length <= width) return [clean];
+      const words = clean.split(" ");
+      const lines = [];
+      let line = "";
+      words.forEach(word => {
+        if (!line) {
+          line = word;
+        } else if ((line + " " + word).length <= width) {
+          line += " " + word;
+        } else {
+          lines.push(line);
+          line = word;
+        }
+      });
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    function getPrintGroups() {
+      const rows = getActivePrintRows();
+      const supplierGroups = new Map();
+
+      rows.forEach(row => {
+        const supplierKey = sameNameKey(row.supplier || UNSET_SUPPLIER);
+        if (!supplierGroups.has(supplierKey)) {
+          supplierGroups.set(supplierKey, { supplierName: row.supplier || UNSET_SUPPLIER, products: new Map() });
+        }
+        const supplierGroup = supplierGroups.get(supplierKey);
+        supplierGroup.supplierName = chooseBetterName(supplierGroup.supplierName, row.supplier || UNSET_SUPPLIER);
+
+        const productKey = `${row.itemId}::${sameNameKey(row.name || "Barang")}`;
+        if (!supplierGroup.products.has(productKey)) {
+          supplierGroup.products.set(productKey, { productName: row.name, rows: [] });
+        }
+        const productGroup = supplierGroup.products.get(productKey);
+        productGroup.productName = chooseBetterName(productGroup.productName, row.name || "Barang");
+        productGroup.rows.push(row);
+      });
+
+      const printableGroups = new Map();
+      [...supplierGroups.values()]
+        .sort((a, b) => a.supplierName.localeCompare(b.supplierName, "id-ID"))
+        .forEach(group => printableGroups.set(group.supplierName, group.products));
+
+      return { rows, supplierGroups: printableGroups };
+    }
+
+    const PRINT_LINE_WIDTH = 48;
+    const PRINT_BIG_LINE_WIDTH = 24;
+    const PRINT_CHECK_BOX = "[ ]";
+
+    function formatPrintSupplier(supplier = "") {
+      const name = String(supplier || "Supplier belum diisi").replace(/\s+/g, " ").trim();
+      return `- ${name || "Supplier belum diisi"} -`;
+    }
+
+    function formatPrintProduct(productName = "") {
+      const name = String(productName || "Barang").replace(/\s+/g, " ").trim();
+      return `* ${name || "Barang"} *`;
+    }
+
+    function formatPrintVariant(row) {
+      return `${row.color} = ${row.qty} pcs`;
+    }
+
+    function printSeparator(width = PRINT_LINE_WIDTH) {
+      return "-".repeat(width);
+    }
+
+    function padRightText(text = "", width = PRINT_LINE_WIDTH) {
+      const value = String(text);
+      if (value.length >= width) return value;
+      return value + " ".repeat(width - value.length);
+    }
+
+    function centerText(text = "", width = PRINT_LINE_WIDTH) {
+      const value = String(text);
+      if (value.length >= width) return value;
+      const left = Math.max(0, Math.floor((width - value.length) / 2));
+      return " ".repeat(left) + value;
+    }
+
+    function pushChecklistLines(lines, text, width = PRINT_LINE_WIDTH) {
+      const availableTextWidth = Math.max(8, width - PRINT_CHECK_BOX.length - 1);
+      const wrapped = padLine(text, availableTextWidth);
+      wrapped.forEach((line, index) => {
+        const isLast = index === wrapped.length - 1;
+        if (isLast) {
+          lines.push(padRightText(line, width - PRINT_CHECK_BOX.length) + PRINT_CHECK_BOX);
+        } else {
+          lines.push(line);
+        }
+      });
+      lines.push(printSeparator(width));
+    }
+
+    function getPrintModeTitle() {
+      return printMode === "staffInbox" ? "INBOX KIRIMAN STAFF" : "";
+    }
+
+    function getPrintModeDateLine() {
+      try {
+        return new Date().toLocaleString("id-ID", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+      } catch (error) {
+        return new Date().toLocaleString();
+      }
+    }
+
+    function appendPrintModeHeader(lines, width = PRINT_LINE_WIDTH) {
+      const title = getPrintModeTitle();
+      if (!title) return;
+      lines.push(centerText(title, width));
+      lines.push(centerText(getPrintModeDateLine(), width));
+      lines.push(printSeparator(width));
+      lines.push("");
+    }
+
+    function makePrintText() {
+      const { rows, supplierGroups } = getPrintGroups();
+      const lines = [];
+      appendPrintModeHeader(lines, PRINT_LINE_WIDTH);
+
+      if (!rows.length) {
+        lines.push(getEmptyPrintMessage());
+        return lines.join("\n") + "\n\n\n";
+      }
+
+      [...supplierGroups.entries()].forEach(([supplier, productGroups], supplierIndex) => {
+        if (supplierIndex > 0) lines.push("");
+        padLine(formatPrintSupplier(supplier), PRINT_LINE_WIDTH).forEach(line => lines.push(line));
+
+        [...productGroups.values()].forEach(({ productName, rows: productRows }, productIndex) => {
+          if (productIndex > 0) lines.push("");
+          padLine(formatPrintProduct(productName), PRINT_LINE_WIDTH).forEach(line => lines.push(centerText(line, PRINT_LINE_WIDTH)));
+          productRows.forEach(row => pushChecklistLines(lines, formatPrintVariant(row), PRINT_LINE_WIDTH));
+        });
+      });
+
+      lines.push("\n\n");
+      return lines.join("\n");
+    }
+
+    function escapePrintHtml(value = "") {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function makePrintHtml() {
+      const { rows, supplierGroups } = getPrintGroups();
+      const blocks = [];
+      if (getPrintModeTitle()) {
+        blocks.push(`<span class="print-line supplier">${escapePrintHtml(getPrintModeTitle())}</span>`);
+        blocks.push(`<span class="print-line variant">${escapePrintHtml(getPrintModeDateLine())}</span>`);
+        blocks.push(`<span class="print-line separator">${escapePrintHtml(printSeparator(32))}</span>`);
+        blocks.push('<span class="print-line gap"></span>');
+      }
+
+      if (!rows.length) {
+        return `<span class="print-line variant">${escapePrintHtml(getEmptyPrintMessage())}</span>`;
+      }
+
+      [...supplierGroups.entries()].forEach(([supplier, productGroups], supplierIndex) => {
+        if (supplierIndex > 0) blocks.push('<span class="print-line gap"></span>');
+        blocks.push(`<span class="print-line supplier">${escapePrintHtml(formatPrintSupplier(supplier))}</span>`);
+
+        [...productGroups.values()].forEach(({ productName, rows: productRows }, productIndex) => {
+          if (productIndex > 0) blocks.push('<span class="print-line gap"></span>');
+          blocks.push(`<span class="print-line product">${escapePrintHtml(formatPrintProduct(productName))}</span>`);
+          productRows.forEach(row => {
+            blocks.push(`<span class="print-line variant-check"><span>${escapePrintHtml(formatPrintVariant(row))}</span><span class="print-line check-box">${escapePrintHtml(PRINT_CHECK_BOX)}</span></span>`);
+            blocks.push(`<span class="print-line separator">${escapePrintHtml(printSeparator(32))}</span>`);
+          });
+        });
+      });
+
+      return blocks.join("");
+    }
+
+    function makeEscPosPrintText() {
+      const { rows, supplierGroups } = getPrintGroups();
+      const normal = "\x1b\x21\x00";
+      const bigBold = "\x1b\x21\x38";
+      const lines = [normal];
+
+      if (!rows.length) {
+        lines.push(getEmptyPrintMessage());
+        lines.push("\n\n\n");
+        return lines.join("\n");
+      }
+
+      [...supplierGroups.entries()].forEach(([supplier, productGroups], supplierIndex) => {
+        if (supplierIndex > 0) lines.push("");
+        padLine(formatPrintSupplier(supplier), PRINT_BIG_LINE_WIDTH).forEach(line => lines.push(bigBold + line + normal));
+
+        [...productGroups.values()].forEach(({ productName, rows: productRows }, productIndex) => {
+          if (productIndex > 0) lines.push("");
+          padLine(formatPrintProduct(productName), PRINT_LINE_WIDTH).forEach(line => lines.push(normal + centerText(line, PRINT_LINE_WIDTH)));
+          productRows.forEach(row => pushChecklistLines(lines, formatPrintVariant(row), PRINT_LINE_WIDTH));
+        });
+      });
+
+      lines.push(normal + "\n\n\n");
+      return lines.join("\n");
+    }
+
+    function makePrintBlocks() {
+      const { rows, supplierGroups } = getPrintGroups();
+      const blocks = [];
+      if (getPrintModeTitle()) {
+        blocks.push({ type: "supplier", text: getPrintModeTitle(), size: "large", bold: true, align: "center" });
+        blocks.push({ type: "text", text: getPrintModeDateLine(), size: "normal", bold: false, align: "center" });
+        blocks.push({ type: "separator", text: printSeparator(32), size: "normal", bold: false });
+        blocks.push({ type: "gap" });
+      }
+      if (!rows.length) {
+        blocks.push({ type: "text", text: getEmptyPrintMessage(), size: "normal", bold: false });
+        return blocks;
+      }
+
+      [...supplierGroups.entries()].forEach(([supplier, productGroups], supplierIndex) => {
+        if (supplierIndex > 0) blocks.push({ type: "gap" });
+        blocks.push({ type: "supplier", text: formatPrintSupplier(supplier), size: "large", bold: true });
+
+        [...productGroups.values()].forEach(({ productName, rows: productRows }, productIndex) => {
+          if (productIndex > 0) blocks.push({ type: "gap" });
+          blocks.push({ type: "product", text: formatPrintProduct(productName), size: "small", bold: false, align: "center" });
+          productRows.forEach(row => {
+            blocks.push({ type: "variant", text: formatPrintVariant(row), checkBox: PRINT_CHECK_BOX, size: "normal", bold: false });
+            blocks.push({ type: "separator", text: printSeparator(32), size: "normal", bold: false });
+          });
+        });
+      });
+      return blocks;
+    }
+
+    function updatePrintPreview() {
+      if (printPreviewText) printPreviewText.innerHTML = makePrintHtml();
+    }
+
+    function renderPrintSelector() {
+      const allRows = getPrintRows();
+      const selectedCount = allRows.filter(row => printSelectedVariantKeys.has(row.key)).length;
+      const allSelected = allRows.length > 0 && selectedCount === allRows.length;
+
+      if (printSelectedInfo) {
+        printSelectedInfo.textContent = allRows.length
+          ? `Dipilih ${selectedCount} dari ${allRows.length} data. Default: cetak semua.`
+          : (printMode === "staffInbox" ? "Inbox kiriman staff kosong." : "Tidak ada barang pending untuk dicetak.");
+      }
+
+      if (printToggleAllBtn) {
+        printToggleAllBtn.textContent = allSelected ? "Batal Semua" : "Pilih Semua";
+        printToggleAllBtn.disabled = !allRows.length;
+      }
+
+      if (!printChoiceList) return;
+      printChoiceList.innerHTML = "";
+
+      if (!allRows.length) {
+        printChoiceList.innerHTML = `<div class="print-choice-empty">${escapePrintHtml(printMode === "staffInbox" ? "Inbox kiriman staff kosong." : "Semua barang sudah selesai.")}</div>`;
+        return;
+      }
+
+      allRows.forEach(row => {
+        const label = document.createElement("label");
+        label.className = "print-choice-row";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = printSelectedVariantKeys.has(row.key);
+        checkbox.addEventListener("change", () => {
+          if (checkbox.checked) {
+            printSelectedVariantKeys.add(row.key);
+          } else {
+            printSelectedVariantKeys.delete(row.key);
+          }
+          renderPrintSelector();
+          updatePrintPreview();
+        });
+
+        const text = document.createElement("div");
+        text.className = "print-choice-main";
+        text.textContent = `${row.name} • ${row.color} = ${row.qty} pcs`;
+        const meta = document.createElement("span");
+        meta.textContent = printMode === "staffInbox" ? `${row.supplier} • ${row.createdByName || "Staff"}` : row.supplier;
+        text.appendChild(meta);
+
+        label.append(checkbox, text);
+        printChoiceList.appendChild(label);
+      });
+    }
+
+    function toggleAllPrintSelection() {
+      const allRows = getPrintRows();
+      if (!allRows.length) return;
+      const selectedCount = allRows.filter(row => printSelectedVariantKeys.has(row.key)).length;
+      if (selectedCount === allRows.length) {
+        printSelectedVariantKeys.clear();
+      } else {
+        printSelectedVariantKeys = new Set(allRows.map(row => row.key));
+      }
+      renderPrintSelector();
+      updatePrintPreview();
+    }
+
+    function makePrintPayloadObject() {
+      const activeRows = getActivePrintRows();
+      const plainText = makePrintText();
+      const escPosText = makeEscPosPrintText();
+      const htmlText = makePrintHtml();
+
+      return {
+        title: printMode === "staffInbox" ? "Inbox Kiriman Staff" : "",
+        printModeName: printMode,
+        printerName: PRINTER_NAME,
+        paperMm: 80,
+        format: "raw_preview_text_v2",
+        printMode: "raw_text",
+        forceUseReceiptText: true,
+        usePreviewTextOnly: true,
+        text: escPosText,
+        rawText: escPosText,
+        escPosText: escPosText,
+        receiptText: escPosText,
+        finalReceiptText: escPosText,
+        plainText: plainText,
+        plainReceiptText: plainText,
+        previewText: plainText,
+        receiptHtml: htmlText,
+        receiptBlocks: makePrintBlocks(),
+        selectedCount: activeRows.length,
+        font: {
+          supplier: { size: "large", bold: true, escpos: "double_width_height_bold" },
+          product: { size: "small", bold: false, escpos: "normal_with_star_prefix" },
+          variant: { size: "normal", bold: false, checkBox: "right" }
+        },
+        items: activeRows.map(row => ({
+          supplierName: row.supplier,
+          supplier: row.supplier,
+          name: row.name,
+          productName: row.name,
+          colorName: row.color,
+          color: row.color,
+          qty: row.qty,
+          unit: "pcs",
+          lineText: `${formatPrintVariant(row)} ${PRINT_CHECK_BOX}`,
+          supplierLineText: formatPrintSupplier(row.supplier),
+          productLineText: formatPrintProduct(row.name),
+          supplierTextSize: "large",
+          nameTextSize: "small"
+        }))
+      };
+    }
+
+    function makePrintPayload() {
+      return JSON.stringify(makePrintPayloadObject());
+    }
+
+    function isAndroidNativePrinterReady() {
+      if (!window.AndroidPrinter) return false;
+      return [
+        "printPreviewText",
+        "printReceiptText",
+        "printRawText",
+        "printEscPosText",
+        "printText",
+        "printShoppingList"
+      ].some(method => typeof window.AndroidPrinter[method] === "function");
+    }
+
+    function checkAndroidNativePrinter() {
+      if (window.AndroidPrinter && typeof window.AndroidPrinter.checkPrinter === "function") {
+        window.AndroidPrinter.checkPrinter();
+        updatePrinterStatus(`Cek printer native: ${PRINTER_NAME}`);
+        return;
+      }
+      alert("Mode Android Studio belum terdeteksi bro. Buka file ini dari APK WebView, bukan langsung dari browser.");
+    }
+
+    function sendNativePrint() {
+      if (printUseSelection && getPrintRows().length && !getActivePrintRows().length) {
+        alert("Pilih minimal satu data yang mau dicetak bro.");
+        return;
+      }
+
+      if (!isAndroidNativePrinterReady()) {
+        alert("Printer native belum siap bro. Jalankan lewat APK Android Studio supaya Bluetooth dicetak dari kode Android.");
+        return;
+      }
+
+      const payload = makePrintPayloadObject();
+      const directMethods = [
+        "printPreviewText",
+        "printReceiptText",
+        "printRawText",
+        "printEscPosText"
+      ];
+
+      for (const method of directMethods) {
+        if (typeof window.AndroidPrinter[method] === "function") {
+          window.AndroidPrinter[method](payload.escPosText);
+          updatePrinterStatus(`Dikirim sesuai preview: ${PRINTER_NAME}`);
+          return;
+        }
+      }
+
+      if (typeof window.AndroidPrinter.printText === "function") {
+        window.AndroidPrinter.printText(payload.plainText);
+        updatePrinterStatus(`Dikirim sesuai preview: ${PRINTER_NAME}`);
+        return;
+      }
+
+      window.AndroidPrinter.printShoppingList(JSON.stringify(payload));
+      updatePrinterStatus(`Dikirim ke Android Studio: ${PRINTER_NAME} • pakai payload preview`);
+    }
+
+    function openPrintPreview(mode = "cart") {
+      printMode = mode === "staffInbox" ? "staffInbox" : "cart";
+      if (printModalTitle) printModalTitle.textContent = printMode === "staffInbox" ? "Preview Inbox Kiriman Staff" : "Preview List Belanja";
+      initPrintSelection();
+      renderPrintSelector();
+      updatePrintPreview();
+      updatePrinterStatus(`Printer Android: ${PRINTER_NAME} • Kertas 80mm`);
+      printModal.classList.add("show");
+    }
+
+    function openStaffInboxPrintPreview() {
+      openPrintPreview("staffInbox");
+    }
+
+    function closePrintPreview() {
+      printModal.classList.remove("show");
+      printUseSelection = false;
+      printMode = "cart";
+      if (printModalTitle) printModalTitle.textContent = "Preview List Belanja";
+    }
+
+    async function chooseBluetoothPrinter() {
+      if (!navigator.bluetooth) {
+        alert("Bluetooth belum tersedia di WebView ini bro. Di Web2APK, aktifkan Web Bluetooth / Bluetooth permission dulu.");
+        return null;
+      }
+
+      updatePrinterStatus(`Mencari printer ${PRINTER_NAME}...`);
+      const optionalServices = [
+        "0000ffe0-0000-1000-8000-00805f9b34fb",
+        "0000ff00-0000-1000-8000-00805f9b34fb",
+        "000018f0-0000-1000-8000-00805f9b34fb",
+        "49535343-fe7d-4ae5-8fa9-9fafd205e455"
+      ];
+
+      try {
+        bluetoothDevice = await navigator.bluetooth.requestDevice({
+          filters: [
+            { name: PRINTER_NAME },
+            { namePrefix: "RPP02N" }
+          ],
+          optionalServices
+        });
+
+        bluetoothDevice.addEventListener("gattserverdisconnected", () => {
+          printerCharacteristic = null;
+          updatePrinterStatus(`Printer terputus: ${PRINTER_NAME}`);
+        });
+
+        const server = await bluetoothDevice.gatt.connect();
+        const services = await server.getPrimaryServices();
+
+        for (const service of services) {
+          const characteristics = await service.getCharacteristics();
+          for (const characteristic of characteristics) {
+            if (characteristic.properties.write || characteristic.properties.writeWithoutResponse) {
+              printerCharacteristic = characteristic;
+              updatePrinterStatus(`Printer siap: ${bluetoothDevice.name || PRINTER_NAME}`);
+              showToast("Printer siap");
+              return printerCharacteristic;
+            }
+          }
+        }
+
+        alert("Printer ketemu, tapi channel cetaknya belum ketemu bro.");
+        updatePrinterStatus(`Printer belum siap: ${PRINTER_NAME}`);
+        return null;
+      } catch (error) {
+        console.error(error);
+        updatePrinterStatus(`Printer belum dipilih: ${PRINTER_NAME}`);
+        alert("Gagal memilih printer bro. Pastikan Bluetooth aktif dan printer RPP02N-FF57 menyala.");
+        return null;
+      }
+    }
+
+    async function sendTextToPrinter(text) {
+      const characteristic = printerCharacteristic || await chooseBluetoothPrinter();
+      if (!characteristic) return;
+
+      const encoder = new TextEncoder();
+      const escInit = new Uint8Array([0x1b, 0x40]);
+      const cutFeed = new Uint8Array([0x0a, 0x0a, 0x0a]);
+      const body = encoder.encode(text);
+      const payload = new Uint8Array(escInit.length + body.length + cutFeed.length);
+      payload.set(escInit, 0);
+      payload.set(body, escInit.length);
+      payload.set(cutFeed, escInit.length + body.length);
+
+      try {
+        for (let offset = 0; offset < payload.length; offset += 180) {
+          const chunk = payload.slice(offset, offset + 180);
+          if (characteristic.properties.writeWithoutResponse && characteristic.writeValueWithoutResponse) {
+            await characteristic.writeValueWithoutResponse(chunk);
+          } else {
+            await characteristic.writeValue(chunk);
+          }
+          await new Promise(resolve => setTimeout(resolve, 35));
+        }
+        showToast("List dikirim ke printer");
+        updatePrinterStatus(`Berhasil dikirim: ${bluetoothDevice?.name || PRINTER_NAME}`);
+      } catch (error) {
+        console.error(error);
+        printerCharacteristic = null;
+        alert("Gagal cetak bro. Coba pilih printer ulang.");
+        updatePrinterStatus(`Gagal cetak: ${PRINTER_NAME}`);
+      }
+    }
+
+
+    function renderList() {
+      renderSupplierList();
+      renderStaffRequestsPage();
+      renderPendingPage();
+      if (selectedSupplier && pageDetail.classList.contains("active")) {
+        renderSupplierDetail(selectedSupplier);
+      }
+      if (pageBudget && pageBudget.classList.contains("active")) renderBudgetPage(true);
+    }
+
+    function syncMasterFromExistingItems() {
+      if (!Array.isArray(items) || !items.length) return;
+      const data = { itemNames: [], suppliers: [], colors: [] };
+      getCartItems().forEach(rawItem => {
+        const item = normalizeItem(rawItem);
+        if (item.name) data.itemNames.push(item.name);
+        if (item.supplierName) data.suppliers.push(item.supplierName);
+        item.variants.forEach(variant => {
+          if (variant.colorName) data.colors.push(variant.colorName);
+        });
+      });
+      saveStoredSavedData(data);
+    }
+
+    async function refreshItems() {
+      items = (await getAllItems()).map(normalizeItem);
+      syncMasterFromExistingItems();
+      pruneSelectedVariantKeys();
+      renderList();
+    }
+
+    async function manualRefreshData() {
+      try {
+        await refreshItems();
+        updateSuggestions();
+        showToast("Data diperbarui");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal refresh data bro. Coba ulangi.");
+      }
+    }
+
+
+    async function clearAllDataKeepMaster() {
+      if (!(await requirePin("hapus semua data"))) return;
+
+      const savedData = getSavedData();
+      const ok = confirm("Hapus semua data belanja? Nama barang, supplier, dan warna tetap disimpan untuk saran input.");
+      if (!ok) return;
+
+      try {
+        saveStoredSavedData(savedData);
+        await clearAllItems();
+        items = [];
+        selectedSupplier = "";
+        selectedVariantKeys.clear();
+        resetForm();
+        await refreshItems();
+        updateSuggestions();
+        showPage("home");
+        showToast("Data dihapus, nama/supplier/warna tetap aman");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal hapus data bro. Coba refresh lalu ulangi.");
+      }
+    }
+
+    function getFormItem() {
+      const now = new Date().toISOString();
+      const oldItem = items.find(item => item.id === editId.value);
+      const oldVariants = oldItem ? normalizeItem(oldItem).variants : [];
+      const variants = getFormVariants().map((variant, index) => ({
+        ...variant,
+        done: oldVariants[index] ? Boolean(oldVariants[index].done) : false
+      }));
+
+      return {
+        id: editId.value || makeId(),
+        name: safeText(nameInput.value),
+        supplierName: safeText(supplierInput.value),
+        kodiPrice: Math.max(0, parseRupiah(kodiPriceInput.value)),
+        variants,
+        unit: DEFAULT_UNIT,
+        priority: priorityInput.value,
+        note: safeText(noteInput.value),
+        done: variants.length ? variants.every(variant => variant.done) : false,
+        createdAt: oldItem ? oldItem.createdAt : now,
+        updatedAt: now
+      };
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      const item = getFormItem();
+      if (!item.name) return alert("Nama barang wajib diisi bro.");
+      if (!item.variants.length || item.variants.reduce((sum, variant) => sum + variant.qty, 0) < 1) return alert("Minimal isi 1 warna bro.");
+      try {
+        const edited = Boolean(editId.value);
+        rememberSavedFromItem(item);
+        await saveItem(item);
+        await refreshItems();
+        resetForm();
+        showToast(edited ? "Barang diperbarui" : "Barang ditambahkan");
+      } catch (error) {
+        console.error(error);
+        alert("Gagal menyimpan data bro. Coba refresh lalu ulangi.");
+      }
+    });
+
+    resetBtn.addEventListener("click", resetForm);
+    if (refreshBtn) refreshBtn.addEventListener("click", manualRefreshData);
+    if (clearDataKeepMasterBtn) clearDataKeepMasterBtn.addEventListener("click", clearAllDataKeepMaster);
+    searchInput.addEventListener("input", renderList);
+    statusFilter.addEventListener("change", renderList);
+    if (budgetInput) {
+      budgetInput.addEventListener("input", () => {
+        budgetInput.value = budgetInput.value ? formatRupiah(parseRupiah(budgetInput.value)) : "";
+        if (budgetResultList) delete budgetResultList.dataset.calculated;
+      });
+      budgetInput.addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          renderBudgetPage(true);
+        }
+      });
+    }
+    if (refreshStaffRequestsBtn) refreshStaffRequestsBtn.addEventListener("click", refreshStaffRequests);
+    if (printStaffInboxBtn) printStaffInboxBtn.addEventListener("click", openStaffInboxPrintPreview);
+    if (addAllStaffRequestsBtn) addAllStaffRequestsBtn.addEventListener("click", addAllStaffRequestsToCart);
+    if (calculateBudgetBtn) calculateBudgetBtn.addEventListener("click", () => renderBudgetPage(true));
+    if (clearBudgetBtn) clearBudgetBtn.addEventListener("click", () => {
+      if (budgetInput) budgetInput.value = "";
+      if (budgetResultList) delete budgetResultList.dataset.calculated;
+      renderBudgetPage(false);
+    });
+
+
+    if (manageMasterBtn) manageMasterBtn.addEventListener("click", openMasterManager);
+    if (closeMasterBtn) closeMasterBtn.addEventListener("click", closeMasterManager);
+    if (masterModal) masterModal.addEventListener("click", event => {
+      if (event.target === masterModal) closeMasterManager();
+    });
+
+    if (printerBtn) printerBtn.addEventListener("click", () => openPrintPreview("cart"));
+    if (closePrintBtn) closePrintBtn.addEventListener("click", closePrintPreview);
+    if (printToggleAllBtn) printToggleAllBtn.addEventListener("click", toggleAllPrintSelection);
+    if (selectPrinterBtn) selectPrinterBtn.addEventListener("click", checkAndroidNativePrinter);
+    if (sendPrintBtn) sendPrintBtn.addEventListener("click", sendNativePrint);
+    if (printModal) printModal.addEventListener("click", event => {
+      if (event.target === printModal) closePrintPreview();
+    });
+
+
+    async function checkStaffBridgeQueue() {
+      try { await importStaffBridgeQueue(true); }
+      catch (error) { console.warn("Cek kiriman aplikasi gagal", error); }
+    }
+
+    window.addEventListener("focus", checkStaffBridgeQueue);
+    window.addEventListener("online", checkStaffBridgeQueue);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) checkStaffBridgeQueue();
+    });
+
+    async function init() {
+      try {
+        db = await openDB();
+        await refreshMasterFromSupabase();
+        setVariantRows([{ colorName: "", qty: 1 }]);
+        updatePricePreview();
+        await importStaffBridgeQueue(false);
+        await refreshItems();
+        updateSuggestions();
+      } catch (error) {
+        console.error(error);
+        supplierList.innerHTML = `
+          <div class="empty">
+            Maaf bro, database aplikasi belum bisa dibuka.<br />
+            Coba refresh aplikasi atau cek koneksi internet.
+          </div>
+        `;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
