@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Aplikasi Toko Gabungan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --bg: #eef3f2;
+      --surface: #ffffff;
+      --surface-2: #f7faf9;
+      --ink: #111827;
+      --muted: #667085;
+      --line: #dbe4e2;
+      --green: #137a55;
+      --green-2: #0f5f46;
+      --rose: #d9236b;
+      --blue: #2563eb;
+      --amber: #b7791f;
+      --violet: #6941c6;
+      --shadow: 0 16px 48px rgba(15, 23, 42, .12);
+      --top: 72px;
+      --bottom: 78px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .shell {
+      width: 100%;
+      height: 100dvh;
+      min-height: 480px;
+      display: grid;
+      grid-template-rows: var(--top) 1fr var(--bottom);
+      background:
+        linear-gradient(135deg, rgba(19, 122, 85, .12), transparent 28%),
+        linear-gradient(225deg, rgba(217, 35, 107, .10), transparent 30%),
+        var(--bg);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, .90);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 2px 18px rgba(15, 23, 42, .06);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 20;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 2px;
+      font-size: 11px;
+      line-height: 1.2;
+      font-weight: 700;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 13px;
+      background: var(--surface-2);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+      transition: transform .12s ease, background .12s ease, color .12s ease;
+    }
+
+    .icon-btn:active {
+      transform: scale(.94);
+    }
+
+    .icon-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.4;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .viewer {
+      min-height: 0;
+      padding: 10px;
+      position: relative;
+    }
+
+    .frame-card {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border: 1px solid rgba(15, 23, 42, .10);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+
+    .loading {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(247, 250, 249, .94));
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .16s ease;
+      z-index: 2;
+    }
+
+    .loading.show {
+      opacity: 1;
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 10px;
+      border-radius: 999px;
+      border: 3px solid #dbe4e2;
+      border-top-color: var(--green);
+      animation: spin .75s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 6px;
+      padding: 8px 10px calc(8px + var(--safe-bottom));
+      background: rgba(255, 255, 255, .92);
+      border-top: 1px solid var(--line);
+      box-shadow: 0 -8px 24px rgba(15, 23, 42, .07);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 20;
+    }
+
+    .nav button {
+      min-width: 0;
+      min-height: 56px;
+      border-radius: 16px;
+      background: transparent;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 900;
+      transition: transform .12s ease, background .12s ease, color .12s ease;
+    }
+
+    .nav button:active {
+      transform: scale(.94);
+    }
+
+    .nav button svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.35;
+    }
+
+    .nav button.active {
+      color: var(--active, var(--green));
+      background: color-mix(in srgb, var(--active, var(--green)) 13%, white);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active, var(--green)) 15%, transparent);
+    }
+
+    .menu-panel {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 14px;
+      background: rgba(15, 23, 42, .42);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 60;
+    }
+
+    .menu-panel.show {
+      display: flex;
+    }
+
+    .menu-sheet {
+      width: min(760px, 100%);
+      max-height: min(760px, calc(100dvh - 28px));
+      overflow: auto;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 24px 72px rgba(15, 23, 42, .25);
+      padding: 14px;
+      animation: sheetIn .18s ease both;
+    }
+
+    @keyframes sheetIn {
+      from {
+        transform: translateY(16px);
+        opacity: .8;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .menu-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .menu-head h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .menu-head p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .app-card {
+      min-height: 112px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: start;
+      padding: 13px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      text-align: left;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+    }
+
+    .app-card.active {
+      border-color: color-mix(in srgb, var(--card-color, var(--green)) 42%, var(--line));
+      background: color-mix(in srgb, var(--card-color, var(--green)) 10%, white);
+    }
+
+    .app-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--card-color, var(--green));
+      background: color-mix(in srgb, var(--card-color, var(--green)) 13%, white);
+    }
+
+    .app-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 2.35;
+    }
+
+    .app-card strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-top: 1px;
+    }
+
+    .app-card span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .focus-exit {
+      position: fixed;
+      left: 50%;
+      top: calc(10px + env(safe-area-inset-top, 0px));
+      transform: translateX(-50%);
+      z-index: 120;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, .92);
+      color: #fff;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, .28);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .focus-exit svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    body.focus-mode .shell {
+      grid-template-rows: 1fr;
+    }
+
+    body.focus-mode .topbar,
+    body.focus-mode .nav {
+      display: none;
+    }
+
+    body.focus-mode .viewer {
+      padding: 0;
+    }
+
+    body.focus-mode .frame-card {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    body.focus-mode .focus-exit {
+      display: inline-flex;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(var(--bottom) + 16px + var(--safe-bottom));
+      transform: translateX(-50%) translateY(10px);
+      z-index: 100;
+      max-width: calc(100% - 28px);
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, .94);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, .22);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @supports not (background: color-mix(in srgb, red 10%, white)) {
+      .nav button.active,
+      .app-card.active,
+      .app-icon {
+        background: #eef6f2;
+      }
+    }
+
+    @media (min-width: 820px) {
+      :root {
+        --top: 74px;
+        --bottom: 0px;
+      }
+
+      .shell {
+        grid-template-columns: 112px minmax(0, 1fr);
+        grid-template-rows: var(--top) minmax(0, 1fr);
+      }
+
+      .topbar {
+        grid-column: 1 / 3;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .nav {
+        grid-row: 2;
+        grid-column: 1;
+        grid-template-columns: 1fr;
+        grid-auto-rows: minmax(74px, auto);
+        align-content: start;
+        border-top: 0;
+        border-right: 1px solid var(--line);
+        padding: 12px;
+        box-shadow: 8px 0 24px rgba(15, 23, 42, .05);
+      }
+
+      .nav button {
+        min-height: 70px;
+        font-size: 11px;
+      }
+
+      .viewer {
+        grid-row: 2;
+        grid-column: 2;
+        padding: 12px 14px 14px;
+      }
+
+      .frame-card {
+        border-radius: 22px;
+      }
+
+      .menu-panel {
+        align-items: center;
+      }
+
+      .menu-sheet {
+        border-radius: 26px;
+      }
+
+      .app-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 420px) {
+      :root {
+        --top: 66px;
+        --bottom: 74px;
+      }
+
+      .topbar {
+        padding: 8px 10px;
+        gap: 8px;
+      }
+
+      .brand h1 {
+        font-size: 14px;
+      }
+
+      .brand span {
+        font-size: 10px;
+      }
+
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+      }
+
+      .top-actions {
+        gap: 5px;
+      }
+
+      .viewer {
+        padding: 7px;
+      }
+
+      .frame-card {
+        border-radius: 16px;
+      }
+
+      .nav {
+        gap: 4px;
+        padding-left: 6px;
+        padding-right: 6px;
+      }
+
+      .nav button {
+        min-height: 54px;
+        border-radius: 14px;
+        font-size: 8.5px;
+        gap: 3px;
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+
+      .nav button svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .menu-panel {
+        padding: 9px;
+      }
+
+      .menu-sheet {
+        padding: 12px;
+        border-radius: 22px;
+      }
+
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .app-card {
+        min-height: 92px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" aria-label="Aplikasi toko gabungan">
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" type="button" title="Menu aplikasi" aria-label="Menu aplikasi">
+        <i data-lucide="layout-grid"></i>
+      </button>
+      <div class="brand">
+        <h1 id="appTitle">Aplikasi Toko Gabungan</h1>
+        <span id="appSubtitle">Semua aplikasi toko dalam satu layar</span>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="reloadBtn" type="button" title="Refresh aplikasi aktif" aria-label="Refresh aplikasi aktif">
+          <i data-lucide="refresh-cw"></i>
+        </button>
+        <button class="icon-btn" id="focusBtn" type="button" title="Mode fokus" aria-label="Mode fokus">
+          <i data-lucide="maximize-2"></i>
+        </button>
+        <button class="icon-btn" id="openBtn" type="button" title="Buka penuh di tab ini" aria-label="Buka penuh di tab ini">
+          <i data-lucide="external-link"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="viewer" aria-label="Tampilan aplikasi aktif">
+      <div class="frame-card">
+        <iframe
+          id="appFrame"
+          title="Aplikasi aktif"
+          allow="geolocation; clipboard-read; clipboard-write; bluetooth; camera; microphone; payment; fullscreen"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="loading show" id="loading">
+          <div>
+            <div class="spinner"></div>
+            <div>Membuka aplikasi...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="nav" id="bottomNav" aria-label="Pindah aplikasi"></nav>
+  </main>
+
+  <button class="focus-exit" id="focusExitBtn" type="button">
+    <i data-lucide="minimize-2"></i>
+    Keluar Mode Fokus
+  </button>
+
+  <section class="menu-panel" id="menuPanel" aria-label="Pilih aplikasi">
+    <div class="menu-sheet" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+      <div class="menu-head">
+        <div>
+          <h2 id="menuTitle">Pilih Aplikasi</h2>
+          <p>Semua file asli tetap dipakai, jadi data dan login yang sudah ada tetap aman.</p>
+        </div>
+        <button class="icon-btn" id="closeMenuBtn" type="button" title="Tutup menu" aria-label="Tutup menu">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="app-grid" id="appGrid"></div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const apps = [
+      {
+        id: "pusat",
+        title: "Pusat",
+        subtitle: "Admin, staff, transaksi, laporan, dan pengaturan pusat",
+        file: "server.html",
+        icon: "building-2",
+        color: "#d36b35"
+      },
+      {
+        id: "staff",
+        title: "Staff",
+        subtitle: "Login staff, absen, transaksi, bonus, dan closing",
+        file: "index_staff_supabase.html",
+        icon: "users",
+        color: "#2563eb"
+      },
+      {
+        id: "catatan",
+        title: "Catatan Toko",
+        subtitle: "Keuangan toko, server pusat, kas fisik, dan Risma",
+        file: "catatantoko.html",
+        icon: "clipboard-list",
+        color: "#137a55"
+      },
+      {
+        id: "belanja",
+        title: "Belanja",
+        subtitle: "Daftar belanja toko, supplier, variasi warna, dan print",
+        file: "daftar_belanja.html",
+        icon: "shopping-bag",
+        color: "#d9236b"
+      },
+      {
+        id: "kas",
+        title: "Kas Pribadi",
+        subtitle: "Catatan keuangan pribadi dan laporan bulanan",
+        file: "Kaspribadi.html",
+        icon: "wallet-cards",
+        color: "#b7791f"
+      },
+      {
+        id: "laporan",
+        title: "Laporan",
+        subtitle: "Laporan database toko dan rekap dari aplikasi kasir",
+        file: "Laporan.html",
+        icon: "bar-chart-3",
+        color: "#6941c6"
+      }
+    ];
+
+    const frame = document.getElementById("appFrame");
+    const loading = document.getElementById("loading");
+    const appTitle = document.getElementById("appTitle");
+    const appSubtitle = document.getElementById("appSubtitle");
+    const nav = document.getElementById("bottomNav");
+    const appGrid = document.getElementById("appGrid");
+    const menuPanel = document.getElementById("menuPanel");
+    const toastEl = document.getElementById("toast");
+    let currentAppId = "";
+    let loadTimer = null;
+    let toastTimer = null;
+
+    function getInitialAppId() {
+      const fromHash = decodeURIComponent((location.hash || "").replace("#", "")).trim();
+      if (apps.some(app => app.id === fromHash)) return fromHash;
+      const saved = localStorage.getItem("toko_gabungan_active_app");
+      if (apps.some(app => app.id === saved)) return saved;
+      return "pusat";
+    }
+
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1900);
+    }
+
+    function setLoading(active) {
+      clearTimeout(loadTimer);
+      if (active) {
+        loading.classList.add("show");
+        return;
+      }
+      loadTimer = setTimeout(() => loading.classList.remove("show"), 180);
+    }
+
+    function activeApp() {
+      return apps.find(app => app.id === currentAppId) || apps[0];
+    }
+
+    function renderNav() {
+      nav.innerHTML = apps.map(app => `
+        <button
+          type="button"
+          class="${app.id === currentAppId ? "active" : ""}"
+          style="--active:${app.color}"
+          data-app="${app.id}"
+          title="${app.title}"
+          aria-label="Buka ${app.title}">
+          <i data-lucide="${app.icon}"></i>
+          <span>${app.title}</span>
+        </button>
+      `).join("");
+
+      nav.querySelectorAll("button[data-app]").forEach(btn => {
+        btn.addEventListener("click", () => selectApp(btn.dataset.app));
+      });
+    }
+
+    function renderAppGrid() {
+      appGrid.innerHTML = apps.map(app => `
+        <button
+          type="button"
+          class="app-card ${app.id === currentAppId ? "active" : ""}"
+          style="--card-color:${app.color}"
+          data-app="${app.id}">
+          <span class="app-icon"><i data-lucide="${app.icon}"></i></span>
+          <span>
+            <strong>${app.title}</strong>
+            <span>${app.subtitle}</span>
+          </span>
+        </button>
+      `).join("");
+
+      appGrid.querySelectorAll("button[data-app]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectApp(btn.dataset.app);
+          closeMenu();
+        });
+      });
+    }
+
+    function refreshIcons() {
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function selectApp(id, options = {}) {
+      const app = apps.find(item => item.id === id) || apps[0];
+      const changed = currentAppId !== app.id;
+      currentAppId = app.id;
+      localStorage.setItem("toko_gabungan_active_app", app.id);
+      history.replaceState(null, "", "#" + encodeURIComponent(app.id));
+      appTitle.textContent = app.title;
+      appSubtitle.textContent = app.subtitle;
+      document.documentElement.style.setProperty("--active-app", app.color);
+      renderNav();
+      renderAppGrid();
+      refreshIcons();
+
+      if (changed || options.force) {
+        setLoading(true);
+        frame.src = app.file;
+      }
+    }
+
+    function reloadCurrentApp() {
+      const app = activeApp();
+      setLoading(true);
+      try {
+        frame.contentWindow.location.reload();
+      } catch (error) {
+        frame.src = app.file;
+      }
+      showToast(app.title + " direfresh");
+    }
+
+    function openCurrentApp() {
+      const app = activeApp();
+      location.href = app.file;
+    }
+
+    function openMenu() {
+      renderAppGrid();
+      menuPanel.classList.add("show");
+      refreshIcons();
+    }
+
+    function closeMenu() {
+      menuPanel.classList.remove("show");
+    }
+
+    function enterFocusMode() {
+      document.body.classList.add("focus-mode");
+      showToast("Mode fokus aktif");
+    }
+
+    function exitFocusMode() {
+      document.body.classList.remove("focus-mode");
+    }
+
+    document.getElementById("menuBtn").addEventListener("click", openMenu);
+    document.getElementById("closeMenuBtn").addEventListener("click", closeMenu);
+    document.getElementById("reloadBtn").addEventListener("click", reloadCurrentApp);
+    document.getElementById("openBtn").addEventListener("click", openCurrentApp);
+    document.getElementById("focusBtn").addEventListener("click", enterFocusMode);
+    document.getElementById("focusExitBtn").addEventListener("click", exitFocusMode);
+
+    menuPanel.addEventListener("click", event => {
+      if (event.target === menuPanel) closeMenu();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeMenu();
+        exitFocusMode();
+      }
+    });
+
+    frame.addEventListener("load", () => setLoading(false));
+    window.addEventListener("hashchange", () => {
+      const id = decodeURIComponent((location.hash || "").replace("#", "")).trim();
+      if (id && id !== currentAppId && apps.some(app => app.id === id)) selectApp(id);
+    });
+
+    selectApp(getInitialAppId(), { force: true });
+    refreshIcons();
+  </script>
+</body>
+</html>
