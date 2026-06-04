@@ -704,6 +704,8 @@
   // getDoc(), getDocs(), setDoc(), addDoc(), deleteDoc(), onSnapshot(), serverTimestamp(), Timestamp.fromMillis().
   const SUPABASE_TABLES = ['users','attendance','transactions','closings','manualBonuses','audit_logs','adminDeviceTokens'];
   const SUPABASE_FALLBACK_POLL_MS = 2 * 60 * 1000;
+  const SUPABASE_FAST_POLL_MS = 3500;
+  const SUPABASE_MEDIUM_POLL_MS = 12000;
   const SUPABASE_REALTIME_DEBOUNCE_MS = 450;
   const SUPABASE_UNCHANGED_NOTIFY_MS = 60000;
   const SERVER_TIMESTAMP_SENTINEL = { __supabaseServerTimestamp: true };
@@ -844,6 +846,31 @@
     if (refOrQuery.kind === 'doc') return String(row.id || '') === String(refOrQuery.id || '');
     if (lastIds && lastIds.has(String(row.id || ''))) return true;
     return rowMatchesQuery(row, refOrQuery);
+  }
+  function buildRealtimeRowsFromMap(refOrQuery, rowsById) {
+    const constraints = refOrQuery.constraints || [];
+    const hardLimit = constraints.find((c) => c.kind === 'limit')?.count || 1000;
+    let rows = [...(rowsById || new Map()).values()].filter(row => rowMatchesQuery(row, refOrQuery));
+    const ord = constraints.find((c) => c.kind === 'orderBy');
+    if (ord) {
+      rows.sort((x, y) => {
+        const a = getFieldValue(x, ord.field);
+        const b = getFieldValue(y, ord.field);
+        const cmp = String(a ?? '').localeCompare(String(b ?? ''), undefined, { numeric: true });
+        return ord.direction === 'desc' ? -cmp : cmp;
+      });
+    } else if (refOrQuery.collectionName === 'transactions' && typeof sortByCreatedDesc === 'function') {
+      rows = sortByCreatedDesc(rows);
+    } else {
+      rows = sortByCreatedDesc(rows);
+    }
+    return rows.slice(0, hardLimit);
+  }
+  function getSnapshotPollMs(refOrQuery) {
+    const table = String(refOrQuery?.collectionName || '');
+    if (['transactions','attendance','closings','manualBonuses'].includes(table)) return SUPABASE_FAST_POLL_MS;
+    if (table === 'users' || table === 'audit_logs' || table === 'adminDeviceTokens') return SUPABASE_MEDIUM_POLL_MS;
+    return SUPABASE_FALLBACK_POLL_MS;
   }
   function applySupabaseWhereFilters(req, constraints) {
     let applied = 0;
@@ -1041,7 +1068,24 @@
         realtimeChannel = supabase
           .channel(realtimeChannelName(refOrQuery))
           .on('postgres_changes', config, (payload) => {
-            if (isRealtimePayloadRelevant(refOrQuery, payload, lastIds)) queueRun();
+            if (!isRealtimePayloadRelevant(refOrQuery, payload, lastIds)) return;
+            const row = realtimePayloadRow(payload);
+            if (refOrQuery.kind !== 'doc' && row && previousDocsById) {
+              const nextRowsById = new Map(previousDocsById);
+              const rowId = String(row.id || '');
+              const eventType = String(payload?.eventType || '').toUpperCase();
+              if (eventType === 'DELETE' || !rowMatchesQuery(row, refOrQuery)) nextRowsById.delete(rowId);
+              else nextRowsById.set(rowId, row);
+              const rows = buildRealtimeRowsFromMap(refOrQuery, nextRowsById);
+              const type = eventType === 'INSERT' ? 'added' : eventType === 'DELETE' ? 'removed' : 'modified';
+              const changeDoc = { id: rowId, data: () => ({ ...row }) };
+              previousDocsById = new Map(rows.map((item) => [String(item.id), item]));
+              lastIds = new Set(rows.map((item) => String(item.id)));
+              next(querySnapshot(rows, [{ type, doc: changeDoc }]));
+              queueRun();
+              return;
+            }
+            queueRun();
           })
           .subscribe((status) => {
             if (!stopped && (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT')) {
@@ -1052,11 +1096,18 @@
     } catch (e) {
       console.warn('Supabase realtime init skipped:', e?.message || e);
     }
-    const timer = setInterval(run, SUPABASE_FALLBACK_POLL_MS);
+    const timer = setInterval(run, getSnapshotPollMs(refOrQuery));
+    const handleVisibleRefresh = () => {
+      if (!document.hidden) run({ force: true });
+    };
+    window.addEventListener('focus', handleVisibleRefresh);
+    document.addEventListener('visibilitychange', handleVisibleRefresh);
     return () => {
       stopped = true;
       clearInterval(timer);
       clearTimeout(queuedTimer);
+      window.removeEventListener('focus', handleVisibleRefresh);
+      document.removeEventListener('visibilitychange', handleVisibleRefresh);
       if (realtimeChannel) {
         try { supabase.removeChannel(realtimeChannel).catch(() => {}); } catch (_) {}
       }
@@ -1780,6 +1831,7 @@
       const createdAtMs = getRecordTimeMs(rec) || Number(rec.createdAtMs || Date.now());
       saveAttendanceCache(user, { dateKey: todayKey, createdAtMs });
       upsertAttendanceRecord({ ...rec, user, name: rec.name || currentUser.name, dateKey: todayKey, createdAtMs });
+      updateStaffMonthlyAttendanceSnapshotFromLocal({ ...rec, user, dateKey: todayKey, createdAtMs }, { updateDom: currentPage === 'home' });
       attendanceReady = true;
       refreshCurrentPage();
     }
@@ -1966,7 +2018,12 @@
     return visible;
   }
   function getVisibleAttendance() {
-    return cachedAttendance.filter(a => !isRecordDeleted(a));
+    const visible = cachedAttendance.filter(a => !isRecordDeleted(a));
+    if (!isAdmin() && currentUser?.username) {
+      const me = sanitizeUsername(currentUser.username);
+      return visible.filter(a => sanitizeUsername(a.user) === me);
+    }
+    return visible;
   }
   function getDeletedTransactions() {
     return sortByCreatedDesc(cachedTransactions.filter(isRecordDeleted));
@@ -2208,6 +2265,43 @@
       scopedMap.set(id, { ...(scopedMap.get(id) || {}), ...row });
     });
     return sortByCreatedDesc([...otherRows, ...Array.from(scopedMap.values())]);
+  }
+
+  function replaceScopedCacheRows(currentRows, incomingRows, isSameScope) {
+    const keepRows = (currentRows || []).filter((row) => row && !isSameScope(row));
+    return sortByCreatedDesc([...keepRows, ...(incomingRows || []).filter(Boolean)]);
+  }
+
+  function getUserTransactionsFromCache(username = currentUser?.username) {
+    const target = username && username !== 'all' ? sanitizeUsername(username) : null;
+    return (cachedTransactions || []).filter((t) => {
+      if (!t || isRecordDeleted(t)) return false;
+      return !target || sanitizeUsername(t.user) === target;
+    });
+  }
+
+  function getTodayIncomeFromCache(username = currentUser?.username, dateKey = toDateKey(nowDate())) {
+    return getUserTransactionsFromCache(username)
+      .filter((t) => getTransactionDateKey(t) === dateKey)
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+  }
+
+  function getMonthlyAttendanceTotalFromCache(username = currentUser?.username, month = toMonthKey(nowDate())) {
+    const target = username && username !== 'all' ? sanitizeUsername(username) : null;
+    const dates = new Set();
+    dedupeAttendanceRecords(cachedAttendance || []).forEach((a) => {
+      if (!a || isRecordDeleted(a)) return;
+      if (target && sanitizeUsername(a.user) !== target) return;
+      const dateKey = extractDateKey(a);
+      if (dateKey && dateKey.startsWith(month)) dates.add(dateKey);
+    });
+    return dates.size;
+  }
+
+  function getBonusBreakdownFromCache(username = currentUser?.username, period = toMonthKey(nowDate())) {
+    const target = username && username !== 'all' ? sanitizeUsername(username) : null;
+    const transactions = target ? getUserTransactionsFromCache(target) : getVisibleTransactions();
+    return getBonusBreakdown(transactions, target, period);
   }
 
   function getTransactionBonusRate() {
@@ -3055,6 +3149,7 @@
           rows,
           (t) => sanitizeUsername(t.user) === currentUsername && getTransactionDateKey(t) === todayKey
         );
+        updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: currentPage === 'home' });
       }
       handleAdminTransactionSnapshotNotifications(snap);
       refreshCurrentPage();
@@ -3070,10 +3165,11 @@
           cachedTransactions = fallbackRows;
         } else {
           cachedTransactions = mergeScopedCacheRows(
-            cachedTransactions,
-            fallbackRows,
-            (t) => sanitizeUsername(t.user) === currentUsername && getTransactionDateKey(t) === todayKey
-          );
+          cachedTransactions,
+          fallbackRows,
+          (t) => sanitizeUsername(t.user) === currentUsername && getTransactionDateKey(t) === todayKey
+        );
+          updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: currentPage === 'home' });
         }
         refreshCurrentPage();
       } catch (e) {
@@ -3086,9 +3182,16 @@
       : query(collection(db, 'attendance'), where('user', '==', currentUsername), where('dateKey', '==', todayKey), limit(ATT_SYNC_LIMIT_STAFF));
     unsubAttendance = onSnapshot(aq, (snap) => {
       stripCachedAttendance();
-      cachedAttendance = dedupeAttendanceRecords(
-        snap.docs.map(d => ({ id: d.id, ...d.data() }))
-      );
+      const rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (isAdmin()) {
+        cachedAttendance = dedupeAttendanceRecords(rows);
+      } else {
+        const otherRows = cachedAttendance.filter((a) => (
+          sanitizeUsername(a.user) !== currentUsername || extractDateKey(a) !== todayKey
+        ));
+        cachedAttendance = dedupeAttendanceRecords(sortByCreatedDesc([...otherRows, ...rows]));
+        updateStaffMonthlyAttendanceSnapshotFromLocal(null, { updateDom: true });
+      }
       if (!isAdmin()) {
         const today = toDateKey(nowDate());
         const todayRec = cachedAttendance.find(a => !isRecordDeleted(a) && extractDateKey(a) === today && sanitizeUsername(a.user) === currentUser.username);
@@ -3111,6 +3214,7 @@
       : query(collection(db, 'closings'), where('dateKey', '==', todayKey), limit(CLOSING_SYNC_LIMIT));
     unsubClosings = onSnapshot(cq, (snap) => {
       cachedClosings = sortByCreatedDesc(snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(c => c.id !== HEADER_GUIDE_NOTE_DOC_ID && c.id !== STAFF_DAILY_NOTE_DOC_ID && c.id !== RECEIPT_TEXT_DOC_ID && c.type !== 'header_guide_note' && c.type !== 'staff_daily_home_note' && c.type !== 'receipt_text_settings'));
+      if (!isAdmin()) updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: currentPage === 'home' });
       refreshCurrentPage();
     }, (err) => console.error('Closing listener gagal:', err));
 
@@ -3121,6 +3225,7 @@
       } else {
         cachedBonusSettings = getDefaultBonusSettings();
       }
+      if (!isAdmin()) updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: currentPage === 'home' });
       refreshCurrentPage();
     }, (err) => console.error('Bonus settings listener gagal:', err));
 
@@ -3157,11 +3262,12 @@
         cachedManualBonuses = rows;
       } else {
         const currentMonthKey = toMonthKey(nowDate());
-        cachedManualBonuses = dedupeManualBonusRecords(mergeScopedCacheRows(
+        cachedManualBonuses = dedupeManualBonusRecords(replaceScopedCacheRows(
           cachedManualBonuses,
           rows,
           (b) => sanitizeUsername(b.user) === currentUsername && String(b.monthKey || extractDateKey(b).slice(0, 7)) === currentMonthKey
         ));
+        updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: currentPage === 'home' });
       }
       refreshCurrentPage();
     }, (err) => console.error('Manual bonus listener gagal:', err));
@@ -3221,13 +3327,13 @@
 
   async function refreshAfterLocalDataChange({ transactions = false, attendance = false, attendanceRecord = null } = {}) {
     if (attendance) updateStaffMonthlyAttendanceSnapshotFromLocal(attendanceRecord, { updateDom: true });
+    if (transactions) updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: true });
     try {
       await refreshCurrentPage();
     } catch (e) {
       console.warn('Refresh halaman setelah perubahan gagal:', e?.message || e);
     }
     if (currentUser && !isAdmin() && transactions) {
-      staffMonthlyBonusSnapshot.loadedAtMs = 0;
       if (isDailyEmployee(currentUser)) {
         updateStaffMonthlyBonusCard();
       } else {
@@ -3254,7 +3360,12 @@
   }
   function getTodayAttendanceRecord() {
     const today = toDateKey(nowDate());
-    return sortByCreatedDesc(cachedAttendance.filter(a => !isRecordDeleted(a) && extractDateKey(a) === today))[0] || null;
+    const me = sanitizeUsername(currentUser?.username || '');
+    return sortByCreatedDesc(cachedAttendance.filter(a => (
+      !isRecordDeleted(a) &&
+      extractDateKey(a) === today &&
+      (!me || sanitizeUsername(a.user) === me)
+    )))[0] || null;
   }
 
   function getHeaderGuideNoteText() {
@@ -3908,6 +4019,8 @@
     }
     const paymentInfo = getTransactionPaymentInfo(payment);
     setLoading(true);
+    let optimisticTransactionId = '';
+    let rollbackTransactions = null;
     try {
       if (draft.isEdit && draft.id) {
         const id = String(draft.id);
@@ -3942,8 +4055,14 @@
           editedBy: currentUser.username,
           editedByName: currentUser.name
         };
-        await setDoc(doc(db, 'transactions', id), patch, { merge: true });
+        rollbackTransactions = cachedTransactions;
         cachedTransactions = sortByCreatedDesc(cachedTransactions.map(t => String(t.id) === id ? { ...t, ...patch } : t));
+        pendingTransactionPaymentDraft = null;
+        closeTransactionPaymentModal(true);
+        closeTransactionModal();
+        setLoading(false);
+        await refreshAfterLocalDataChange({ transactions: true });
+        await setDoc(doc(db, 'transactions', id), patch, { merge: true });
         await logAudit('transaction_edit', {
           id,
           user: targetUsername,
@@ -3957,10 +4076,6 @@
           paymentLabel: paymentInfo.label
         });
         showToast(`✓ Edit transaksi disimpan · ${paymentInfo.label}`);
-        pendingTransactionPaymentDraft = null;
-        closeTransactionPaymentModal(true);
-        closeTransactionModal();
-        setLoading(false);
         await refreshAfterLocalDataChange({ transactions: true });
         return;
       }
@@ -3979,7 +4094,9 @@
       const bonusGroup = userRole === 'harian' ? 'harian' : 'staff';
       const bonusRate = userBonus.transactionBonusRate;
       const transactionCreatedAtMs = Date.now();
-      const savedRef = await addDoc(collection(db, 'transactions'), {
+      const transactionId = `stafftx_${sanitizeUsername(freshUser.username || targetUsername)}_${transactionCreatedAtMs}_${Math.random().toString(36).slice(2, 7)}`;
+      optimisticTransactionId = transactionId;
+      const transactionPayload = {
         user: sanitizeUsername(freshUser.username || targetUsername),
         name: freshUser.name || targetUser.name || targetUsername,
         amount,
@@ -4008,53 +4125,43 @@
         source: isAdmin() ? 'admin_manual' : 'staff_cashier',
         createdBy: sanitizeUsername(currentUser.username),
         createdByName: currentUser.name || currentUser.username,
-        createdAt: serverTimestamp(),
-        createdAtMs: transactionCreatedAtMs
-      });
-      const savedTx = {
-        id: savedRef?.id || '',
-        user: sanitizeUsername(freshUser.username || targetUsername),
-        name: freshUser.name || targetUser.name || targetUsername,
-        amount,
-        note,
-        paymentMethod: paymentInfo.method,
-        paymentLabel: paymentInfo.label,
-        dateKey: toDateKey(nowDate()),
-        monthKey: toMonthKey(nowDate()),
-        userRole,
-        role: userRole,
-        bonusGroup,
-        bonusRate,
-        transactionBonusRate: bonusRate,
-        bonusPercent: userBonus.transactionBonusPercent,
-        transactionBonusPercent: userBonus.transactionBonusPercent,
-        closingBonusPerMinuteSnapshot: userBonus.closingBonusPerMinute,
-        paymentStatus: 'success',
-        paymentCashOutType: paymentInfo.method === 'qris_transfer' ? 'qris' : '',
-        isNonCashPayment: paymentInfo.method === 'qris_transfer',
-        paymentConfirmed: true,
-        paymentConfirmedAtMs: Date.now(),
-        notifyAdmin: !isAdmin(),
-        notificationType: isAdmin() ? 'admin_manual_transaction' : 'staff_transaction',
-        notificationStatus: isAdmin() ? 'skip' : 'pending',
-        source: isAdmin() ? 'admin_manual' : 'staff_cashier',
-        createdBy: sanitizeUsername(currentUser.username),
-        createdByName: currentUser.name || currentUser.username,
         createdAtMs: transactionCreatedAtMs
       };
-      cachedTransactions = sortByCreatedDesc([{ ...savedTx, id: savedRef?.id || savedTx.id || '' }, ...cachedTransactions]);
+      const localTx = { id: transactionId, ...transactionPayload, pending: true };
+      cachedTransactions = sortByCreatedDesc([localTx, ...cachedTransactions]);
       const shouldPrint = Boolean(pendingTransactionPaymentDraft?.printAfterSave);
       pendingTransactionPaymentDraft = null;
-      playTransactionSuccessSound();
-      if (!isAdmin()) notifyAdminNewTransaction(savedTx);
-      showToast(`✓ Transaksi disimpan · ${paymentInfo.label}${shouldPrint ? ' · cetak struk' : ''}`);
       closeTransactionPaymentModal(true);
       closeTransactionModal();
       setLoading(false);
       await refreshAfterLocalDataChange({ transactions: true });
+      await setDoc(doc(db, 'transactions', transactionId), {
+        ...transactionPayload,
+        createdAt: serverTimestamp(),
+        syncedAt: serverTimestamp(),
+        syncedAtMs: Date.now()
+      }, { merge: false });
+      const savedTx = {
+        id: transactionId,
+        ...transactionPayload,
+        pending: false,
+        syncedAtMs: Date.now()
+      };
+      cachedTransactions = sortByCreatedDesc(cachedTransactions.map(t => String(t.id) === transactionId ? savedTx : t));
+      playTransactionSuccessSound();
+      if (!isAdmin()) notifyAdminNewTransaction(savedTx);
+      showToast(`✓ Transaksi disimpan · ${paymentInfo.label}${shouldPrint ? ' · cetak struk' : ''}`);
+      await refreshAfterLocalDataChange({ transactions: true });
       if (shouldPrint) setTimeout(() => directPrintReceiptText(buildTransactionReceiptText(savedTx), 'Struk Transaksi Baru'), 180);
     } catch (e) {
       console.error(e);
+      if (rollbackTransactions) {
+        cachedTransactions = rollbackTransactions;
+      } else if (optimisticTransactionId) {
+        cachedTransactions = cachedTransactions.filter(t => String(t.id) !== optimisticTransactionId);
+      }
+      updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: currentPage === 'home' });
+      await refreshCurrentPage().catch(() => {});
       showToast(e.message || 'Gagal cek bonus terbaru. Transaksi belum disimpan.', true);
     }
     setLoading(false);
@@ -4069,6 +4176,7 @@
     if (!pin) return;
     if (!(await requireCurrentUserPin(pin, 'PIN salah!'))) return;
     setLoading(true);
+    let rollbackTransactions = null;
     try {
       const deletePatch = {
         deleted: true,
@@ -4077,15 +4185,22 @@
         deletedBy: currentUser.username,
         deletedByName: currentUser.name
       };
-      await setDoc(doc(db, 'transactions', id), deletePatch, { merge: true });
+      rollbackTransactions = cachedTransactions;
       cachedTransactions = sortByCreatedDesc(cachedTransactions.map(t => String(t.id) === String(id) ? { ...t, ...deletePatch } : t));
+      setLoading(false);
+      await refreshAfterLocalDataChange({ transactions: true });
+      await setDoc(doc(db, 'transactions', id), deletePatch, { merge: true });
       await logAudit('transaction_soft_delete', { id, user: trx.user, amount: Number(trx.amount || 0), note: trx.note || 'Transaksi' });
       if (!isAdmin()) notifyAdminTransactionDelete({ ...trx, id, ...deletePatch });
-      setLoading(false);
       await refreshAfterLocalDataChange({ transactions: true });
       showToast(`✓ Transaksi dihapus aman`);
     } catch (e) {
       console.error(e);
+      if (rollbackTransactions) {
+        cachedTransactions = rollbackTransactions;
+        updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: currentPage === 'home' });
+        await refreshCurrentPage().catch(() => {});
+      }
       showToast('Gagal hapus', true);
     }
     setLoading(false);
@@ -4366,24 +4481,50 @@
     return data;
   }
 
+  function updateStaffMonthlyBonusSnapshotFromLocal({ updateDom = false } = {}) {
+    if (!currentUser || isAdmin() || isDailyEmployee(currentUser)) return staffMonthlyBonusSnapshot;
+    const month = toMonthKey(nowDate());
+    const user = sanitizeUsername(currentUser.username || '');
+    if (!user) return staffMonthlyBonusSnapshot;
+    const breakdown = getBonusBreakdownFromCache(user, month);
+    staffMonthlyBonusSnapshot = {
+      ...staffMonthlyBonusSnapshot,
+      monthKey: month,
+      totalBonus: Math.round(Number(breakdown.totalBonus || 0)),
+      loading: false,
+      error: '',
+      loadedAtMs: staffMonthlyBonusSnapshot.loadedAtMs || Date.now()
+    };
+    if (updateDom) updateStaffMonthlyBonusCard();
+    return staffMonthlyBonusSnapshot;
+  }
+
   function updateStaffMonthlyBonusCard() {
     if (!currentUser || isAdmin()) return;
     if (isDailyEmployee(currentUser)) {
       const today = toDateKey(nowDate());
       const dailyPay = getDailyEmployeeTodaySalary(currentUser.username, today);
+      const todayBreakdown = getBonusBreakdownFromCache(currentUser.username, { type: 'daily', dateKey: today });
+      const totalTodayBonus = Math.round(Number(todayBreakdown.totalBonus || dailyPay.salary || 0));
       if ($('monthly-bonus-label')) $('monthly-bonus-label').textContent = 'Bonus Hari Ini';
       if ($('monthly-bonus-month')) $('monthly-bonus-month').textContent = formatDateLabel(today);
-      if ($('monthly-bonus-total')) $('monthly-bonus-total').textContent = `Rp ${formatRupiah(dailyPay.salary || 0)}`;
-      if ($('monthly-bonus-text')) $('monthly-bonus-text').textContent = `${dailyPay.items.length} transaksi hari ini`;
+      if ($('monthly-bonus-total')) $('monthly-bonus-total').textContent = `Rp ${formatRupiah(totalTodayBonus)}`;
+      if ($('monthly-bonus-text')) {
+        const manualToday = Number(todayBreakdown.manualBonus || 0);
+        $('monthly-bonus-text').textContent = `${dailyPay.items.length} transaksi hari ini${manualToday ? ' · manual Rp ' + formatRupiah(manualToday) : ''}`;
+      }
       return;
     }
     const month = staffMonthlyBonusSnapshot.monthKey || toMonthKey(nowDate());
+    const localBreakdown = getBonusBreakdownFromCache(currentUser.username, month);
+    const localTotal = Math.round(Number(localBreakdown.totalBonus || 0));
+    const displayTotal = staffMonthlyBonusSnapshot.loadedAtMs
+      ? Number(staffMonthlyBonusSnapshot.totalBonus || 0)
+      : localTotal;
     if ($('monthly-bonus-label')) $('monthly-bonus-label').textContent = 'Total Bonus Bulanan';
     if ($('monthly-bonus-month')) $('monthly-bonus-month').textContent = month;
     if ($('monthly-bonus-total')) {
-      $('monthly-bonus-total').textContent = staffMonthlyBonusSnapshot.loading
-        ? 'Memuat...'
-        : `Rp ${formatRupiah(staffMonthlyBonusSnapshot.totalBonus || 0)}`;
+      $('monthly-bonus-total').textContent = `Rp ${formatRupiah(displayTotal)}`;
     }
     if ($('monthly-bonus-text')) {
       if (staffMonthlyBonusSnapshot.error) {
@@ -4391,6 +4532,8 @@
       } else if (staffMonthlyBonusSnapshot.loadedAtMs) {
         const t = new Date(staffMonthlyBonusSnapshot.loadedAtMs).toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit', timeZone:'Asia/Jakarta' }).replace('.', ':');
         $('monthly-bonus-text').textContent = `Bulan aktif ${month} · update ${t} WIB`;
+      } else if (staffMonthlyBonusSnapshot.loading) {
+        $('monthly-bonus-text').textContent = `Bulan aktif ${month} · sinkron...`;
       } else {
         $('monthly-bonus-text').textContent = `Bulan aktif ${month}`;
       }
@@ -4414,18 +4557,34 @@
         getDocsFreshSafe('Bonus closing bulan aktif', query(collection(db, 'closings'), where('monthKey', '==', month), limit(90))),
         getDocsFreshSafe('Bonus manual bulan aktif', query(collection(db, 'manualBonuses'), where('user', '==', user), where('monthKey', '==', month), limit(120)))
       ]);
-      const txRows = (txSnap?.docs || []).map(d => ({ id: d.id, ...d.data() })).filter(t => !isRecordDeleted(t));
-      const closingRows = (closingSnap?.docs || []).map(d => ({ id: d.id, ...d.data() })).filter(isClosingDataRecord);
-      const manualRows = dedupeManualBonusRecords((manualSnap?.docs || []).map(d => ({ id: d.id, ...d.data() })));
-      const dailyMode = isDailyEmployee(currentUser);
-      const txBonus = dailyMode
-        ? calculateTransactionBonusForList(txRows.filter(isDailyTransactionRecord).length ? txRows.filter(isDailyTransactionRecord) : txRows)
-        : calculateTransactionBonusForList(txRows.filter(t => !isDailyTransactionRecord(t)));
-      const closingBonus = dailyMode ? 0 : closingRows.reduce((sum, closing) => sum + getClosingBonusValue(closing, user), 0);
-      const manualBonus = manualRows.reduce((sum, b) => sum + Number(b.amount || 0), 0);
+      const txRows = txSnap ? (txSnap.docs || []).map(d => ({ id: d.id, ...d.data() })) : null;
+      const closingRows = closingSnap ? (closingSnap.docs || []).map(d => ({ id: d.id, ...d.data() })).filter(isClosingDataRecord) : null;
+      const manualRows = manualSnap ? dedupeManualBonusRecords((manualSnap.docs || []).map(d => ({ id: d.id, ...d.data() }))) : null;
+      if (txRows) {
+        cachedTransactions = replaceScopedCacheRows(
+          cachedTransactions,
+          txRows,
+          (t) => sanitizeUsername(t.user) === user && String(getTransactionMonthKey(t) || getTransactionDateKey(t).slice(0, 7)) === month
+        );
+      }
+      if (closingRows) {
+        cachedClosings = replaceScopedCacheRows(
+          cachedClosings,
+          closingRows,
+          (c) => isClosingDataRecord(c) && String(c.monthKey || extractDateKey(c).slice(0, 7) || c.dateKey?.slice?.(0, 7) || '') === month
+        );
+      }
+      if (manualRows) {
+        cachedManualBonuses = dedupeManualBonusRecords(replaceScopedCacheRows(
+          cachedManualBonuses,
+          manualRows,
+          (b) => sanitizeUsername(b.user) === user && String(b.monthKey || extractDateKey(b).slice(0, 7)) === month
+        ));
+      }
+      const breakdown = getBonusBreakdownFromCache(user, month);
       staffMonthlyBonusSnapshot = {
         monthKey: month,
-        totalBonus: Math.round(txBonus + closingBonus + manualBonus),
+        totalBonus: Math.round(Number(breakdown.totalBonus || 0)),
         loadedAtMs: Date.now(),
         loading: false,
         error: ''
@@ -4452,22 +4611,16 @@
     const month = toMonthKey(nowDate());
     const user = sanitizeUsername(currentUser.username || '');
     if (!user) return staffMonthlyAttendanceSnapshot;
-    const knownDates = new Set(
-      staffMonthlyAttendanceSnapshot.monthKey === month && Array.isArray(staffMonthlyAttendanceSnapshot.dateKeys)
-        ? staffMonthlyAttendanceSnapshot.dateKeys
-        : []
-    );
+    const knownDates = new Set();
     getStaffMonthlyAttendanceDateKeysFromCache(month, user).forEach(dateKey => knownDates.add(dateKey));
     const recordDate = extractDateKey(record);
     if (recordDate && recordDate.startsWith(month) && sanitizeUsername(record?.user || user) === user && !isRecordDeleted(record)) {
       knownDates.add(recordDate);
     }
-    const previousTotal = staffMonthlyAttendanceSnapshot.monthKey === month ? Number(staffMonthlyAttendanceSnapshot.total || 0) : 0;
-    const nextTotal = Math.max(previousTotal, knownDates.size);
     staffMonthlyAttendanceSnapshot = {
       ...staffMonthlyAttendanceSnapshot,
       monthKey: month,
-      total: nextTotal,
+      total: knownDates.size,
       dateKeys: [...knownDates],
       loading: false,
       error: '',
@@ -4514,9 +4667,18 @@
         where('dateKey', '<', end),
         limit(80)
       ));
-      const dates = new Set((snap?.docs || [])
+      const rows = snap ? (snap.docs || [])
         .map(d => ({ id: d.id, ...d.data() }))
-        .filter(a => !isRecordDeleted(a))
+        .filter(a => !isRecordDeleted(a)) : [];
+      if (snap) {
+        cachedAttendance = dedupeAttendanceRecords(sortByCreatedDesc([
+          ...cachedAttendance.filter((a) => (
+            sanitizeUsername(a.user) !== user || !String(extractDateKey(a) || '').startsWith(month)
+          )),
+          ...rows
+        ]));
+      }
+      const dates = new Set(rows
         .map(extractDateKey)
         .filter(dateKey => dateKey && dateKey.startsWith(month)));
       getStaffMonthlyAttendanceDateKeysFromCache(month, user).forEach(dateKey => dates.add(dateKey));
@@ -4539,16 +4701,24 @@
     // Untuk staff, getVisibleTransactions()/getVisibleAttendance() sudah otomatis dibatasi ke data sendiri.
     const sourceTransactions = visibleTransactions;
     const sourceAttendance = visibleAttendance;
-    const pendapatanHariIni = sourceTransactions.filter(t => extractDateKey(t) === today).reduce((a,b)=>a+Number(b.amount||0),0);
-    const omzetBulanan = sourceTransactions.filter(t => t.monthKey === month).reduce((a,b)=>a+Number(b.amount||0),0);
+    const pendapatanHariIni = isAdmin()
+      ? sourceTransactions.filter(t => extractDateKey(t) === today).reduce((a,b)=>a+Number(b.amount||0),0)
+      : getTodayIncomeFromCache(currentUser.username, today);
+    const omzetBulanan = sourceTransactions.filter(t => getTransactionMonthKey(t) === month).reduce((a,b)=>a+Number(b.amount||0),0);
     const bonusScopeUser = isAdmin() ? null : currentUser.username;
-    const bonusBreakdown = getBonusBreakdown(sourceTransactions, bonusScopeUser, month);
-    const todayBonusBreakdown = getBonusBreakdown(sourceTransactions, bonusScopeUser, { type: 'daily', dateKey: today });
+    const bonusBreakdown = isAdmin()
+      ? getBonusBreakdown(sourceTransactions, bonusScopeUser, month)
+      : getBonusBreakdownFromCache(currentUser.username, month);
+    const todayBonusBreakdown = isAdmin()
+      ? getBonusBreakdown(sourceTransactions, bonusScopeUser, { type: 'daily', dateKey: today })
+      : getBonusBreakdownFromCache(currentUser.username, { type: 'daily', dateKey: today });
     const dailyMode = !isAdmin() && isDailyEmployee(currentUser);
     const dailyPay = dailyMode ? getDailyEmployeeTodaySalary(currentUser.username, today) : null;
-    const dailyManualBonus = dailyMode ? getMonthlyManualBonus(currentUser.username, month) : 0;
+    const dailyManualBonus = dailyMode ? getPeriodManualBonus(currentUser.username, { type: 'daily', dateKey: today }) : 0;
     const rec = sortByCreatedDesc(sourceAttendance.filter(a => extractDateKey(a) === today))[0] || null;
     if (!isAdmin()) {
+      updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: true });
+      updateStaffMonthlyAttendanceSnapshotFromLocal(null, { updateDom: true });
       if (dailyMode) {
         updateStaffMonthlyBonusCard();
         await loadStaffMonthlyAttendanceSnapshot();
@@ -6415,22 +6585,25 @@
     preloadAttendanceCache();
     const todayKey = toDateKey(nowDate());
     const currentUsername = sanitizeUsername(currentUser.username || '');
+    const currentMonthKey = toMonthKey(nowDate());
+    const monthStartKey = `${currentMonthKey}-01`;
+    const nextMonthStartKey = `${nextMonthKey(currentMonthKey)}-01`;
 
     const txQueryFresh = isAdmin()
       ? query(collection(db, 'transactions'), orderBy('createdAtMs', 'desc'), limit(TX_SYNC_LIMIT_ADMIN))
-      : query(collection(db, 'transactions'), where('user', '==', currentUsername), where('dateKey', '==', todayKey), orderBy('createdAtMs', 'desc'), limit(TX_SYNC_LIMIT_STAFF));
+      : query(collection(db, 'transactions'), where('user', '==', currentUsername), where('dateKey', '>=', monthStartKey), where('dateKey', '<', nextMonthStartKey), orderBy('createdAtMs', 'desc'), limit(1500));
     const txQueryFallback = isAdmin()
       ? query(collection(db, 'transactions'), limit(TX_SYNC_LIMIT_ADMIN))
-      : query(collection(db, 'transactions'), where('user', '==', currentUsername), where('dateKey', '==', todayKey), limit(TX_SYNC_LIMIT_STAFF));
+      : query(collection(db, 'transactions'), where('user', '==', currentUsername), limit(1500));
     const attendanceQuery = isAdmin()
       ? query(collection(db, 'attendance'), limit(ATT_SYNC_LIMIT_ADMIN))
-      : query(collection(db, 'attendance'), where('user', '==', currentUsername), where('dateKey', '==', todayKey), limit(ATT_SYNC_LIMIT_STAFF));
+      : query(collection(db, 'attendance'), where('user', '==', currentUsername), where('dateKey', '>=', monthStartKey), where('dateKey', '<', nextMonthStartKey), limit(80));
     const manualBonusQuery = isAdmin()
       ? query(collection(db, 'manualBonuses'), limit(MANUAL_BONUS_SYNC_LIMIT))
       : query(collection(db, 'manualBonuses'), where('user', '==', currentUsername), where('monthKey', '==', toMonthKey(nowDate())), limit(MANUAL_BONUS_SYNC_LIMIT));
     const closingQuery = isAdmin()
       ? query(collection(db, 'closings'), limit(CLOSING_SYNC_LIMIT))
-      : query(collection(db, 'closings'), where('dateKey', '==', todayKey), limit(CLOSING_SYNC_LIMIT));
+      : query(collection(db, 'closings'), where('dateKey', '>=', monthStartKey), where('dateKey', '<', nextMonthStartKey), limit(90));
 
     const [txSnap, attSnap, closingSnap, bonusSnap, guideNoteSnap, staffDailyNoteSnap, receiptTextSnap, manualBonusSnap] = await Promise.all([
       getDocsFreshWithFallback('Transaksi terbaru', txQueryFresh, txQueryFallback).then(countError),
@@ -6448,19 +6621,29 @@
       if (isAdmin()) {
         cachedTransactions = rows;
       } else {
-        cachedTransactions = mergeScopedCacheRows(
+        cachedTransactions = replaceScopedCacheRows(
           cachedTransactions,
           rows,
-          (t) => sanitizeUsername(t.user) === currentUsername && getTransactionDateKey(t) === todayKey
+          (t) => sanitizeUsername(t.user) === currentUsername && String(getTransactionMonthKey(t) || getTransactionDateKey(t).slice(0, 7)) === currentMonthKey
         );
+        updateStaffMonthlyBonusSnapshotFromLocal({ updateDom: true });
       }
     }
 
     if (attSnap) {
       stripCachedAttendance();
-      cachedAttendance = dedupeAttendanceRecords(
-        attSnap.docs.map(d => ({ id: d.id, ...d.data() })).filter(a => !isRecordDeleted(a))
-      );
+      const rows = attSnap.docs.map(d => ({ id: d.id, ...d.data() })).filter(a => !isRecordDeleted(a));
+      if (isAdmin()) {
+        cachedAttendance = dedupeAttendanceRecords(rows);
+      } else {
+        cachedAttendance = dedupeAttendanceRecords(sortByCreatedDesc([
+          ...cachedAttendance.filter((a) => (
+            sanitizeUsername(a.user) !== currentUsername || !String(extractDateKey(a) || '').startsWith(currentMonthKey)
+          )),
+          ...rows
+        ]));
+        updateStaffMonthlyAttendanceSnapshotFromLocal(null, { updateDom: true });
+      }
       if (!isAdmin()) {
         const today = toDateKey(nowDate());
         const todayRec = cachedAttendance.find(a => !isRecordDeleted(a) && extractDateKey(a) === today && sanitizeUsername(a.user) === currentUser.username);
@@ -6523,7 +6706,7 @@
         cachedManualBonuses = rows;
       } else {
         const currentMonthKey = toMonthKey(nowDate());
-        cachedManualBonuses = dedupeManualBonusRecords(mergeScopedCacheRows(
+        cachedManualBonuses = dedupeManualBonusRecords(replaceScopedCacheRows(
           cachedManualBonuses,
           rows,
           (b) => sanitizeUsername(b.user) === currentUsername && String(b.monthKey || extractDateKey(b).slice(0, 7)) === currentMonthKey
