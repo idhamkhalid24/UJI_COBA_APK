@@ -1,27 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Kasir Staff & Harian</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root{--transition-theme:background .16s ease,color .16s ease,border-color .16s ease,box-shadow .16s ease;--radius:10px;--radius-lg:13px;--num-font:'DM Mono','Outfit','Arial',sans-serif;--bg:#f0ede8;--bg2:#faf8f5;--bg3:#e8e4de;--surface:rgba(90,70,50,.055);--surface-hover:rgba(90,70,50,.09);--border:rgba(90,70,50,.13);--border-focus:rgba(211,107,53,.5);--text:#2c2420;--text-soft:#7a6a60;--text-ghost:#b0a096;--accent:#d36b35;--accent-dim:rgba(211,107,53,.12);--accent-glow:rgba(211,107,53,.22);--green:#2e8a5e;--green-dim:rgba(46,138,94,.11);--red:#c94040;--red-dim:rgba(201,64,64,.1);--amber:#c48a1a;--amber-dim:rgba(196,138,26,.13);--nav-bg:rgba(250,248,245,.92);--shadow:0 8px 28px rgba(60,40,20,.12)}
-    *{box-sizing:border-box;margin:0;padding:0}html{background:var(--bg)}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;letter-spacing:0;transition:var(--transition-theme);-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}.stat-value,.stat-mini-num,.amount-display,.trx-amount,.trx-time{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum' 1,'lnum' 1}
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<title>Kasir Staff &amp; Harian</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+    :root{--transition-theme:background .16s ease,color .16s ease,border-color .16s ease,box-shadow .16s ease;--radius:10px;--radius-lg:13px;--num-font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;--bg:#f0ede8;--bg2:#faf8f5;--bg3:#e8e4de;--surface:rgba(90,70,50,.055);--surface-hover:rgba(90,70,50,.09);--border:rgba(90,70,50,.13);--border-focus:rgba(211,107,53,.5);--text:#2c2420;--text-soft:#7a6a60;--text-ghost:#b0a096;--accent:#d36b35;--accent-dim:rgba(211,107,53,.12);--accent-glow:rgba(211,107,53,.22);--green:#2e8a5e;--green-dim:rgba(46,138,94,.11);--red:#c94040;--red-dim:rgba(201,64,64,.1);--amber:#c48a1a;--amber-dim:rgba(196,138,26,.13);--nav-bg:rgba(250,248,245,.92);--shadow:0 8px 28px rgba(60,40,20,.12)}
+    *{box-sizing:border-box;margin:0;padding:0}html{background:var(--bg)}body{font-family:var(--num-font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;letter-spacing:0;transition:var(--transition-theme);-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}.stat-value,.stat-mini-num,.amount-display,.trx-amount,.trx-time{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum' 1,'lnum' 1}
     #app{width:100%;max-width:1120px;min-height:100vh;margin:0 auto;position:relative;background:var(--bg);overflow-x:hidden}#app::before,.stat-hero::before,.bonus-card::before{display:none!important}#page-content{position:relative;z-index:1;padding-bottom:96px!important}.page-pad{width:min(100%,980px);margin:0 auto;padding:0 16px}.page-title{font-size:clamp(20px,2vw,28px)!important;line-height:1.12;font-weight:800;letter-spacing:0}.page-subtitle{font-size:12px!important;color:var(--text-soft);margin-top:3px}.label-xs{font-size:10px!important;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:7px}
     .card,.stat-mini,.trx-card,.setting-row,.header-guide-item,.staff-daily-composer,.staff-daily-preview-wrap,.staff-daily-public-text{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)!important;transition:var(--transition-theme)}.card{box-shadow:0 1px 0 rgba(255,255,255,.03)}.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.g-input{width:100%;min-height:42px;border:1px solid var(--border);border-radius:var(--radius)!important;background:var(--surface);color:var(--text);font-size:14px!important;line-height:1.35;padding:10px 12px!important;outline:none;transition:var(--transition-theme)}.g-input:focus{border-color:var(--border-focus);background:var(--bg2);box-shadow:0 0 0 3px var(--accent-dim)}.g-input::placeholder{color:var(--text-ghost)}
-    .btn{border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;border-radius:var(--radius)!important;transition:transform .14s ease,filter .14s ease,background .14s ease}.btn:hover:not(:disabled),.theme-toggle:hover{filter:brightness(1.05);transform:translateY(-1px)}.btn:active,.theme-toggle:active{transform:scale(.98)}.btn:disabled{opacity:.45;pointer-events:none}.btn-primary{background:var(--accent);color:#fff;box-shadow:none}.btn-glass{background:var(--surface);border:1px solid var(--border)!important;color:var(--text)}.btn-danger{background:var(--red-dim);border:1px solid rgba(255,105,97,.24)!important;color:var(--red)}.btn-success{background:var(--green);color:#fff}.theme-toggle{width:38px!important;height:38px!important;min-width:38px;border:1px solid var(--border);border-radius:var(--radius)!important;background:var(--bg2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--text-soft);text-decoration:none;transition:transform .14s ease,filter .14s ease}.theme-btn{color:var(--amber);background:var(--amber-dim)}.member-btn,.refresh-btn{color:var(--accent);background:var(--accent-dim)}.logout-btn{color:var(--red);background:var(--red-dim)}.refresh-btn.is-refreshing i{animation:spin .65s linear infinite}.header-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+    .btn{border:none;cursor:pointer;font-family:var(--num-font);font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;border-radius:var(--radius)!important;transition:transform .14s ease,filter .14s ease,background .14s ease}.btn:hover:not(:disabled),.theme-toggle:hover{filter:brightness(1.05);transform:translateY(-1px)}.btn:active,.theme-toggle:active{transform:scale(.98)}.btn:disabled{opacity:.45;pointer-events:none}.btn-primary{background:var(--accent);color:#fff;box-shadow:none}.btn-glass{background:var(--surface);border:1px solid var(--border)!important;color:var(--text)}.btn-danger{background:var(--red-dim);border:1px solid rgba(255,105,97,.24)!important;color:var(--red)}.btn-success{background:var(--green);color:#fff}.theme-toggle{width:38px!important;height:38px!important;min-width:38px;border:1px solid var(--border);border-radius:var(--radius)!important;background:var(--bg2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--text-soft);text-decoration:none;transition:transform .14s ease,filter .14s ease}.theme-btn{color:var(--amber);background:var(--amber-dim)}.member-btn,.refresh-btn{color:var(--accent);background:var(--accent-dim)}.logout-btn{color:var(--red);background:var(--red-dim)}.refresh-btn.is-refreshing i{animation:spin .65s linear infinite}.header-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
     .stat-hero{background:var(--bg2)!important;border:1px solid var(--border);border-radius:var(--radius-lg)!important;padding:18px!important;position:relative;overflow:hidden}.stat-label{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}.stat-value{font-family:var(--num-font);font-size:clamp(24px,4vw,40px)!important;font-weight:800;letter-spacing:0;position:relative;z-index:1}.stat-sub{font-size:12px;color:var(--text-soft);margin-top:5px}.stat-mini{padding:14px;text-align:center}.stat-mini-num{font-family:var(--num-font);font-size:24px;font-weight:800;line-height:1.1}.stat-mini-lbl{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:5px}.bonus-card{background:var(--bg2)!important;border:1px solid rgba(246,184,79,.28)!important;border-radius:var(--radius)!important;padding:16px;position:relative;overflow:hidden}
     .modal-wrap{position:fixed;inset:0;background:rgba(6,8,12,.62);backdrop-filter:blur(12px);z-index:150;display:none;align-items:center;justify-content:center;padding:18px}.modal-wrap.show{display:flex}.modal-sheet{width:100%;max-width:440px;background:var(--bg2);border:1px solid var(--border);border-radius:16px!important;padding:18px!important;box-shadow:var(--shadow);animation:sheetPop .18s ease both}.modal-pill{width:36px;height:3px;background:var(--border);border-radius:2px;margin:0 auto 18px}.modal-ico{width:44px;height:44px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 12px}.amount-display{font-family:var(--num-font);font-size:34px!important;font-weight:800;color:var(--accent);text-align:right;width:100%;background:none;border:none;outline:none}
     #bottom-nav{position:fixed;bottom:12px!important;left:50%;transform:translateX(-50%);width:min(calc(100% - 22px),760px)!important;max-width:760px!important;height:68px!important;background:var(--nav-bg);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:18px!important;display:flex;justify-content:space-around;align-items:center;z-index:100;padding:0 8px!important;box-shadow:var(--shadow)}.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex:1;min-width:0!important;min-height:52px!important;padding:8px 6px!important;border-radius:12px!important;cursor:pointer;background:none;border:none;color:var(--text-ghost)}.nav-item i{font-size:19px!important;line-height:1}.nav-item span{font-size:9px!important;font-weight:800;letter-spacing:0!important;text-transform:uppercase;line-height:1.05}.nav-item.active{background:var(--accent-dim);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(79,124,255,.16)}#bottom-nav.staff-nav{justify-content:center;gap:10px;padding:0 10px!important}#bottom-nav.staff-nav .nav-item{max-width:138px!important}.fab-add{position:fixed;right:22px;bottom:92px!important;width:56px!important;height:56px!important;border-radius:16px!important;border:none;background:var(--accent);color:#fff;display:none!important;align-items:center;justify-content:center;box-shadow:var(--shadow);z-index:110;cursor:pointer;font-size:21px!important}.fab-add.staff-fab{width:58px!important;height:58px!important}
     #loading{position:fixed;inset:0;background:rgba(10,13,20,.7);backdrop-filter:blur(16px);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px}.loader-ring{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .65s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@keyframes sheetPop{from{opacity:.85;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}.page-in{animation:pageIn .2s ease both}.s1{animation-delay:.03s}.s2{animation-delay:.06s}.s3{animation-delay:.09s}.s4{animation-delay:.12s}#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-8px) scale(.96);z-index:300;padding:10px 18px;border-radius:999px;font-size:12.5px;font-weight:700;opacity:0;transition:all .22s cubic-bezier(.34,1.5,.64,1);white-space:nowrap;max-width:calc(100% - 40px);text-align:center;pointer-events:none;box-shadow:var(--shadow)}#toast.show{transform:translateX(-50%) translateY(0) scale(1);opacity:1}
     .loc-chip,.status-pill,.user-chip,.badge{display:inline-flex;align-items:center;border-radius:999px;border:1px solid var(--border);font-weight:800}.loc-chip{gap:6px;padding:5px 11px;font-size:12px}.loc-in,.status-ok{background:var(--green-dim);color:var(--green);border-color:rgba(57,191,127,.22)}.loc-out,.status-warn{background:var(--red-dim);color:var(--red);border-color:rgba(255,105,97,.22)}.loc-loading{background:var(--surface);color:var(--text-ghost)}.status-pill{gap:6px;padding:5px 12px;font-size:11px}.user-chip{gap:6px;padding:4px 10px;font-size:11px;background:var(--surface);color:var(--text-soft)}.badge{padding:2px 7px;font-size:9px;letter-spacing:.05em;text-transform:uppercase}.badge-blue{background:var(--accent-dim);color:var(--accent);border-color:rgba(79,124,255,.2)}.tab-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:3px;display:flex;gap:2px}.tab-btn{flex:1;padding:8px 4px;border-radius:6px!important;font-size:12px;font-weight:800;color:var(--text-ghost);background:none;border:none;cursor:pointer}.tab-btn.active{background:var(--accent);color:#fff}
-    .trx-card{padding:12px 14px;display:flex;align-items:center;gap:12px}.trx-icon{width:36px;height:36px;background:var(--accent-dim);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:var(--accent)}.trx-amount{font-family:var(--num-font);font-size:16px;font-weight:800}.trx-note{font-size:12px;color:var(--text-soft);margin-top:2px;max-width:clamp(150px,42vw,420px)!important;white-space:normal;overflow:hidden;text-overflow:ellipsis}.trx-time{font-family:var(--num-font);font-size:10px;color:var(--text-ghost);margin-top:3px}.setting-row{display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 14px;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif}.setting-ico{width:32px;height:32px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}.setting-label{font-size:13px;font-weight:700;color:var(--text);flex:1;text-align:left}.setting-arrow{color:var(--text-ghost);font-size:10px}.sync-btn{padding:8px 12px;background:var(--accent-dim);border:1px solid rgba(79,124,255,.22);border-radius:var(--radius);color:var(--accent);font-size:12px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px}.login-brand{width:64px;height:64px;border-radius:16px!important;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative;background:var(--accent-dim);border:1px solid rgba(79,124,255,.22)}.swipe-hint{display:flex;align-items:center;justify-content:center;gap:7px;margin:8px 0 0;font-size:11px;color:var(--text-ghost);font-weight:800}
+    .trx-card{padding:12px 14px;display:flex;align-items:center;gap:12px}.trx-icon{width:36px;height:36px;background:var(--accent-dim);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:var(--accent)}.trx-amount{font-family:var(--num-font);font-size:16px;font-weight:800}.trx-note{font-size:12px;color:var(--text-soft);margin-top:2px;max-width:clamp(150px,42vw,420px)!important;white-space:normal;overflow:hidden;text-overflow:ellipsis}.trx-time{font-family:var(--num-font);font-size:10px;color:var(--text-ghost);margin-top:3px}.setting-row{display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 14px;cursor:pointer;width:100%;font-family:var(--num-font)}.setting-ico{width:32px;height:32px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}.setting-label{font-size:13px;font-weight:700;color:var(--text);flex:1;text-align:left}.setting-arrow{color:var(--text-ghost);font-size:10px}.sync-btn{padding:8px 12px;background:var(--accent-dim);border:1px solid rgba(79,124,255,.22);border-radius:var(--radius);color:var(--accent);font-size:12px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px}.login-brand{width:64px;height:64px;border-radius:16px!important;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative;background:var(--accent-dim);border:1px solid rgba(79,124,255,.22)}.swipe-hint{display:flex;align-items:center;justify-content:center;gap:7px;margin:8px 0 0;font-size:11px;color:var(--text-ghost);font-weight:800}
     .header-guide-card{margin:8px 0 10px;background:var(--bg2);overflow:hidden;border-color:rgba(79,124,255,.18)!important}.header-guide-card.is-hidden{padding:10px 11px;background:var(--green-dim);border-color:rgba(57,191,127,.24)!important}.header-guide-between{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.header-guide-bonus-quote{margin-top:4px;font-size:12px;line-height:1.5;font-weight:800;color:var(--text);letter-spacing:0}.header-guide-eye{width:34px;height:34px;min-width:34px;border-radius:var(--radius);border:1px solid rgba(79,124,255,.22);background:var(--accent-dim);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.header-guide-eye svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.25;fill:none;stroke-linecap:round;stroke-linejoin:round}.header-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.header-guide-item{display:flex;align-items:flex-start;gap:8px;padding:9px;min-width:0}.header-guide-ico{width:28px;height:28px;min-width:28px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--accent)}.header-guide-title{font-size:12px;font-weight:900;line-height:1.15;color:var(--text)}.header-guide-desc{font-size:11px;color:var(--text-soft);line-height:1.3;margin-top:2px}.header-guide-note-preview{padding:10px 11px;border-radius:var(--radius);border:1px solid rgba(57,191,127,.24);background:var(--green-dim);font-size:12px;line-height:1.45;color:var(--text);font-weight:700}
-    .staff-daily-status-card,.staff-daily-public-card{padding:0!important;margin:8px 0 10px!important;overflow:hidden;border-color:rgba(79,124,255,.18)!important;background:var(--bg2)!important;box-shadow:none!important}.staff-daily-status-editor{display:flex;flex-direction:column;gap:10px;padding:12px 13px 13px!important}.staff-daily-status-head{display:flex;align-items:center;gap:10px}.staff-daily-avatar{width:38px;height:38px;min-width:38px;border-radius:var(--radius)!important;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px}.staff-daily-status-name{font-size:13px;font-weight:900;letter-spacing:0;line-height:1.1;color:var(--text)}.staff-daily-status-meta{font-size:11px;color:var(--text-soft);margin-top:3px;line-height:1.25}.staff-daily-status-toggle{display:inline-flex;align-items:center;gap:7px;margin-left:auto;padding:6px 8px!important;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-size:11px;font-weight:850;color:var(--text-soft);white-space:nowrap}.staff-daily-status-toggle input{width:17px;height:17px;min-height:17px;accent-color:var(--accent)}.staff-daily-composer{background:var(--surface);padding:11px 12px!important}.staff-daily-composer textarea{width:100%;min-height:82px;resize:vertical;border:none;outline:none;background:transparent;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;line-height:1.45}.staff-daily-composer textarea::placeholder{color:var(--text-ghost)}.staff-daily-composer-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:9px;padding-top:9px!important;border-top:1px solid var(--border)}.staff-daily-note-count{font-size:10px;color:var(--text-ghost);font-weight:750}.staff-daily-preview-wrap{border-color:rgba(79,124,255,.22);background:var(--accent-dim);padding:10px 11px!important}.staff-daily-preview-wrap.off,.staff-daily-note-preview.off{border-color:rgba(255,105,97,.22);background:var(--red-dim);color:var(--text-soft)}.staff-daily-preview-title{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:7px}.staff-daily-preview-wrap.off .staff-daily-preview-title{color:var(--red)}.staff-daily-preview-text{font-size:12px;line-height:1.48;color:var(--text);font-weight:800;white-space:pre-wrap;word-break:break-word}.staff-daily-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.staff-daily-actions .btn{padding:9px 11px!important;font-size:12px!important}.staff-daily-public-inner{padding:11px 12px!important}.staff-daily-public-text{margin-top:9px;padding:10px 11px!important;border-color:rgba(79,124,255,.2);background:var(--accent-dim);font-size:12px;line-height:1.5;font-weight:800;color:var(--text);white-space:pre-wrap;word-break:break-word}.staff-daily-link{color:var(--accent);font-weight:900;text-decoration:underline;text-underline-offset:3px;word-break:break-all}.staff-daily-link::after{content:'\2197';font-size:10px;margin-left:3px;text-decoration:none;display:inline-block}.staff-daily-note-preview{padding:10px 11px!important;border-radius:var(--radius);border:1px solid rgba(79,124,255,.24);background:var(--accent-dim);font-size:12px;line-height:1.45;color:var(--text);font-weight:700}
+    .staff-daily-status-card,.staff-daily-public-card{padding:0!important;margin:8px 0 10px!important;overflow:hidden;border-color:rgba(79,124,255,.18)!important;background:var(--bg2)!important;box-shadow:none!important}.staff-daily-status-editor{display:flex;flex-direction:column;gap:10px;padding:12px 13px 13px!important}.staff-daily-status-head{display:flex;align-items:center;gap:10px}.staff-daily-avatar{width:38px;height:38px;min-width:38px;border-radius:var(--radius)!important;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px}.staff-daily-status-name{font-size:13px;font-weight:900;letter-spacing:0;line-height:1.1;color:var(--text)}.staff-daily-status-meta{font-size:11px;color:var(--text-soft);margin-top:3px;line-height:1.25}.staff-daily-status-toggle{display:inline-flex;align-items:center;gap:7px;margin-left:auto;padding:6px 8px!important;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-size:11px;font-weight:850;color:var(--text-soft);white-space:nowrap}.staff-daily-status-toggle input{width:17px;height:17px;min-height:17px;accent-color:var(--accent)}.staff-daily-composer{background:var(--surface);padding:11px 12px!important}.staff-daily-composer textarea{width:100%;min-height:82px;resize:vertical;border:none;outline:none;background:transparent;color:var(--text);font-family:var(--num-font);font-size:13px;line-height:1.45}.staff-daily-composer textarea::placeholder{color:var(--text-ghost)}.staff-daily-composer-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:9px;padding-top:9px!important;border-top:1px solid var(--border)}.staff-daily-note-count{font-size:10px;color:var(--text-ghost);font-weight:750}.staff-daily-preview-wrap{border-color:rgba(79,124,255,.22);background:var(--accent-dim);padding:10px 11px!important}.staff-daily-preview-wrap.off,.staff-daily-note-preview.off{border-color:rgba(255,105,97,.22);background:var(--red-dim);color:var(--text-soft)}.staff-daily-preview-title{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:7px}.staff-daily-preview-wrap.off .staff-daily-preview-title{color:var(--red)}.staff-daily-preview-text{font-size:12px;line-height:1.48;color:var(--text);font-weight:800;white-space:pre-wrap;word-break:break-word}.staff-daily-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.staff-daily-actions .btn{padding:9px 11px!important;font-size:12px!important}.staff-daily-public-inner{padding:11px 12px!important}.staff-daily-public-text{margin-top:9px;padding:10px 11px!important;border-color:rgba(79,124,255,.2);background:var(--accent-dim);font-size:12px;line-height:1.5;font-weight:800;color:var(--text);white-space:pre-wrap;word-break:break-word}.staff-daily-link{color:var(--accent);font-weight:900;text-decoration:underline;text-underline-offset:3px;word-break:break-all}.staff-daily-link::after{content:'\2197';font-size:10px;margin-left:3px;text-decoration:none;display:inline-block}.staff-daily-note-preview{padding:10px 11px!important;border-radius:var(--radius);border:1px solid rgba(79,124,255,.24);background:var(--accent-dim);font-size:12px;line-height:1.45;color:var(--text);font-weight:700}
     @media(min-width:760px){.summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}#history-list,#report-view,#settings-summary,#attendance-admin-page,#admin-closing-panel,#admin-logs-list{max-width:980px}.modal-wrap{align-items:center!important}.modal-sheet{border-radius:16px!important}}
     @media(max-width:520px){html,body,#app{width:100%;max-width:none;min-height:100svh;overflow-x:hidden}body{font-size:13px;background:var(--bg);overscroll-behavior-y:contain}#app{margin:0}#page-content{padding-bottom:calc(94px + env(safe-area-inset-bottom,0px))!important}.page-pad{width:100%;padding:0 10px}.page-pad>div[style*="padding:34px 0 18px"],.page-pad>div[style*="padding:50px 0 18px"]{padding:14px 0 10px!important}.page-pad>div[style*="padding:18px 0"],.page-pad>div[style*="padding:10px 0"]{padding-top:10px!important;padding-bottom:8px!important}.page-pad>div[style*="display:flex"][style*="justify-content:space-between"]{gap:10px;align-items:flex-start!important}.page-title{font-size:20px!important;line-height:1.15!important}.page-subtitle{font-size:11.5px!important;line-height:1.35!important}.label-xs{font-size:9px!important;margin-bottom:5px}.header-actions{gap:6px;flex-wrap:nowrap;max-width:52vw;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.header-actions::-webkit-scrollbar{display:none}.theme-toggle{width:34px!important;height:34px!important;min-width:34px!important}.card,.stat-hero,.bonus-card,.trx-card,.setting-row{border-radius:10px!important}.stat-hero,.bonus-card{padding:13px!important}.stat-label{font-size:9px}.stat-value{font-size:25px!important}.stat-sub{font-size:11px}.stat-mini{padding:10px 8px}.stat-mini-num{font-size:20px}.summary-grid{gap:8px;margin-bottom:8px}.g-input,input,select,textarea{font-size:16px!important}.g-input{min-height:42px;padding:10px 11px!important}.btn{min-height:42px;font-size:13px}.amount-display{font-size:30px!important}.tab-group{gap:3px}.tab-btn{font-size:11px!important;padding:8px 3px}.loc-chip,.user-chip,.status-pill{font-size:10.5px;padding:4px 8px}.badge{font-size:8px}.trx-card{align-items:flex-start;padding:10px 11px;gap:10px}.trx-icon{width:34px;height:34px}.trx-amount{font-size:14px}.trx-note{font-size:11px;max-width:calc(100vw - 150px)!important}.trx-time{font-size:9px}.setting-row{padding:10px 11px;gap:10px}.setting-ico{width:30px;height:30px}.setting-label{font-size:12.5px}#bottom-nav{height:64px!important;width:calc(100% - 12px)!important;bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;border-radius:18px!important;padding:0 4px!important}.nav-item{min-width:0!important;min-height:50px!important;padding:6px 2px!important;gap:4px!important;flex:1 1 0}.nav-item i{font-size:17px!important}.nav-item span{font-size:7.4px!important;line-height:1!important;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#bottom-nav.admin-six-nav .nav-item{min-width:0!important;padding:6px 1px!important}#bottom-nav.admin-six-nav .nav-item i{font-size:16px!important}#bottom-nav.admin-six-nav .nav-item span{font-size:7px!important}#bottom-nav.staff-nav{gap:8px!important}.fab-add{right:14px!important;bottom:calc(82px + env(safe-area-inset-bottom,0px))!important;width:52px!important;height:52px!important;border-radius:16px!important}.modal-wrap{align-items:center!important;justify-content:center!important;padding:16px 12px!important}.modal-sheet{max-width:440px!important;max-height:calc(100svh - 32px);overflow:auto;border-radius:16px!important;padding:14px!important}.header-guide-grid{grid-template-columns:1fr}.header-guide-item{padding:8px}.staff-daily-status-head{align-items:flex-start}.staff-daily-status-toggle{margin-left:0}.staff-daily-actions{flex-direction:column;align-items:stretch}.staff-daily-actions .btn{width:100%}}
     @media(max-width:380px){.page-pad{padding:0 8px}.page-title{font-size:18px!important}.header-actions{max-width:50vw}.theme-toggle{width:32px!important;height:32px!important;min-width:32px!important}.stat-value{font-size:22px!important}.nav-item i{font-size:16px!important}.nav-item span{font-size:6.8px!important}#bottom-nav.admin-six-nav .nav-item span{font-size:6.4px!important}.trx-note{max-width:calc(100vw - 136px)!important}}
@@ -244,9 +242,9 @@
 
 
     /* PATCH UI COMPACT + MODERN FONT - SUPA */
-    :root{--radius:10px;--radius-lg:13px;--num-font:'DM Mono','Outfit',Arial,sans-serif}
+    :root{--radius:10px;--radius-lg:13px;--num-font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
     html,body,#app{max-width:100%!important;overflow-x:hidden!important}
-    body,button,input,select,textarea,.btn,.setting-row{font-family:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif!important;letter-spacing:-.01em}
+    body,button,input,select,textarea,.btn,.setting-row{font-family:var(--num-font)!important;letter-spacing:0!important}
     *{min-width:0}
     #page-content,.page-pad,.card,.stat-hero,.bonus-card,.trx-card,.setting-row,.modal-sheet{overflow-wrap:anywhere;word-break:normal}
     .page-pad{padding-left:10px!important;padding-right:10px!important}
@@ -419,11 +417,13 @@
     }
 
     .staff-simple-home{padding-bottom:170px}
+    .staff-simple-home.staff-daily-no-attendance{padding-bottom:110px}
     .staff-simple-card{border-radius:14px!important;padding:13px 14px!important;margin-bottom:9px!important}
     #bottom-nav.staff-nav.simple-nav{justify-content:center!important;gap:12px!important}
     #bottom-nav.staff-nav.simple-nav .nav-item{max-width:190px!important}
     @media(max-width:520px){
       .staff-simple-home{padding-bottom:calc(170px + env(safe-area-inset-bottom,0px))}
+      .staff-simple-home.staff-daily-no-attendance{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
       .staff-simple-card{padding:11px 12px!important;margin-bottom:8px!important}
       #bottom-nav.staff-nav.simple-nav{width:calc(100% - 12px)!important;height:62px!important}
       #bottom-nav.staff-nav.simple-nav .nav-item span{font-size:8.5px!important}
@@ -571,100 +571,99 @@
       #transaction-modal #modal-pos-amount{font-size:28px!important}
     }
 
+    /* PATCH FINAL 4: font ringan bawaan perangkat, bukan Google Font */
+    :root{--app-font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;--num-font:var(--app-font)}
+    html,body,#app,button,input,select,textarea,.btn,.setting-row,.page-title,.page-subtitle,.label-xs,
+    .stat-value,.stat-mini-num,.amount-display,.trx-amount,.trx-time,.user-chip,.loc-chip,.status-pill{
+      font-family:var(--app-font)!important;
+      letter-spacing:0!important;
+    }
+    .receipt-preview-text{font-family:"Courier New",monospace!important}
+
 </style>
 </head>
 <body>
 <div id="app">
-  <div id="loading">
-    <div class="loader-ring"></div>
-    <p style="font-size:12px;font-weight:700;color:var(--text-soft);letter-spacing:.07em">MEMPROSES</p>
-  </div>
-  <div id="toast">Toast</div>
-
-  <div id="transaction-modal" class="modal-wrap">
-    <div class="modal-sheet">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px">
-        <div>
-          <h3 id="transaction-modal-title" style="font-size:16px;font-weight:800;letter-spacing:-.02em">Transaksi</h3>
-        </div>
-        <button onclick="closeTransactionModal()" class="btn btn-glass" style="width:36px;height:36px;padding:0;border-radius:12px"><i class="fas fa-xmark"></i></button>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div id="modal-pos-user-wrap" style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px 15px">
-          <p class="label-xs">User Transaksi</p>
-          <select id="modal-pos-user" class="g-input" style="background:none;border:none;padding:4px 0 2px;font-size:15px;line-height:1.45;min-height:34px;display:block;width:100%"></select>
-        </div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px 15px">
-          <p class="label-xs">Catatan</p>
-          <input id="modal-pos-note" type="text" placeholder="Tulis manual..." autocomplete="off" class="g-input" style="background:none;border:none;padding:4px 0 2px;font-size:15px;line-height:1.45;min-height:30px;display:block">
-        </div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px 15px">
-          <p class="label-xs">Nominal</p>
-          <input id="modal-pos-amount" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="0" autocomplete="off" class="amount-display" data-numeric="0">
-        </div>
-      </div>
-      <div id="modal-pos-status" style="margin:14px 0 0"></div>
-      <div id="transaction-modal-actions" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:16px">
-        <button onclick="closeTransactionModal()" class="btn btn-glass" style="padding:12px;font-size:13px">Batal</button>
-        <button id="transaction-modal-print-btn" onclick="handleTransactionModalPrint()" class="btn btn-success" style="padding:12px;font-size:13px"><i class="fas fa-print"></i> Cetak</button>
-        <button id="transaction-modal-save-btn" onclick="handleTransactionModalSave()" class="btn btn-primary" style="padding:12px;font-size:13px">Simpan</button>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div id="transaction-payment-modal" class="modal-wrap">
-    <div class="modal-sheet">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px">
-        <div>
-          <h3 style="font-size:16px;font-weight:800;letter-spacing:-.02em">Pilih Pembayaran</h3>
-          <p style="font-size:11.5px;color:var(--text-soft);margin-top:3px">Cash atau QRIS / Transfer</p>
-        </div>
-        <button onclick="closeTransactionPaymentModal()" class="btn btn-glass" style="width:36px;height:36px;padding:0;border-radius:12px"><i class="fas fa-xmark"></i></button>
-      </div>
-      <div id="transaction-payment-summary" style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:12px 13px;margin-bottom:12px"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <button id="transaction-pay-cash" data-transaction-payment-choice="cash" onpointerdown="confirmTransactionPayment('cash',this,event)" ontouchstart="confirmTransactionPayment('cash',this,event)" onclick="confirmTransactionPayment('cash',this,event)" class="btn btn-success" style="min-height:56px;font-size:13px"><i class="fas fa-money-bill-wave"></i> Cash</button>
-        <button id="transaction-pay-qris" data-transaction-payment-choice="qris_transfer" onpointerdown="confirmTransactionPayment('qris_transfer',this,event)" ontouchstart="confirmTransactionPayment('qris_transfer',this,event)" onclick="confirmTransactionPayment('qris_transfer',this,event)" class="btn btn-primary" style="min-height:56px;font-size:13px"><i class="fas fa-qrcode"></i> QRIS / Transfer</button>
-      </div>
-      <button onclick="closeTransactionPaymentModal()" class="btn btn-danger" style="width:100%;margin-top:10px;padding:12px;font-size:13px">Batal</button>
-    </div>
-  </div>
-
-
-  <div id="receipt-preview-modal" class="modal-wrap">
-    <div class="modal-sheet">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px">
-        <div>
-          <h3 id="receipt-preview-title" style="font-size:16px;font-weight:800;letter-spacing:-.02em">Struk Transaksi</h3>
-          <p style="font-size:11.5px;color:var(--text-soft);margin-top:3px">Preview struk sebelum cetak</p>
-        </div>
-        <button onclick="closeReceiptPreview()" class="btn btn-glass" style="width:36px;height:36px;padding:0;border-radius:12px"><i class="fas fa-xmark"></i></button>
-      </div>
-      <div class="receipt-preview-box"><pre id="receipt-preview-text" class="receipt-preview-text"></pre></div>
-      <div class="receipt-modal-actions">
-        <button onclick="closeReceiptPreview()" class="btn btn-glass" style="padding:11px;font-size:12px"><i class="fas fa-xmark"></i> Tutup</button>
-        <button onclick="nativePrintReceiptText()" class="btn btn-primary" style="padding:11px;font-size:12px"><i class="fas fa-print"></i> Cetak</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="page-content"></div>
-
-  <nav id="bottom-nav" style="display:none">
-    <button onclick="router.navigate('home')" id="nav-home" class="nav-item"><i class="fas fa-house"></i><span id="nav-home-label">Beranda</span></button>
-    <button onclick="router.navigate('history')" id="nav-history" class="nav-item"><i class="fas fa-receipt"></i><span id="nav-history-label">Riwayat</span></button>
-    <button onclick="router.navigate('report')" id="nav-report" class="nav-item"><i class="fas fa-chart-line"></i><span id="nav-report-label">Laporan</span></button>
-    <button onclick="router.navigate('attendance')" id="nav-attendance" class="nav-item"><i class="fas fa-user-clock"></i><span id="nav-attendance-label">Absen</span></button>
-    <button onclick="router.navigate('closing')" id="nav-closing" class="nav-item"><i class="fas fa-lock"></i><span id="nav-closing-label">Closing</span></button>
-    <button onclick="router.navigate('settings')" id="nav-settings" class="nav-item"><i class="fas fa-gear"></i><span id="nav-settings-label">Setelan</span></button>
-  </nav>
-
-  <button id="fab-pos" class="fab-add" type="button" aria-hidden="true" tabindex="-1"></button>
-  <button id="fab-absen" class="fab-add" type="button" aria-hidden="true" tabindex="-1"></button>
+<div id="loading">
+<div class="loader-ring"></div>
+<p style="font-size:12px;font-weight:700;color:var(--text-soft);letter-spacing:.07em">MEMPROSES</p>
 </div>
-
+<div id="toast">Toast</div>
+<div class="modal-wrap" id="transaction-modal">
+<div class="modal-sheet">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px">
+<div>
+<h3 id="transaction-modal-title" style="font-size:16px;font-weight:800;letter-spacing:-.02em">Transaksi</h3>
+</div>
+<button class="btn btn-glass" onclick="closeTransactionModal()" style="width:36px;height:36px;padding:0;border-radius:12px"><i class="fas fa-xmark"></i></button>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div id="modal-pos-user-wrap" style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px 15px">
+<p class="label-xs">User Transaksi</p>
+<select class="g-input" id="modal-pos-user" style="background:none;border:none;padding:4px 0 2px;font-size:15px;line-height:1.45;min-height:34px;display:block;width:100%"></select>
+</div>
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px 15px">
+<p class="label-xs">Catatan</p>
+<input autocomplete="off" class="g-input" id="modal-pos-note" placeholder="Tulis manual..." style="background:none;border:none;padding:4px 0 2px;font-size:15px;line-height:1.45;min-height:30px;display:block" type="text"/>
+</div>
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px 15px">
+<p class="label-xs">Nominal</p>
+<input autocomplete="off" class="amount-display" data-numeric="0" id="modal-pos-amount" inputmode="numeric" pattern="[0-9]*" placeholder="0" type="text"/>
+</div>
+</div>
+<div id="modal-pos-status" style="margin:14px 0 0"></div>
+<div id="transaction-modal-actions" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:16px">
+<button class="btn btn-glass" onclick="closeTransactionModal()" style="padding:12px;font-size:13px">Batal</button>
+<button class="btn btn-success" id="transaction-modal-print-btn" onclick="handleTransactionModalPrint()" style="padding:12px;font-size:13px"><i class="fas fa-print"></i> Cetak</button>
+<button class="btn btn-primary" id="transaction-modal-save-btn" onclick="handleTransactionModalSave()" style="padding:12px;font-size:13px">Simpan</button>
+</div>
+</div>
+</div>
+<div class="modal-wrap" id="transaction-payment-modal">
+<div class="modal-sheet">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px">
+<div>
+<h3 style="font-size:16px;font-weight:800;letter-spacing:-.02em">Pilih Pembayaran</h3>
+<p style="font-size:11.5px;color:var(--text-soft);margin-top:3px">Cash atau QRIS / Transfer</p>
+</div>
+<button class="btn btn-glass" onclick="closeTransactionPaymentModal()" style="width:36px;height:36px;padding:0;border-radius:12px"><i class="fas fa-xmark"></i></button>
+</div>
+<div id="transaction-payment-summary" style="background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:12px 13px;margin-bottom:12px"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<button class="btn btn-success" data-transaction-payment-choice="cash" id="transaction-pay-cash" onclick="confirmTransactionPayment('cash',this,event)" onpointerdown="confirmTransactionPayment('cash',this,event)" ontouchstart="confirmTransactionPayment('cash',this,event)" style="min-height:56px;font-size:13px"><i class="fas fa-money-bill-wave"></i> Cash</button>
+<button class="btn btn-primary" data-transaction-payment-choice="qris_transfer" id="transaction-pay-qris" onclick="confirmTransactionPayment('qris_transfer',this,event)" onpointerdown="confirmTransactionPayment('qris_transfer',this,event)" ontouchstart="confirmTransactionPayment('qris_transfer',this,event)" style="min-height:56px;font-size:13px"><i class="fas fa-qrcode"></i> QRIS / Transfer</button>
+</div>
+<button class="btn btn-danger" onclick="closeTransactionPaymentModal()" style="width:100%;margin-top:10px;padding:12px;font-size:13px">Batal</button>
+</div>
+</div>
+<div class="modal-wrap" id="receipt-preview-modal">
+<div class="modal-sheet">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px">
+<div>
+<h3 id="receipt-preview-title" style="font-size:16px;font-weight:800;letter-spacing:-.02em">Struk Transaksi</h3>
+<p style="font-size:11.5px;color:var(--text-soft);margin-top:3px">Preview struk sebelum cetak</p>
+</div>
+<button class="btn btn-glass" onclick="closeReceiptPreview()" style="width:36px;height:36px;padding:0;border-radius:12px"><i class="fas fa-xmark"></i></button>
+</div>
+<div class="receipt-preview-box"><pre class="receipt-preview-text" id="receipt-preview-text"></pre></div>
+<div class="receipt-modal-actions">
+<button class="btn btn-glass" onclick="closeReceiptPreview()" style="padding:11px;font-size:12px"><i class="fas fa-xmark"></i> Tutup</button>
+<button class="btn btn-primary" onclick="nativePrintReceiptText()" style="padding:11px;font-size:12px"><i class="fas fa-print"></i> Cetak</button>
+</div>
+</div>
+</div>
+<div id="page-content"></div>
+<nav id="bottom-nav" style="display:none">
+<button class="nav-item" id="nav-home" onclick="router.navigate('home')"><i class="fas fa-house"></i><span id="nav-home-label">Beranda</span></button>
+<button class="nav-item" id="nav-history" onclick="router.navigate('history')"><i class="fas fa-receipt"></i><span id="nav-history-label">Riwayat</span></button>
+<button class="nav-item" id="nav-report" onclick="router.navigate('report')"><i class="fas fa-chart-line"></i><span id="nav-report-label">Laporan</span></button>
+<button class="nav-item" id="nav-attendance" onclick="router.navigate('attendance')"><i class="fas fa-user-clock"></i><span id="nav-attendance-label">Absen</span></button>
+<button class="nav-item" id="nav-closing" onclick="router.navigate('closing')"><i class="fas fa-lock"></i><span id="nav-closing-label">Closing</span></button>
+<button class="nav-item" id="nav-settings" onclick="router.navigate('settings')"><i class="fas fa-gear"></i><span id="nav-settings-label">Setelan</span></button>
+</nav>
+<button aria-hidden="true" class="fab-add" id="fab-pos" tabindex="-1" type="button"></button>
+<button aria-hidden="true" class="fab-add" id="fab-absen" tabindex="-1" type="button"></button>
+</div>
 <script type="module">
   import { createClient as createSupabaseClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
@@ -694,6 +693,11 @@
   const db = { type: 'supabase', client: supabase };
   const app = db; // kompatibilitas untuk fungsi notifikasi lama.
   const firebaseConfig = supabaseConfig; // alias lama agar logika backup/UI tidak perlu diubah.
+  const ROCKY_ADMIN_NOTIFY_WORKER_BASE_URL = 'https://rocky-notif-worker.alfajrihanif24.workers.dev';
+  const ROCKY_ADMIN_NOTIFY_WORKER_URL = `${ROCKY_ADMIN_NOTIFY_WORKER_BASE_URL}/notify-transaction`;
+  const ROCKY_ADMIN_NOTIFY_ATTENDANCE_URL = `${ROCKY_ADMIN_NOTIFY_WORKER_BASE_URL}/notify-attendance`;
+  const ROCKY_ADMIN_NOTIFY_TRANSACTION_DELETE_URL = `${ROCKY_ADMIN_NOTIFY_WORKER_BASE_URL}/notify-transaction-delete`;
+  const ROCKY_ADMIN_NOTIFY_SECRET = 'rockyNotifRahasia2026';
 
   // === FIRESTORE COMPAT LAYER DI ATAS SUPABASE ===
   // Tujuannya menjaga logika aplikasi tetap sama: doc(), collection(), query(), where(), limit(), orderBy(),
@@ -701,6 +705,7 @@
   const SUPABASE_TABLES = ['users','attendance','transactions','closings','manualBonuses','audit_logs','adminDeviceTokens'];
   const SUPABASE_FALLBACK_POLL_MS = 2 * 60 * 1000;
   const SUPABASE_REALTIME_DEBOUNCE_MS = 450;
+  const SUPABASE_UNCHANGED_NOTIFY_MS = 60000;
   const SERVER_TIMESTAMP_SENTINEL = { __supabaseServerTimestamp: true };
   const Timestamp = {
     fromMillis(ms){
@@ -890,8 +895,21 @@
     const constraints = qy.constraints || [];
     const hardLimit = constraints.find((c) => c.kind === 'limit')?.count || 1000;
     const filteredReq = applySupabaseWhereFilters(supabase.from(collectionName).select('id,data'), constraints);
-    const fetchLimit = filteredReq.canServerFilter ? hardLimit : Math.min(Math.max(hardLimit * 3, hardLimit), 5000);
-    const { data, error } = await filteredReq.req.limit(fetchLimit);
+
+    // PATCH CARA BACA DATA (selaras zip kasir_staff-main):
+    // - Filter user/dateKey tetap didorong ke Supabase JSONB `data->>field`.
+    // - Khusus transaksi, ambil data terbaru dengan order id DESC karena id addDoc berisi timestamp.
+    // - Jika filter server tidak lengkap, ambil buffer jauh lebih besar supaya riwayat tidak kosong/terpotong.
+    const isTransactionsTable = collectionName === 'transactions';
+    const fetchLimit = filteredReq.canServerFilter
+      ? hardLimit
+      : isTransactionsTable
+        ? Math.min(Math.max(hardLimit * 50, 1000), 5000)
+        : Math.min(Math.max(hardLimit * 3, hardLimit), 5000);
+    let req = filteredReq.req;
+    if (isTransactionsTable) req = req.order('id', { ascending: false });
+
+    const { data, error } = await req.limit(fetchLimit);
     if (error) throw error;
     let rows = (data || []).map(normalizeRow);
     constraints.filter((c) => c.kind === 'where').forEach((c) => { rows = rows.filter((row) => compareWhere(row, c)); });
@@ -903,6 +921,8 @@
         const cmp = String(a ?? '').localeCompare(String(b ?? ''), undefined, { numeric: true });
         return ord.direction === 'desc' ? -cmp : cmp;
       });
+    } else if (isTransactionsTable && typeof sortByCreatedDesc === 'function') {
+      rows = sortByCreatedDesc(rows);
     }
     return querySnapshot(rows.slice(0, hardLimit));
   }
@@ -961,6 +981,7 @@
     if (unsubRismaManualClosing) { unsubRismaManualClosing(); unsubRismaManualClosing = null; }
     if (unsubHeaderGuideNote) { unsubHeaderGuideNote(); unsubHeaderGuideNote = null; }
     if (unsubStaffDailyHomeNote) { unsubStaffDailyHomeNote(); unsubStaffDailyHomeNote = null; }
+    cachedStaffDailyHomeNoteReady = false;
     if (unsubReceiptTextSettings) { unsubReceiptTextSettings(); unsubReceiptTextSettings = null; }
   }
 
@@ -1110,7 +1131,8 @@
   let adminNotifSeenIds = new Set();
   let cachedBonusSettings = { transactionBonusRate: 0.015, transactionBonusPercent: 1.5, closingBonusPerMinute: 100, closingDeadlineTime: '18:00', closingDeadlineHour: 18, closingDeadlineMinute: 0, closingDeadlineMinutes: 1080 };
   let cachedHeaderGuideNote = { id: HEADER_GUIDE_NOTE_DOC_ID, note: DEFAULT_HEADER_GUIDE_NOTE, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
-  let cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: true, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+  let cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: false, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+  let cachedStaffDailyHomeNoteReady = false;
   let cachedReceiptTextSettings = { id: RECEIPT_TEXT_DOC_ID, ...DEFAULT_RECEIPT_TEXT_SETTINGS, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
   let cachedRismaManualClosingConfig = { id: '__risma_manual_closing', enabled: true, allowedUsers: [], allowedNames: {} };
   let unsubTransactions = null, unsubAttendance = null, unsubUsers = null, unsubAuditLogs = null, unsubClosings = null, unsubBonusSettings = null, unsubManualBonuses = null, unsubRismaManualClosing = null, unsubHeaderGuideNote = null, unsubStaffDailyHomeNote = null, unsubReceiptTextSettings = null, rangeStartDate = null, rangeEndDate = null;
@@ -1294,6 +1316,105 @@
     const label = getTransactionPaymentLabel(tx);
     const cls = method === 'qris_transfer' ? 'badge-blue' : '';
     return `<span class="badge ${cls}" style="font-size:8.5px;letter-spacing:.02em">${escapeHtml(label)}</span>`;
+  }
+  async function notifyRockyAdmin(url, payload = {}, label = 'Notif admin') {
+    try {
+      if (!url || !ROCKY_ADMIN_NOTIFY_SECRET) return null;
+      const res = await fetch(url, {
+        method: 'POST',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json', 'X-Notify-Secret': ROCKY_ADMIN_NOTIFY_SECRET },
+        body: JSON.stringify(payload || {})
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || data?.ok === false) console.warn(`${label} gagal:`, data || res.status);
+      return data;
+    } catch (err) {
+      console.warn(`${label} gagal:`, err?.message || err);
+      return null;
+    }
+  }
+  function notifyAdminNewTransaction(tx = {}) {
+    try {
+      if (isAdmin() || !ROCKY_ADMIN_NOTIFY_WORKER_URL || !ROCKY_ADMIN_NOTIFY_SECRET) return;
+      const staffName = String(tx.name || tx.user || currentUser?.name || currentUser?.username || 'Staff');
+      fetch(ROCKY_ADMIN_NOTIFY_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Notify-Secret': ROCKY_ADMIN_NOTIFY_SECRET },
+        body: JSON.stringify({
+          user: staffName,
+          username: String(tx.user || currentUser?.username || ''),
+          name: staffName,
+          amount: Number(tx.amount || 0),
+          note: String(tx.note || 'Transaksi baru'),
+          paymentMethod: String(tx.paymentMethod || ''),
+          paymentLabel: String(tx.paymentLabel || getTransactionPaymentLabel(tx) || ''),
+          transactionId: String(tx.id || tx.clientId || ''),
+          dateKey: String(tx.dateKey || toDateKey(nowDate()))
+        })
+      }).then(async (res) => {
+        const data = await res.json().catch(() => null);
+        if (!res.ok || data?.ok === false) console.warn('Notif admin gagal:', data || res.status);
+      }).catch((err) => console.warn('Notif admin gagal:', err?.message || err));
+    } catch (err) {
+      console.warn('Notif admin gagal:', err?.message || err);
+    }
+  }
+  function notifyAdminAttendance(att = {}, action = 'masuk') {
+    try {
+      if (isAdmin()) return null;
+      const createdMs = getRecordTimeMs(att) || Number(att.createdAtMs || Date.now());
+      const staffName = String(att.name || currentUser?.name || att.user || currentUser?.username || 'Staff');
+      return notifyRockyAdmin(ROCKY_ADMIN_NOTIFY_ATTENDANCE_URL, {
+        type: 'attendance',
+        staff: staffName,
+        user: staffName,
+        username: String(att.user || currentUser?.username || ''),
+        name: staffName,
+        action: String(action || 'masuk'),
+        time: String(att.time || formatAttendanceTime(att)),
+        dateKey: String(att.dateKey || extractDateKey(att) || toDateKey(new Date(createdMs))),
+        attendanceId: String(att.id || att.clientId || ''),
+        source: 'staff',
+        note: String(att.note || 'Absen dari aplikasi staff')
+      }, 'Notif absen admin');
+    } catch (err) {
+      console.warn('Notif absen admin gagal:', err?.message || err);
+      return null;
+    }
+  }
+  function notifyAdminTransactionDelete(tx = {}) {
+    try {
+      if (isAdmin()) return null;
+      const staffName = String(tx.deletedByName || currentUser?.name || tx.name || tx.user || currentUser?.username || 'Staff');
+      const ownerName = String(tx.name || tx.user || '');
+      const paymentLabel = String(tx.paymentLabel || getTransactionPaymentLabel(tx) || tx.payment || '');
+      const desc = String(tx.note || tx.desc || 'Transaksi');
+      return notifyRockyAdmin(ROCKY_ADMIN_NOTIFY_TRANSACTION_DELETE_URL, {
+        type: 'delete_transaction',
+        title: 'Transaksi Dihapus',
+        staff: staffName,
+        user: staffName,
+        username: String(tx.deletedBy || currentUser?.username || tx.user || ''),
+        name: staffName,
+        deletedBy: staffName,
+        targetUser: ownerName,
+        transactionUser: ownerName,
+        amount: Number(tx.amount || 0),
+        desc,
+        note: desc,
+        payment: paymentLabel,
+        paymentMethod: String(tx.paymentMethod || ''),
+        paymentLabel,
+        transactionId: String(tx.id || tx.clientId || ''),
+        dateKey: String(tx.dateKey || extractDateKey(tx) || toDateKey(nowDate())),
+        time: new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit', timeZone:'Asia/Jakarta' }),
+        source: 'staff'
+      }, 'Notif hapus transaksi admin');
+    } catch (err) {
+      console.warn('Notif hapus transaksi admin gagal:', err?.message || err);
+      return null;
+    }
   }
 
   function markAdminKnownTransactions(rows = []) {
@@ -2070,6 +2191,25 @@
   function sortByCreatedDesc(list) {
     return [...list].sort((a,b) => getRecordTimeMs(b) - getRecordTimeMs(a));
   }
+
+  // PATCH CARA BACA REALTIME: merge data scoped agar polling/realtime Supabase yang parsial
+  // tidak mengosongkan riwayat lokal. Row dengan id sama tetap dioverwrite oleh data server terbaru.
+  function mergeScopedCacheRows(currentRows, incomingRows, isSameScope) {
+    const otherRows = [];
+    const scopedMap = new Map();
+    (currentRows || []).forEach((row) => {
+      if (!row || !row.id) return;
+      if (isSameScope(row)) scopedMap.set(String(row.id), row);
+      else otherRows.push(row);
+    });
+    (incomingRows || []).forEach((row) => {
+      if (!row || !row.id) return;
+      const id = String(row.id);
+      scopedMap.set(id, { ...(scopedMap.get(id) || {}), ...row });
+    });
+    return sortByCreatedDesc([...otherRows, ...Array.from(scopedMap.values())]);
+  }
+
   function getTransactionBonusRate() {
     const rate = Number(cachedBonusSettings?.transactionBonusRate);
     return Number.isFinite(rate) && rate >= 0 ? rate : DEFAULT_TRANSACTION_BONUS_RATE;
@@ -2791,7 +2931,8 @@
       cachedManualBonuses = [];
       cachedRismaManualClosingConfig = { id: RISMA_MANUAL_CLOSING_DOC_ID, enabled: true, allowedUsers: [], allowedNames: {} };
       cachedHeaderGuideNote = { id: HEADER_GUIDE_NOTE_DOC_ID, note: DEFAULT_HEADER_GUIDE_NOTE, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
-      cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: true, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: false, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      cachedStaffDailyHomeNoteReady = false;
     cachedReceiptTextSettings = { id: RECEIPT_TEXT_DOC_ID, ...DEFAULT_RECEIPT_TEXT_SETTINGS, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
       preloadAttendanceCache();
       persistCurrentSession();
@@ -2826,7 +2967,8 @@
     cachedManualBonuses = [];
     cachedRismaManualClosingConfig = { id: RISMA_MANUAL_CLOSING_DOC_ID, enabled: true, allowedUsers: [], allowedNames: {} };
     cachedHeaderGuideNote = { id: HEADER_GUIDE_NOTE_DOC_ID, note: DEFAULT_HEADER_GUIDE_NOTE, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
-      cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: true, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: false, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      cachedStaffDailyHomeNoteReady = false;
     cachedReceiptTextSettings = { id: RECEIPT_TEXT_DOC_ID, ...DEFAULT_RECEIPT_TEXT_SETTINGS, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
     cachedBonusSettings = getDefaultBonusSettings();
     attendanceReady = false;
@@ -2875,7 +3017,8 @@
       cachedManualBonuses = [];
       cachedRismaManualClosingConfig = { id: RISMA_MANUAL_CLOSING_DOC_ID, enabled: true, allowedUsers: [], allowedNames: {} };
       cachedHeaderGuideNote = { id: HEADER_GUIDE_NOTE_DOC_ID, note: DEFAULT_HEADER_GUIDE_NOTE, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
-      cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: true, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: false, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      cachedStaffDailyHomeNoteReady = false;
     cachedReceiptTextSettings = { id: RECEIPT_TEXT_DOC_ID, ...DEFAULT_RECEIPT_TEXT_SETTINGS, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
       preloadAttendanceCache();
       bindRealtimeData();
@@ -2903,9 +3046,16 @@
       ? query(collection(db, 'transactions'), limit(TX_SYNC_LIMIT_ADMIN))
       : query(collection(db, 'transactions'), where('user', '==', currentUsername), where('dateKey', '==', todayKey), limit(TX_SYNC_LIMIT_STAFF));
     unsubTransactions = onSnapshot(tq, (snap) => {
-      cachedTransactions = sortByCreatedDesc(
-        snap.docs.map(d => ({ id: d.id, ...d.data() }))
-      );
+      const rows = sortByCreatedDesc(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      if (isAdmin()) {
+        cachedTransactions = rows;
+      } else {
+        cachedTransactions = mergeScopedCacheRows(
+          cachedTransactions,
+          rows,
+          (t) => sanitizeUsername(t.user) === currentUsername && getTransactionDateKey(t) === todayKey
+        );
+      }
       handleAdminTransactionSnapshotNotifications(snap);
       refreshCurrentPage();
     }, async (err) => {
@@ -2915,9 +3065,16 @@
           ? query(collection(db, 'transactions'), limit(TX_SYNC_LIMIT_ADMIN))
           : query(collection(db, 'transactions'), where('user', '==', currentUsername), where('dateKey', '==', todayKey), limit(TX_SYNC_LIMIT_STAFF));
         const fallbackSnap = await getDocs(fallbackQ);
-        cachedTransactions = sortByCreatedDesc(
-          fallbackSnap.docs.map(d => ({ id: d.id, ...d.data() }))
-        );
+        const fallbackRows = sortByCreatedDesc(fallbackSnap.docs.map(d => ({ id: d.id, ...d.data() })));
+        if (isAdmin()) {
+          cachedTransactions = fallbackRows;
+        } else {
+          cachedTransactions = mergeScopedCacheRows(
+            cachedTransactions,
+            fallbackRows,
+            (t) => sanitizeUsername(t.user) === currentUsername && getTransactionDateKey(t) === todayKey
+          );
+        }
         refreshCurrentPage();
       } catch (e) {
         console.error('Fallback transaksi gagal:', e);
@@ -2968,11 +3125,21 @@
     }, (err) => console.error('Bonus settings listener gagal:', err));
 
     unsubStaffDailyHomeNote = onSnapshot(doc(db, 'closings', STAFF_DAILY_NOTE_DOC_ID), (snap) => {
-      cachedStaffDailyHomeNote = snap.exists()
-        ? { id: snap.id, note: DEFAULT_STAFF_DAILY_NOTE, enabled: true, ...(snap.data() || {}) }
-        : { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: true, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      if (snap.exists()) {
+        const data = snap.data() || {};
+        cachedStaffDailyHomeNote = {
+          id: snap.id,
+          note: DEFAULT_STAFF_DAILY_NOTE,
+          enabled: isEnabledFromServer(data.enabled, false),
+          ...data
+        };
+        cachedStaffDailyHomeNote.enabled = isEnabledFromServer(cachedStaffDailyHomeNote.enabled, false);
+      } else {
+        cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: false, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      }
+      cachedStaffDailyHomeNoteReady = true;
       refreshCurrentPage();
-    }, (err) => console.error('Catatan home staff/harian listener gagal:', err));
+    }, (err) => { cachedStaffDailyHomeNoteReady = true; cachedStaffDailyHomeNote.enabled = false; console.error('Catatan home staff/harian listener gagal:', err); refreshCurrentPage(); });
 
     unsubReceiptTextSettings = onSnapshot(doc(db, 'closings', RECEIPT_TEXT_DOC_ID), (snap) => {
       cachedReceiptTextSettings = snap.exists()
@@ -2985,9 +3152,17 @@
       ? query(collection(db, 'manualBonuses'), limit(MANUAL_BONUS_SYNC_LIMIT))
       : query(collection(db, 'manualBonuses'), where('user', '==', currentUsername), where('monthKey', '==', toMonthKey(nowDate())), limit(MANUAL_BONUS_SYNC_LIMIT));
     unsubManualBonuses = onSnapshot(mbq, (snap) => {
-      cachedManualBonuses = dedupeManualBonusRecords(
-        snap.docs.map(d => ({ id: d.id, ...d.data() }))
-      );
+      const rows = dedupeManualBonusRecords(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      if (isAdmin()) {
+        cachedManualBonuses = rows;
+      } else {
+        const currentMonthKey = toMonthKey(nowDate());
+        cachedManualBonuses = dedupeManualBonusRecords(mergeScopedCacheRows(
+          cachedManualBonuses,
+          rows,
+          (b) => sanitizeUsername(b.user) === currentUsername && String(b.monthKey || extractDateKey(b).slice(0, 7)) === currentMonthKey
+        ));
+      }
       refreshCurrentPage();
     }, (err) => console.error('Manual bonus listener gagal:', err));
 
@@ -3044,6 +3219,27 @@
     else if (currentPage === 'adminLogs') renderAdminLogsPage();
   }
 
+  async function refreshAfterLocalDataChange({ transactions = false, attendance = false, attendanceRecord = null } = {}) {
+    if (attendance) updateStaffMonthlyAttendanceSnapshotFromLocal(attendanceRecord, { updateDom: true });
+    try {
+      await refreshCurrentPage();
+    } catch (e) {
+      console.warn('Refresh halaman setelah perubahan gagal:', e?.message || e);
+    }
+    if (currentUser && !isAdmin() && transactions) {
+      staffMonthlyBonusSnapshot.loadedAtMs = 0;
+      if (isDailyEmployee(currentUser)) {
+        updateStaffMonthlyBonusCard();
+      } else {
+        loadStaffMonthlyBonusSnapshot({ force: true }).catch(e => console.warn('Refresh bonus background gagal:', e?.message || e));
+      }
+    }
+    if (currentUser && !isAdmin() && attendance) {
+      staffMonthlyAttendanceSnapshot.loadedAtMs = 0;
+      loadStaffMonthlyAttendanceSnapshot({ force: true }).catch(e => console.warn('Refresh absen background gagal:', e?.message || e));
+    }
+  }
+
   function hasClockedInToday() {
     const today = toDateKey(nowDate());
     const me = sanitizeUsername(currentUser?.username || '');
@@ -3068,6 +3264,18 @@
   function getStaffDailyHomeNoteText() {
     const note = String(cachedStaffDailyHomeNote?.note || '').trim();
     return note || DEFAULT_STAFF_DAILY_NOTE;
+  }
+  function isEnabledFromServer(value, fallback = false) {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'number') return value === 1;
+    const s = String(value ?? '').trim().toLowerCase();
+    if (['true','1','yes','ya','aktif','active','on','checked'].includes(s)) return true;
+    if (['false','0','no','tidak','nonaktif','inactive','off','unchecked'].includes(s)) return false;
+    return fallback;
+  }
+  function isStaffDailyHomeNoteEnabled() {
+    if (!cachedStaffDailyHomeNoteReady) return false;
+    return isEnabledFromServer(cachedStaffDailyHomeNote?.enabled, false);
   }
   function headerGuideStorageKey() {
     return `${HEADER_GUIDE_HIDDEN}_${sanitizeUsername(currentUser?.username || 'guest')}`;
@@ -3199,7 +3407,7 @@
   async function saveReceiptTextSettings() { return null; }
 
   function renderStaffDailyHomeNotePublicCard() {
-    if (!currentUser || isAdmin() || cachedStaffDailyHomeNote?.enabled === false) return '';
+    if (!currentUser || isAdmin() || !isStaffDailyHomeNoteEnabled()) return '';
     const note = getStaffDailyHomeNoteText();
     const updatedAtMs = Number(cachedStaffDailyHomeNote?.updatedAtMs || 0);
     const updatedText = updatedAtMs ? new Date(updatedAtMs).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : 'Catatan aktif';
@@ -3219,15 +3427,110 @@
       </div>`;
   }
 
-  function renderStaffDailyHomeNoteControlBody() { return ''; }
+  function renderStaffDailyHomeNoteControlBody() {
+    const note = getStaffDailyHomeNoteText();
+    const enabled = cachedStaffDailyHomeNote?.enabled !== false;
+    const updatedBy = cachedStaffDailyHomeNote?.updatedByName || cachedStaffDailyHomeNote?.updatedBy || '-';
+    const updatedAtMs = Number(cachedStaffDailyHomeNote?.updatedAtMs || 0);
+    const updatedText = updatedAtMs ? new Date(updatedAtMs).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : 'Default aplikasi';
+    const countText = `${String(note || '').length}/320`;
+    return `
+      <div class="staff-daily-status-editor">
+        <div class="staff-daily-status-head">
+          <div class="staff-daily-avatar"><i class="fas fa-note-sticky"></i></div>
+          <div style="min-width:0;flex:1">
+            <div class="staff-daily-status-name">Catatan Home Staff & Harian</div>
+            <div class="staff-daily-status-meta">Update: ${escapeHtml(updatedText)} · ${escapeHtml(updatedBy)}</div>
+          </div>
+          <label class="staff-daily-status-toggle" title="Aktif / nonaktif card catatan di home staff dan harian">
+            <input id="staff-daily-note-enabled" type="checkbox" ${enabled ? 'checked' : ''} onchange="updateStaffDailyNoteLivePreview()">
+            <span>Aktif</span>
+          </label>
+        </div>
+        <div class="staff-daily-composer">
+          <textarea id="staff-daily-note-input" maxlength="320" rows="4" placeholder="Tulis catatan atau tempel link update/download untuk staff dan karyawan harian..." oninput="updateStaffDailyNoteLivePreview()">${escapeHtml(note)}</textarea>
+          <div class="staff-daily-composer-foot">
+            <span style="font-size:10.5px;color:var(--text-soft);line-height:1.35"><i class="fas fa-house"></i> Tampil di halaman utama staff & harian · link otomatis bisa diklik</span>
+            <span id="staff-daily-note-count" class="staff-daily-note-count">${escapeHtml(countText)}</span>
+          </div>
+        </div>
+        <div id="staff-daily-note-live-preview" class="staff-daily-preview-wrap ${enabled ? '' : 'off'}">
+          <div class="staff-daily-preview-title"><i class="fas ${enabled ? 'fa-eye' : 'fa-eye-slash'}"></i> Preview Home</div>
+          <div class="staff-daily-preview-text">${enabled ? renderStaffDailyNoteLinks(note) : 'Card catatan sedang nonaktif dan tidak tampil di halaman utama.'}</div>
+        </div>
+        <div class="staff-daily-actions">
+          <span style="font-size:10.5px;color:var(--text-soft);line-height:1.35">Logika simpan, default, dan on/off tetap sama.</span>
+          <div style="display:flex;gap:7px;flex-wrap:wrap">
+            <button onclick="resetStaffDailyHomeNoteInput()" class="btn btn-glass"><i class="fas fa-rotate-left"></i> Default</button>
+            <button onclick="saveStaffDailyHomeNote()" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Update Status</button>
+          </div>
+        </div>
+      </div>`;
+  }
 
-  function renderStaffDailyHomeNoteHomeCard() { return ''; }
+  function renderStaffDailyHomeNoteHomeCard() {
+    if (!isAdmin()) return '';
+    return `<div class="card staff-daily-status-card page-in s4">${renderStaffDailyHomeNoteControlBody()}</div>`;
+  }
 
-  function updateStaffDailyNoteLivePreview() { return null; }
+  function updateStaffDailyNoteLivePreview() {
+    const input = $('staff-daily-note-input');
+    const check = $('staff-daily-note-enabled');
+    const preview = $('staff-daily-note-live-preview');
+    const count = $('staff-daily-note-count');
+    const value = String(input?.value || '');
+    const note = value.trim();
+    const enabled = check?.checked !== false;
+    if (count) count.textContent = `${value.length}/320`;
+    if (preview) {
+      preview.classList.toggle('off', !enabled);
+      preview.innerHTML = enabled
+        ? `<div class="staff-daily-preview-title"><i class="fas fa-eye"></i> Preview Home</div><div class="staff-daily-preview-text">${renderStaffDailyNoteLinks(note || DEFAULT_STAFF_DAILY_NOTE)}</div>`
+        : `<div class="staff-daily-preview-title"><i class="fas fa-eye-slash"></i> Preview Home</div><div class="staff-daily-preview-text">Card catatan sedang nonaktif dan tidak tampil di halaman utama.</div>`;
+    }
+  }
 
-  async function saveStaffDailyHomeNote() { return null; }
+  async function saveStaffDailyHomeNote() {
+    if (!isAdmin()) return showToast('Hanya admin!', true);
+    if (isBusy) return showToast('Tunggu proses selesai', true);
+    const note = String($('staff-daily-note-input')?.value || '').trim();
+    const enabled = $('staff-daily-note-enabled')?.checked !== false;
+    if (enabled && !note) return showToast('Catatan tidak boleh kosong saat aktif', true);
+    if (note.length > 320) return showToast('Catatan maksimal 320 karakter', true);
+    const pin = await askPin('Simpan catatan Home Staff & Harian?\nMasukkan PIN admin:');
+    if (!pin) return;
+    if (!(await requireCurrentAdminPin(pin, 'PIN admin salah!'))) return;
+    setLoading(true);
+    try {
+      const payload = {
+        id: STAFF_DAILY_NOTE_DOC_ID,
+        type: 'staff_daily_home_note',
+        note: note || DEFAULT_STAFF_DAILY_NOTE,
+        enabled,
+        updatedAt: serverTimestamp(),
+        updatedAtMs: Date.now(),
+        updatedBy: currentUser.username,
+        updatedByName: currentUser.name
+      };
+      await setDoc(doc(db, 'closings', STAFF_DAILY_NOTE_DOC_ID), payload, { merge: true });
+      cachedStaffDailyHomeNote = { ...cachedStaffDailyHomeNote, ...payload };
+      await logAudit('staff_daily_home_note_update', { enabled, note: payload.note });
+      showToast('✓ Catatan home staff/harian disimpan');
+      await refreshCurrentPage();
+    } catch (e) {
+      console.error(e);
+      showToast('Gagal simpan catatan home staff/harian', true);
+    }
+    setLoading(false);
+  }
 
-  function resetStaffDailyHomeNoteInput() { return null; }
+  function resetStaffDailyHomeNoteInput() {
+    const input = $('staff-daily-note-input');
+    if (input) input.value = DEFAULT_STAFF_DAILY_NOTE;
+    const check = $('staff-daily-note-enabled');
+    if (check) check.checked = true;
+    updateStaffDailyNoteLivePreview();
+  }
 
   function updateLocation() {
     const info = $('loc-info'); if (!info) return;
@@ -3256,6 +3559,7 @@
   async function handleClockIn() {
     if (isBusy || clockInInFlight) return;
     if (!currentUser) return;
+    if (isDailyEmployee(currentUser)) return showToast('Karyawan harian tidak perlu absen.');
     if (hasClockedInToday()) return showToast('Sudah absen hari ini!');
     if (!currentPos) return showToast('Tunggu lokasi!', true);
 
@@ -3274,7 +3578,7 @@
         upsertAttendanceRecord({ ...existing, user, name: existing.name || currentUser.name, dateKey: todayKey, createdAtMs });
         staffMonthlyAttendanceSnapshot.loadedAtMs = 0;
         attendanceReady = true;
-        refreshCurrentPage();
+        await refreshAfterLocalDataChange({ attendance: true, attendanceRecord: { ...existing, user, name: existing.name || currentUser.name, dateKey: todayKey, createdAtMs } });
         showToast('Sudah absen hari ini!');
         return;
       }
@@ -3296,15 +3600,28 @@
       attendanceReady = true;
       refreshCurrentPage();
 
-      await setDoc(doc(db, 'attendance', lockedDocId), {
+      const attendancePayload = {
         user,
         name: currentUser.name,
         dateKey: todayKey,
-        createdAt: serverTimestamp(),
         createdAtMs: nowMs,
+        clientId: lockedDocId,
+        source: 'staff_cashier',
         loc: currentPos,
+        lat: currentPos?.lat ?? null,
+        lng: currentPos?.lng ?? null,
         deleted: false
+      };
+      await setDoc(doc(db, 'attendance', lockedDocId), {
+        ...attendancePayload,
+        createdAt: serverTimestamp(),
+        syncedAt: serverTimestamp(),
+        syncedAtMs: Date.now()
       }, { merge: true });
+      notifyAdminAttendance({ id: lockedDocId, ...attendancePayload }, 'masuk');
+      upsertAttendanceRecord({ id: lockedDocId, ...attendancePayload });
+      setLoading(false);
+      await refreshAfterLocalDataChange({ attendance: true, attendanceRecord: { id: lockedDocId, ...attendancePayload } });
       showToast('✓ Absen berhasil');
     } catch (e) {
       console.error('Gagal absen:', e);
@@ -3494,9 +3811,58 @@
     return prepareTransactionPaymentFromModal(true);
   }
 
-  function openEditTransactionModal(id) { return null; }
+  function openEditTransactionModal(id) {
+    if (!currentUser) return showToast('Silakan login dulu!', true);
+    const trx = cachedTransactions.find(t => t.id === id);
+    if (!trx) return showToast('Transaksi tidak ditemukan!', true);
+    if (trx.user !== currentUser.username && !isAdmin()) return showToast('Tidak bisa edit transaksi orang lain!', true);
+    if (isRecordDeleted(trx)) return showToast('Transaksi terhapus tidak bisa diedit.', true);
+    transactionEditTargetId = id;
+    bindTransactionAmountFormatter('modal-pos-amount');
+    setTransactionUserSelect(trx.user || currentUser?.username || '');
+    const modal = $('transaction-modal');
+    if ($('transaction-modal-title')) $('transaction-modal-title').innerText = 'Edit Transaksi';
+    if ($('transaction-modal-save-btn')) $('transaction-modal-save-btn').innerText = 'Simpan Edit';
+    if ($('transaction-modal-print-btn')) $('transaction-modal-print-btn').style.display = 'none';
+    if ($('transaction-modal-actions')) $('transaction-modal-actions').style.gridTemplateColumns = '1fr 1fr';
+    const noteInput = $('modal-pos-note');
+    const amountInput = $('modal-pos-amount');
+    if (noteInput) noteInput.value = String(trx.note || 'Transaksi');
+    if (amountInput) {
+      const amount = Number(trx.amount || 0);
+      amountInput.setAttribute('data-numeric', String(amount));
+      amountInput.value = amount ? formatRupiah(amount) : '';
+    }
+    const statusBox = $('modal-pos-status');
+    if (statusBox) statusBox.innerHTML = `<div style="display:flex;align-items:center;gap:9px;padding:11px 13px;background:var(--amber-dim);border:1px solid rgba(255,196,107,0.2);border-radius:11px"><i class="fas fa-pen-to-square" style="color:var(--amber);font-size:13px"></i><span style="font-size:12.5px;color:var(--amber);font-weight:600">Mode edit: ubah user, catatan, nominal, lalu pilih Cash atau QRIS / Transfer.</span></div>`;
+    if (modal) { modal.classList.add('show'); modal.style.display = 'flex'; }
+    setTimeout(() => noteInput?.focus?.(), 100);
+  }
 
-  async function saveEditedTransaction() { return null; }
+  async function saveEditedTransaction() {
+    if (isBusy) return showToast('Tunggu proses selesai', true);
+    const id = transactionEditTargetId;
+    const trx = cachedTransactions.find(t => String(t.id) === String(id));
+    if (!trx) return showToast('Transaksi tidak ditemukan!', true);
+    if (trx.user !== currentUser.username && !isAdmin()) return showToast('Tidak bisa edit transaksi orang lain!', true);
+    const amount = parseInt($('modal-pos-amount')?.getAttribute('data-numeric') || '0', 10);
+    const note = String($('modal-pos-note')?.value || '').trim() || 'Transaksi';
+    const selectedUser = getSelectedTransactionUser(trx.user || currentUser?.username || '');
+    if (!selectedUser) return showToast('Pilih user transaksi!', true);
+    if (!isAdmin() && sanitizeUsername(selectedUser.username) !== sanitizeUsername(currentUser?.username || '')) return showToast('Tidak bisa pilih user lain!', true);
+    if (!amount || amount <= 0) return showToast('Nominal tidak valid!', true);
+    openTransactionPaymentModal({
+      id,
+      isEdit: true,
+      username: sanitizeUsername(selectedUser.username),
+      name: selectedUser.name || selectedUser.username,
+      amount,
+      note,
+      oldAmount: Number(trx.amount || 0),
+      oldNote: trx.note || 'Transaksi',
+      printAfterSave: false
+    });
+  }
 
   function prepareTransactionPaymentFromModal(printAfterSave = false) {
     if (isBusy) return;
@@ -3577,6 +3943,7 @@
           editedByName: currentUser.name
         };
         await setDoc(doc(db, 'transactions', id), patch, { merge: true });
+        cachedTransactions = sortByCreatedDesc(cachedTransactions.map(t => String(t.id) === id ? { ...t, ...patch } : t));
         await logAudit('transaction_edit', {
           id,
           user: targetUsername,
@@ -3594,6 +3961,7 @@
         closeTransactionPaymentModal(true);
         closeTransactionModal();
         setLoading(false);
+        await refreshAfterLocalDataChange({ transactions: true });
         return;
       }
       const latest = await fetchLatestBonusBeforeTransaction(targetUsername);
@@ -3610,6 +3978,7 @@
       const userRole = normalizeRole(freshUser.role || targetUser.role || currentUser.role || 'staff');
       const bonusGroup = userRole === 'harian' ? 'harian' : 'staff';
       const bonusRate = userBonus.transactionBonusRate;
+      const transactionCreatedAtMs = Date.now();
       const savedRef = await addDoc(collection(db, 'transactions'), {
         user: sanitizeUsername(freshUser.username || targetUsername),
         name: freshUser.name || targetUser.name || targetUsername,
@@ -3625,6 +3994,7 @@
         dateKey: toDateKey(nowDate()),
         monthKey: toMonthKey(nowDate()),
         userRole,
+        role: userRole,
         bonusGroup,
         bonusRate,
         transactionBonusRate: bonusRate,
@@ -3639,7 +4009,7 @@
         createdBy: sanitizeUsername(currentUser.username),
         createdByName: currentUser.name || currentUser.username,
         createdAt: serverTimestamp(),
-        createdAtMs: Date.now()
+        createdAtMs: transactionCreatedAtMs
       });
       const savedTx = {
         id: savedRef?.id || '',
@@ -3664,17 +4034,24 @@
         isNonCashPayment: paymentInfo.method === 'qris_transfer',
         paymentConfirmed: true,
         paymentConfirmedAtMs: Date.now(),
+        notifyAdmin: !isAdmin(),
+        notificationType: isAdmin() ? 'admin_manual_transaction' : 'staff_transaction',
+        notificationStatus: isAdmin() ? 'skip' : 'pending',
         source: isAdmin() ? 'admin_manual' : 'staff_cashier',
         createdBy: sanitizeUsername(currentUser.username),
         createdByName: currentUser.name || currentUser.username,
-        createdAtMs: Date.now()
+        createdAtMs: transactionCreatedAtMs
       };
+      cachedTransactions = sortByCreatedDesc([{ ...savedTx, id: savedRef?.id || savedTx.id || '' }, ...cachedTransactions]);
       const shouldPrint = Boolean(pendingTransactionPaymentDraft?.printAfterSave);
       pendingTransactionPaymentDraft = null;
       playTransactionSuccessSound();
+      if (!isAdmin()) notifyAdminNewTransaction(savedTx);
       showToast(`✓ Transaksi disimpan · ${paymentInfo.label}${shouldPrint ? ' · cetak struk' : ''}`);
       closeTransactionPaymentModal(true);
       closeTransactionModal();
+      setLoading(false);
+      await refreshAfterLocalDataChange({ transactions: true });
       if (shouldPrint) setTimeout(() => directPrintReceiptText(buildTransactionReceiptText(savedTx), 'Struk Transaksi Baru'), 180);
     } catch (e) {
       console.error(e);
@@ -3683,7 +4060,36 @@
     setLoading(false);
   }
 
-  async function deleteTransaction(id) { return null; }
+  async function deleteTransaction(id) {
+    if (isBusy) return showToast('Tunggu proses selesai', true);
+    const trx = cachedTransactions.find(t => t.id === id);
+    if (!trx) return showToast('Transaksi tidak ditemukan!', true);
+    if (trx.user !== currentUser.username && !isAdmin()) return showToast('Tidak bisa hapus transaksi orang lain!', true);
+    const pin = await askPin(`Hapus transaksi Rp ${formatRupiah(trx.amount)}?\nMasukkan PIN ${isAdmin() ? 'admin' : 'akun kamu'}:`);
+    if (!pin) return;
+    if (!(await requireCurrentUserPin(pin, 'PIN salah!'))) return;
+    setLoading(true);
+    try {
+      const deletePatch = {
+        deleted: true,
+        deletedAt: serverTimestamp(),
+        deletedAtMs: Date.now(),
+        deletedBy: currentUser.username,
+        deletedByName: currentUser.name
+      };
+      await setDoc(doc(db, 'transactions', id), deletePatch, { merge: true });
+      cachedTransactions = sortByCreatedDesc(cachedTransactions.map(t => String(t.id) === String(id) ? { ...t, ...deletePatch } : t));
+      await logAudit('transaction_soft_delete', { id, user: trx.user, amount: Number(trx.amount || 0), note: trx.note || 'Transaksi' });
+      if (!isAdmin()) notifyAdminTransactionDelete({ ...trx, id, ...deletePatch });
+      setLoading(false);
+      await refreshAfterLocalDataChange({ transactions: true });
+      showToast(`✓ Transaksi dihapus aman`);
+    } catch (e) {
+      console.error(e);
+      showToast('Gagal hapus', true);
+    }
+    setLoading(false);
+  }
 
 
   async function restoreDeletedTransaction(id) { return null; }
@@ -3706,8 +4112,8 @@
       const closing = getTodayUserClosing(currentUser?.username) || getTodayGlobalClosing();
       const jamClosing = getClosingDisplayTime(closing) || '--:--';
       el.innerHTML = `<div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--amber)"><i class="fas fa-lock"></i> Transaksi sudah closing</div><div style="font-size:12px;color:var(--text-soft)">Jam closing: ${jamClosing} WIB · terbuka lagi besok.</div></div>`;
-    } else if (isDailyEmployee(currentUser) && !hasClockedInToday()) {
-      el.innerHTML = `<div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--accent)"><i class="fas fa-user-check"></i> Karyawan Harian</div><div style="font-size:12px;color:var(--text-soft)">Belum absen. Tap tombol sidik jari di kanan bawah.</div></div>`;
+    } else if (isDailyEmployee(currentUser)) {
+      el.innerHTML = `<div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--accent)"><i class="fas fa-user-check"></i> Karyawan Harian</div><div style="font-size:12px;color:var(--text-soft)">Transaksi bisa langsung tanpa absen.</div></div>`;
     } else if (!attendanceReady) {
       if (hasClockedInToday()) {
         const rec = getTodayAttendanceRecord();
@@ -3724,6 +4130,43 @@
       el.innerHTML = `<div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--red)"><i class="fas fa-circle-exclamation"></i> Belum absen</div><div style="font-size:12px;color:var(--text-soft)">Tap tombol sidik jari di kanan bawah.</div></div>`;
     }
     updateStaffHomeFabs();
+  }
+
+  function shouldShowStaffAttendanceHomeCards() {
+    return !!currentUser && !isAdmin() && !isDailyEmployee(currentUser);
+  }
+
+  function renderStaffHomeAttendanceCard() {
+    if (!shouldShowStaffAttendanceHomeCards()) return '';
+    return `
+            <div class="card staff-simple-card page-in s1">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">
+                <p class="label-xs" style="margin:0">Absen Hari Ini</p>
+                <div id="loc-info"><span class="loc-chip loc-loading"><i class="fas fa-circle-notch fa-spin" style="font-size:10px"></i> GPS...</span></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <div id="home-status" style="flex:1;min-width:0"></div>
+                <div id="today-attendance-card" style="min-width:82px;flex-shrink:0;text-align:center;border:1px solid rgba(255,107,107,0.2);border-radius:13px;padding:9px 10px;background:var(--red-dim)">
+                  <p id="today-attendance-label" style="font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-bottom:4px">Jam</p>
+                  <p id="today-attendance-info" style="font-family:var(--num-font);font-size:18px;font-weight:800;color:var(--red);line-height:1">--:--</p>
+                </div>
+              </div>
+            </div>`;
+  }
+
+  function renderStaffMonthlyAttendanceCard() {
+    if (!shouldShowStaffAttendanceHomeCards()) return '';
+    return `
+            <div class="card staff-simple-card page-in s2" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div style="min-width:0">
+                <p class="label-xs" style="margin-bottom:5px;color:var(--green)">Total Absen Bulan Ini</p>
+                <p id="monthly-attendance-text" style="font-size:11px;color:var(--text-soft);line-height:1.35">Total hari hadir bulan aktif</p>
+              </div>
+              <div style="text-align:center;border:1px solid rgba(46,138,94,.22);border-radius:13px;padding:9px 12px;background:var(--green-dim);min-width:82px;flex-shrink:0">
+                <p id="monthly-attendance-count" style="font-family:var(--num-font);font-size:24px;font-weight:850;color:var(--green);line-height:1">0</p>
+                <p id="monthly-attendance-month" style="font-size:9px;font-weight:850;color:var(--green);margin-top:3px">${toMonthKey(nowDate())}</p>
+              </div>
+            </div>`;
   }
 
   function renderStaffAttendancePage(requestLocation = false) { return ''; }
@@ -3784,6 +4227,7 @@
                 </div>
                 <div class="trx-right-inline">
                   <p class="trx-amount" style="font-size:15px;white-space:nowrap;color:var(--green)">Rp ${formatRupiah(t.amount)}</p>
+                  <span class="trx-actions-inline"><button onclick="printTransactionReceipt('${t.id}')" class="btn btn-success" title="Cetak"><i class="fas fa-print"></i></button><button onclick="openEditTransactionModal('${t.id}')" class="btn btn-glass" title="Edit"><i class="fas fa-pen"></i></button><button onclick="deleteTransaction('${t.id}')" class="btn btn-danger" title="Hapus"><i class="fas fa-trash"></i></button></span>
                 </div>
               </div>
             </div>
@@ -3923,7 +4367,18 @@
   }
 
   function updateStaffMonthlyBonusCard() {
+    if (!currentUser || isAdmin()) return;
+    if (isDailyEmployee(currentUser)) {
+      const today = toDateKey(nowDate());
+      const dailyPay = getDailyEmployeeTodaySalary(currentUser.username, today);
+      if ($('monthly-bonus-label')) $('monthly-bonus-label').textContent = 'Bonus Hari Ini';
+      if ($('monthly-bonus-month')) $('monthly-bonus-month').textContent = formatDateLabel(today);
+      if ($('monthly-bonus-total')) $('monthly-bonus-total').textContent = `Rp ${formatRupiah(dailyPay.salary || 0)}`;
+      if ($('monthly-bonus-text')) $('monthly-bonus-text').textContent = `${dailyPay.items.length} transaksi hari ini`;
+      return;
+    }
     const month = staffMonthlyBonusSnapshot.monthKey || toMonthKey(nowDate());
+    if ($('monthly-bonus-label')) $('monthly-bonus-label').textContent = 'Total Bonus Bulanan';
     if ($('monthly-bonus-month')) $('monthly-bonus-month').textContent = month;
     if ($('monthly-bonus-total')) {
       $('monthly-bonus-total').textContent = staffMonthlyBonusSnapshot.loading
@@ -3983,12 +4438,51 @@
     return staffMonthlyBonusSnapshot;
   }
 
+  function getStaffMonthlyAttendanceDateKeysFromCache(month = toMonthKey(nowDate()), username = currentUser?.username) {
+    const user = sanitizeUsername(username || '');
+    if (!user) return [];
+    return [...new Set((cachedAttendance || [])
+      .filter(a => !isRecordDeleted(a) && sanitizeUsername(a.user) === user)
+      .map(extractDateKey)
+      .filter(dateKey => dateKey && String(dateKey).startsWith(month)))];
+  }
+
+  function updateStaffMonthlyAttendanceSnapshotFromLocal(record = null, { updateDom = false } = {}) {
+    if (!currentUser || isAdmin()) return staffMonthlyAttendanceSnapshot;
+    const month = toMonthKey(nowDate());
+    const user = sanitizeUsername(currentUser.username || '');
+    if (!user) return staffMonthlyAttendanceSnapshot;
+    const knownDates = new Set(
+      staffMonthlyAttendanceSnapshot.monthKey === month && Array.isArray(staffMonthlyAttendanceSnapshot.dateKeys)
+        ? staffMonthlyAttendanceSnapshot.dateKeys
+        : []
+    );
+    getStaffMonthlyAttendanceDateKeysFromCache(month, user).forEach(dateKey => knownDates.add(dateKey));
+    const recordDate = extractDateKey(record);
+    if (recordDate && recordDate.startsWith(month) && sanitizeUsername(record?.user || user) === user && !isRecordDeleted(record)) {
+      knownDates.add(recordDate);
+    }
+    const previousTotal = staffMonthlyAttendanceSnapshot.monthKey === month ? Number(staffMonthlyAttendanceSnapshot.total || 0) : 0;
+    const nextTotal = Math.max(previousTotal, knownDates.size);
+    staffMonthlyAttendanceSnapshot = {
+      ...staffMonthlyAttendanceSnapshot,
+      monthKey: month,
+      total: nextTotal,
+      dateKeys: [...knownDates],
+      loading: false,
+      error: '',
+      loadedAtMs: staffMonthlyAttendanceSnapshot.loadedAtMs || Date.now()
+    };
+    if (updateDom) updateStaffMonthlyAttendanceCard();
+    return staffMonthlyAttendanceSnapshot;
+  }
+
   function updateStaffMonthlyAttendanceCard() {
     const month = staffMonthlyAttendanceSnapshot.monthKey || toMonthKey(nowDate());
     if ($('monthly-attendance-month')) $('monthly-attendance-month').textContent = month;
     if ($('monthly-attendance-count')) {
       $('monthly-attendance-count').textContent = staffMonthlyAttendanceSnapshot.loading
-        ? '...'
+        ? String(staffMonthlyAttendanceSnapshot.total || '...')
         : String(staffMonthlyAttendanceSnapshot.total || 0);
     }
     if ($('monthly-attendance-text')) {
@@ -4025,7 +4519,8 @@
         .filter(a => !isRecordDeleted(a))
         .map(extractDateKey)
         .filter(dateKey => dateKey && dateKey.startsWith(month)));
-      staffMonthlyAttendanceSnapshot = { monthKey: month, total: dates.size, loadedAtMs: Date.now(), loading: false, error: '' };
+      getStaffMonthlyAttendanceDateKeysFromCache(month, user).forEach(dateKey => dates.add(dateKey));
+      staffMonthlyAttendanceSnapshot = { monthKey: month, total: dates.size, dateKeys: [...dates], loadedAtMs: Date.now(), loading: false, error: '' };
     } catch (e) {
       console.error('Gagal memuat absen bulanan staff:', e);
       staffMonthlyAttendanceSnapshot = { ...staffMonthlyAttendanceSnapshot, monthKey: month, loading: false, error: e?.message || 'error' };
@@ -4053,10 +4548,17 @@
     const dailyPay = dailyMode ? getDailyEmployeeTodaySalary(currentUser.username, today) : null;
     const dailyManualBonus = dailyMode ? getMonthlyManualBonus(currentUser.username, month) : 0;
     const rec = sortByCreatedDesc(sourceAttendance.filter(a => extractDateKey(a) === today))[0] || null;
-    if (!isAdmin()) await Promise.all([
-      loadStaffMonthlyBonusSnapshot(),
-      loadStaffMonthlyAttendanceSnapshot()
-    ]);
+    if (!isAdmin()) {
+      if (dailyMode) {
+        updateStaffMonthlyBonusCard();
+        await loadStaffMonthlyAttendanceSnapshot();
+      } else {
+        await Promise.all([
+          loadStaffMonthlyBonusSnapshot(),
+          loadStaffMonthlyAttendanceSnapshot()
+        ]);
+      }
+    }
     if ($('today-income')) $('today-income').innerText = `Rp ${formatRupiah(pendapatanHariIni)}`;
     if ($('home-cash-fisik-total')) {
       const shouldForceCash = forceCashFisikNextRender;
@@ -4199,7 +4701,68 @@
   }
 
 
-  async function renderHistory() { return ''; }
+  async function renderHistory() {
+    const list = $('history-list'); if (!list) return;
+    const filtered = sortByCreatedDesc(getFilteredTransactions());
+    const total = filtered.reduce((a,b)=>a+Number(b.amount||0),0);
+    const visibleItems = filtered.slice(0, historyDisplayLimit);
+    const hasMore = filtered.length > visibleItems.length;
+    const filterBox = isAdmin() ? `
+      <div style="margin-bottom:10px" class="page-in s1">
+        <select id="admin-history-user" class="g-input" onchange="setSelectedUserFilter(this.value)">${getUserOptionsHtml(true)}</select>
+      </div>` : '';
+    list.innerHTML = `
+      <div class="stat-hero page-in" style="margin-bottom:12px">
+        <p class="stat-label">${isAdmin() ? 'Total Transaksi Global' : 'Total Transaksi'}</p>
+        <p class="stat-value">Rp ${formatRupiah(total)}</p>
+        <p class="stat-sub">Menampilkan ${visibleItems.length} dari ${filtered.length} transaksi · ${isAdmin() ? getSelectedUserLabel() : 'akun saya'}</p>
+      </div>
+      ${filterBox}
+      <div style="display:flex;gap:7px;margin-bottom:10px" class="page-in s1">
+        <button onclick="openTransactionModal()" class="btn btn-primary" style="width:100%;padding:11px 12px;font-size:12.5px"><i class="fas fa-plus"></i> Tambah Transaksi</button>
+      </div>
+      <div style="display:flex;gap:7px;margin-bottom:9px" class="page-in s1">
+        <input type="date" id="history-range-start" class="g-input" style="flex:1;font-size:11px;padding:9px 11px;color-scheme:${getTheme()}">
+        <span style="font-size:11px;color:var(--text-ghost);align-self:center;flex-shrink:0">–</span>
+        <input type="date" id="history-range-end" class="g-input" style="flex:1;font-size:11px;padding:9px 11px;color-scheme:${getTheme()}">
+      </div>
+      <div style="display:flex;gap:7px;margin-bottom:12px" class="page-in s2">
+        <button onclick="filterHistoryByDateRange()" class="btn btn-primary" style="flex:1;padding:9px;font-size:12px">Cari</button>
+        <button onclick="resetHistoryFilter()" class="btn btn-glass" style="flex:1;padding:9px;font-size:12px">Reset</button>
+      </div>
+      <div class="tab-group page-in s2" style="margin-bottom:14px">
+        <button onclick="setHistoryFilter('daily')" class="tab-btn ${historyFilter==='daily'?'active':''}">Hari Ini</button>
+        <button onclick="setHistoryFilter('monthly')" class="tab-btn ${historyFilter==='monthly'?'active':''}">Bulan Ini</button>
+        <button onclick="setHistoryFilter('yearly')" class="tab-btn ${historyFilter==='yearly'?'active':''}">Tahun Ini</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px" class="page-in s3">
+        ${visibleItems.map(t => `
+          <div class="trx-card">
+            <div class="trx-icon"><i class="fas fa-arrow-trend-up"></i></div>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:7px;margin-bottom:2px;flex-wrap:wrap">
+                <span class="trx-amount">Rp ${formatRupiah(t.amount)}</span>
+                <span class="badge badge-blue">POS</span>
+                ${getTransactionPaymentBadge(t)}
+                ${isAdmin() ? `<span class="user-chip"><i class="fas fa-user" style="font-size:10px"></i>${escapeHtml(t.name || t.user)}</span>` : ''}
+              </div>
+              <p class="trx-note">${escapeHtml(t.note || 'Transaksi')}</p>
+              <p class="trx-time">${(() => { const ms = getRecordTimeMs(t); return ms ? dateToTimeInput(new Date(ms)) : formatDateLabel(getTransactionDateKey(t)); })()} · ${getTransactionPaymentLabel(t)}</p>
+            </div>
+            <div class="trx-actions-inline" style="flex-shrink:0">
+              <button onclick="printTransactionReceipt('${t.id}')" class="btn btn-success" title="Cetak"><i class="fas fa-print"></i></button>
+              <button onclick="openEditTransactionModal('${t.id}')" class="btn btn-glass" title="Edit"><i class="fas fa-pen"></i></button>
+              <button onclick="deleteTransaction('${t.id}')" class="btn btn-danger" title="Hapus"><i class="fas fa-trash-can"></i></button>
+            </div>
+          </div>
+        `).join('') || `<div style="text-align:center;padding:56px 0;color:var(--text-ghost)"><i class="fas fa-inbox" style="font-size:30px;margin-bottom:10px;display:block;opacity:0.5"></i><p style="font-size:12.5px">Tidak ada transaksi</p></div>`}
+      </div>
+      ${hasMore ? `<button onclick="increaseHistoryDisplayLimit()" class="btn btn-glass page-in s4" style="width:100%;margin-top:12px;padding:11px 12px;font-size:12px">Muat ${Math.min(HISTORY_PAGE_STEP, filtered.length - visibleItems.length)} transaksi lagi</button>` : ''}
+    `;
+    if ($('history-range-start')) $('history-range-start').value = rangeStartDate || '';
+    if ($('history-range-end')) $('history-range-end').value = rangeEndDate || '';
+    if ($('admin-history-user')) $('admin-history-user').value = selectedUserFilter;
+  }
 
 
   function getReportMonthKey() {
@@ -5267,6 +5830,8 @@
       title: 'Tambah transaksi',
       onClick: openTransactionModal
     });
+    // Karyawan harian memang tidak memakai absen, jadi FAB sidik jari tidak ditampilkan.
+    if (isDailyEmployee(currentUser)) return;
     if (hasClockedInToday() || isTransactionsClosedToday()) return;
     const dist = currentPos ? calculateDistance(currentPos.lat, currentPos.lng, OFFICE_LOC.lat, OFFICE_LOC.lng) : null;
     const needsLocation = !currentPos || (dist && dist > RADIUS_LIMIT);
@@ -5472,7 +6037,7 @@
             </div>
             <div id="admin-dashboard-panels"></div>
           </div>` : `
-          <div class="page-pad staff-simple-home">
+          <div class="page-pad staff-simple-home ${isDailyEmployee(currentUser) ? 'staff-daily-no-attendance' : ''}">
             <div style="padding:18px 0 12px;display:flex;justify-content:space-between;align-items:center;gap:12px" class="page-in">
               <div style="min-width:0">
                 <p style="font-size:11px;color:var(--text-ghost);font-weight:700;margin-bottom:3px">Halo, ${escapeHtml(currentUser.name)}</p>
@@ -5486,29 +6051,8 @@
               </div>
             </div>
             ${renderStaffDailyHomeNotePublicCard()}
-            <div class="card staff-simple-card page-in s1">
-              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">
-                <p class="label-xs" style="margin:0">Absen Hari Ini</p>
-                <div id="loc-info"><span class="loc-chip loc-loading"><i class="fas fa-circle-notch fa-spin" style="font-size:10px"></i> GPS...</span></div>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
-                <div id="home-status" style="flex:1;min-width:0"></div>
-                <div id="today-attendance-card" style="min-width:82px;flex-shrink:0;text-align:center;border:1px solid rgba(255,107,107,0.2);border-radius:13px;padding:9px 10px;background:var(--red-dim)">
-                  <p id="today-attendance-label" style="font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-bottom:4px">Jam</p>
-                  <p id="today-attendance-info" style="font-family:var(--num-font);font-size:18px;font-weight:800;color:var(--red);line-height:1">--:--</p>
-                </div>
-              </div>
-            </div>
-            <div class="card staff-simple-card page-in s2" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-              <div style="min-width:0">
-                <p class="label-xs" style="margin-bottom:5px;color:var(--green)">Total Absen Bulan Ini</p>
-                <p id="monthly-attendance-text" style="font-size:11px;color:var(--text-soft);line-height:1.35">Total hari hadir bulan aktif</p>
-              </div>
-              <div style="text-align:center;border:1px solid rgba(46,138,94,.22);border-radius:13px;padding:9px 12px;background:var(--green-dim);min-width:82px;flex-shrink:0">
-                <p id="monthly-attendance-count" style="font-family:var(--num-font);font-size:24px;font-weight:850;color:var(--green);line-height:1">0</p>
-                <p id="monthly-attendance-month" style="font-size:9px;font-weight:850;color:var(--green);margin-top:3px">${toMonthKey(nowDate())}</p>
-              </div>
-            </div>
+            ${renderStaffHomeAttendanceCard()}
+            ${renderStaffMonthlyAttendanceCard()}
             <div class="stat-hero page-in s2" style="margin-bottom:9px">
               <p class="stat-label">Pendapatan Hari Ini</p>
               <p id="today-income" class="stat-value">Rp 0</p>
@@ -5517,11 +6061,11 @@
             <div class="bonus-card page-in s3" style="padding:14px 15px;margin-bottom:9px">
               <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
                 <div style="min-width:0">
-                  <p class="label-xs" style="margin-bottom:6px;color:var(--amber)">Total Bonus Bulanan</p>
+                  <p id="monthly-bonus-label" class="label-xs" style="margin-bottom:6px;color:var(--amber)">${isDailyEmployee(currentUser) ? 'Bonus Hari Ini' : 'Total Bonus Bulanan'}</p>
                   <p id="monthly-bonus-total" style="font-family:var(--num-font);font-size:24px;font-weight:850;color:var(--amber);line-height:1">Rp 0</p>
-                  <p id="monthly-bonus-text" style="font-size:10.5px;color:var(--text-soft);margin-top:6px">Bulan aktif</p>
+                  <p id="monthly-bonus-text" style="font-size:10.5px;color:var(--text-soft);margin-top:6px">${isDailyEmployee(currentUser) ? 'Transaksi hari ini' : 'Bulan aktif'}</p>
                 </div>
-                <span id="monthly-bonus-month" class="user-chip">${toMonthKey(nowDate())}</span>
+                <span id="monthly-bonus-month" class="user-chip">${isDailyEmployee(currentUser) ? formatDateLabel(toDateKey(nowDate())) : toMonthKey(nowDate())}</span>
               </div>
             </div>
           </div>`;
@@ -5900,7 +6444,16 @@
     ]);
 
     if (txSnap) {
-      cachedTransactions = sortByCreatedDesc(txSnap.docs.map(d => ({ id: d.id, ...d.data() })));
+      const rows = sortByCreatedDesc(txSnap.docs.map(d => ({ id: d.id, ...d.data() })));
+      if (isAdmin()) {
+        cachedTransactions = rows;
+      } else {
+        cachedTransactions = mergeScopedCacheRows(
+          cachedTransactions,
+          rows,
+          (t) => sanitizeUsername(t.user) === currentUsername && getTransactionDateKey(t) === todayKey
+        );
+      }
     }
 
     if (attSnap) {
@@ -5943,9 +6496,19 @@
     }
 
     if (staffDailyNoteSnap) {
-      cachedStaffDailyHomeNote = staffDailyNoteSnap.exists()
-        ? { id: staffDailyNoteSnap.id, note: DEFAULT_STAFF_DAILY_NOTE, enabled: true, ...(staffDailyNoteSnap.data() || {}) }
-        : { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: true, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      if (staffDailyNoteSnap.exists()) {
+        const data = staffDailyNoteSnap.data() || {};
+        cachedStaffDailyHomeNote = {
+          id: staffDailyNoteSnap.id,
+          note: DEFAULT_STAFF_DAILY_NOTE,
+          enabled: isEnabledFromServer(data.enabled, false),
+          ...data
+        };
+        cachedStaffDailyHomeNote.enabled = isEnabledFromServer(cachedStaffDailyHomeNote.enabled, false);
+      } else {
+        cachedStaffDailyHomeNote = { id: STAFF_DAILY_NOTE_DOC_ID, note: DEFAULT_STAFF_DAILY_NOTE, enabled: false, updatedAtMs: 0, updatedBy: '', updatedByName: '' };
+      }
+      cachedStaffDailyHomeNoteReady = true;
     }
 
     if (receiptTextSnap) {
@@ -5955,9 +6518,17 @@
     }
 
     if (manualBonusSnap) {
-      cachedManualBonuses = dedupeManualBonusRecords(
-        manualBonusSnap.docs.map(d => ({ id: d.id, ...d.data() }))
-      );
+      const rows = dedupeManualBonusRecords(manualBonusSnap.docs.map(d => ({ id: d.id, ...d.data() })));
+      if (isAdmin()) {
+        cachedManualBonuses = rows;
+      } else {
+        const currentMonthKey = toMonthKey(nowDate());
+        cachedManualBonuses = dedupeManualBonusRecords(mergeScopedCacheRows(
+          cachedManualBonuses,
+          rows,
+          (b) => sanitizeUsername(b.user) === currentUsername && String(b.monthKey || extractDateKey(b).slice(0, 7)) === currentMonthKey
+        ));
+      }
     }
 
     if (isAdmin()) {
@@ -5980,10 +6551,17 @@
 
     applyNavRoleLabels();
     clearCashFisikCacheForRefresh();
-    if (!isAdmin()) await Promise.all([
-      loadStaffMonthlyBonusSnapshot({ force: true }),
-      loadStaffMonthlyAttendanceSnapshot({ force: true })
-    ]);
+    if (!isAdmin()) {
+      if (isDailyEmployee(currentUser)) {
+        updateStaffMonthlyBonusCard();
+        await loadStaffMonthlyAttendanceSnapshot({ force: true });
+      } else {
+        await Promise.all([
+          loadStaffMonthlyBonusSnapshot({ force: true }),
+          loadStaffMonthlyAttendanceSnapshot({ force: true })
+        ]);
+      }
+    }
     await refreshCurrentPage();
     if (!silent) {
       if (errorCount) showToast(`✓ Data direfresh sebagian (${errorCount} gagal, cache lama tetap aman)`, true);
@@ -6056,7 +6634,6 @@
     router.navigate(savedPage);
   } else router.navigate('login');
 </script>
-
 <script>
 (function(){
   function setVisualViewportVars(){
@@ -6112,6 +6689,5 @@
   });
 })();
 </script>
-
 </body>
 </html>
