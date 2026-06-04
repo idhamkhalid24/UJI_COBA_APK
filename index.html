@@ -418,19 +418,28 @@
       }
     }
 
-    .staff-simple-home{padding-bottom:92px}
+    .staff-simple-home{padding-bottom:170px}
     .staff-simple-card{border-radius:14px!important;padding:13px 14px!important;margin-bottom:9px!important}
-    .staff-simple-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
-    .staff-simple-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:4px}
     #bottom-nav.staff-nav.simple-nav{justify-content:center!important;gap:12px!important}
     #bottom-nav.staff-nav.simple-nav .nav-item{max-width:190px!important}
     @media(max-width:520px){
-      .staff-simple-home{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+      .staff-simple-home{padding-bottom:calc(170px + env(safe-area-inset-bottom,0px))}
       .staff-simple-card{padding:11px 12px!important;margin-bottom:8px!important}
-      .staff-simple-grid{gap:8px;margin-bottom:8px}
-      .staff-simple-actions{gap:8px}
       #bottom-nav.staff-nav.simple-nav{width:calc(100% - 12px)!important;height:62px!important}
       #bottom-nav.staff-nav.simple-nav .nav-item span{font-size:8.5px!important}
+    }
+    #fab-pos.staff-home-fab,
+    #fab-absen.staff-home-fab{display:flex!important;visibility:visible!important;pointer-events:auto!important}
+    #fab-pos.staff-home-fab,
+    #fab-absen.staff-home-fab{right:18px!important;width:56px!important;height:56px!important;border-radius:18px!important;align-items:center!important;justify-content:center!important;font-size:20px!important}
+    #fab-pos.staff-home-fab{bottom:calc(92px + env(safe-area-inset-bottom,0px))!important;background:var(--accent)!important}
+    #fab-absen.staff-home-fab{bottom:calc(156px + env(safe-area-inset-bottom,0px))!important;background:var(--green)!important}
+    #fab-absen.staff-home-fab:disabled{opacity:.55;filter:saturate(.7);cursor:not-allowed}
+    @media(max-width:520px){
+      #fab-pos.staff-home-fab,
+      #fab-absen.staff-home-fab{right:14px!important;width:52px!important;height:52px!important;border-radius:17px!important}
+      #fab-pos.staff-home-fab{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+      #fab-absen.staff-home-fab{bottom:calc(144px + env(safe-area-inset-bottom,0px))!important}
     }
 
 </style>
@@ -523,7 +532,8 @@
     <button onclick="router.navigate('settings')" id="nav-settings" class="nav-item"><i class="fas fa-gear"></i><span id="nav-settings-label">Setelan</span></button>
   </nav>
 
-  <button id="fab-pos" class="fab-add" type="button" aria-hidden="true" tabindex="-1" style="display:none!important"></button>
+  <button id="fab-pos" class="fab-add" type="button" aria-hidden="true" tabindex="-1"></button>
+  <button id="fab-absen" class="fab-add" type="button" aria-hidden="true" tabindex="-1"></button>
 </div>
 
 <script type="module">
@@ -3884,7 +3894,9 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
     const info = $('loc-info'); if (!info) return;
     info.innerHTML = `<span class="loc-chip loc-loading"><i class="fas fa-circle-notch fa-spin" style="font-size:10px"></i> Mencari GPS...</span>`;
     if (!navigator.geolocation) {
-      info.innerHTML = `<span class="loc-chip loc-out"><i class="fas fa-xmark"></i> GPS tidak didukung</span>`; return;
+      info.innerHTML = `<span class="loc-chip loc-out"><i class="fas fa-xmark"></i> GPS tidak didukung</span>`;
+      updateStaffHomeFabs();
+      return;
     }
     navigator.geolocation.getCurrentPosition(pos => {
       currentPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
@@ -3893,9 +3905,11 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
         ? `<span class="loc-chip loc-in"><i class="fas fa-circle" style="font-size:6px"></i> Dalam Radius · ${Math.round(dist)}m</span>`
         : `<span class="loc-chip loc-out"><i class="fas fa-xmark"></i> Diluar Radius · ${Math.round(dist)}m</span>`;
       updateHomeStatus();
+      updateStaffHomeFabs();
       if (currentPage === 'attendance' && !isAdmin()) renderStaffAttendancePage(false);
     }, () => {
       info.innerHTML = `<span class="loc-chip loc-out"><i class="fas fa-triangle-exclamation"></i> Gagal ambil lokasi</span>`;
+      updateStaffHomeFabs();
       if (currentPage === 'attendance' && !isAdmin()) renderStaffAttendancePage(false);
     }, { enableHighAccuracy:true, timeout:10000, maximumAge:30000 });
   }
@@ -4526,9 +4540,7 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
       const jamClosing = getClosingDisplayTime(closing) || '--:--';
       el.innerHTML = `<div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--amber)"><i class="fas fa-lock"></i> Transaksi sudah closing</div><div style="font-size:12px;color:var(--text-soft)">Jam closing: ${jamClosing} WIB · terbuka lagi besok.</div></div>`;
     } else if (isDailyEmployee(currentUser) && !hasClockedInToday()) {
-      const dist = currentPos ? calculateDistance(currentPos.lat, currentPos.lng, OFFICE_LOC.lat, OFFICE_LOC.lng) : null;
-      const disabled = !currentPos || (dist && dist > RADIUS_LIMIT);
-      el.innerHTML = `<div style="display:flex;align-items:center;gap:10px;justify-content:space-between;width:100%"><div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--accent)"><i class="fas fa-user-check"></i> Karyawan Harian</div><div style="font-size:12px;color:var(--text-soft)">Transaksi tetap bisa jalan · absen untuk catatan hadir.</div></div><button onclick="handleClockIn()" ${disabled?'disabled':''} class="btn btn-primary" style="padding:10px 12px;width:auto;border-radius:12px;min-height:38px"><i class="fas fa-fingerprint" style="font-size:13px"></i> Absen</button></div>`;
+      el.innerHTML = `<div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--accent)"><i class="fas fa-user-check"></i> Karyawan Harian</div><div style="font-size:12px;color:var(--text-soft)">Belum absen. Tap tombol sidik jari di kanan bawah.</div></div>`;
     } else if (!attendanceReady) {
       if (hasClockedInToday()) {
         const rec = getTodayAttendanceRecord();
@@ -4542,10 +4554,9 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
       const jam = formatAttendanceTime(rec);
       el.innerHTML = `<div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--green)"><i class="fas fa-circle-check"></i> Sudah absen hari ini</div><div style="font-size:12px;color:var(--text-soft)">Jam absen: ${jam}</div></div>`;
     } else {
-      const dist = currentPos ? calculateDistance(currentPos.lat, currentPos.lng, OFFICE_LOC.lat, OFFICE_LOC.lng) : null;
-      const disabled = !currentPos || (dist && dist > RADIUS_LIMIT);
-      el.innerHTML = `<button onclick="handleClockIn()" ${disabled?'disabled':''} class="btn btn-primary" style="padding:12px 16px;width:auto;border-radius:12px"><i class="fas fa-fingerprint" style="font-size:13px"></i> Absen</button>`;
+      el.innerHTML = `<div style="display:flex;flex-direction:column;gap:3px"><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--red)"><i class="fas fa-circle-exclamation"></i> Belum absen</div><div style="font-size:12px;color:var(--text-soft)">Tap tombol sidik jari di kanan bawah.</div></div>`;
     }
+    updateStaffHomeFabs();
   }
 
   function renderStaffAttendancePage(requestLocation = false) {
@@ -5072,14 +5083,10 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
     updateStaffMonthlyBonusCard();
     const todayClosing = isAdmin() ? getTodayGlobalClosing() : (getTodayUserClosing(currentUser?.username) || getTodayGlobalClosing());
     const closingJam = getClosingDisplayTime(todayClosing);
-    if ($('today-attendance-info')) $('today-attendance-info').innerText = dailyMode ? 'Harian' : (todayClosing ? (closingJam || '--:--') : (rec ? formatAttendanceTime(rec).slice(0,5) : '--:--'));
+    if ($('today-attendance-info')) $('today-attendance-info').innerText = todayClosing ? (closingJam || '--:--') : (rec ? formatAttendanceTime(rec).slice(0,5) : '--:--');
     const card = $('today-attendance-card'), lbl = $('today-attendance-label'), info = $('today-attendance-info');
     if (card && lbl && info) {
-      if (dailyMode) {
-        card.style.background = 'var(--accent-dim)'; card.style.borderColor = 'rgba(91,143,255,0.22)';
-        lbl.style.color = 'var(--accent)'; info.style.color = 'var(--accent)';
-        lbl.innerText = 'Mode';
-      } else if (todayClosing) {
+      if (todayClosing) {
         card.style.background = 'var(--amber-dim)'; card.style.borderColor = 'rgba(255,196,107,0.22)';
         lbl.style.color = 'var(--amber)'; info.style.color = 'var(--amber)';
         lbl.innerText = 'Jam Closing';
@@ -5093,6 +5100,7 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
         lbl.innerText = 'Jam';
       }
     }
+    updateStaffHomeFabs();
     if ($('scope-chip')) $('scope-chip').textContent = isAdmin() ? 'Semua User' : 'Data Saya';
     if ($('staff-closing-status')) $('staff-closing-status').innerHTML = renderClosingStatusHtml(true);
     if (isAdmin()) renderAdminClosingPanelMaybe();
@@ -5206,9 +5214,6 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
         <p class="stat-sub">Menampilkan ${visibleItems.length} dari ${filtered.length} transaksi · ${isAdmin() ? getSelectedUserLabel() : 'akun saya'}</p>
       </div>
       ${filterBox}
-      <div style="display:flex;gap:7px;margin-bottom:10px" class="page-in s1">
-        <button onclick="openTransactionModal()" class="btn btn-primary" style="width:100%;padding:11px 12px;font-size:12.5px"><i class="fas fa-plus"></i> Tambah Transaksi</button>
-      </div>
       <div style="display:flex;gap:7px;margin-bottom:9px" class="page-in s1">
         <input type="date" id="history-range-start" class="g-input" style="flex:1;font-size:11px;padding:9px 11px;color-scheme:${getTheme()}">
         <span style="font-size:11px;color:var(--text-ghost);align-self:center;flex-shrink:0">–</span>
@@ -8731,9 +8736,61 @@ Masukkan PIN admin:`);
       const btn = $('nav-' + p); if (btn) btn.classList.toggle('active', p === page || (page === 'adminLogs' && p === 'settings'));
     });
     const fab = $('fab-pos');
-    if (!fab) return;
-    fab.classList.toggle('staff-fab', !!currentUser && !isAdmin());
-    fab.style.display = 'none';
+    if (fab) fab.classList.toggle('staff-fab', !!currentUser && !isAdmin());
+    updateStaffHomeFabs(page);
+  }
+
+  function resetFabButton(btn) {
+    if (!btn) return;
+    btn.classList.remove('staff-home-fab', 'staff-fab');
+    btn.style.setProperty('display', 'none', 'important');
+    btn.style.setProperty('visibility', 'hidden', 'important');
+    btn.style.setProperty('pointer-events', 'none', 'important');
+    btn.setAttribute('aria-hidden', 'true');
+    btn.removeAttribute('aria-label');
+    btn.title = '';
+    btn.innerHTML = '';
+    btn.tabIndex = -1;
+    btn.disabled = false;
+    btn.onclick = null;
+  }
+
+  function showFabButton(btn, { label, icon, title, onClick, disabled = false }) {
+    if (!btn) return;
+    btn.classList.add('staff-home-fab', 'staff-fab');
+    btn.innerHTML = `<i class="fas ${icon}"></i>`;
+    btn.title = title;
+    btn.setAttribute('aria-label', label);
+    btn.setAttribute('aria-hidden', 'false');
+    btn.tabIndex = 0;
+    btn.disabled = !!disabled;
+    btn.onclick = onClick;
+    btn.style.setProperty('display', 'flex', 'important');
+    btn.style.setProperty('visibility', 'visible', 'important');
+    btn.style.setProperty('pointer-events', disabled ? 'none' : 'auto', 'important');
+  }
+
+  function updateStaffHomeFabs(page = currentPage) {
+    const txFab = $('fab-pos');
+    const absenFab = $('fab-absen');
+    resetFabButton(txFab);
+    resetFabButton(absenFab);
+    if (!currentUser || isAdmin() || page !== 'home') return;
+    showFabButton(txFab, {
+      label: 'Tambah transaksi',
+      icon: 'fa-cash-register',
+      title: 'Tambah transaksi',
+      onClick: openTransactionModal
+    });
+    if (hasClockedInToday() || isTransactionsClosedToday()) return;
+    const dist = currentPos ? calculateDistance(currentPos.lat, currentPos.lng, OFFICE_LOC.lat, OFFICE_LOC.lng) : null;
+    const needsLocation = !currentPos || (dist && dist > RADIUS_LIMIT);
+    showFabButton(absenFab, {
+      label: 'Absen hari ini',
+      icon: 'fa-fingerprint',
+      title: needsLocation ? 'Cek lokasi sebelum absen' : 'Absen hari ini',
+      onClick: handleClockIn
+    });
   }
 
 
@@ -8844,7 +8901,8 @@ Masukkan PIN admin:`);
 
       if (page === 'login') {
         nav.style.display = 'none';
-        if ($('fab-pos')) $('fab-pos').style.display = 'none';
+        resetFabButton($('fab-pos'));
+        resetFabButton($('fab-absen'));
         content.innerHTML = `
           <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 22px;position:relative">
             <div style="position:absolute;top:22px;right:22px"><button class="theme-toggle theme-btn" onclick="toggleTheme()">${themeIcon}</button></div>
@@ -8970,11 +9028,6 @@ Masukkan PIN admin:`);
                 <span id="monthly-bonus-month" class="user-chip">${toMonthKey(nowDate())}</span>
               </div>
             </div>
-            <div class="staff-simple-actions page-in s4">
-              <button onclick="openTransactionModal()" class="btn btn-primary" style="padding:13px 12px;font-size:13px;border-radius:14px"><i class="fas fa-cash-register"></i> Transaksi</button>
-              <button onclick="router.navigate('history')" class="btn btn-glass" style="padding:13px 12px;font-size:13px;border-radius:14px"><i class="fas fa-receipt"></i> Riwayat</button>
-            </div>
-            <div class="swipe-hint page-in s4"><i class="fas fa-hand-pointer"></i> Geser kiri untuk Riwayat Hari Ini</div>
           </div>`;
         updateLocation(); updateHomeStatus(); updateHomeStats();
       } else if (page === 'history') {
@@ -8998,10 +9051,6 @@ Masukkan PIN admin:`);
                 </div>
               </div>
               <div class="swipe-hint page-in s1" style="margin-bottom:10px"><i class="fas fa-arrow-left"></i> Geser kanan untuk Beranda</div>
-              <button onclick="openTransactionModal()" class="btn btn-primary page-in s1" style="width:100%;padding:12px 13px;font-size:13px;border-radius:14px;margin-bottom:10px;justify-content:space-between">
-                <span><i class="fas fa-cash-register"></i> Tambah Transaksi</span>
-                <i class="fas fa-plus"></i>
-              </button>
               <div id="staff-today-history-page"></div>
             </div>`;
           renderStaffTodayHistoryPage();
