@@ -2992,7 +2992,24 @@ let androidStaffSessionSignature='';
 function syncAndroidStaffSession(){
   if(!state.user)return;
   try{
-    const payload={username:key(state.user.username),name:String(state.user.name||state.user.username||''),role:String(state.user.role||'staff'),daily:isDaily()};
+    const username=key(state.user.username), actualRole=String(state.user.role||'staff'), dailyMode=isDaily();
+    const payload={
+      username,
+      user:username,
+      staff:username,
+      targetUsername:username,
+      name:String(state.user.name||state.user.username||''),
+      role:'staff',
+      userRole:actualRole,
+      actualRole,
+      bonusGroup:dailyMode?'harian':'staff',
+      daily:false,
+      isDaily:false,
+      actualDaily:dailyMode,
+      dailyMode,
+      mode:dailyMode?'harian':'staff',
+      canReceiveStaffNotifications:true
+    };
     const signature=JSON.stringify(payload);
     if(signature===androidStaffSessionSignature)return;
     androidStaffSessionSignature=signature;
