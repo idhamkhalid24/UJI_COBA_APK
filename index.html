@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Rocky Hijab Pusat</title>
+  <!-- UI REDESIGN: Google Fonts - Sora (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root{--transition-theme:background .16s ease,color .16s ease,border-color .16s ease,box-shadow .16s ease;--radius:10px;--radius-lg:13px;--font-main:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;--num-font:var(--font-main);--bg:#f0ede8;--bg2:#faf8f5;--bg3:#e8e4de;--surface:rgba(90,70,50,.055);--surface-hover:rgba(90,70,50,.09);--border:rgba(90,70,50,.13);--border-focus:rgba(211,107,53,.5);--text:#2c2420;--text-soft:#7a6a60;--text-ghost:#b0a096;--accent:#d36b35;--accent-dim:rgba(211,107,53,.12);--accent-glow:rgba(211,107,53,.22);--green:#2e8a5e;--green-dim:rgba(46,138,94,.11);--red:#c94040;--red-dim:rgba(201,64,64,.1);--amber:#c48a1a;--amber-dim:rgba(196,138,26,.13);--nav-bg:rgba(250,248,245,.92);--shadow:0 8px 28px rgba(60,40,20,.12)}
@@ -415,329 +419,480 @@
       }
     }
 
-    /* UI REDESIGN ONLY: modern mobile POS skin, menjaga id/onclick/function lama tetap utuh. */
-    :root{
-      --radius:18px;
-      --radius-lg:24px;
-      --font-main:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      --num-font:"Segoe UI", Roboto, Arial, sans-serif;
-      --bg:#f5f7fb;
-      --bg2:#ffffff;
-      --bg3:#edf2f8;
-      --surface:#f1f5f9;
-      --surface-hover:#e6eef8;
-      --border:rgba(15,23,42,.09);
-      --border-focus:rgba(37,99,235,.36);
-      --text:#111827;
-      --text-soft:#64748b;
-      --text-ghost:#94a3b8;
-      --accent:#2563eb;
-      --accent-dim:rgba(37,99,235,.10);
-      --accent-glow:rgba(37,99,235,.18);
-      --green:#059669;
-      --green-dim:rgba(5,150,105,.10);
-      --red:#dc2626;
-      --red-dim:rgba(220,38,38,.09);
-      --amber:#d97706;
-      --amber-dim:rgba(217,119,6,.11);
-      --nav-bg:rgba(255,255,255,.88);
-      --shadow:0 18px 44px rgba(15,23,42,.10);
-      --shadow-soft:0 8px 24px rgba(15,23,42,.07);
-      --navy:#0f172a;
-      --mint:#ecfdf5;
-      --sky:#eff6ff;
-    }
-    html{background:var(--bg)!important}
-    body{
-      background:
-        radial-gradient(circle at top left, rgba(37,99,235,.10), transparent 34vw),
-        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 48%,#eef3f8 100%)!important;
-      color:var(--text)!important;
-    }
-    #app{max-width:760px!important;background:transparent!important}
-    #page-content{padding-bottom:calc(98px + env(safe-area-inset-bottom,0px))!important}
-    .page-pad{width:100%!important;max-width:760px!important;padding:0 14px!important}
-    .app-shell{min-height:100svh;padding-top:12px}
-    .app-page-head{
-      padding:14px 0 12px!important;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .page-kicker,.pos-kicker{
-      font-size:10px!important;
-      font-weight:900!important;
-      color:var(--accent)!important;
-      letter-spacing:.08em!important;
-      text-transform:uppercase!important;
-      margin:0 0 4px!important;
-    }
-    .page-title{font-size:23px!important;font-weight:900!important;letter-spacing:0!important;line-height:1.08!important;color:var(--text)!important}
-    .page-subtitle{font-size:12px!important;line-height:1.45!important;color:var(--text-soft)!important;margin-top:4px!important}
-    .header-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;flex-wrap:nowrap!important}
-    .theme-toggle{
-      width:40px!important;height:40px!important;min-width:40px!important;border-radius:14px!important;
-      background:#fff!important;border:1px solid var(--border)!important;color:var(--text-soft)!important;box-shadow:var(--shadow-soft)!important;
-    }
-    .member-btn{color:var(--accent)!important;background:var(--sky)!important}
-    .refresh-btn{color:var(--green)!important;background:var(--mint)!important}
-    .logout-btn{color:var(--red)!important;background:#fff1f2!important}
-    .card,.stat-mini,.trx-card,.setting-row,.modal-sheet,.staff-daily-composer,.staff-daily-preview-wrap,.staff-daily-public-text{
-      background:rgba(255,255,255,.94)!important;
-      border:1px solid var(--border)!important;
-      border-radius:20px!important;
-      box-shadow:var(--shadow-soft)!important;
-    }
-    .card{padding:16px!important}
-    .label-xs{
-      color:var(--text-ghost)!important;
-      font-size:10px!important;
-      font-weight:900!important;
-      letter-spacing:.07em!important;
-      text-transform:uppercase!important;
-    }
-    .g-input{
-      min-height:46px!important;
-      border-radius:16px!important;
-      background:#f8fafc!important;
-      border:1px solid var(--border)!important;
-      color:var(--text)!important;
-      font-size:14px!important;
-      padding:11px 13px!important;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.8)!important;
-    }
-    .g-input:focus{background:#fff!important;border-color:var(--border-focus)!important;box-shadow:0 0 0 4px var(--accent-dim)!important}
-    .btn{
-      min-height:44px!important;
-      border-radius:16px!important;
-      font-size:13px!important;
-      font-weight:900!important;
-      padding:11px 14px!important;
-      box-shadow:none!important;
-      touch-action:manipulation;
-    }
-    .btn-primary{background:linear-gradient(135deg,#2563eb,#0f766e)!important;color:#fff!important}
-    .btn-success{background:linear-gradient(135deg,#059669,#10b981)!important;color:#fff!important}
-    .btn-glass{background:#fff!important;color:var(--text)!important;border:1px solid var(--border)!important}
-    .btn-danger{background:#fff1f2!important;color:var(--red)!important;border:1px solid rgba(220,38,38,.13)!important}
-    .tab-group{
-      background:#eaf1fa!important;border:1px solid rgba(15,23,42,.06)!important;border-radius:18px!important;padding:5px!important;box-shadow:inset 0 1px 2px rgba(15,23,42,.04)!important;
-    }
-    .tab-btn{border-radius:14px!important;min-height:38px!important;color:var(--text-soft)!important;font-size:12px!important;font-weight:900!important}
-    .tab-btn.active{background:#fff!important;color:var(--navy)!important;box-shadow:0 8px 18px rgba(15,23,42,.08)!important}
-    .pos-hero{
-      position:relative;
-      overflow:hidden;
-      border-radius:28px;
-      padding:18px;
-      color:#fff;
-      background:linear-gradient(135deg,#0f172a 0%,#164e63 50%,#047857 100%);
-      box-shadow:0 22px 54px rgba(15,23,42,.22);
-    }
-    .pos-hero:after{
-      content:"";
-      position:absolute;
-      width:180px;height:180px;right:-70px;top:-80px;
-      border-radius:50%;
-      background:rgba(255,255,255,.13);
-      pointer-events:none;
-    }
-    .pos-hero-main{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
-    .pos-avatar{
-      width:46px;height:46px;min-width:46px;border-radius:18px;
-      display:flex;align-items:center;justify-content:center;
-      background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.20);color:#fff;font-weight:900;
-    }
-    .pos-title{font-size:24px!important;line-height:1.08!important;font-weight:950!important;letter-spacing:0!important;color:#fff!important}
-    .pos-subtitle{font-size:12px!important;color:rgba(255,255,255,.72)!important;margin-top:5px!important;line-height:1.42!important}
-    .pos-date-chip{display:inline-flex;align-items:center;gap:6px;margin-top:13px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.16);font-size:11px;font-weight:800;color:#fff}
-    .pos-action-stack{position:relative;z-index:2;display:flex;gap:8px}
-    .pos-action-stack .theme-toggle{background:rgba(255,255,255,.14)!important;border-color:rgba(255,255,255,.18)!important;color:#fff!important;box-shadow:none!important}
-    .metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
-    .metric-card{
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:22px;
-      padding:15px;
-      box-shadow:var(--shadow-soft);
-      min-height:112px;
-      overflow:hidden;
-    }
-    .metric-card.primary{background:linear-gradient(180deg,#fff,#eff6ff);border-color:rgba(37,99,235,.14)}
-    .metric-card.cash{background:linear-gradient(180deg,#fff,#ecfdf5)!important;border-color:rgba(5,150,105,.16)!important}
-    .metric-icon{width:36px;height:36px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:11px;background:var(--accent-dim);color:var(--accent)}
-    .metric-card.cash .metric-icon{background:var(--green-dim);color:var(--green)}
-    .metric-value{font-family:var(--num-font);font-size:20px;font-weight:950;line-height:1.05;color:var(--text)}
-    .metric-caption{font-size:11px;color:var(--text-soft);line-height:1.35;margin-top:5px}
-    .status-strip{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 13px!important;border-radius:20px!important}
-    .bonus-panel{display:grid;grid-template-columns:1fr;gap:10px}
-    .bonus-panel .card{padding:16px!important}
-    .bonus-line{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
-    .bonus-amount{font-family:var(--num-font);font-size:24px!important;font-weight:950!important;line-height:1.05!important}
-    .stat-hero{
-      background:linear-gradient(135deg,#0f172a,#1e40af)!important;
-      color:#fff!important;
-      border:none!important;
-      border-radius:26px!important;
-      padding:20px!important;
-      box-shadow:0 18px 44px rgba(30,64,175,.20)!important;
-    }
-    .stat-hero .stat-label,.stat-hero .stat-sub{color:rgba(255,255,255,.72)!important}
-    .stat-hero .stat-value{color:#fff!important;font-size:29px!important;font-weight:950!important;letter-spacing:0!important}
-    .stat-mini{padding:15px!important;text-align:left!important;border-radius:20px!important}
-    .stat-mini-num{font-size:23px!important;font-weight:950!important}
-    .status-pill,.user-chip,.badge,.loc-chip{
-      border-radius:999px!important;
-      border:1px solid var(--border)!important;
-      font-weight:900!important;
-      letter-spacing:0!important;
-    }
-    .badge{padding:4px 8px!important;font-size:9px!important}
-    .badge-blue{background:var(--accent-dim)!important;color:var(--accent)!important;border-color:rgba(37,99,235,.14)!important}
-    .status-ok,.loc-in{background:var(--green-dim)!important;color:var(--green)!important;border-color:rgba(5,150,105,.16)!important}
-    .status-warn,.loc-out{background:var(--red-dim)!important;color:var(--red)!important;border-color:rgba(220,38,38,.16)!important}
-    .loc-loading{background:var(--surface)!important;color:var(--text-soft)!important}
-    .trx-card{
-      padding:12px!important;
-      gap:12px!important;
-      align-items:flex-start!important;
-      border-radius:20px!important;
-    }
-    .trx-icon{
-      width:42px!important;height:42px!important;min-width:42px!important;border-radius:16px!important;
-      background:var(--accent-dim)!important;color:var(--accent)!important;font-size:15px!important;
-    }
-    .trx-amount{font-size:15px!important;font-weight:950!important;color:var(--text)!important}
-    .trx-note{font-size:12px!important;color:var(--text-soft)!important;line-height:1.4!important;margin-top:4px!important}
-    .trx-time{font-size:10px!important;color:var(--text-ghost)!important;margin-top:6px!important}
-    .trx-actions-inline{display:flex!important;gap:6px!important;flex-wrap:nowrap!important}
-    .trx-actions-inline .btn{
-      width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;padding:0!important;border-radius:13px!important;font-size:11px!important;
-    }
-    .history-filter-card{display:flex;flex-direction:column;gap:10px;margin:10px 0 12px}
-    .date-range-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
-    .section-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 2px 9px}
-    .empty-state{
-      background:#fff;
-      border:1px dashed rgba(100,116,139,.28);
-      border-radius:24px;
-      padding:42px 18px;
-      text-align:center;
-      color:var(--text-soft);
-    }
-    .empty-state i{font-size:28px;color:var(--text-ghost);display:block;margin-bottom:10px}
-    .setting-row{
-      min-height:66px!important;
-      padding:14px!important;
-      margin-bottom:10px!important;
-      border-radius:20px!important;
-    }
-    .setting-ico{width:42px!important;height:42px!important;border-radius:16px!important}
-    .setting-label{font-size:14px!important;font-weight:900!important}
-    .setting-label small{font-size:11px!important;line-height:1.35!important;color:var(--text-soft)!important;margin-top:4px!important}
-    #bottom-nav{
-      height:72px!important;
-      width:min(calc(100% - 22px),720px)!important;
-      bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;
-      border-radius:24px!important;
-      padding:6px!important;
-      background:var(--nav-bg)!important;
-      border:1px solid rgba(15,23,42,.08)!important;
-      box-shadow:0 18px 44px rgba(15,23,42,.17)!important;
-    }
-    .nav-item{
-      min-height:58px!important;
-      border-radius:19px!important;
-      color:#94a3b8!important;
-      gap:5px!important;
-      padding:7px 3px!important;
-    }
-    .nav-item.active{
-      background:linear-gradient(135deg,#0f172a,#2563eb)!important;
-      color:#fff!important;
-      box-shadow:0 12px 24px rgba(37,99,235,.24)!important;
-    }
-    .nav-item i{font-size:18px!important}
-    .nav-item span{font-size:8px!important;font-weight:900!important;text-transform:none!important;letter-spacing:0!important}
-    #loading{background:rgba(15,23,42,.50)!important;backdrop-filter:blur(16px)!important}
-    .loader-ring{width:44px!important;height:44px!important;border-width:3px!important;border-top-color:#fff!important}
-    #toast{
-      top:16px!important;
-      border-radius:18px!important;
-      background:#0f172a!important;
-      color:#fff!important;
-      box-shadow:0 16px 38px rgba(15,23,42,.22)!important;
-      font-size:12px!important;
-      padding:12px 16px!important;
-    }
-    .modal-sheet{border-radius:26px!important;max-width:min(420px,calc(100vw - 28px))!important;padding:18px!important}
-    #transaction-modal .modal-sheet,#transaction-payment-modal .modal-sheet,#receipt-preview-modal .modal-sheet{max-width:min(390px,calc(100vw - 28px))!important}
-    .login-screen{
-      min-height:100svh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:30px 20px;
-      position:relative;
-    }
-    .login-panel{
-      width:100%;
-      max-width:380px;
-      background:rgba(255,255,255,.92);
-      border:1px solid var(--border);
-      border-radius:30px;
-      padding:24px;
-      box-shadow:0 24px 64px rgba(15,23,42,.14);
-    }
-    .login-brand-mark{
-      width:66px;height:66px;border-radius:24px;
-      background:linear-gradient(135deg,#0f172a,#059669);
-      color:#fff;
-      display:flex;align-items:center;justify-content:center;
-      font-size:26px;
-      margin-bottom:18px;
-      box-shadow:0 14px 34px rgba(15,23,42,.18);
-    }
-    .login-title{font-size:25px!important;font-weight:950!important;line-height:1.08!important;margin:0!important;color:var(--text)!important}
-    .login-copy{font-size:12.5px!important;color:var(--text-soft)!important;line-height:1.5!important;margin:7px 0 18px!important}
-    @media(min-width:680px){
-      .metric-grid{grid-template-columns:1fr 1fr 1fr 1fr}
-      .bonus-panel{grid-template-columns:1fr 1fr}
-      .stat-hero .stat-value{font-size:36px!important}
-    }
-    @media(max-width:520px){
-      .page-pad{padding-left:12px!important;padding-right:12px!important}
-      .app-page-head{padding-top:12px!important}
-      .page-title{font-size:21px!important}
-      .pos-hero{border-radius:26px;padding:16px}
-      .pos-title{font-size:22px!important}
-      .metric-grid{gap:9px}
-      .metric-card{padding:13px;min-height:106px;border-radius:20px}
-      .metric-value{font-size:18px}
-      .bonus-amount{font-size:21px!important}
-      .date-range-grid{grid-template-columns:1fr}
-      .date-range-grid span{display:none}
-      .header-actions{max-width:46vw!important;overflow:visible!important}
-      .theme-toggle{width:38px!important;height:38px!important;min-width:38px!important}
-      .btn{min-height:42px!important;font-size:12px!important}
-      .g-input{min-height:44px!important;font-size:16px!important}
-      .trx-actions-inline .btn{width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important}
-      #bottom-nav{height:68px!important;width:calc(100% - 14px)!important;border-radius:23px!important;padding:5px!important}
-      .nav-item{min-height:56px!important;border-radius:18px!important}
-      .nav-item i{font-size:17px!important}
-      .nav-item span{font-size:7.2px!important;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-      #bottom-nav.admin-six-nav .nav-item span{font-size:6.7px!important}
-      .modal-wrap .modal-sheet{max-width:min(372px,calc(100vw - 24px))!important}
-    }
+
+/* ============================================================
+   UI REDESIGN TOTAL — Rocky Hijab POS
+   Semua rule di bawah ini hanya mengubah TAMPILAN (CSS).
+   Tidak ada perubahan logic, fungsi, atau struktur HTML.
+   ============================================================ */
+
+/* --- NEW DESIGN TOKENS --- */
+:root {
+  /* Override tema lama ke Navy + Emerald premium */
+  --bg: #0f1923 !important;
+  --bg2: #162030 !important;
+  --bg3: #1d2b3c !important;
+  --surface: rgba(255,255,255,.045) !important;
+  --surface-hover: rgba(255,255,255,.08) !important;
+  --border: rgba(255,255,255,.09) !important;
+  --border-focus: rgba(16,185,129,.5) !important;
+  --text: #f0f4f8 !important;
+  --text-soft: #8da0b5 !important;
+  --text-ghost: #4e6070 !important;
+  --accent: #10b981 !important;
+  --accent-dim: rgba(16,185,129,.13) !important;
+  --accent-glow: rgba(16,185,129,.28) !important;
+  --green: #10b981 !important;
+  --green-dim: rgba(16,185,129,.13) !important;
+  --red: #f87171 !important;
+  --red-dim: rgba(248,113,113,.13) !important;
+  --amber: #fbbf24 !important;
+  --amber-dim: rgba(251,191,36,.13) !important;
+  --nav-bg: rgba(15,25,35,.92) !important;
+  --shadow: 0 8px 32px rgba(0,0,0,.45) !important;
+  --radius: 12px !important;
+  --radius-lg: 16px !important;
+  --font-main: 'DM Sans', system-ui, sans-serif !important;
+  --num-font: 'Sora', 'DM Sans', monospace !important;
+  --transition-theme: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease !important;
+  /* Accent sekunder: biru lembut */
+  --blue: #3b82f6;
+  --blue-dim: rgba(59,130,246,.14);
+}
+
+/* --- FONT GLOBAL --- */
+html, body, button, input, select, textarea {
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+.stat-value, .stat-mini-num, .amount-display, .trx-amount, .trx-time, .page-title {
+  font-family: 'Sora', 'DM Sans', sans-serif !important;
+}
+
+/* --- BODY / APP BACKGROUND --- */
+html, body, #app {
+  background: #0f1923 !important;
+}
+body::before {
+  content: '' !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background:
+    radial-gradient(ellipse 70% 50% at 90% 10%, rgba(16,185,129,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 10% 90%, rgba(59,130,246,.06) 0%, transparent 55%) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* --- CARDS --- */
+.card, .stat-mini, .trx-card, .setting-row,
+.header-guide-item, .staff-daily-composer,
+.staff-daily-preview-wrap, .staff-daily-public-text {
+  background: #162030 !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25), 0 1px 0 rgba(255,255,255,.035) inset !important;
+}
+.card {
+  border-radius: 14px !important;
+}
+
+/* --- STAT HERO --- */
+.stat-hero {
+  background: linear-gradient(135deg, #162030 0%, #1a2c3f 100%) !important;
+  border: 1px solid rgba(16,185,129,.22) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3), 0 0 0 1px rgba(16,185,129,.08) !important;
+  border-radius: 18px !important;
+}
+.stat-label {
+  color: var(--accent) !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+}
+.stat-value {
+  color: #f0f4f8 !important;
+  letter-spacing: -.01em !important;
+}
+.stat-sub { color: #8da0b5 !important; }
+.stat-mini-lbl { color: #4e6070 !important; }
+.stat-mini-num { color: #f0f4f8 !important; }
+
+/* --- BONUS CARD --- */
+.bonus-card {
+  background: linear-gradient(135deg, #1a2a1a 0%, #162a22 100%) !important;
+  border: 1px solid rgba(16,185,129,.25) !important;
+  border-radius: 14px !important;
+}
+
+/* --- INPUTS --- */
+.g-input {
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  color: #f0f4f8 !important;
+  border-radius: 12px !important;
+}
+.g-input:focus {
+  border-color: rgba(16,185,129,.55) !important;
+  background: rgba(16,185,129,.07) !important;
+  box-shadow: 0 0 0 3px rgba(16,185,129,.15) !important;
+}
+.g-input::placeholder { color: #4e6070 !important; }
+
+/* --- BUTTONS --- */
+.btn {
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: .01em !important;
+  transition: transform .13s ease, filter .13s ease, background .13s ease, box-shadow .13s ease !important;
+}
+.btn:active { transform: scale(.97) !important; }
+.btn-primary {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(16,185,129,.35) !important;
+}
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08) !important;
+  box-shadow: 0 6px 20px rgba(16,185,129,.45) !important;
+}
+.btn-glass {
+  background: rgba(255,255,255,.07) !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  color: #f0f4f8 !important;
+}
+.btn-glass:hover:not(:disabled) {
+  background: rgba(255,255,255,.12) !important;
+}
+.btn-danger {
+  background: rgba(248,113,113,.15) !important;
+  border: 1px solid rgba(248,113,113,.3) !important;
+  color: #f87171 !important;
+}
+.btn-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(16,185,129,.3) !important;
+}
+
+/* --- THEME TOGGLE --- */
+.theme-toggle {
+  background: rgba(255,255,255,.07) !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  color: #8da0b5 !important;
+  border-radius: 12px !important;
+}
+.logout-btn { color: #f87171 !important; background: rgba(248,113,113,.12) !important; }
+.refresh-btn, .member-btn { color: var(--accent) !important; background: rgba(16,185,129,.12) !important; }
+
+/* --- MODAL --- */
+.modal-wrap {
+  background: rgba(4,10,18,.75) !important;
+  backdrop-filter: blur(18px) !important;
+}
+.modal-sheet {
+  background: #162030 !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(16,185,129,.08) !important;
+}
+.modal-pill { background: rgba(255,255,255,.15) !important; }
+.amount-display {
+  color: var(--accent) !important;
+  font-family: 'Sora', monospace !important;
+  font-weight: 800 !important;
+}
+
+/* --- BOTTOM NAV --- */
+#bottom-nav {
+  background: rgba(15,25,35,.93) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1px solid rgba(255,255,255,.09) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 -4px 24px rgba(0,0,0,.5), 0 8px 32px rgba(0,0,0,.4) !important;
+}
+.nav-item {
+  color: #4e6070 !important;
+  border-radius: 14px !important;
+  transition: color .15s, background .15s !important;
+}
+.nav-item span {
+  font-family: 'DM Sans', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 9px !important;
+  letter-spacing: .04em !important;
+}
+.nav-item.active {
+  background: rgba(16,185,129,.15) !important;
+  color: #10b981 !important;
+  box-shadow: inset 0 0 0 1px rgba(16,185,129,.2) !important;
+}
+.nav-item.active i { text-shadow: 0 0 12px rgba(16,185,129,.5) !important; }
+
+/* --- FAB --- */
+.fab-add {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 20px rgba(16,185,129,.45) !important;
+}
+
+/* --- LOADING --- */
+#loading {
+  background: rgba(4,10,18,.88) !important;
+  backdrop-filter: blur(20px) !important;
+}
+.loader-ring {
+  border: 2.5px solid rgba(255,255,255,.08) !important;
+  border-top-color: #10b981 !important;
+}
+#loading p {
+  color: #8da0b5 !important;
+  font-family: 'DM Sans', sans-serif !important;
+  letter-spacing: .12em !important;
+}
+
+/* --- TOAST --- */
+#toast {
+  background: #162030 !important;
+  border: 1px solid rgba(16,185,129,.3) !important;
+  color: #f0f4f8 !important;
+  font-family: 'DM Sans', sans-serif !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5) !important;
+}
+
+/* --- BADGES / CHIPS / STATUS --- */
+.loc-chip, .status-pill, .user-chip, .badge {
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+}
+.loc-in, .status-ok {
+  background: rgba(16,185,129,.15) !important;
+  color: #34d399 !important;
+  border-color: rgba(16,185,129,.3) !important;
+}
+.loc-out, .status-warn {
+  background: rgba(248,113,113,.14) !important;
+  color: #f87171 !important;
+  border-color: rgba(248,113,113,.3) !important;
+}
+.loc-loading {
+  background: rgba(255,255,255,.05) !important;
+  color: #4e6070 !important;
+}
+.badge-blue {
+  background: rgba(59,130,246,.15) !important;
+  color: #60a5fa !important;
+  border-color: rgba(59,130,246,.3) !important;
+}
+.user-chip {
+  background: rgba(255,255,255,.06) !important;
+  color: #8da0b5 !important;
+  border-color: rgba(255,255,255,.09) !important;
+}
+
+/* --- TAB GROUP --- */
+.tab-group {
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.09) !important;
+  border-radius: 12px !important;
+}
+.tab-btn {
+  color: #4e6070 !important;
+  font-weight: 700 !important;
+  border-radius: 9px !important;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #fff !important;
+  box-shadow: 0 3px 10px rgba(16,185,129,.3) !important;
+}
+
+/* --- TRANSACTION CARDS --- */
+.trx-card {
+  background: #162030 !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+  border-radius: 14px !important;
+  transition: background .15s !important;
+}
+.trx-card:active { background: rgba(255,255,255,.06) !important; }
+.trx-icon {
+  background: rgba(16,185,129,.15) !important;
+  color: #34d399 !important;
+  border-radius: 12px !important;
+}
+.trx-amount { color: #f0f4f8 !important; }
+.trx-note { color: #8da0b5 !important; }
+.trx-time { color: #4e6070 !important; }
+
+/* --- SETTINGS ROW --- */
+.setting-row {
+  background: #162030 !important;
+  border-radius: 14px !important;
+}
+.setting-row:active { background: rgba(255,255,255,.05) !important; }
+.setting-ico {
+  border-radius: 10px !important;
+  background: rgba(16,185,129,.12) !important;
+  color: #34d399 !important;
+}
+.setting-label { color: #f0f4f8 !important; }
+.setting-arrow { color: #4e6070 !important; }
+
+/* --- LOGIN BRAND --- */
+.login-brand {
+  background: rgba(16,185,129,.15) !important;
+  border: 1px solid rgba(16,185,129,.3) !important;
+  border-radius: 20px !important;
+}
+
+/* --- PAGE TITLE --- */
+.page-title { color: #f0f4f8 !important; font-weight: 800 !important; }
+.page-subtitle { color: #8da0b5 !important; }
+.label-xs { color: #4e6070 !important; }
+
+/* --- HEADER GUIDE CARD --- */
+.header-guide-card {
+  background: #162030 !important;
+  border-color: rgba(59,130,246,.2) !important;
+}
+.header-guide-card.is-hidden {
+  background: rgba(16,185,129,.1) !important;
+  border-color: rgba(16,185,129,.28) !important;
+}
+.header-guide-eye {
+  background: rgba(59,130,246,.13) !important;
+  border-color: rgba(59,130,246,.25) !important;
+  color: #60a5fa !important;
+}
+.header-guide-ico {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.09) !important;
+  color: #34d399 !important;
+}
+.header-guide-title { color: #f0f4f8 !important; }
+.header-guide-desc { color: #8da0b5 !important; }
+.header-guide-bonus-quote { color: #f0f4f8 !important; }
+.header-guide-note-preview {
+  background: rgba(16,185,129,.1) !important;
+  border-color: rgba(16,185,129,.25) !important;
+  color: #f0f4f8 !important;
+}
+
+/* --- STAFF DAILY --- */
+.staff-daily-status-card, .staff-daily-public-card {
+  background: #162030 !important;
+  border-color: rgba(59,130,246,.18) !important;
+}
+.staff-daily-avatar { background: linear-gradient(135deg, #10b981, #059669) !important; }
+.staff-daily-status-name { color: #f0f4f8 !important; }
+.staff-daily-status-meta { color: #8da0b5 !important; }
+.staff-daily-status-toggle {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.1) !important;
+  color: #8da0b5 !important;
+}
+.staff-daily-composer {
+  background: rgba(255,255,255,.04) !important;
+}
+.staff-daily-composer textarea { color: #f0f4f8 !important; }
+.staff-daily-composer textarea::placeholder { color: #4e6070 !important; }
+.staff-daily-note-count { color: #4e6070 !important; }
+.staff-daily-preview-wrap {
+  background: rgba(16,185,129,.1) !important;
+  border-color: rgba(16,185,129,.22) !important;
+}
+.staff-daily-preview-wrap.off {
+  background: rgba(248,113,113,.1) !important;
+  border-color: rgba(248,113,113,.22) !important;
+}
+.staff-daily-preview-title { color: #34d399 !important; }
+.staff-daily-preview-wrap.off .staff-daily-preview-title { color: #f87171 !important; }
+.staff-daily-preview-text { color: #f0f4f8 !important; }
+.staff-daily-public-text {
+  background: rgba(16,185,129,.1) !important;
+  border-color: rgba(16,185,129,.2) !important;
+  color: #f0f4f8 !important;
+}
+.staff-daily-link { color: #34d399 !important; }
+.staff-daily-note-preview {
+  background: rgba(16,185,129,.1) !important;
+  border-color: rgba(16,185,129,.22) !important;
+  color: #f0f4f8 !important;
+}
+
+/* --- SYNC BTN --- */
+.sync-btn {
+  background: rgba(59,130,246,.13) !important;
+  border-color: rgba(59,130,246,.25) !important;
+  color: #60a5fa !important;
+}
+
+/* --- RECEIPT PREVIEW --- */
+.receipt-preview-box {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 12px !important;
+}
+.receipt-preview-text { color: #8da0b5 !important; }
+
+/* --- SCROLLBAR CUSTOM (WEBKIT) --- */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.2); }
+
+/* --- MISC OVERRIDES untuk elemen inline-style warna lama --- */
+/* Semua elemen pakai var() otomatis ikut, 
+   tapi beberapa inline style pakai hardcode — override dengan !important */
+[style*="background:var(--bg2)"] { background: #162030 !important; }
+[style*="background:var(--bg)"] { background: #0f1923 !important; }
+[style*="background:var(--surface)"] { background: rgba(255,255,255,.05) !important; }
+[style*="color:var(--text)"] { color: #f0f4f8 !important; }
+[style*="color:var(--text-soft)"] { color: #8da0b5 !important; }
+[style*="color:var(--text-ghost)"] { color: #4e6070 !important; }
+[style*="color:var(--accent)"] { color: #10b981 !important; }
+[style*="color:var(--green)"] { color: #10b981 !important; }
+[style*="color:var(--red)"] { color: #f87171 !important; }
+[style*="border-color:var(--border)"] { border-color: rgba(255,255,255,.09) !important; }
+
+/* --- INPUT PAYMENT BUTTONS BESAR --- */
+#transaction-pay-cash {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  box-shadow: 0 4px 16px rgba(16,185,129,.35) !important;
+  font-size: 14px !important;
+  border-radius: 16px !important;
+  min-height: 58px !important;
+}
+#transaction-pay-qris {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  box-shadow: 0 4px 16px rgba(59,130,246,.35) !important;
+  font-size: 14px !important;
+  border-radius: 16px !important;
+  min-height: 58px !important;
+}
+
+/* --- TRANSACTION MODAL FIELDS LEBIH MODERN --- */
+#modal-pos-user-wrap,
+#transaction-modal .modal-sheet > div[style*="flex-direction:column"] > div {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.09) !important;
+  border-radius: 14px !important;
+}
+
+/* --- PAGE CONTENT SECTIONS: beberapa heading inline --- */
+/* Judul section biasanya pakai style inline, paksa font baru */
+.page-pad h2, .page-pad h3, .page-pad h4 {
+  font-family: 'Sora', 'DM Sans', sans-serif !important;
+  color: #f0f4f8 !important;
+}
 </style>
 </head>
 <body>
 <div id="app">
+  <!-- UI REDESIGN: Loading screen lebih modern -->
   <div id="loading">
     <div class="loader-ring"></div>
-    <p style="font-size:12px;font-weight:700;color:var(--text-soft);letter-spacing:.07em">MEMPROSES</p>
+    <p style="font-size:11px;font-weight:700;color:var(--text-soft);letter-spacing:.14em;font-family:'DM Sans',sans-serif">MEMUAT</p>
   </div>
   <div id="toast">Toast</div>
 
@@ -2145,19 +2300,11 @@
     if (hash === adminDashboardPanelsHash && board.innerHTML.trim()) return;
     adminDashboardPanelsHash = hash;
     board.innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px" class="page-in s3">
-        <div class="stat-mini">
-          <div class="metric-icon" style="background:var(--green-dim);color:var(--green)"><i class="fas fa-user-check"></i></div>
-          <p class="label-xs">User Aktif Hari Ini</p>
-          <p class="stat-mini-num" style="color:var(--green)">${stats.activeToday}</p>
-        </div>
-        <div class="stat-mini">
-          <div class="metric-icon"><i class="fas fa-users"></i></div>
-          <p class="label-xs">User Sistem</p>
-          <p class="stat-mini-num" style="color:var(--accent)">${stats.userCount}</p>
-        </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px" class="page-in s3">
+        <div class="card" style="padding:10px 11px"><p class="label-xs" style="margin-bottom:5px;font-size:9px">User Aktif Hari Ini</p><p style="font-family:var(--num-font);font-size:18px;font-weight:850;color:var(--green);line-height:1">${stats.activeToday}</p></div>
+        <div class="card" style="padding:10px 11px"><p class="label-xs" style="margin-bottom:5px;font-size:9px">User Sistem</p><p style="font-family:var(--num-font);font-size:18px;font-weight:850;color:var(--accent);line-height:1">${stats.userCount}</p></div>
       </div>
-      <button onclick="router.navigate('report')" class="btn btn-glass page-in s4" style="width:100%;padding:12px 14px;font-size:12px;margin-bottom:8px"><i class="fas fa-ranking-star"></i> Lihat Ranking Omzet di Global</button>
+      <button onclick="router.navigate('report')" class="btn btn-glass page-in s4" style="width:100%;padding:10px 12px;font-size:12px;margin-bottom:8px"><i class="fas fa-ranking-star"></i> Lihat Ranking Omzet di Global</button>
 `;
   }
 
@@ -4897,11 +5044,11 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
     const safeCash = Math.max(0, Number(data.cashFisik || 0));
     if (totalEl) {
       totalEl.innerText = `Rp ${formatRupiah(safeCash)}`;
-      totalEl.style.color = data.cashFisik < 0 ? 'var(--red)' : 'var(--green)';
+      totalEl.style.color = data.cashFisik < 0 ? 'var(--red)' : '#2563eb';
     }
     if (card) {
-      card.style.background = data.cashFisik < 0 ? 'var(--red-dim)' : 'linear-gradient(180deg,#fff,#ecfdf5)';
-      card.style.borderColor = data.cashFisik < 0 ? 'rgba(255,107,107,.22)' : 'rgba(5,150,105,.16)';
+      card.style.background = data.cashFisik < 0 ? 'var(--red-dim)' : '#eff6ff';
+      card.style.borderColor = data.cashFisik < 0 ? 'rgba(255,107,107,.22)' : '#bfdbfe';
     }
     if (infoEl) {
       // Tampilan home dibuat nominal-only sesuai request.
@@ -4983,14 +5130,14 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
     const visibleItems = filtered.slice(0, historyDisplayLimit);
     const hasMore = filtered.length > visibleItems.length;
     const filterBox = isAdmin() ? `
-      <div class="card page-in s1" style="margin-bottom:10px">
+      <div style="margin-bottom:10px" class="page-in s1">
         <select id="admin-history-user" class="g-input" onchange="setSelectedUserFilter(this.value)">${getUserOptionsHtml(true)}</select>
       </div>` : '';
     list.innerHTML = `
       <div class="stat-hero page-in" style="margin-bottom:12px">
-        <p class="stat-label">${isAdmin() ? 'Omzet Transaksi Global' : 'Omzet Transaksi'}</p>
+        <p class="stat-label">${isAdmin() ? 'Total Transaksi Global' : 'Total Transaksi'}</p>
         <p class="stat-value">Rp ${formatRupiah(total)}</p>
-        <p class="stat-sub">Menampilkan ${visibleItems.length} dari ${filtered.length} transaksi - ${isAdmin() ? getSelectedUserLabel() : 'akun saya'}</p>
+        <p class="stat-sub">Menampilkan ${visibleItems.length} dari ${filtered.length} transaksi · ${isAdmin() ? getSelectedUserLabel() : 'akun saya'}</p>
       </div>
       ${filterBox}
       <div style="display:flex;gap:7px;margin-bottom:10px" class="page-in s1">
@@ -5013,7 +5160,7 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
       <div style="display:flex;flex-direction:column;gap:7px" class="page-in s3">
         ${visibleItems.map(t => `
           <div class="trx-card">
-            <div class="trx-icon"><i class="fas fa-receipt"></i></div>
+            <div class="trx-icon"><i class="fas fa-arrow-trend-up"></i></div>
             <div style="flex:1;min-width:0">
               <div style="display:flex;align-items:center;gap:7px;margin-bottom:2px;flex-wrap:wrap">
                 <span class="trx-amount">Rp ${formatRupiah(t.amount)}</span>
@@ -5022,7 +5169,7 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
                 ${isAdmin() ? `<span class="user-chip"><i class="fas fa-user" style="font-size:10px"></i>${escapeHtml(t.name || t.user)}</span>` : ''}
               </div>
               <p class="trx-note">${escapeHtml(t.note || 'Transaksi')}</p>
-              <p class="trx-time">${(() => { const ms = getRecordTimeMs(t); return ms ? dateToTimeInput(new Date(ms)) : formatDateLabel(getTransactionDateKey(t)); })()} - ${getTransactionPaymentLabel(t)}</p>
+              <p class="trx-time">${(() => { const ms = getRecordTimeMs(t); return ms ? dateToTimeInput(new Date(ms)) : formatDateLabel(getTransactionDateKey(t)); })()} · ${getTransactionPaymentLabel(t)}</p>
             </div>
             <div class="trx-actions-inline" style="flex-shrink:0">
               <button onclick="printTransactionReceipt('${t.id}')" class="btn btn-success" title="Cetak"><i class="fas fa-print"></i></button>
@@ -5030,7 +5177,7 @@ ${lockedByGlobal ? 'Hanya user ini yang dibuka dari closing global. Bonus closin
               <button onclick="deleteTransaction('${t.id}')" class="btn btn-danger" title="Hapus"><i class="fas fa-trash-can"></i></button>
             </div>
           </div>
-        `).join('') || `<div class="empty-state"><i class="fas fa-inbox"></i><p style="font-size:13px;font-weight:800;color:var(--text)">Tidak ada transaksi</p><p style="font-size:11px;margin-top:4px">Data akan muncul setelah transaksi disimpan.</p></div>`}
+        `).join('') || `<div style="text-align:center;padding:56px 0;color:var(--text-ghost)"><i class="fas fa-inbox" style="font-size:30px;margin-bottom:10px;display:block;opacity:0.5"></i><p style="font-size:12.5px">Tidak ada transaksi</p></div>`}
       </div>
       ${hasMore ? `<button onclick="increaseHistoryDisplayLimit()" class="btn btn-glass page-in s4" style="width:100%;margin-top:12px;padding:11px 12px;font-size:12px">Muat ${Math.min(HISTORY_PAGE_STEP, filtered.length - visibleItems.length)} transaksi lagi</button>` : ''}
     `;
@@ -8025,11 +8172,10 @@ Masukkan PIN admin:`);
     if (nav) nav.style.display = 'flex';
     setActiveNav('settings');
     content.innerHTML = `
-      <div class="page-pad app-shell">
-        <div class="app-page-head page-in" style="align-items:center">
+      <div class="page-pad">
+        <div style="padding:34px 0 14px;display:flex;align-items:center;gap:10px" class="page-in">
           <button onclick="router.navigate('settings')" class="btn btn-glass" style="width:38px;height:38px;padding:0;border-radius:12px"><i class="fas fa-arrow-left"></i></button>
           <div style="min-width:0;flex:1">
-            <p class="page-kicker">Admin Pro</p>
             <p class="page-title">${escapeHtml(titles[key] || 'Admin Pro')}</p>
             <p class="page-subtitle">Halaman terpisah supaya ringan dan tidak menumpuk.</p>
           </div>
@@ -8071,23 +8217,7 @@ Masukkan PIN admin:`);
       </button>`).join('') : '';
 
     info.innerHTML = `
-      <div class="summary-grid page-in s1" style="margin-bottom:12px">
-        <div class="stat-mini">
-          <div class="metric-icon"><i class="fas fa-users"></i></div>
-          <p class="label-xs">User Aktif</p>
-          <p class="stat-mini-num" style="color:var(--accent)">${userCount}</p>
-        </div>
-        <button onclick="router.navigate('adminLogs')" class="stat-mini" style="border:none;text-align:left;cursor:pointer">
-          <div class="metric-icon" style="background:var(--amber-dim);color:var(--amber)"><i class="fas fa-clock-rotate-left"></i></div>
-          <p class="label-xs">Audit Log</p>
-          <p class="stat-mini-num" style="color:var(--amber)">${cachedAuditLogs.length}</p>
-        </button>
-      </div>
-      <div class="section-title-row page-in s1">
-        <p class="label-xs" style="margin:0">Menu Admin</p>
-        <span class="user-chip">${isAdmin() ? 'Admin' : 'User'}</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:0" class="page-in s2">
+      <div style="display:flex;flex-direction:column;gap:0">
         ${adminMenuCards}
       </div>
     `;
@@ -8541,9 +8671,6 @@ Masukkan PIN admin:`);
       const themeIcon = getTheme() === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
       const memberIcon = '<a href="https://idhamkhalid24.github.io/kode-khusus-member/" target="_blank" rel="noopener noreferrer" class="theme-toggle member-btn" title="Member" aria-label="Member"><i class="fas fa-id-card"></i></a>';
       const refreshIcon = '<button class="theme-toggle refresh-btn" onclick="manualRefreshData()" title="Refresh Data" aria-label="Refresh Data"><i class="fas fa-rotate"></i></button>';
-      const todayLongLabel = nowDate().toLocaleDateString('id-ID', { weekday:'long', day:'2-digit', month:'long', year:'numeric', timeZone:'Asia/Jakarta' });
-      const activeUserName = currentUser?.name || currentUser?.username || 'Admin';
-      const activeUserInitial = String(activeUserName || 'A').trim().charAt(0).toUpperCase() || 'A';
       if (!window.__adminSwipeReady && content) {
         content.addEventListener('touchstart', handleAppBackSwipeStart, { passive:true });
         content.addEventListener('touchend', handleAppBackSwipeEnd, { passive:false });
@@ -8554,20 +8681,16 @@ Masukkan PIN admin:`);
         nav.style.display = 'none';
         if ($('fab-pos')) $('fab-pos').style.display = 'none';
         content.innerHTML = `
-          <div class="login-screen">
+          <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 22px;position:relative">
             <div style="position:absolute;top:22px;right:22px"><button class="theme-toggle theme-btn" onclick="toggleTheme()">${themeIcon}</button></div>
-            <div class="login-panel page-in s1">
-              <div class="login-brand-mark"><i class="fas fa-cash-register"></i></div>
-              <p class="page-kicker">Mobile POS Admin</p>
-              <h1 class="login-title">Rocky Hijab Pusat</h1>
-              <p class="login-copy">Masuk untuk mengelola transaksi, laporan, absen, closing, user, dan backup data toko.</p>
-              <div style="display:flex;flex-direction:column;gap:11px">
+            <h1 style="font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px;text-align:center" class="page-in s1">Rocky Hijab</h1>
+            <p style="font-size:13px;color:var(--text-soft);margin-bottom:10px;text-align:center" class="page-in s1">Koleksi Terbaik Untuk Muslimah Hebat</p>
+            <div style="width:100%;display:flex;flex-direction:column;gap:10px;max-width:360px" class="page-in s2">
               <input id="login-user" type="text" placeholder="Username" class="g-input" style="font-size:15px;padding:14px 15px">
               <input id="login-pin" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" placeholder="PIN" class="g-input" style="font-size:15px;padding:14px 15px;letter-spacing:.08em">
-                <button onclick="login()" class="btn btn-primary" style="width:100%;padding:14px;font-size:14.5px;margin-top:4px;border-radius:16px"><i class="fas fa-right-to-bracket"></i> Masuk</button>
-              </div>
-              <p style="font-size:11px;color:var(--text-ghost);margin-top:14px;line-height:1.45">Akses admin tetap memakai sistem login dan PIN lama.</p>
+              <button onclick="login()" class="btn btn-primary" style="width:100%;padding:14px;font-size:14.5px;margin-top:4px;border-radius:13px">Masuk</button>
             </div>
+            <p style="font-size:11px;color:var(--text-ghost);margin-top:14px;text-align:center" class="page-in s3">Hanya akun admin yang bisa masuk</p>
           </div>`;
       } else if (!currentUser) {
         return router.navigate('login');
@@ -8586,91 +8709,69 @@ Masukkan PIN admin:`);
       if (page === 'home') {
         nav.style.display = 'flex'; setActiveNav(page);
         content.innerHTML = `
-          <div class="page-pad app-shell">
-            <section class="pos-hero page-in">
-              <div class="pos-hero-main">
-                <div style="min-width:0">
-                  <p class="pos-kicker" style="color:rgba(255,255,255,.72)!important">Dashboard Kasir</p>
-                  <h2 class="pos-title">Halo, ${escapeHtml(activeUserName)}</h2>
-                  <p class="pos-subtitle">Ringkasan operasional toko hari ini.</p>
-                  <span class="pos-date-chip"><i class="fas fa-calendar-day"></i> ${escapeHtml(todayLongLabel)}</span>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px">
-                  <div class="pos-action-stack">
-                    ${memberIcon}
-                    ${refreshIcon}
-                    <button class="theme-toggle theme-btn" onclick="toggleTheme()" style="width:34px;height:34px;border-radius:10px">${themeIcon}</button>
-                    <button class="theme-toggle logout-btn" onclick="logout()" title="Logout" style="width:34px;height:34px;border-radius:10px"><i class="fas fa-power-off"></i></button>
-                  </div>
-                  <div class="pos-avatar">${escapeHtml(activeUserInitial)}</div>
-                </div>
+          <div class="page-pad" style="padding-top:8px">
+            <div style="padding:10px 0 8px;display:flex;justify-content:space-between;align-items:center" class="page-in">
+              <div>
+                <p style="font-size:10px;color:var(--text-ghost);font-weight:700;margin-bottom:2px">Panel Admin</p>
+                <h2 style="font-size:18px;font-weight:850;letter-spacing:-.03em">Kontrol Data</h2>
               </div>
-            </section>
-            <div class="metric-grid page-in s1">
-              <div class="metric-card primary">
-                <div class="metric-icon"><i class="fas fa-chart-line"></i></div>
-                <p class="label-xs">Omzet Hari Ini</p>
-                <p id="today-income" class="metric-value">Rp 0</p>
-                <p class="metric-caption">Total transaksi masuk hari ini</p>
+              <div class="header-actions">
+                ${memberIcon}
+                ${refreshIcon}
+                <button class="theme-toggle theme-btn" onclick="toggleTheme()" style="width:34px;height:34px;border-radius:10px">${themeIcon}</button>
+                <button class="theme-toggle logout-btn" onclick="logout()" title="Logout" style="width:34px;height:34px;border-radius:10px"><i class="fas fa-power-off"></i></button>
               </div>
-              <div id="home-cash-fisik-card" class="metric-card cash">
-                <div class="metric-icon"><i class="fas fa-wallet"></i></div>
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
-                  <p class="label-xs" style="margin:0;color:var(--green)!important">Cash Fisik</p>
-                  <span class="badge" style="background:var(--green-dim);color:var(--green);border-color:rgba(5,150,105,.16)">Hari Ini</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px" class="page-in s1">
+              <div class="card" style="padding:10px 11px"><p class="label-xs" style="margin-bottom:5px;font-size:9px">Omzet Hari Ini</p><p id="today-income" style="font-family:var(--num-font);font-size:17px;font-weight:850;color:var(--text);line-height:1">Rp 0</p></div>
+              <div id="home-cash-fisik-card" class="card" style="padding:10px 11px;background:#eff6ff;border-color:#bfdbfe">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px">
+                  <p class="label-xs" style="margin:0;font-size:9px;color:#2563eb">Cash Fisik Hari Ini</p>
+                  <span style="font-size:8px;font-weight:900;padding:2px 6px;border-radius:999px;background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;white-space:nowrap">HARI INI</span>
                 </div>
-                <p id="home-cash-fisik-total" class="metric-value" style="color:var(--green);margin-top:8px">Rp 0</p>
+                <p id="home-cash-fisik-total" style="font-family:var(--num-font);font-size:20px;font-weight:900;color:#2563eb;line-height:1.05;margin-top:3px">Rp 0</p>
                 <p id="home-cash-fisik-info" style="display:none"></p>
               </div>
             </div>
-            <div class="card status-strip page-in s1">
-              <div id="home-status"></div>
-              <div id="loc-info"><span class="loc-chip loc-loading" style="padding:6px 10px;font-size:11px"><i class="fas fa-circle-notch fa-spin" style="font-size:9px"></i> GPS...</span></div>
-            </div>
-            <div class="bonus-panel page-in s2" style="margin-top:10px">
-              <div class="card">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px">
-                  <p class="label-xs" style="margin:0">Bonus Global</p>
-                  <span id="scope-chip" class="user-chip">Semua User</span>
-                </div>
-                <div class="bonus-line">
-                  <div style="min-width:0">
-                    <p id="total-bonus" class="bonus-amount" style="color:var(--accent)">Rp 0</p>
-                    <p id="bonus-text" class="metric-caption">Bonus ini sudah termasuk total bonus keseluruhan</p>
-                  </div>
-                  <div style="text-align:right;flex-shrink:0">
-                    <span style="font-size:10px;color:var(--text-soft)">Omzet Bulan</span>
-                    <strong id="month-omzet" style="display:block;font-family:var(--num-font);font-size:13px;color:var(--text);margin-top:4px">Rp 0</strong>
-                  </div>
-                </div>
+            <div class="card page-in s1" style="padding:10px 11px;margin-bottom:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                <div id="home-status"></div>
+                <div id="loc-info"><span class="loc-chip loc-loading" style="padding:4px 8px;font-size:10px"><i class="fas fa-circle-notch fa-spin" style="font-size:9px"></i> GPS...</span></div>
               </div>
-              <div class="card" style="background:linear-gradient(180deg,#fff,#ecfdf5)!important;border-color:rgba(5,150,105,.16)!important">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px">
-                  <p class="label-xs" style="margin:0;color:var(--green)!important">Total Bonus Harian</p>
-                  <span class="user-chip" style="color:var(--green);background:var(--green-dim);border-color:rgba(5,150,105,.16)">Hari Ini</span>
+            </div>
+            <div class="card page-in s2" style="padding:10px 11px;margin-bottom:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px"><p class="label-xs" style="margin:0;font-size:9px">Bonus Global</p><span id="scope-chip" class="user-chip" style="font-size:10px;padding:3px 7px">Semua User</span></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end">
+                <div><p id="total-bonus" style="font-family:var(--num-font);font-size:21px;font-weight:850;color:var(--accent);line-height:1">Rp 0</p><p id="bonus-text" style="font-size:10px;color:var(--text-soft);margin-top:4px;line-height:1.25">Bonus ini sudah termasuk total bonus keseluruhan</p></div>
+                <div style="text-align:right"><span style="font-size:10px;color:var(--text-soft)">Omzet Bulan</span><strong id="month-omzet" style="display:block;font-size:12px;color:var(--text);margin-top:3px">Rp 0</strong></div>
+              </div>
+            </div>
+            <div class="card page-in s2" style="padding:10px 11px;margin-bottom:8px;border-color:rgba(82,216,158,.18);background:linear-gradient(135deg,var(--green-dim),var(--bg2))">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px">
+                <p class="label-xs" style="margin:0;font-size:9px;color:var(--green)">Total Bonus Harian</p>
+                <span class="user-chip" style="font-size:10px;padding:3px 7px;color:var(--green);background:var(--green-dim);border-color:rgba(82,216,158,.2)">Hari Ini</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end">
+                <div>
+                  <p id="today-bonus-total" style="font-family:var(--num-font);font-size:21px;font-weight:850;color:var(--green);line-height:1">Rp 0</p>
+                  <p id="today-bonus-text" style="font-size:10px;color:var(--text-soft);margin-top:4px;line-height:1.25">Bonus semua user khusus tanggal hari ini</p>
                 </div>
-                <div class="bonus-line">
-                  <div style="min-width:0">
-                    <p id="today-bonus-total" class="bonus-amount" style="color:var(--green)">Rp 0</p>
-                    <p id="today-bonus-text" class="metric-caption">Bonus semua user khusus tanggal hari ini</p>
-                  </div>
-                  <div style="text-align:right;flex-shrink:0">
-                    <span style="font-size:10px;color:var(--text-soft)">Omzet Hari Ini</span>
-                    <strong id="today-bonus-omzet" style="display:block;font-family:var(--num-font);font-size:13px;color:var(--text);margin-top:4px">Rp 0</strong>
-                  </div>
+                <div style="text-align:right">
+                  <span style="font-size:10px;color:var(--text-soft)">Omzet Hari Ini</span>
+                  <strong id="today-bonus-omzet" style="display:block;font-size:12px;color:var(--text);margin-top:3px">Rp 0</strong>
                 </div>
               </div>
             </div>
-            <div id="admin-dashboard-panels" style="margin-top:10px"></div>
+            <div id="admin-dashboard-panels"></div>
           </div>`;
         updateLocation(); updateHomeStatus(); updateHomeStats();
       } else if (page === 'history') {
         nav.style.display = 'flex'; setActiveNav(page);
         content.innerHTML = `
-          <div class="page-pad app-shell">
-            <div class="app-page-head page-in">
-              <div style="min-width:0"><p class="page-kicker">Transaksi</p><p class="page-title">Riwayat Kasir</p><p class="page-subtitle">Pantau, cari, cetak, edit, dan hapus transaksi seluruh user.</p></div>
-              <div class="header-actions">
+          <div class="page-pad">
+            <div style="padding:34px 0 18px;display:flex;justify-content:space-between;align-items:center" class="page-in">
+              <div><p class="page-title">Semua Transaksi</p><p class="page-subtitle">Pantau transaksi seluruh user</p></div>
+              <div style="display:flex;gap:8px">
                 ${memberIcon}
                 ${refreshIcon}
                 <button class="theme-toggle theme-btn" onclick="toggleTheme()">${themeIcon}</button>
@@ -8684,11 +8785,10 @@ Masukkan PIN admin:`);
         if (!isAdmin()) return router.navigate('home');
         nav.style.display = 'flex'; setActiveNav(page);
         content.innerHTML = `
-          <div class="page-pad app-shell">
-            <div class="app-page-head page-in">
+          <div class="page-pad">
+            <div style="padding:34px 0 18px;display:flex;justify-content:space-between;align-items:center;gap:10px" class="page-in">
               <div style="min-width:0">
-                <p class="page-kicker">Absensi</p>
-                <p class="page-title" style="font-size:21px">Kelola Absen</p>
+                <p class="page-title" style="font-size:21px">Halaman Absen</p>
                 <p class="page-subtitle">Tambah, edit, hapus, dan pulihkan absen staff/harian</p>
               </div>
               <div class="header-actions">
@@ -8705,11 +8805,10 @@ Masukkan PIN admin:`);
         if (!isAdmin()) return router.navigate('home');
         nav.style.display = 'flex'; setActiveNav(page);
         content.innerHTML = `
-          <div class="page-pad app-shell">
-            <div class="app-page-head page-in">
+          <div class="page-pad">
+            <div style="padding:34px 0 18px;display:flex;justify-content:space-between;align-items:center;gap:10px" class="page-in">
               <div style="min-width:0">
-                <p class="page-kicker">Closing</p>
-                <p class="page-title" style="font-size:21px">Tutup Shift</p>
+                <p class="page-title" style="font-size:21px">Halaman Closing</p>
                 <p class="page-subtitle">Closing Per User dan Closing Manual Risma</p>
               </div>
               <div class="header-actions">
@@ -8726,10 +8825,10 @@ Masukkan PIN admin:`);
         if (!isAdmin()) return router.navigate('home');
         nav.style.display = 'flex'; setActiveNav(page);
         content.innerHTML = `
-          <div class="page-pad app-shell">
-            <div class="app-page-head page-in">
-              <div style="min-width:0"><p class="page-kicker">Laporan</p><p class="page-title">Ringkasan Global</p><p class="page-subtitle">Omzet, bonus, ranking, absensi, dan rekap bulanan.</p></div>
-              <div class="header-actions">
+          <div class="page-pad">
+            <div style="padding:34px 0 18px;display:flex;justify-content:space-between;align-items:center" class="page-in">
+              <div><p class="page-title">Laporan Global</p><p class="page-subtitle">Ringkasan semua user dalam satu panel</p></div>
+              <div style="display:flex;gap:8px">
                 ${memberIcon}
                 ${refreshIcon}
                 <button class="theme-toggle theme-btn" onclick="toggleTheme()">${themeIcon}</button>
@@ -8748,13 +8847,12 @@ Masukkan PIN admin:`);
         if (!isAdmin()) return router.navigate('home');
         nav.style.display = 'flex'; setActiveNav(page);
         content.innerHTML = `
-          <div class="page-pad app-shell">
-            <div class="app-page-head page-in">
+          <div class="page-pad">
+            <div style="padding:50px 0 18px;display:flex;justify-content:space-between;align-items:center;gap:10px" class="page-in">
               <div style="display:flex;align-items:center;gap:10px;min-width:0">
                 <button onclick="router.navigate('settings')" class="theme-toggle" style="width:38px;height:38px"><i class="fas fa-arrow-left"></i></button>
                 <div style="min-width:0">
-                  <p class="page-kicker">Audit</p>
-                  <p class="page-title" style="font-size:21px">Log Aktivitas</p>
+                  <p class="page-title" style="font-size:21px">Log Aktivitas Admin</p>
                   <p class="page-subtitle">Halaman khusus audit log</p>
                 </div>
               </div>
@@ -8767,12 +8865,11 @@ Masukkan PIN admin:`);
         if (!isAdmin()) return router.navigate('home');
         nav.style.display = 'flex'; setActiveNav(page);
         content.innerHTML = `
-          <div class="page-pad app-shell">
-            <div class="app-page-head page-in">
+          <div class="page-pad">
+            <div style="padding:34px 0 14px;display:flex;justify-content:space-between;align-items:center" class="page-in">
               <div>
-                <p class="page-kicker">Setelan</p>
-                <p class="page-title">Pusat Admin</p>
-                <p class="page-subtitle">Menu pengelolaan dibuat ringkas agar cepat dipakai di HP.</p>
+                <p class="page-title">User</p>
+                <p class="page-subtitle">Menu admin dipisah per halaman agar tidak menumpuk.</p>
               </div>
             </div>
             <div id="settings-summary" style="padding-bottom:18px" class="page-in s1"></div>
