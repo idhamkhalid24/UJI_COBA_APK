@@ -566,15 +566,6 @@
     </div>
   </div>
 
-  <div id="emergencyFundHistoryModal" class="modal hidden">
-    <div class="box">
-      <h3 style="margin-bottom:6px;text-align:center">Riwayat Dana Darurat</h3>
-      <p class="small" style="text-align:center;margin-bottom:14px">Tabungan 5% dari pendapatan Server Pusat yang sudah final sampai H-1.</p>
-      <div id="emergencyFundHistoryList"></div>
-      <button class="btn" onclick="closeEmergencyFundHistoryModal()" style="margin-top:14px;background:var(--blue)">Tutup</button>
-    </div>
-  </div>
-
   <div id="backupOptionModal" class="modal hidden">
     <div class="box">
       <h3 style="margin-bottom:14px;text-align:center">Backup</h3>
@@ -955,10 +946,6 @@
           <div class="stat"><span>Belum Ditabungkan</span><b id="emergencyFundUnpaidDisplay" class="num">Rp 0</b></div>
         </div>
         <div id="emergencyFundBasisInfo" class="small" style="margin-top:10px;padding-top:10px;border-top:1px solid #bfdbfe;color:var(--blue);font-weight:700">Dana Darurat = 5% × Cash Fisik bulan berjalan sampai kemarin. Cash Fisik hari ini masuk hitungan besok.</div>
-        <div id="emergencyFundHistoryPreview" class="zakat-mini" style="display:none">
-          <div id="emergencyFundHistoryMiniList" class="zakat-mini"></div>
-          <button class="tab" onclick="showEmergencyFundHistoryModal()">Semua</button>
-        </div>
       </div>
 
       <!-- Hutang Section Paling Bawah -->
@@ -1520,65 +1507,35 @@ function emergencyRecordFromTransaction(t={}){
   });
 }
 async function syncEmergencyFundHistoryFromTransactions(){
-  const emergencyTx=(transactions||[]).filter(t=>isEmergencyFundTx(t));
-  if(!emergencyTx.length)return 0;
-  const existing=getEmergencyFundHistory();
-  const txIds=new Set(existing.map(r=>Number(r.transactionId||0)).filter(Boolean));
-  const missing=emergencyTx.filter(t=>Number(t&&t.id||0)&&!txIds.has(Number(t.id)));
-  if(!missing.length)return 0;
-  const rows=missing.map(emergencyRecordFromTransaction);
-  emergencyFundHistory=[...existing,...rows];
-  persistEmergencyFundLocal(emergencyFundHistory);
-  if(supabaseClient&&emergencyFundTableReady){
-    const payload=rows.map(r=>({
-      id:r.id,owner_id:OWNER_ID,date:r.date,month_key:r.monthKey,cutoff_date:r.cutoffDate,
-      income_at_payment:roundRp(r.incomeAtPayment),amount_saved:roundRp(r.amountSaved),transaction_id:r.transactionId,
-      cancelled:!!r.cancelled,cancelled_at:r.cancelledAt||null,note:r.note||''
-    }));
-    const up=await supabaseClient.from('dana_darurat_history').upsert(payload,{onConflict:'id'});
-    if(up.error)console.warn('Gagal sync riwayat Dana Darurat lama:',up.error);
-  }
-  return rows.length;
-}
-async function loadEmergencyFundHistory(){
-  if(!supabaseClient){emergencyFundHistory=readEmergencyFundLocal();emergencyFundTableReady=false;return emergencyFundHistory}
-  const {data,error}=await supabaseClient.from('dana_darurat_history').select('*').eq('owner_id',OWNER_ID).order('id',{ascending:true});
-  if(error){
-    emergencyFundTableReady=false;
-    const backup=readEmergencyFundLocal();
-    emergencyFundHistory=backup;
-    console.warn('Tabel dana_darurat_history belum siap:',error);
-    showToast('Tabel Dana Darurat belum ada. Jalankan SQL dana_darurat_history dulu.',4200);
-    return emergencyFundHistory;
-  }
+  // Riwayat khusus Dana Darurat sudah tidak dipakai. Sumber kebenaran hanya tabel transactions.
+  emergencyFundHistory=[];
+  try{localStorage.removeItem(EMERGENCY_LOCAL_BACKUP_KEY);}catch(e){}
   emergencyFundTableReady=true;
-  emergencyFundHistory=(data||[]).map(normalizeEmergencyFundRecord);
-  persistEmergencyFundLocal(emergencyFundHistory);
+  return 0;
+}
+
+async function loadEmergencyFundHistory(){
+  // Riwayat khusus Dana Darurat tidak dipakai lagi supaya tidak membingungkan.
+  emergencyFundHistory=[];
+  try{localStorage.removeItem(EMERGENCY_LOCAL_BACKUP_KEY);}catch(e){}
+  emergencyFundTableReady=true;
   return emergencyFundHistory;
 }
+
 async function saveEmergencyFundHistory(history){
-  const clean=(history||[]).map(normalizeEmergencyFundRecord);
-  const old=getEmergencyFundHistory();
-  emergencyFundHistory=clean;
-  persistEmergencyFundLocal(clean);
-  if(!supabaseClient)return;
-  const del=await supabaseClient.from('dana_darurat_history').delete().eq('owner_id',OWNER_ID);
-  if(del.error){emergencyFundHistory=old;persistEmergencyFundLocal(old);throw del.error}
-  if(!clean.length)return;
-  const rows=clean.map(r=>({id:r.id,owner_id:OWNER_ID,date:r.date,month_key:r.monthKey,cutoff_date:r.cutoffDate,income_at_payment:roundRp(r.incomeAtPayment),amount_saved:roundRp(r.amountSaved),transaction_id:r.transactionId,cancelled:!!r.cancelled,cancelled_at:r.cancelledAt||null,note:r.note||''}));
-  const ins=await supabaseClient.from('dana_darurat_history').insert(rows);
-  if(ins.error)throw ins.error;
-}
-async function appendEmergencyFundRecord(record){
-  const row=normalizeEmergencyFundRecord(record);
-  emergencyFundHistory=[...getEmergencyFundHistory(),row];
-  persistEmergencyFundLocal(emergencyFundHistory);
-  if(!supabaseClient)return;
-  const payload={id:row.id,owner_id:OWNER_ID,date:row.date,month_key:row.monthKey,cutoff_date:row.cutoffDate,income_at_payment:roundRp(row.incomeAtPayment),amount_saved:roundRp(row.amountSaved),transaction_id:row.transactionId,cancelled:false,cancelled_at:null,note:row.note||''};
-  const ins=await supabaseClient.from('dana_darurat_history').insert(payload);
-  if(ins.error){emergencyFundTableReady=false;throw ins.error}
+  // No-op: Dana Darurat sekarang cukup tercatat sebagai transaksi pengeluaran.
+  emergencyFundHistory=[];
+  try{localStorage.removeItem(EMERGENCY_LOCAL_BACKUP_KEY);}catch(e){}
   emergencyFundTableReady=true;
 }
+
+async function appendEmergencyFundRecord(record){
+  // No-op: tidak membuat tabel/riwayat khusus lagi.
+  emergencyFundHistory=[];
+  try{localStorage.removeItem(EMERGENCY_LOCAL_BACKUP_KEY);}catch(e){}
+  emergencyFundTableReady=true;
+}
+
 function getEmergencyCashFisikForDate(date){
   const day=String(date||'').slice(0,10);
   if(!day)return 0;
@@ -1661,8 +1618,6 @@ async function getEmergencyExpenseCategory(){
 }
 async function markEmergencyFundSaved(){
   const monthKey=getEmergencyMonthKey(),cutoff=getEmergencyCutoffDate();
-  if(!emergencyFundTableReady){await loadEmergencyFundHistory();}
-  if(!emergencyFundTableReady){showToast('Jalankan SQL tabel dana_darurat_history dulu, baru bisa simpan Dana Darurat.',5200);return;}
   const due=getCurrentEmergencyFundDue(monthKey);
   if(due<=0){showToast(`Dana Darurat bulan ${monthKey} sudah aman / belum ada Cash Fisik final`);return;}
   const unpaidIncome=getUnpaidEmergencyIncome(monthKey);
@@ -1673,86 +1628,44 @@ Data Cash Fisik sampai ${cutoff} (H-1)
 = ${formatRupiah(due)}
 
 Nominal ini akan masuk sebagai Pengeluaran kategori "Dana Darurat". Lanjutkan?`))return;
-  let txId=Date.now()+77;
+  const txId=Date.now()+77;
   try{
     const cat=await getEmergencyExpenseCategory();
     const tx={id:txId,date:getLocalDateString(),description:`${EMERGENCY_PREFIX}${monthKey}] Tabungan Dana Darurat sampai ${cutoff}`,amount:due,type:'expense',category_id:cat?Number(cat.id):null,category_name:EMERGENCY_CATEGORY_NAME};
     await saveTransaction(tx);
-    try{
-      await appendEmergencyFundRecord({id:Date.now()+88,date:getWibDateTimeString(),monthKey,cutoffDate:cutoff,incomeAtPayment:unpaidIncome,amountSaved:due,transactionId:txId,note:`Dana Darurat 5% dari Cash Fisik ${formatRupiah(unpaidIncome)} sampai ${cutoff}`});
-    }catch(e){
-      await deleteTransactionFromDB(txId).catch(()=>{});
-      throw e;
-    }
     await loadTransactions();
-    await loadEmergencyFundHistory();
-    await syncEmergencyFundHistoryFromTransactions().catch(()=>{});
     render();renderCashFisik();
-    showToast(`Dana Darurat tersimpan: ${formatRupiah(due)}`);
+    showToast(`Dana Darurat tersimpan di Riwayat Transaksi: ${formatRupiah(due)}`);
   }catch(e){showToast('Gagal simpan Dana Darurat: '+(e.message||e),6000)}
 }
+
 function renderEmergencyFundSection(){
   const monthKey=getEmergencyMonthKey(),cutoff=getEmergencyCutoffDate();
-  const income=getEmergencyServerIncome(monthKey),covered=getEmergencySavedCoveredIncome(monthKey),unpaid=getUnpaidEmergencyIncome(monthKey),due=getCurrentEmergencyFundDue(monthKey),saved=getEmergencySavedAmount(monthKey);
+  const income=getEmergencyServerIncome(monthKey),unpaid=getUnpaidEmergencyIncome(monthKey),due=getCurrentEmergencyFundDue(monthKey),saved=getEmergencySavedAmount(monthKey);
   if($('emergencyFundTotalSavedDisplay'))$('emergencyFundTotalSavedDisplay').innerText=formatRupiah(getEmergencyFundTotalSavedAll());
   if($('emergencyFundAmountLarge'))$('emergencyFundAmountLarge').innerText=formatRupiah(due);
   if($('emergencyFundIncomeDisplay'))$('emergencyFundIncomeDisplay').innerText=formatRupiah(income);
   if($('emergencyFundUnpaidDisplay'))$('emergencyFundUnpaidDisplay').innerText=formatRupiah(unpaid);
-  if($('emergencyFundBasisInfo'))$('emergencyFundBasisInfo').innerText=`Dana Darurat = 5% × Cash Fisik bulan ${monthKey} sampai ${cutoff} (H-1). Cash Fisik hari ini masuk hitungan besok. Sudah ditabung bulan ini: ${formatRupiah(saved)}.`;
+  if($('emergencyFundBasisInfo'))$('emergencyFundBasisInfo').innerText=`Dana Darurat = 5% × Cash Fisik bulan ${monthKey} sampai ${cutoff} (H-1). Sudah ditabung bulan ini: ${formatRupiah(saved)}. Riwayatnya cukup dari Riwayat Transaksi.`;
   const btn=$('payEmergencyFundBtn'),st=$('emergencyFundStatusText');
-  if(btn&&!emergencyFundTableReady){btn.disabled=true;btn.style.opacity=.55;if(st)st.innerText='Jalankan SQL tabel dana_darurat_history dulu';}
-  else if(btn&&income<=0){btn.disabled=true;btn.style.opacity=.55;if(st)st.innerText=`Belum ada Cash Fisik final bulan ${monthKey} sampai ${cutoff}`;}
+  if(btn&&income<=0){btn.disabled=true;btn.style.opacity=.55;if(st)st.innerText=`Belum ada Cash Fisik final bulan ${monthKey} sampai ${cutoff}`;}
   else if(btn&&due<=0){btn.disabled=true;btn.style.opacity=.55;if(st)st.innerText=`Dana Darurat bulan ${monthKey} sudah aman ✓`;}
   else if(btn){btn.disabled=false;btn.style.opacity=1;if(st)st.innerText=`Wajib nabung 5% bulan ${monthKey}: ${formatRupiah(due)}`;}
-  const prev=$('emergencyFundHistoryPreview'),mini=$('emergencyFundHistoryMiniList');
-  if(!prev||!mini)return;
-  const valid=getActiveEmergencyFundHistory();
-  const fallbackTx=getEmergencyFundTransactions(monthKey).slice(-2).map(emergencyRecordFromTransaction);
-  const miniRows=valid.length?valid:fallbackTx;
-  if(miniRows.length){
-    prev.style.display='flex';
-    mini.innerHTML=miniRows.slice(-2).reverse().map(x=>`<span class="chip" style="background:#dbeafe;color:#1d4ed8;border-color:#bfdbfe">${formatRupiah(x.amountSaved)}</span>`).join('');
-  }else prev.style.display='none';
 }
+
 function showEmergencyFundHistoryModal(){
-  const box=$('emergencyFundHistoryList');
-  if(!box)return;
-  let h=getEmergencyFundHistory();
-  if(!h.length)h=getEmergencyFundTransactions().map(emergencyRecordFromTransaction);
-  box.innerHTML=h.length?h.slice().reverse().map(r=>{
-    const missingTx=!findEmergencyFundTransactionForRecord(r);
-    const cancelled=!!r.cancelled||missingTx;
-    const cancelBtn=(cancelled||missingTx)?'':`<button class="mini-btn" type="button" onclick="cancelEmergencyFundRecord(${r.id})">Batalkan</button>`;
-    const deleteBtn=`<button class="mini-btn danger" type="button" onclick="deleteEmergencyFundRecord(${r.id})">Hapus</button>`;
-    const btn=`<div style="display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap">${cancelBtn}${deleteBtn}</div>`;
-    const status=missingTx?' (Transaksi sudah hilang)':(r.cancelled?' (Batal)':'');
-    const note=missingTx?'Tidak dihitung sebagai tabungan karena transaksi Dana Darurat sudah dihapus dari Riwayat Transaksi.':(r.note||'Dana Darurat');
-    return `<div class="item ${cancelled?'danger-card':''}" style="align-items:flex-start"><div class="desc"><b>${escapeHtml(r.date)}${escapeHtml(status)}</b><small>Bulan ${escapeHtml(r.monthKey)} · sampai ${escapeHtml(r.cutoffDate)} · basis ${formatRupiah(r.incomeAtPayment)}</small><small>${escapeHtml(note)}</small></div><div class="right"><b class="num ${cancelled?'red':'blue'}">${formatRupiah(r.amountSaved)}</b><div style="margin-top:6px">${btn}</div></div></div>`;
-  }).join(''):'<div class="empty">Belum ada riwayat Dana Darurat</div>';
-  $('emergencyFundHistoryModal').classList.remove('hidden');
+  showToast('Riwayat Dana Darurat khusus sudah dihapus. Cek/hapus Dana Darurat dari Riwayat Transaksi.');
 }
-function closeEmergencyFundHistoryModal(){$('emergencyFundHistoryModal').classList.add('hidden')}
+
+function closeEmergencyFundHistoryModal(){
+  const modal=$('emergencyFundHistoryModal');
+  if(modal)modal.classList.add('hidden');
+}
+
 async function cancelEmergencyFundRecord(id){
-  const row=getEmergencyFundHistory().find(r=>Number(r.id)===Number(id)) || emergencyRecordFromTransaction((transactions||[]).find(t=>Number(t.id)+EMERGENCY_HISTORY_ID_OFFSET===Number(id))||{});
-  if(!row||row.cancelled)return;
-  openPasswordModal(async()=>{
-    try{
-      const cancelledAt=getWibDateTimeString();
-      if(supabaseClient&&emergencyFundTableReady){
-        const up=await supabaseClient.from('dana_darurat_history').update({cancelled:true,cancelled_at:cancelledAt}).eq('owner_id',OWNER_ID).eq('id',Number(id));
-        if(up.error)throw up.error;
-      }
-      const tx=findEmergencyFundTransactionForRecord(row);
-      if(tx)await deleteTransactionFromDB(Number(tx.id)).catch(()=>{});
-      emergencyFundHistory=getEmergencyFundHistory().map(r=>Number(r.id)===Number(id)?{...r,cancelled:true,cancelledAt}:r);
-      persistEmergencyFundLocal(emergencyFundHistory);
-      await loadTransactions();
-      if(emergencyFundTableReady)await loadEmergencyFundHistory();
-      render();renderCashFisik();showEmergencyFundHistoryModal();
-      showToast('Dana Darurat dibatalkan');
-    }catch(e){showToast('Gagal batalkan Dana Darurat: '+(e.message||e),6000)}
-  });
+  showToast('Riwayat Dana Darurat khusus sudah tidak dipakai. Hapus transaksinya dari Riwayat Transaksi.');
 }
+
 function findEmergencyFundTransactionForRecord(row={}){
   const directId=Number(row.transactionId||0);
   if(directId){
@@ -1771,35 +1684,9 @@ function findEmergencyFundTransactionForRecord(row={}){
   })||null;
 }
 async function deleteEmergencyFundRecord(id){
-  const row=getEmergencyFundHistory().find(r=>Number(r.id)===Number(id));
-  if(!row)return;
-  if(!confirm(`Hapus riwayat Dana Darurat ini permanen?\n\nNominal: ${formatRupiah(row.amountSaved)}\nBulan: ${row.monthKey}\n\nKalau ada transaksi pengeluaran Dana Darurat terkait, transaksi itu juga akan dihapus.`))return;
-  openPasswordModal(async()=>{
-    const old=getEmergencyFundHistory();
-    try{
-      const tx=findEmergencyFundTransactionForRecord(row);
-      if(tx&&supabaseClient){await deleteTransactionFromDB(Number(tx.id)).catch(e=>console.warn('Transaksi Dana Darurat tidak terhapus / tidak ada:',e));}
-
-      emergencyFundHistory=old.filter(r=>Number(r.id)!==Number(id));
-      persistEmergencyFundLocal(emergencyFundHistory);
-
-      if(supabaseClient){
-        const del=await supabaseClient.from('dana_darurat_history').delete().eq('owner_id',OWNER_ID).eq('id',Number(id));
-        if(del.error&&emergencyFundTableReady)throw del.error;
-      }
-
-      await loadTransactions().catch(()=>{});
-      if(emergencyFundTableReady)await loadEmergencyFundHistory().catch(()=>{});
-      // Jangan membuat ulang riwayat dari transaksi setelah tombol hapus ditekan.
-      // Status sudah/belum ditabung selalu dihitung dari transactions yang masih ada.
-      render();renderCashFisik();showEmergencyFundHistoryModal();
-      showToast('Riwayat Dana Darurat dihapus');
-    }catch(e){
-      emergencyFundHistory=old;persistEmergencyFundLocal(old);
-      showToast('Gagal hapus Dana Darurat: '+(e.message||e),6000);
-    }
-  });
+  showToast('Riwayat Dana Darurat khusus sudah tidak dipakai. Hapus transaksinya dari Riwayat Transaksi.');
 }
+
 
 async function loadTransactions(){
   // Hapus cache lama yang mungkin corrupt/dobel — Supabase adalah satu-satunya sumber kebenaran
@@ -1837,8 +1724,6 @@ async function clearFullSupabaseData(){
   if(txDel.error)throw txDel.error;
   const zkDel=await supabaseClient.from('zakat_history').delete().eq('owner_id',OWNER_ID);
   if(zkDel.error)throw zkDel.error;
-  const efDel=await supabaseClient.from('dana_darurat_history').delete().eq('owner_id',OWNER_ID);
-  if(efDel.error)console.warn('Dana Darurat tidak terhapus / tabel belum ada:',efDel.error);
   try{
     await loadExpenseCategories();
     await ensureDefaultExpenseCategories();
@@ -2051,27 +1936,11 @@ async function addTransaction(){try{const dateVal=$('inputDate').value,type=$('t
 function onHistoryRangeChange(){$('filterStartDate').value=$('filterStartDateHistory').value;$('filterEndDate').value=$('filterEndDateHistory').value;render();}
 function changeFilter(f){currentFilter=f;$('rangeSelector').classList.toggle('hidden',f!=='range');const rh=$('rangeSelectorHistory');if(rh)rh.classList.toggle('hidden',f!=='range');if(f==='range'){const s=$('filterStartDateHistory'),e=$('filterEndDateHistory');if(s&&!s.value)s.value=getLocalDateString();if(e&&!e.value)e.value=getLocalDateString();$('filterStartDate').value=s?s.value:getLocalDateString();$('filterEndDate').value=e?e.value:getLocalDateString();}updateFilterUI();render();updateMonthValidityIdle()}function updateFilterUI(){['today','month','range','all'].forEach(f=>{const el=$('filter-'+f);if(el)el.classList.toggle('active',f===currentFilter)})}
 async function deleteEmergencyHistoryRowsForTransaction(t={}){
-  const txId=Number(t&&t.id||0);
-  const month=parseEmergencyMonthFromTransaction(t);
-  const cutoff=parseEmergencyCutoffFromTransaction(t);
-  const amount=roundRp(t&&t.amount||0);
-  const old=getEmergencyFundHistory();
-  const keep=old.filter(r=>{
-    if(txId&&Number(r.transactionId||0)===txId)return false;
-    const sameMonth=!month||String(r.monthKey||'').slice(0,7)===month;
-    const sameCutoff=!cutoff||String(r.cutoffDate||'').slice(0,10)===cutoff;
-    const sameAmount=!amount||roundRp(r.amountSaved||0)===amount;
-    return !(sameMonth&&sameCutoff&&sameAmount);
-  });
-  if(keep.length!==old.length){emergencyFundHistory=keep;persistEmergencyFundLocal(keep);}
-  if(supabaseClient&&emergencyFundTableReady){
-    if(txId)await supabaseClient.from('dana_darurat_history').delete().eq('owner_id',OWNER_ID).eq('transaction_id',txId).catch(()=>{});
-    // Fallback untuk data lama yang transaction_id kosong.
-    const stale=old.filter(r=>!keep.includes(r));
-    for(const r of stale){await supabaseClient.from('dana_darurat_history').delete().eq('owner_id',OWNER_ID).eq('id',Number(r.id)).catch(()=>{});}
-  }
+  // No-op: tidak ada riwayat Dana Darurat khusus yang perlu dibersihkan.
+  emergencyFundHistory=[];
+  try{localStorage.removeItem(EMERGENCY_LOCAL_BACKUP_KEY);}catch(e){}
 }
-async function deleteTransaction(id){const t=transactions.find(x=>Number(x.id)===Number(id));if(t&&isAutoQrisCashOut(t)){showToast('QRIS otomatis tidak bisa dihapus di sini. Hapus transaksi aslinya dari aplikasi staff.');return}if(t&&isFirebaseUploaded(t)){showToast('Data SERVER LOCK. Gunakan tombol Sync di halaman Server Pusat, bukan hapus manual.');return}openPasswordModal(async()=>{try{await deleteTransactionFromDB(id);if(t&&isEmergencyFundTx(t)){await deleteEmergencyHistoryRowsForTransaction(t).catch(()=>{});}await loadTransactions();if(emergencyFundTableReady)await loadEmergencyFundHistory().catch(()=>{});validateAndCancelInvalidZakat();render();renderCashFisik();showToast(t&&isEmergencyFundTx(t)?'Transaksi Dana Darurat dihapus, status kembali belum ditabung jika belum ada transaksi lain':'Transaksi dihapus')}catch(e){showToast('Gagal hapus: '+e.message)}})}
+async function deleteTransaction(id){const t=transactions.find(x=>Number(x.id)===Number(id));if(t&&isAutoQrisCashOut(t)){showToast('QRIS otomatis tidak bisa dihapus di sini. Hapus transaksi aslinya dari aplikasi staff.');return}if(t&&isFirebaseUploaded(t)){showToast('Data SERVER LOCK. Gunakan tombol Sync di halaman Server Pusat, bukan hapus manual.');return}openPasswordModal(async()=>{try{await deleteTransactionFromDB(id);if(t&&isEmergencyFundTx(t)){await deleteEmergencyHistoryRowsForTransaction(t).catch(()=>{});}await loadTransactions();validateAndCancelInvalidZakat();render();renderCashFisik();showToast(t&&isEmergencyFundTx(t)?'Transaksi Dana Darurat dihapus, status kembali belum ditabung jika belum ada transaksi lain':'Transaksi dihapus')}catch(e){showToast('Gagal hapus: '+e.message)}})}
 async function requestClearAll(){
   openPasswordModal(async()=>{
     if(confirm('Hapus semua data manual? Data SERVER LOCK tidak akan dihapus.')){
@@ -2606,7 +2475,7 @@ function render(){
       (debt?`<span class="cashout-badge tabungan" style="font-size:9px;margin-left:4px;background:#fef3c7;color:#92400e">${debtLabel}</span>`:(emergency?'<span class="lock-badge">DANA DARURAT</span>':(isFirebaseUploaded(t)?'<span class="lock-badge">SERVER LOCK</span>':'')));
     const ctrl=co
       ? `<div class="small" style="color:#0369a1;font-weight:900;font-size:9px">CASH PINDAH</div>`
-      : (debt?`<div class="small" style="color:#92400e;font-weight:900;font-size:9px">NETRAL</div>`:(emergency?`<div class="small blue" style="font-weight:900;font-size:9px">TABUNGAN</div>`:(isFirebaseUploaded(t)?`<div class="small blue" style="font-weight:900">${t.__firebasePreview?'PREVIEW':'LOCK'}</div>`:`<button class="x" onclick="deleteTransaction(${t.id})">×</button>`)));
+      : (debt?`<div class="small" style="color:#92400e;font-weight:900;font-size:9px">NETRAL</div>`:(emergency?`<div class="small blue" style="font-weight:900;font-size:9px;margin-bottom:2px">TABUNGAN</div><button class="x" onclick="deleteTransaction(${t.id})">×</button>`:(isFirebaseUploaded(t)?`<div class="small blue" style="font-weight:900">${t.__firebasePreview?'PREVIEW':'LOCK'}</div>`:`<button class="x" onclick="deleteTransaction(${t.id})">×</button>`)));
     return `<div class="item" style="${co?'background:#f0f9ff;border-color:#bfdbfe':(debt?'background:#fffbeb;border-color:#fde68a':(emergency?'background:#eff6ff;border-color:#bfdbfe':''))}"><div class="left"><div class="icon ${iconClass}" style="${iconStyle}">${icon}</div><div class="desc"><b>${escapeHtml(desc)}${badge}</b><small>${t.date}</small>${catLine}</div></div><div class="right"><b class="num" style="color:${amtColor}">${amtSign}${formatRupiah(t.amount).replace('Rp','')}</b>${ctrl}</div></div>`;
   }).join('')+(f.length>80?`<div class="empty">Ditampilkan 80 dari ${f.length} data biar ringan</div>`:'');
   renderFirebaseUploadCard();
@@ -2630,7 +2499,6 @@ function getBackupPayload(){
     owner_id:OWNER_ID,
     transactions:(transactions||[]),
     zakatHistory:getZakatHistory?getZakatHistory():(zakatHistory||[]),
-    emergencyFundHistory:getEmergencyFundHistory?getEmergencyFundHistory():(emergencyFundHistory||[]),
     expenseCategories:(expenseCategories||[]).map(normalizeCategoryForBackup).filter(c=>c.name)
   };
 }
@@ -2686,7 +2554,7 @@ async function importFromText(){try{const raw=$('importDataText').value.trim();i
   } else if(parsed&&Array.isArray(parsed.transactions)){
     importedTx=parsed.transactions;
     importedZakat=Array.isArray(parsed.zakatHistory)?parsed.zakatHistory:[];
-    importedEmergency=Array.isArray(parsed.emergencyFundHistory)?parsed.emergencyFundHistory:[];
+    importedEmergency=[];
     importedCategories=Array.isArray(parsed.expenseCategories)?parsed.expenseCategories:[];
   } else throw new Error('format');
   importedTx=importedTx.map(t=>({...t,amount:Number(t.amount||0)}));
@@ -3758,7 +3626,6 @@ function scheduleFinanceRealtimeRefresh(){
     try{
       await loadTransactions();
       try{await loadExpenseCategories();}catch(e){}
-      try{await loadEmergencyFundHistory();await syncEmergencyFundHistoryFromTransactions();}catch(e){}
       render();
       renderCashFisik();
     }catch(e){console.warn('Refresh finance realtime gagal:',e)}
@@ -3777,8 +3644,6 @@ async function initApp(){try{if(!initSupabase())return;
   await loadTransactions();
   try{await loadExpenseCategories();await ensureDefaultExpenseCategories();await migrateLegacyExpenseCategories();}catch(e){console.warn('Kategori belum siap:',e)}
   await loadZakatHistory();
-  await loadEmergencyFundHistory();
-  await syncEmergencyFundHistoryFromTransactions().catch(e=>console.warn('Sync Dana Darurat lama gagal:',e));
   if(firebaseDb){
     // Tunggu snapshot pertama Server Pusat hari ini. Panel tanggal lain baru dibaca saat halaman Server dibuka.
     await Promise.race([
