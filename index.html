@@ -829,6 +829,12 @@
         </div>
       </div>
 
+      <!-- Total Dana Darurat Terkumpul -->
+      <div id="emergencyFundTotalCard" class="stat" style="margin-bottom:8px;border-color:#bfdbfe;background:var(--blue-light)">
+        <span>Total Dana Darurat Terkumpul</span>
+        <b id="emergencyFundTotalSavedDisplay" class="num" style="color:var(--blue);font-size:15px">Rp 0</b>
+      </div>
+
       <!-- Cash Fisik Card -->
       <div class="cash-fisik-card">
         <div class="cash-fisik-header">
@@ -860,48 +866,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Hutang Card -->
-      <div class="debt-card">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
-          <div style="min-width:0">
-            <div class="debt-title">Hutang Uang Aktif</div>
-            <div id="debtActiveTotal" class="debt-amount num" onclick="openDebtModal('list')">Rp 0</div>
-            <div id="debtTodayInfo" class="small" style="margin-top:3px;color:#92400e;font-weight:700">Pinjaman menambah Saldo Bersih, bayar pokok mengurangi Saldo Bersih.</div>
-          </div>
-          <div class="debt-actions">
-            <button class="debt-mini-btn" onclick="openDebtModal('borrow')">+ Pinjam</button>
-            <button class="debt-mini-btn pay" onclick="openDebtModal('pay')">Bayar</button>
-          </div>
-        </div>
-        <div class="cash-fisik-breakdown" style="border-color:#fde68a;margin-top:9px">
-          <div class="breakdown-row">
-            <span class="breakdown-label">Belum Dibayar</span>
-            <b id="debtCardUnpaid" class="breakdown-val num" style="color:#92400e" onclick="openDebtModal('list')">Rp 0</b>
-          </div>
-          <div class="breakdown-row">
-            <span class="breakdown-label">Status</span>
-            <b id="debtCardStatus" class="breakdown-val" style="color:#92400e" onclick="openDebtModal('list')">Lunas</b>
-          </div>
-        </div>
-        <div class="debt-note">Tidak masuk pendapatan, pengeluaran, laba, atau zakat. Hanya mutasi Saldo Bersih dan sisa hutang.</div>
-      </div>
-
-      <div class="grid2">
-        <div class="stat" onclick="openDebtModal('list')" style="cursor:pointer;background:#fffbeb;border-color:#fde68a">
-          <span>Total Pinjaman</span>
-          <b id="debtTotalBorrowed" class="num" style="color:#92400e">Rp 0</b>
-        </div>
-        <div class="stat" onclick="openDebtModal('list')" style="cursor:pointer;background:#f0fdf4;border-color:#bbf7d0">
-          <span>Sudah Dibayar</span>
-          <b id="debtTotalPaid" class="num" style="color:#15803d">Rp 0</b>
-        </div>
-      </div>
-      <div class="stat" onclick="openDebtModal('list')" style="cursor:pointer;background:#fff7ed;border-color:#fed7aa;margin-bottom:10px">
-        <span>Belum Dibayar</span>
-        <b id="debtTotalUnpaid" class="num" style="color:#c2410c">Rp 0</b>
-      </div>
-
       <!-- Hidden elements tetap ada agar JS tidak error -->
       <div id="todayIncomeCard" class="hidden"></div>
       <div id="todayFirebaseIncomeHome" class="hidden"></div>
@@ -987,15 +951,58 @@
           <button id="payEmergencyFundBtn" class="btn" style="width:auto;min-width:90px;padding:10px;background:var(--blue)" onclick="markEmergencyFundSaved()">Nabung</button>
         </div>
         <div class="zakat-grid">
-          <div class="stat"><span>Server Final Bulan Ini s.d H-1</span><b id="emergencyFundIncomeDisplay" class="num">Rp 0</b></div>
+          <div class="stat"><span>Cash Fisik Bulan Ini s.d H-1</span><b id="emergencyFundIncomeDisplay" class="num">Rp 0</b></div>
           <div class="stat"><span>Belum Ditabungkan</span><b id="emergencyFundUnpaidDisplay" class="num">Rp 0</b></div>
         </div>
-        <div id="emergencyFundBasisInfo" class="small" style="margin-top:10px;padding-top:10px;border-top:1px solid #bfdbfe;color:var(--blue);font-weight:700">Dana Darurat = 5% × pendapatan Server Pusat bulan berjalan yang sudah final sampai kemarin. Pendapatan hari ini masuk hitungan besok.</div>
+        <div id="emergencyFundBasisInfo" class="small" style="margin-top:10px;padding-top:10px;border-top:1px solid #bfdbfe;color:var(--blue);font-weight:700">Dana Darurat = 5% × Cash Fisik bulan berjalan sampai kemarin. Cash Fisik hari ini masuk hitungan besok.</div>
         <div id="emergencyFundHistoryPreview" class="zakat-mini" style="display:none">
           <div id="emergencyFundHistoryMiniList" class="zakat-mini"></div>
           <button class="tab" onclick="showEmergencyFundHistoryModal()">Semua</button>
         </div>
       </div>
+
+      <!-- Hutang Section Paling Bawah -->
+      <!-- Hutang Card -->
+      <div class="debt-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+          <div style="min-width:0">
+            <div class="debt-title">Hutang Uang Aktif</div>
+            <div id="debtActiveTotal" class="debt-amount num" onclick="openDebtModal('list')">Rp 0</div>
+            <div id="debtTodayInfo" class="small" style="margin-top:3px;color:#92400e;font-weight:700">Pinjaman menambah Saldo Bersih, bayar pokok mengurangi Saldo Bersih.</div>
+          </div>
+          <div class="debt-actions">
+            <button class="debt-mini-btn" onclick="openDebtModal('borrow')">+ Pinjam</button>
+            <button class="debt-mini-btn pay" onclick="openDebtModal('pay')">Bayar</button>
+          </div>
+        </div>
+        <div class="cash-fisik-breakdown" style="border-color:#fde68a;margin-top:9px">
+          <div class="breakdown-row">
+            <span class="breakdown-label">Belum Dibayar</span>
+            <b id="debtCardUnpaid" class="breakdown-val num" style="color:#92400e" onclick="openDebtModal('list')">Rp 0</b>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-label">Status</span>
+            <b id="debtCardStatus" class="breakdown-val" style="color:#92400e" onclick="openDebtModal('list')">Lunas</b>
+          </div>
+        </div>
+        <div class="debt-note">Tidak masuk pendapatan, pengeluaran, laba, atau zakat. Hanya mutasi Saldo Bersih dan sisa hutang.</div>
+      </div>
+
+      <div class="grid2">
+        <div class="stat" onclick="openDebtModal('list')" style="cursor:pointer;background:#fffbeb;border-color:#fde68a">
+          <span>Total Pinjaman</span>
+          <b id="debtTotalBorrowed" class="num" style="color:#92400e">Rp 0</b>
+        </div>
+        <div class="stat" onclick="openDebtModal('list')" style="cursor:pointer;background:#f0fdf4;border-color:#bbf7d0">
+          <span>Sudah Dibayar</span>
+          <b id="debtTotalPaid" class="num" style="color:#15803d">Rp 0</b>
+        </div>
+      </div>
+      <div class="stat" onclick="openDebtModal('list')" style="cursor:pointer;background:#fff7ed;border-color:#fed7aa;margin-bottom:10px">
+        <span>Belum Dibayar</span>
+        <b id="debtTotalUnpaid" class="num" style="color:#c2410c">Rp 0</b>
+      </div>
+
     </section>
 
     <!-- ====== HISTORY PAGE ====== -->
@@ -1235,6 +1242,7 @@ const OPS_CATEGORY_NAME='Operasional Toko';
 const EMERGENCY_CATEGORY_NAME='Dana Darurat';
 const EMERGENCY_RATE=0.05;
 const EMERGENCY_PREFIX='[DANA_DARURAT:';
+const EMERGENCY_HISTORY_ID_OFFSET=7000000000000;
 function normalizeCategoryRecord(r={}){return {id:Number(r.id)||Date.now(),owner_id:r.owner_id||OWNER_ID,name:String(r.name||'').trim(),sort_order:Number(r.sort_order||0),created_at:r.created_at||''}}
 function sortExpenseCategories(){expenseCategories=(expenseCategories||[]).filter(c=>c&&c.name).sort((a,b)=>Number(a.sort_order||0)-Number(b.sort_order||0)||String(a.name).localeCompare(String(b.name),'id'))}
 function getCategoryById(id){return (expenseCategories||[]).find(c=>String(c.id)===String(id))||null}
@@ -1444,7 +1452,7 @@ function closeZakatHistoryModal(){$('zakatHistoryModal').classList.add('hidden')
 
 // =====================================================
 // DANA DARURAT
-// 5% dari pendapatan Server Pusat yang sudah final sampai H-1.
+// 5% dari Cash Fisik yang sudah final sampai H-1.
 // Reset otomatis setiap bulan karena basis hitung memakai month_key bulan berjalan.
 // Saat dibayar, nominal juga dibuat sebagai transaksi expense kategori "Dana Darurat".
 // =====================================================
@@ -1481,6 +1489,56 @@ function persistEmergencyFundLocal(history=getEmergencyFundHistory()){
 }
 function readEmergencyFundLocal(){
   try{return (JSON.parse(localStorage.getItem(EMERGENCY_LOCAL_BACKUP_KEY)||'[]')||[]).map(normalizeEmergencyFundRecord)}catch(e){return[]}
+}
+
+function parseEmergencyMonthFromTransaction(t={}){
+  const desc=String(t&&t.description||'');
+  const m=desc.match(/\[DANA_DARURAT:(\d{4}-\d{2})\]/i);
+  return (m&&m[1]) || String(t&&t.date||getLocalDateString()).slice(0,7) || getEmergencyMonthKey();
+}
+function parseEmergencyCutoffFromTransaction(t={}){
+  const desc=String(t&&t.description||'');
+  const m=desc.match(/sampai\s+(\d{4}-\d{2}-\d{2})/i);
+  return (m&&m[1]) || String(t&&t.date||getLocalDateString()).slice(0,10) || getEmergencyCutoffDate();
+}
+function emergencyRecordFromTransaction(t={}){
+  const txId=Number(t&&t.id||0);
+  const amount=roundRp(t&&t.amount||0);
+  const monthKey=parseEmergencyMonthFromTransaction(t);
+  const cutoffDate=parseEmergencyCutoffFromTransaction(t);
+  return normalizeEmergencyFundRecord({
+    id:txId?EMERGENCY_HISTORY_ID_OFFSET+txId:Date.now()+Math.floor(Math.random()*999),
+    owner_id:OWNER_ID,
+    date:String(t&&t.date||getLocalDateString()),
+    monthKey,
+    cutoffDate,
+    incomeAtPayment:amount?roundRp(amount/EMERGENCY_RATE):0,
+    amountSaved:amount,
+    transactionId:txId||null,
+    cancelled:false,
+    note:'Migrasi otomatis dari transaksi Dana Darurat yang belum masuk riwayat khusus'
+  });
+}
+async function syncEmergencyFundHistoryFromTransactions(){
+  const emergencyTx=(transactions||[]).filter(t=>isEmergencyFundTx(t));
+  if(!emergencyTx.length)return 0;
+  const existing=getEmergencyFundHistory();
+  const txIds=new Set(existing.map(r=>Number(r.transactionId||0)).filter(Boolean));
+  const missing=emergencyTx.filter(t=>Number(t&&t.id||0)&&!txIds.has(Number(t.id)));
+  if(!missing.length)return 0;
+  const rows=missing.map(emergencyRecordFromTransaction);
+  emergencyFundHistory=[...existing,...rows];
+  persistEmergencyFundLocal(emergencyFundHistory);
+  if(supabaseClient&&emergencyFundTableReady){
+    const payload=rows.map(r=>({
+      id:r.id,owner_id:OWNER_ID,date:r.date,month_key:r.monthKey,cutoff_date:r.cutoffDate,
+      income_at_payment:roundRp(r.incomeAtPayment),amount_saved:roundRp(r.amountSaved),transaction_id:r.transactionId,
+      cancelled:!!r.cancelled,cancelled_at:r.cancelledAt||null,note:r.note||''
+    }));
+    const up=await supabaseClient.from('dana_darurat_history').upsert(payload,{onConflict:'id'});
+    if(up.error)console.warn('Gagal sync riwayat Dana Darurat lama:',up.error);
+  }
+  return rows.length;
 }
 async function loadEmergencyFundHistory(){
   if(!supabaseClient){emergencyFundHistory=readEmergencyFundLocal();emergencyFundTableReady=false;return emergencyFundHistory}
@@ -1521,11 +1579,54 @@ async function appendEmergencyFundRecord(record){
   if(ins.error){emergencyFundTableReady=false;throw ins.error}
   emergencyFundTableReady=true;
 }
-function getEmergencyServerIncome(monthKey=getEmergencyMonthKey()){
-  const cutoff=getEmergencyCutoffDate();
-  return (transactions||[])
-    .filter(t=>t&&t.type==='income'&&isFirebaseUploaded(t)&&String(t.date||'').startsWith(monthKey)&&String(t.date||'').slice(0,10)<=cutoff)
+function getEmergencyCashFisikForDate(date){
+  const day=String(date||'').slice(0,10);
+  if(!day)return 0;
+  const rows=transactions||[];
+  const serverIncome=rows
+    .filter(t=>t&&t.type==='income'&&isFirebaseUploaded(t)&&String(t.date||'').slice(0,10)===day)
     .reduce((sum,t)=>sum+Number(t.amount||0),0);
+  const opsTotal=rows
+    .filter(t=>t&&isOpsExpense(t)&&String(t.date||'').slice(0,10)===day)
+    .reduce((sum,t)=>sum+Number(t.amount||0),0);
+  const cashOutTotal=rows
+    .filter(t=>t&&isCashOut(t)&&String(t.date||'').slice(0,10)===day)
+    .reduce((sum,t)=>sum+Number(t.amount||0),0);
+  return Math.max(0,roundRp(serverIncome-opsTotal-cashOutTotal));
+}
+function getEmergencyCashFisikBasis(monthKey=getEmergencyMonthKey()){
+  const cutoff=getEmergencyCutoffDate();
+  const days=[...new Set((transactions||[])
+    .map(t=>String(t&&t.date||'').slice(0,10))
+    .filter(d=>d&&d.startsWith(monthKey)&&d<=cutoff))];
+  return roundRp(days.reduce((sum,day)=>sum+getEmergencyCashFisikForDate(day),0));
+}
+function getEmergencyServerIncome(monthKey=getEmergencyMonthKey()){
+  // Nama fungsi lama dipertahankan agar tidak memutus kode lain.
+  // Basis Dana Darurat sekarang memakai Cash Fisik H-1, bukan Server Pusat mentah.
+  return getEmergencyCashFisikBasis(monthKey);
+}
+function getEmergencyFundTransactions(monthKey){
+  return (transactions||[])
+    .filter(t=>t&&t.type==='expense'&&isEmergencyFundTx(t))
+    .filter(t=>!monthKey||parseEmergencyMonthFromTransaction(t)===monthKey);
+}
+function getEmergencySavedAmountFromTransactions(monthKey){
+  return roundRp(getEmergencyFundTransactions(monthKey).reduce((sum,t)=>sum+Number(t.amount||0),0));
+}
+function getEmergencySavedCoveredIncomeFromTransactions(monthKey){
+  return roundRp(getEmergencyFundTransactions(monthKey).reduce((sum,t)=>sum+(Number(t.amount||0)/EMERGENCY_RATE),0));
+}
+function getEmergencyFundTotalSavedAll(){
+  // Sumber kebenaran Total Dana Darurat Terkumpul = transaksi yang benar-benar masih ada.
+  return getEmergencySavedAmountFromTransactions();
+}
+function emergencyRecordStillHasTransaction(row={}){
+  return !!findEmergencyFundTransactionForRecord(row);
+}
+function getActiveEmergencyFundHistory(){
+  // Riwayat khusus boleh ada, tapi status lunas hanya valid kalau transaksi pasangannya masih ada.
+  return getEmergencyFundHistory().filter(r=>!r.cancelled&&emergencyRecordStillHasTransaction(r));
 }
 function getEmergencyCoveredIncome(r={}){
   const amount=roundRp(r.amountSaved??r.amount_saved??0);
@@ -1534,14 +1635,13 @@ function getEmergencyCoveredIncome(r={}){
   return Math.max(income,fromAmount);
 }
 function getEmergencySavedCoveredIncome(monthKey=getEmergencyMonthKey()){
-  return getEmergencyFundHistory()
-    .filter(r=>!r.cancelled&&String(r.monthKey||r.month_key||'').slice(0,7)===monthKey)
-    .reduce((sum,r)=>sum+getEmergencyCoveredIncome(r),0);
+  // Jangan pakai dana_darurat_history untuk menentukan sudah/belum ditabung.
+  // Kalau transaksi Dana Darurat di Riwayat Transaksi sudah dihapus, maka otomatis terbaca belum ditabung lagi.
+  return getEmergencySavedCoveredIncomeFromTransactions(monthKey);
 }
 function getEmergencySavedAmount(monthKey=getEmergencyMonthKey()){
-  return getEmergencyFundHistory()
-    .filter(r=>!r.cancelled&&String(r.monthKey||r.month_key||'').slice(0,7)===monthKey)
-    .reduce((sum,r)=>sum+roundRp(r.amountSaved??r.amount_saved??0),0);
+  // Sumber utama nominal terkumpul bulan ini = transaksi expense Dana Darurat yang masih ada.
+  return getEmergencySavedAmountFromTransactions(monthKey);
 }
 function getUnpaidEmergencyIncome(monthKey=getEmergencyMonthKey()){
   return Math.max(0,roundRp(getEmergencyServerIncome(monthKey)-getEmergencySavedCoveredIncome(monthKey)));
@@ -1564,11 +1664,11 @@ async function markEmergencyFundSaved(){
   if(!emergencyFundTableReady){await loadEmergencyFundHistory();}
   if(!emergencyFundTableReady){showToast('Jalankan SQL tabel dana_darurat_history dulu, baru bisa simpan Dana Darurat.',5200);return;}
   const due=getCurrentEmergencyFundDue(monthKey);
-  if(due<=0){showToast(`Dana Darurat bulan ${monthKey} sudah aman / belum ada pendapatan final`);return;}
+  if(due<=0){showToast(`Dana Darurat bulan ${monthKey} sudah aman / belum ada Cash Fisik final`);return;}
   const unpaidIncome=getUnpaidEmergencyIncome(monthKey);
   if(!confirm(`Nabung Dana Darurat:
 Bulan: ${monthKey}
-Data Server Pusat final sampai ${cutoff} (H-1)
+Data Cash Fisik sampai ${cutoff} (H-1)
 5% × ${formatRupiah(unpaidIncome)}
 = ${formatRupiah(due)}
 
@@ -1579,13 +1679,14 @@ Nominal ini akan masuk sebagai Pengeluaran kategori "Dana Darurat". Lanjutkan?`)
     const tx={id:txId,date:getLocalDateString(),description:`${EMERGENCY_PREFIX}${monthKey}] Tabungan Dana Darurat sampai ${cutoff}`,amount:due,type:'expense',category_id:cat?Number(cat.id):null,category_name:EMERGENCY_CATEGORY_NAME};
     await saveTransaction(tx);
     try{
-      await appendEmergencyFundRecord({id:Date.now()+88,date:getWibDateTimeString(),monthKey,cutoffDate:cutoff,incomeAtPayment:unpaidIncome,amountSaved:due,transactionId:txId,note:`Dana Darurat 5% dari pendapatan Server Pusat ${formatRupiah(unpaidIncome)} sampai ${cutoff}`});
+      await appendEmergencyFundRecord({id:Date.now()+88,date:getWibDateTimeString(),monthKey,cutoffDate:cutoff,incomeAtPayment:unpaidIncome,amountSaved:due,transactionId:txId,note:`Dana Darurat 5% dari Cash Fisik ${formatRupiah(unpaidIncome)} sampai ${cutoff}`});
     }catch(e){
       await deleteTransactionFromDB(txId).catch(()=>{});
       throw e;
     }
     await loadTransactions();
     await loadEmergencyFundHistory();
+    await syncEmergencyFundHistoryFromTransactions().catch(()=>{});
     render();renderCashFisik();
     showToast(`Dana Darurat tersimpan: ${formatRupiah(due)}`);
   }catch(e){showToast('Gagal simpan Dana Darurat: '+(e.message||e),6000)}
@@ -1593,48 +1694,110 @@ Nominal ini akan masuk sebagai Pengeluaran kategori "Dana Darurat". Lanjutkan?`)
 function renderEmergencyFundSection(){
   const monthKey=getEmergencyMonthKey(),cutoff=getEmergencyCutoffDate();
   const income=getEmergencyServerIncome(monthKey),covered=getEmergencySavedCoveredIncome(monthKey),unpaid=getUnpaidEmergencyIncome(monthKey),due=getCurrentEmergencyFundDue(monthKey),saved=getEmergencySavedAmount(monthKey);
+  if($('emergencyFundTotalSavedDisplay'))$('emergencyFundTotalSavedDisplay').innerText=formatRupiah(getEmergencyFundTotalSavedAll());
   if($('emergencyFundAmountLarge'))$('emergencyFundAmountLarge').innerText=formatRupiah(due);
   if($('emergencyFundIncomeDisplay'))$('emergencyFundIncomeDisplay').innerText=formatRupiah(income);
   if($('emergencyFundUnpaidDisplay'))$('emergencyFundUnpaidDisplay').innerText=formatRupiah(unpaid);
-  if($('emergencyFundBasisInfo'))$('emergencyFundBasisInfo').innerText=`Dana Darurat = 5% × pendapatan Server Pusat bulan ${monthKey} yang sudah final sampai ${cutoff} (H-1). Pendapatan hari ini masuk hitungan besok. Sudah ditabung bulan ini: ${formatRupiah(saved)}.`;
+  if($('emergencyFundBasisInfo'))$('emergencyFundBasisInfo').innerText=`Dana Darurat = 5% × Cash Fisik bulan ${monthKey} sampai ${cutoff} (H-1). Cash Fisik hari ini masuk hitungan besok. Sudah ditabung bulan ini: ${formatRupiah(saved)}.`;
   const btn=$('payEmergencyFundBtn'),st=$('emergencyFundStatusText');
   if(btn&&!emergencyFundTableReady){btn.disabled=true;btn.style.opacity=.55;if(st)st.innerText='Jalankan SQL tabel dana_darurat_history dulu';}
-  else if(btn&&income<=0){btn.disabled=true;btn.style.opacity=.55;if(st)st.innerText=`Belum ada pendapatan Server final bulan ${monthKey} sampai ${cutoff}`;}
+  else if(btn&&income<=0){btn.disabled=true;btn.style.opacity=.55;if(st)st.innerText=`Belum ada Cash Fisik final bulan ${monthKey} sampai ${cutoff}`;}
   else if(btn&&due<=0){btn.disabled=true;btn.style.opacity=.55;if(st)st.innerText=`Dana Darurat bulan ${monthKey} sudah aman ✓`;}
   else if(btn){btn.disabled=false;btn.style.opacity=1;if(st)st.innerText=`Wajib nabung 5% bulan ${monthKey}: ${formatRupiah(due)}`;}
   const prev=$('emergencyFundHistoryPreview'),mini=$('emergencyFundHistoryMiniList');
   if(!prev||!mini)return;
-  const valid=getEmergencyFundHistory().filter(x=>!x.cancelled);
-  if(valid.length){
+  const valid=getActiveEmergencyFundHistory();
+  const fallbackTx=getEmergencyFundTransactions(monthKey).slice(-2).map(emergencyRecordFromTransaction);
+  const miniRows=valid.length?valid:fallbackTx;
+  if(miniRows.length){
     prev.style.display='flex';
-    mini.innerHTML=valid.slice(-2).reverse().map(x=>`<span class="chip" style="background:#dbeafe;color:#1d4ed8;border-color:#bfdbfe">${formatRupiah(x.amountSaved)}</span>`).join('');
+    mini.innerHTML=miniRows.slice(-2).reverse().map(x=>`<span class="chip" style="background:#dbeafe;color:#1d4ed8;border-color:#bfdbfe">${formatRupiah(x.amountSaved)}</span>`).join('');
   }else prev.style.display='none';
 }
 function showEmergencyFundHistoryModal(){
-  const h=getEmergencyFundHistory(),box=$('emergencyFundHistoryList');
+  const box=$('emergencyFundHistoryList');
   if(!box)return;
+  let h=getEmergencyFundHistory();
+  if(!h.length)h=getEmergencyFundTransactions().map(emergencyRecordFromTransaction);
   box.innerHTML=h.length?h.slice().reverse().map(r=>{
-    const cancelled=!!r.cancelled;
-    const btn=cancelled?'':`<button class="mini-btn danger" type="button" onclick="cancelEmergencyFundRecord(${r.id})">Batalkan</button>`;
-    return `<div class="item ${cancelled?'danger-card':''}" style="align-items:flex-start"><div class="desc"><b>${escapeHtml(r.date)} ${cancelled?'(Batal)':''}</b><small>Bulan ${escapeHtml(r.monthKey)} · sampai ${escapeHtml(r.cutoffDate)} · basis ${formatRupiah(r.incomeAtPayment)}</small><small>${escapeHtml(r.note||'Dana Darurat')}</small></div><div class="right"><b class="num ${cancelled?'red':'blue'}">${formatRupiah(r.amountSaved)}</b><div style="margin-top:6px">${btn}</div></div></div>`;
+    const missingTx=!findEmergencyFundTransactionForRecord(r);
+    const cancelled=!!r.cancelled||missingTx;
+    const cancelBtn=(cancelled||missingTx)?'':`<button class="mini-btn" type="button" onclick="cancelEmergencyFundRecord(${r.id})">Batalkan</button>`;
+    const deleteBtn=`<button class="mini-btn danger" type="button" onclick="deleteEmergencyFundRecord(${r.id})">Hapus</button>`;
+    const btn=`<div style="display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap">${cancelBtn}${deleteBtn}</div>`;
+    const status=missingTx?' (Transaksi sudah hilang)':(r.cancelled?' (Batal)':'');
+    const note=missingTx?'Tidak dihitung sebagai tabungan karena transaksi Dana Darurat sudah dihapus dari Riwayat Transaksi.':(r.note||'Dana Darurat');
+    return `<div class="item ${cancelled?'danger-card':''}" style="align-items:flex-start"><div class="desc"><b>${escapeHtml(r.date)}${escapeHtml(status)}</b><small>Bulan ${escapeHtml(r.monthKey)} · sampai ${escapeHtml(r.cutoffDate)} · basis ${formatRupiah(r.incomeAtPayment)}</small><small>${escapeHtml(note)}</small></div><div class="right"><b class="num ${cancelled?'red':'blue'}">${formatRupiah(r.amountSaved)}</b><div style="margin-top:6px">${btn}</div></div></div>`;
   }).join(''):'<div class="empty">Belum ada riwayat Dana Darurat</div>';
   $('emergencyFundHistoryModal').classList.remove('hidden');
 }
 function closeEmergencyFundHistoryModal(){$('emergencyFundHistoryModal').classList.add('hidden')}
 async function cancelEmergencyFundRecord(id){
-  const row=getEmergencyFundHistory().find(r=>Number(r.id)===Number(id));
+  const row=getEmergencyFundHistory().find(r=>Number(r.id)===Number(id)) || emergencyRecordFromTransaction((transactions||[]).find(t=>Number(t.id)+EMERGENCY_HISTORY_ID_OFFSET===Number(id))||{});
   if(!row||row.cancelled)return;
   openPasswordModal(async()=>{
     try{
       const cancelledAt=getWibDateTimeString();
-      const up=await supabaseClient.from('dana_darurat_history').update({cancelled:true,cancelled_at:cancelledAt}).eq('owner_id',OWNER_ID).eq('id',Number(id));
-      if(up.error)throw up.error;
-      if(row.transactionId)await deleteTransactionFromDB(Number(row.transactionId)).catch(()=>{});
-      await loadEmergencyFundHistory();
+      if(supabaseClient&&emergencyFundTableReady){
+        const up=await supabaseClient.from('dana_darurat_history').update({cancelled:true,cancelled_at:cancelledAt}).eq('owner_id',OWNER_ID).eq('id',Number(id));
+        if(up.error)throw up.error;
+      }
+      const tx=findEmergencyFundTransactionForRecord(row);
+      if(tx)await deleteTransactionFromDB(Number(tx.id)).catch(()=>{});
+      emergencyFundHistory=getEmergencyFundHistory().map(r=>Number(r.id)===Number(id)?{...r,cancelled:true,cancelledAt}:r);
+      persistEmergencyFundLocal(emergencyFundHistory);
       await loadTransactions();
+      if(emergencyFundTableReady)await loadEmergencyFundHistory();
       render();renderCashFisik();showEmergencyFundHistoryModal();
       showToast('Dana Darurat dibatalkan');
     }catch(e){showToast('Gagal batalkan Dana Darurat: '+(e.message||e),6000)}
+  });
+}
+function findEmergencyFundTransactionForRecord(row={}){
+  const directId=Number(row.transactionId||0);
+  if(directId){
+    const direct=(transactions||[]).find(t=>Number(t.id)===directId);
+    if(direct)return direct;
+  }
+  const month=String(row.monthKey||'').slice(0,7);
+  const cutoff=String(row.cutoffDate||'').slice(0,10);
+  const amount=roundRp(row.amountSaved||0);
+  return (transactions||[]).find(t=>{
+    const desc=String(t&&t.description||'');
+    return isEmergencyFundTx(t)
+      && (!amount||roundRp(t.amount||0)===amount)
+      && (!month||desc.includes(month))
+      && (!cutoff||desc.includes(cutoff));
+  })||null;
+}
+async function deleteEmergencyFundRecord(id){
+  const row=getEmergencyFundHistory().find(r=>Number(r.id)===Number(id));
+  if(!row)return;
+  if(!confirm(`Hapus riwayat Dana Darurat ini permanen?\n\nNominal: ${formatRupiah(row.amountSaved)}\nBulan: ${row.monthKey}\n\nKalau ada transaksi pengeluaran Dana Darurat terkait, transaksi itu juga akan dihapus.`))return;
+  openPasswordModal(async()=>{
+    const old=getEmergencyFundHistory();
+    try{
+      const tx=findEmergencyFundTransactionForRecord(row);
+      if(tx&&supabaseClient){await deleteTransactionFromDB(Number(tx.id)).catch(e=>console.warn('Transaksi Dana Darurat tidak terhapus / tidak ada:',e));}
+
+      emergencyFundHistory=old.filter(r=>Number(r.id)!==Number(id));
+      persistEmergencyFundLocal(emergencyFundHistory);
+
+      if(supabaseClient){
+        const del=await supabaseClient.from('dana_darurat_history').delete().eq('owner_id',OWNER_ID).eq('id',Number(id));
+        if(del.error&&emergencyFundTableReady)throw del.error;
+      }
+
+      await loadTransactions().catch(()=>{});
+      if(emergencyFundTableReady)await loadEmergencyFundHistory().catch(()=>{});
+      // Jangan membuat ulang riwayat dari transaksi setelah tombol hapus ditekan.
+      // Status sudah/belum ditabung selalu dihitung dari transactions yang masih ada.
+      render();renderCashFisik();showEmergencyFundHistoryModal();
+      showToast('Riwayat Dana Darurat dihapus');
+    }catch(e){
+      emergencyFundHistory=old;persistEmergencyFundLocal(old);
+      showToast('Gagal hapus Dana Darurat: '+(e.message||e),6000);
+    }
   });
 }
 
@@ -1887,7 +2050,28 @@ function openPasswordModal(cb){pendingAction=cb;$('passwordModal').classList.rem
 async function addTransaction(){try{const dateVal=$('inputDate').value,type=$('type').value;let desc=$('description').value.trim();const amount=getActualAmount($('amount').value);let categoryPayload={};if(type==='income'&&!desc)desc='Omset';if(type==='expense'){if(!desc){showToast('Deskripsi pengeluaran wajib');return}const catId=$('expenseCategorySelect')?$('expenseCategorySelect').value:'';const cat=getCategoryById(catId);if(!cat){showToast('Kategori pengeluaran wajib dipilih');return}categoryPayload={category_id:Number(cat.id),category_name:cat.name};}if(!dateVal||amount<=0){showToast('Nominal tidak valid');return}await saveTransaction({id:Date.now(),date:dateVal,description:desc,amount,type,...categoryPayload});await loadTransactions();render();$('description').value='';$('amount').value='';$('liveAmountPreview').innerText='';$('inputDate').value=getLocalDateString();renderCategorySelects();closeTransactionModal();showToast('Transaksi tersimpan');goPage('home')}catch(e){showToast('Gagal simpan: '+e.message)}}
 function onHistoryRangeChange(){$('filterStartDate').value=$('filterStartDateHistory').value;$('filterEndDate').value=$('filterEndDateHistory').value;render();}
 function changeFilter(f){currentFilter=f;$('rangeSelector').classList.toggle('hidden',f!=='range');const rh=$('rangeSelectorHistory');if(rh)rh.classList.toggle('hidden',f!=='range');if(f==='range'){const s=$('filterStartDateHistory'),e=$('filterEndDateHistory');if(s&&!s.value)s.value=getLocalDateString();if(e&&!e.value)e.value=getLocalDateString();$('filterStartDate').value=s?s.value:getLocalDateString();$('filterEndDate').value=e?e.value:getLocalDateString();}updateFilterUI();render();updateMonthValidityIdle()}function updateFilterUI(){['today','month','range','all'].forEach(f=>{const el=$('filter-'+f);if(el)el.classList.toggle('active',f===currentFilter)})}
-async function deleteTransaction(id){const t=transactions.find(x=>Number(x.id)===Number(id));if(t&&isEmergencyFundTx(t)){showToast('Dana Darurat dibatalkan dari Riwayat Dana Darurat, bukan dari transaksi manual.');return}if(t&&isAutoQrisCashOut(t)){showToast('QRIS otomatis tidak bisa dihapus di sini. Hapus transaksi aslinya dari aplikasi staff.');return}if(t&&isFirebaseUploaded(t)){showToast('Data SERVER LOCK. Gunakan tombol Sync di halaman Server Pusat, bukan hapus manual.');return}openPasswordModal(async()=>{try{await deleteTransactionFromDB(id);await loadTransactions();validateAndCancelInvalidZakat();render();showToast('Transaksi dihapus')}catch(e){showToast('Gagal hapus: '+e.message)}})}
+async function deleteEmergencyHistoryRowsForTransaction(t={}){
+  const txId=Number(t&&t.id||0);
+  const month=parseEmergencyMonthFromTransaction(t);
+  const cutoff=parseEmergencyCutoffFromTransaction(t);
+  const amount=roundRp(t&&t.amount||0);
+  const old=getEmergencyFundHistory();
+  const keep=old.filter(r=>{
+    if(txId&&Number(r.transactionId||0)===txId)return false;
+    const sameMonth=!month||String(r.monthKey||'').slice(0,7)===month;
+    const sameCutoff=!cutoff||String(r.cutoffDate||'').slice(0,10)===cutoff;
+    const sameAmount=!amount||roundRp(r.amountSaved||0)===amount;
+    return !(sameMonth&&sameCutoff&&sameAmount);
+  });
+  if(keep.length!==old.length){emergencyFundHistory=keep;persistEmergencyFundLocal(keep);}
+  if(supabaseClient&&emergencyFundTableReady){
+    if(txId)await supabaseClient.from('dana_darurat_history').delete().eq('owner_id',OWNER_ID).eq('transaction_id',txId).catch(()=>{});
+    // Fallback untuk data lama yang transaction_id kosong.
+    const stale=old.filter(r=>!keep.includes(r));
+    for(const r of stale){await supabaseClient.from('dana_darurat_history').delete().eq('owner_id',OWNER_ID).eq('id',Number(r.id)).catch(()=>{});}
+  }
+}
+async function deleteTransaction(id){const t=transactions.find(x=>Number(x.id)===Number(id));if(t&&isAutoQrisCashOut(t)){showToast('QRIS otomatis tidak bisa dihapus di sini. Hapus transaksi aslinya dari aplikasi staff.');return}if(t&&isFirebaseUploaded(t)){showToast('Data SERVER LOCK. Gunakan tombol Sync di halaman Server Pusat, bukan hapus manual.');return}openPasswordModal(async()=>{try{await deleteTransactionFromDB(id);if(t&&isEmergencyFundTx(t)){await deleteEmergencyHistoryRowsForTransaction(t).catch(()=>{});}await loadTransactions();if(emergencyFundTableReady)await loadEmergencyFundHistory().catch(()=>{});validateAndCancelInvalidZakat();render();renderCashFisik();showToast(t&&isEmergencyFundTx(t)?'Transaksi Dana Darurat dihapus, status kembali belum ditabung jika belum ada transaksi lain':'Transaksi dihapus')}catch(e){showToast('Gagal hapus: '+e.message)}})}
 async function requestClearAll(){
   openPasswordModal(async()=>{
     if(confirm('Hapus semua data manual? Data SERVER LOCK tidak akan dihapus.')){
@@ -3574,7 +3758,7 @@ function scheduleFinanceRealtimeRefresh(){
     try{
       await loadTransactions();
       try{await loadExpenseCategories();}catch(e){}
-      try{await loadEmergencyFundHistory();}catch(e){}
+      try{await loadEmergencyFundHistory();await syncEmergencyFundHistoryFromTransactions();}catch(e){}
       render();
       renderCashFisik();
     }catch(e){console.warn('Refresh finance realtime gagal:',e)}
@@ -3594,6 +3778,7 @@ async function initApp(){try{if(!initSupabase())return;
   try{await loadExpenseCategories();await ensureDefaultExpenseCategories();await migrateLegacyExpenseCategories();}catch(e){console.warn('Kategori belum siap:',e)}
   await loadZakatHistory();
   await loadEmergencyFundHistory();
+  await syncEmergencyFundHistoryFromTransactions().catch(e=>console.warn('Sync Dana Darurat lama gagal:',e));
   if(firebaseDb){
     // Tunggu snapshot pertama Server Pusat hari ini. Panel tanggal lain baru dibaca saat halaman Server dibuka.
     await Promise.race([
