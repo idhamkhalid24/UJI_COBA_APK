@@ -1879,7 +1879,7 @@ function openTxDetail(id){
   const pay=txPaymentLabel(t.paymentMethod||t.paymentLabel)||'Cash';
   const cashier=esc(t.name||state.user?.name||t.user||'Staff');
   const body=`<div class="tx-detail-box"><div class="tx-meta" style="margin-bottom:8px">${cashier} · ${dateID(txDate(t))} · ${timeID(ms(t))} · ${esc(pay)}</div><div class="tx-nominal" style="margin-bottom:10px">Rp ${rp(t.amount)}</div><div class="tx-meta" style="margin-bottom:6px">Daftar Barang</div>${txProductDetailHtml(t.note||'Transaksi')}</div>`;
-  modal('Detail Transaksi',body,`<button class="btn primary" onclick="closeModal(true)">Tutup</button>`,'tx-modal');
+  modal('Detail Transaksi',body,'','tx-modal');
 }
 
 function unlockHomeCard(){
