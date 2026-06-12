@@ -1857,7 +1857,7 @@ function handleTxProductKey(e){
 function txPaymentBadgeHtml(v){
   const method=normalizeTxPaymentMethod(v);
   if(!method)return '';
-  const label=txPaymentLabel(method);
+  const label=String(txPaymentLabel(method)||'').toUpperCase();
   const cls=method==='cash'?'cash':'qris';
   return `<span class="tx-pay-badge ${cls}">${esc(label)}</span>`;
 }
@@ -1866,13 +1866,28 @@ function txItem(t){
   const tag=pending?'<span class="pending-tag">MENUNGGU SYNC</span>':'';
   const canDelete=txDate(t)===todayKey()&&!pending;
   const id=esc(t.id);
-  const detailBtn=`<button class="btn sm" onclick="openTxDetail('${id}')" aria-label="Detail transaksi">Detail</button>`;
-  const printBtn=!pending?`<button class="btn sm tx-print-btn" onclick="printReceiptFromTx('${id}')" aria-label="Cetak struk">Cetak</button>`:'';
-  const deleteBtn=canDelete?`<button class="btn sm danger tx-del-btn" onclick="delTx('${id}')">Hapus</button>`:'';
-  const action=pending?`<div class="tx-action-buttons">${detailBtn}<span class="pill amber">Sync</span></div>`:`<div class="tx-action-buttons">${detailBtn}${printBtn}${deleteBtn}</div>`;
+
+  const detailBtn=`<button class="btn sm tx-card-btn tx-card-detail" onclick="openTxDetail('${id}')" aria-label="Detail transaksi" title="Detail">☰</button>`;
+  const printBtn=!pending?`<button class="btn sm tx-card-btn tx-card-print" onclick="printReceiptFromTx('${id}')" aria-label="Cetak struk" title="Cetak">🖨</button>`:'';
+  const deleteBtn=canDelete?`<button class="btn sm tx-card-btn tx-card-delete" onclick="delTx('${id}')" aria-label="Hapus transaksi" title="Hapus"><svg class="tx-delete-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 14h10l1-14"/><path d="M9 7V4h6v3"/></svg></button>`:'';
+  const action=pending?`<div class="tx-card-actions">${detailBtn}<span class="pill amber">Sync</span></div>`:`<div class="tx-card-actions">${detailBtn}${printBtn}${deleteBtn}</div>`;
+
+  const payLabel=txPaymentLabel(t.paymentMethod||t.paymentLabel)||'';
   const payBadge=txPaymentBadgeHtml(t.paymentMethod||t.paymentLabel);
   const cashier=esc(t.name||state.user?.name||t.user||'Staff');
-  return `<div class="tx-row"><div class="tx-name"><div class="tx-title">${cashier} · ${timeID(ms(t))} · ${txProductItemCount(t.note)} item</div><div class="tx-meta tx-meta-with-pay"><span class="tx-date-text">${dateID(txDate(t))}</span>${payBadge}${tag}</div></div><div class="tx-nominal">Rp ${rp(t.amount)}</div><div class="tx-action">${action}</div></div>`
+  const itemCount=txProductItemCount(t.note);
+  const dateLabel=dateID(txDate(t));
+  const timeLabel=timeID(ms(t));
+  const infoPay=payLabel?` · ${esc(payLabel)}`:'';
+
+  return `<div class="tx-row tx-row-card-mini">
+    <div class="tx-card-icon">↗</div>
+    <div class="tx-card-main">
+      <div class="tx-card-top"><span class="tx-card-amount">Rp ${rp(t.amount)}</span>${payBadge}</div>
+      <div class="tx-card-info">${cashier} · ${dateLabel}, ${timeLabel} · ${itemCount} item${infoPay}</div>
+    </div>
+    <div class="tx-action tx-action-card-mini">${action}</div>
+  </div>`
 }
 function findTxById(id){return liveTx().find(t=>String(t.id)===String(id))}
 function openTxDetail(id){
