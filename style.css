@@ -580,7 +580,7 @@
 
     /* ===== TX TABLE ===== */
     .tx-table{display:flex;flex-direction:column;gap:8px}
-    .tx-head,.tx-row{display:grid;grid-template-columns:minmax(0,1fr) 96px 90px;align-items:center;gap:7px}
+    .tx-head,.tx-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(100px,auto) minmax(90px,auto);align-items:center;gap:7px}
     .tx-head{padding:0 5px 4px;color:var(--muted);font-size:10.5px;text-transform:uppercase;font-weight:700;letter-spacing:.04em}
     .tx-head span:nth-child(2),.tx-nominal{text-align:right}
     .tx-head span:nth-child(3),.tx-action{text-align:right}
@@ -601,7 +601,7 @@
     .tx-action .pill{padding:3px 7px;font-size:9.5px}
 
     @media(max-width:360px){
-      .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) 80px 72px;gap:4px}
+      .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(88px,auto) minmax(76px,auto);gap:4px}
       .tx-row{padding:9px 7px 9px 10px}
       .tx-title{font-size:12.5px}
       .tx-meta{font-size:10px}
@@ -821,12 +821,12 @@
 
     /* Tabel transaksi biar tidak tembus kanan */
     .tx-table{gap:6px!important;width:100%!important;overflow:hidden!important}
-    .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(66px,78px) minmax(62px,76px)!important;gap:5px!important;width:100%!important;min-width:0!important}
+    .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(90px,auto) minmax(80px,auto)!important;gap:5px!important;width:100%!important;min-width:0!important}
     .tx-head{padding:0 4px 3px!important;font-size:8.5px!important}
     .tx-row{border-radius:13px!important;padding:9px 7px 9px 10px!important;min-width:0!important}
     .tx-title{font-size:11px!important;line-height:1.22!important;min-width:0!important}
     .tx-meta{font-size:8.8px!important;margin-top:2px!important;line-height:1.25!important}
-    .tx-nominal{font-size:10.8px!important;min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important}
+    .tx-nominal{font-size:10.8px!important;min-width:0!important;white-space:nowrap!important}
     .tx-action-buttons{gap:6px!important;justify-content:flex-end!important;min-width:0!important}
     .tx-del-btn,.tx-print-btn{min-height:24px!important;min-width:27px!important;padding:3px 6px!important;font-size:8.5px!important;border-radius:7px!important}
     .tx-action .pill{padding:2px 6px!important;font-size:8px!important}
@@ -886,7 +886,7 @@
       .member{max-width:48px!important}
       .trx-head-status{font-size:0!important;padding:3px 5px!important}
       .trx-head-status .lock-ico{margin:0!important;width:15px!important;height:15px!important}
-      .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(56px,68px) minmax(54px,66px)!important;gap:4px!important}
+      .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(82px,auto) minmax(74px,auto)!important;gap:4px!important}
       .tx-nominal{font-size:9.8px!important}
       .tx-del-btn,.tx-print-btn{font-size:0!important;width:25px!important;min-width:25px!important;padding:0!important}
       .tx-del-btn::before{content:"🗑";font-size:11px!important}
@@ -994,12 +994,12 @@
     .amount{font-size:10.8px!important}
     .icon{width:27px!important;height:27px!important;border-radius:9px!important;font-size:10px!important}
     .tx-table{gap:6px!important;width:100%!important;overflow:hidden!important}
-    .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(62px,74px) minmax(58px,72px)!important;gap:5px!important;width:100%!important;min-width:0!important}
+    .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(88px,auto) minmax(78px,auto)!important;gap:5px!important;width:100%!important;min-width:0!important}
     .tx-head{padding:0 4px 3px!important;font-size:8px!important}
     .tx-row{border-radius:12px!important;padding:8px 7px 8px 9px!important;min-width:0!important}
     .tx-title{font-size:10.4px!important;line-height:1.2!important;min-width:0!important}
     .tx-meta{font-size:8.3px!important;margin-top:2px!important;line-height:1.22!important}
-    .tx-nominal{font-size:10.2px!important;min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important}
+    .tx-nominal{font-size:10.2px!important;min-width:0!important;white-space:nowrap!important}
     .tx-action-buttons{gap:5px!important;justify-content:flex-end!important;min-width:0!important}
     .tx-del-btn,.tx-print-btn{min-height:22px!important;min-width:25px!important;padding:3px 5px!important;font-size:8px!important;border-radius:7px!important}
     .tx-action .pill{padding:2px 5px!important;font-size:7.6px!important}
@@ -1029,7 +1029,7 @@
       .member{max-width:44px!important}
       .trx-head-status{font-size:0!important;padding:3px 5px!important}
       .trx-head-status .lock-ico{margin:0!important;width:14px!important;height:14px!important}
-      .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(52px,64px) minmax(50px,62px)!important;gap:4px!important}
+      .tx-head,.tx-row{grid-template-columns:minmax(0,1fr) minmax(78px,auto) minmax(70px,auto)!important;gap:4px!important}
       .tx-nominal{font-size:9.2px!important}
       .tx-del-btn,.tx-print-btn{font-size:0!important;width:24px!important;min-width:24px!important;padding:0!important}
       .tx-del-btn::before{content:"🗑";font-size:10px!important}
