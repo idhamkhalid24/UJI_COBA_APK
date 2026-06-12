@@ -1104,11 +1104,7 @@ function closeModal(force=false){
   if(main){
     main.className='modal-wrap';
     main.innerHTML='';
-    main.style.display='none';
-    main.style.pointerEvents='none';
-    main.offsetHeight; // paksa browser flush supaya layer modal benar-benar hilang
-    main.style.removeProperty('display');
-    main.style.removeProperty('pointer-events');
+    main.style.cssText='';
   }
   document.querySelectorAll('.modal-wrap').forEach((el)=>{
     if(el!==main)el.remove();
@@ -1858,6 +1854,13 @@ function handleTxProductKey(e){
     addTxProductItem();
   }
 }
+function txPaymentBadgeHtml(v){
+  const method=normalizeTxPaymentMethod(v);
+  if(!method)return '';
+  const label=txPaymentLabel(method);
+  const cls=method==='cash'?'cash':'qris';
+  return `<span class="tx-pay-badge ${cls}">${esc(label)}</span>`;
+}
 function txItem(t){
   const pending=t.pending===true;
   const tag=pending?'<span class="pending-tag">MENUNGGU SYNC</span>':'';
@@ -1867,13 +1870,9 @@ function txItem(t){
   const printBtn=!pending?`<button class="btn sm tx-print-btn" onclick="printReceiptFromTx('${id}')" aria-label="Cetak struk">Cetak</button>`:'';
   const deleteBtn=canDelete?`<button class="btn sm danger tx-del-btn" onclick="delTx('${id}')">Hapus</button>`:'';
   const action=pending?`<div class="tx-action-buttons">${detailBtn}<span class="pill amber">Sync</span></div>`:`<div class="tx-action-buttons">${detailBtn}${printBtn}${deleteBtn}</div>`;
-  const rawPayment=t.paymentMethod||t.paymentLabel;
-  const payKey=normalizeTxPaymentMethod(rawPayment);
-  const pay=txPaymentLabel(rawPayment);
-  const payText=pay?` <span class="tx-pay-badge tx-pay-${payKey||'other'}">${esc(pay)}</span>`:'';
-  const rowPayClass=payKey?` tx-row-pay-${payKey}`:'';
+  const payBadge=txPaymentBadgeHtml(t.paymentMethod||t.paymentLabel);
   const cashier=esc(t.name||state.user?.name||t.user||'Staff');
-  return `<div class="tx-row${rowPayClass}"><div class="tx-name"><div class="tx-title">${cashier} · ${timeID(ms(t))} · ${txProductItemCount(t.note)} item${payText}</div><div class="tx-meta">${dateID(txDate(t))}${tag}</div></div><div class="tx-nominal">Rp ${rp(t.amount)}</div><div class="tx-action">${action}</div></div>`
+  return `<div class="tx-row"><div class="tx-name"><div class="tx-title"><span class="tx-title-main">${cashier} · ${timeID(ms(t))} · ${txProductItemCount(t.note)} item</span>${payBadge}</div><div class="tx-meta">${dateID(txDate(t))}${tag}</div></div><div class="tx-nominal">Rp ${rp(t.amount)}</div><div class="tx-action">${action}</div></div>`
 }
 function findTxById(id){return liveTx().find(t=>String(t.id)===String(id))}
 function openTxDetail(id){
@@ -1882,7 +1881,7 @@ function openTxDetail(id){
   const pay=txPaymentLabel(t.paymentMethod||t.paymentLabel)||'Cash';
   const cashier=esc(t.name||state.user?.name||t.user||'Staff');
   const body=`<div class="tx-detail-box"><div class="tx-meta" style="margin-bottom:8px">${cashier} · ${dateID(txDate(t))} · ${timeID(ms(t))} · ${esc(pay)}</div><div class="tx-nominal" style="margin-bottom:10px">Rp ${rp(t.amount)}</div><div class="tx-meta" style="margin-bottom:6px">Daftar Barang</div>${txProductDetailHtml(t.note||'Transaksi')}</div>`;
-  modal('Detail Transaksi',body,`<button class="btn primary" onclick="closeModal(true)">Kembali</button>`,'tx-modal');
+  modal('Detail Transaksi',body,`<button type="button" class="btn primary" onpointerdown="closeModal(true);event.preventDefault()" ontouchstart="closeModal(true);event.preventDefault()" onclick="closeModal(true)">Kembali</button>`,'tx-modal');
 }
 
 function unlockHomeCard(){
