@@ -2382,3 +2382,72 @@
       .daily-target-title{font-size:16px!important}
       .daily-target-grid{grid-template-columns:1fr!important}
     }
+
+/* ===== BADGE PAYMENT DI SEBELAH TANGGAL ===== */
+.tx-name{
+  min-width:0!important;
+}
+.tx-title{
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  word-break:normal!important;
+}
+.tx-meta.tx-meta-with-pay{
+  display:flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  flex-wrap:wrap!important;
+  min-width:0!important;
+  margin-top:4px!important;
+  line-height:1.1!important;
+}
+.tx-date-text{
+  display:inline-flex!important;
+  align-items:center!important;
+  white-space:nowrap!important;
+  flex:0 0 auto!important;
+}
+.tx-pay-badge{
+  flex:0 0 auto!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  height:18px!important;
+  min-height:18px!important;
+  padding:0 8px!important;
+  border-radius:999px!important;
+  font-size:8.8px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  border:1.5px solid transparent!important;
+  letter-spacing:-.01em!important;
+  transform:translateY(-.2px)!important;
+}
+.tx-pay-badge.cash{
+  background:#e8f7ef!important;
+  color:#0f8a5f!important;
+  border-color:#8ed8ad!important;
+}
+.tx-pay-badge.qris{
+  background:#e25807!important;
+  color:#f3f4f7!important;
+  border-color:#ffffff!important;
+}
+.tx-meta-with-pay .pending-tag{
+  margin-left:0!important;
+}
+@media(max-width:360px){
+  .tx-meta.tx-meta-with-pay{
+    gap:4px!important;
+    margin-top:3px!important;
+  }
+  .tx-pay-badge{
+    height:16px!important;
+    min-height:16px!important;
+    padding:0 6px!important;
+    font-size:7.9px!important;
+    border-width:1.3px!important;
+  }
+}
