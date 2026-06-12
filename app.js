@@ -1104,11 +1104,7 @@ function closeModal(force=false){
   if(main){
     main.className='modal-wrap';
     main.innerHTML='';
-    main.style.display='none';
-    main.style.pointerEvents='none';
-    main.offsetHeight; // paksa browser flush supaya layer modal benar-benar hilang
-    main.style.removeProperty('display');
-    main.style.removeProperty('pointer-events');
+    main.style.cssText='';
   }
   document.querySelectorAll('.modal-wrap').forEach((el)=>{
     if(el!==main)el.remove();
@@ -1879,7 +1875,7 @@ function openTxDetail(id){
   const pay=txPaymentLabel(t.paymentMethod||t.paymentLabel)||'Cash';
   const cashier=esc(t.name||state.user?.name||t.user||'Staff');
   const body=`<div class="tx-detail-box"><div class="tx-meta" style="margin-bottom:8px">${cashier} · ${dateID(txDate(t))} · ${timeID(ms(t))} · ${esc(pay)}</div><div class="tx-nominal" style="margin-bottom:10px">Rp ${rp(t.amount)}</div><div class="tx-meta" style="margin-bottom:6px">Daftar Barang</div>${txProductDetailHtml(t.note||'Transaksi')}</div>`;
-  modal('Detail Transaksi',body,'','tx-modal');
+  modal('Detail Transaksi',body,`<button type="button" class="btn primary" onpointerdown="closeModal(true);event.preventDefault()" ontouchstart="closeModal(true);event.preventDefault()" onclick="closeModal(true)">Kembali</button>`,'tx-modal');
 }
 
 function unlockHomeCard(){
