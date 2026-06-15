@@ -3239,27 +3239,3 @@
   border-color:var(--line)!important;
   color:var(--text)!important;
 }
-
-/* ===== DAILY TARGET PROGRESS THEME COLOR ===== */
-.daily-target-line{
-  border-color:rgba(0,177,160,.28)!important;
-  background:linear-gradient(135deg,var(--majoo-teal-light,var(--green-light)),var(--card))!important;
-}
-.daily-target-progress{
-  background:rgba(0,177,160,.13)!important;
-  border-color:rgba(0,177,160,.18)!important;
-}
-.daily-target-progress span{
-  background:linear-gradient(90deg,var(--majoo-teal,var(--green)),var(--majoo-teal-dark,#008f81))!important;
-  box-shadow:0 0 10px rgba(0,177,160,.28)!important;
-}
-.daily-target-percent{
-  color:var(--majoo-teal-dark,var(--green))!important;
-}
-.daily-target-line.reached{
-  border-color:rgba(0,177,160,.42)!important;
-  background:linear-gradient(135deg,var(--majoo-teal-light,var(--green-light)),var(--card))!important;
-}
-.daily-target-line.reached .daily-target-percent{
-  color:var(--majoo-teal-dark,var(--green))!important;
-}
