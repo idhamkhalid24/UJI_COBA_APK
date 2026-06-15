@@ -1229,7 +1229,46 @@ function openHeaderGuideDetail(){
   modal('Panduan Icon Header',`<div class="header-guide-modal-note">“${esc(headerGuideNoteText())}”</div>${headerGuideItems()}`,`<button class="btn primary" onclick="closeModal()">Tutup</button>`);
 }
 function headerIconGuide(){
-  return `<div class="card header-guide-card is-compact"><div class="between"><div class="header-guide-mini-row"><span class="header-guide-mini-ico">?</span><div style="min-width:0"><div class="label">Panduan Icon Header</div><div class="hint" style="margin-top:2px">Klik buka untuk lihat pesan dan keterangan tombol atas.</div></div></div><button class="header-guide-open-btn" onclick="openHeaderGuideDetail()" aria-label="Buka Panduan Icon Header">Buka</button></div></div>`;
+  return '';
+}
+function headerTopIcon(name){
+  const icons={
+    back:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>',
+    member:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h4"/><path d="M7 14h7"/><path d="M16.5 10.5h.01"/></svg>',
+    lock:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg>',
+    unlock:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-1.9"/><path d="M12 15v2"/></svg>',
+    refresh:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.2 6.5"/><path d="M3 12A9 9 0 0 1 18.2 5.5"/><path d="M18 2v4h-4"/><path d="M6 22v-4h4"/></svg>',
+    sun:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.9 19.1 1.4-1.4"/><path d="m17.7 6.3 1.4-1.4"/></svg>',
+    moon:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A7.5 7.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>',
+    logout:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M21 19V5a2 2 0 0 0-2-2h-6"/><path d="M13 21h6a2 2 0 0 0 2-2"/></svg>'
+  };
+  return icons[name]||'';
+}
+function headerTopAction(label,iconName,attrs='',extraClass=''){
+  return `<button type="button" class="btn sm top-icon-btn ${extraClass}" ${attrs} aria-label="${esc(label)}" title="${esc(label)}">${headerTopIcon(iconName)}</button>`;
+}
+function headerTopLink(label,iconName,href,extraClass=''){
+  return `<a class="btn sm top-icon-btn ${extraClass}" href="${esc(href)}" target="_blank" rel="noopener" aria-label="${esc(label)}" title="${esc(label)}">${headerTopIcon(iconName)}</a>`;
+}
+headerTxStatus=function(){
+  if(!state.user)return '';
+  const free=isAttendanceFreeUser();
+  const locked=isTrialUser()?false:(!!missedAttendanceLockForDate()||isClosedToday()||(!free&&!todayAtt()));
+  const label=locked?'Terkunci':'Terbuka';
+  return `<span class="trx-head-status ${locked?'locked':'open'}" aria-label="Status transaksi: ${esc(label)}" title="Status transaksi: ${esc(label)}"><span class="lock-ico">${headerTopIcon(locked?'lock':'unlock')}</span><span class="trx-head-label">${esc(label)}</span></span>`;
+}
+top=function(title,sub){
+  const dark=getTheme()==='dark';
+  const back=canAppBack()?`<button class="top-back-btn" onclick="appBack()" aria-label="Kembali" title="Kembali">${headerTopIcon('back')}</button>`:'';
+  return `<div class="top">${back}<div class="brand"><div class="title">${esc(title)}</div><div class="sub">${esc(sub||state.user?.name||'Staff')}</div></div><div class="row top-actions">${headerTopLink('Member','member',MEMBER_URL,'member top-member')}${headerTxStatus()}${headerTopAction('Refresh','refresh','onclick="refresh()"','top-refresh')}${headerTopAction(dark?'Tema terang':'Tema gelap',dark?'sun':'moon','onclick="toggleTheme()"','top-theme')}${headerTopAction('Keluar','logout','onclick="logout()"','danger top-logout')}</div></div>`;
+}
+headerGuideItems=function(){
+  const dark=getTheme()==='dark';
+  const lock=missedAttendanceLockForDate();
+  const free=isAttendanceFreeUser();
+  const locked=!!lock||isClosedToday()||(!free&&!todayAtt());
+  const lockText=lock?`Transaksi terkunci karena tidak ada absen ${dateID(lock.missedDate)}.`:(locked?'Transaksi terkunci karena belum absen atau sudah closing.':(isRismaSpecialUser()?'Risma bebas absen dan siap transaksi.':'Transaksi terbuka dan siap digunakan.'));
+  return `<div class="header-guide-grid"><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('member')}</span><div><div class="header-guide-title">Member</div><div class="header-guide-desc">Membuka halaman kode khusus member.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon(locked?'lock':'unlock')}</span><div><div class="header-guide-title">Status Transaksi</div><div class="header-guide-desc">${lockText}</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('refresh')}</span><div><div class="header-guide-title">Refresh</div><div class="header-guide-desc">Muat ulang data, sync pending, dan update bonus terbaru.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon(dark?'sun':'moon')}</span><div><div class="header-guide-title">Tema</div><div class="header-guide-desc">Ganti tampilan gelap atau terang.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('logout')}</span><div><div class="header-guide-title">Keluar</div><div class="header-guide-desc">Logout dari akun staff di perangkat ini.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('refresh')}</span><div><div class="header-guide-title">Catatan Refresh</div><div class="header-guide-desc">Pakai refresh saat data belum masuk, bonus belum berubah, atau transaksi gagal.</div></div></div></div>`;
 }
 function showStaffAbsenFab(){return !!state.user&&state.page==='home'&&!isAttendanceFreeUser()&&!todayAtt()&&!isClosedToday()&&!missedAttendanceLockForDate()}
 function nav(){const n=$('nav'),f=$('fab'),af=$('absenFab');if(!state.user){n.style.display='none';f.style.display='none';if(af)af.style.display='none';return}n.style.display='flex';f.style.display=state.page==='home'?'block':'none';if(af)af.style.display=showStaffAbsenFab()?'flex':'none';document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));$(`nav-${state.page}`)?.classList.add('active')}
@@ -2005,8 +2044,9 @@ function unlockHomeCard(){
   const pending=pendingUnlockForMissedAttendance(lock.targetDate,lock.missedDate);
   const latestLine=`Tidak ada absen ${dateID(lock.missedDate)}${pending?' - menunggu admin buka fitur':''}`;
   const primary=`<button class="btn primary" onclick="event.stopPropagation();requestFeatureUnlock()" ${pending?'disabled':''}>${pending?'Menunggu Admin':'Minta Buka'}</button>`;
-  return `<div class="card leave-home-card" onclick="go('unlock')" role="button" tabindex="0"><div class="leave-home-main"><div class="leave-home-ico">B</div><div class="leave-home-copy"><div class="label">Buka Fitur</div><div class="leave-home-title">Akses kerja terkunci</div><div class="hint">${esc(latestLine)}</div></div></div><div class="leave-home-actions">${primary}</div></div>`;
+  return `<div class="card leave-home-card" onclick="go('unlock')" role="button" tabindex="0"><div class="leave-home-main"><div class="leave-home-ico">${unlockFeatureIcon()}</div><div class="leave-home-copy"><div class="label">Buka Fitur</div><div class="leave-home-title">Akses kerja terkunci</div><div class="hint">${esc(latestLine)}</div></div></div><div class="leave-home-actions">${primary}</div></div>`;
 }
+function unlockFeatureIcon(){return '<svg class="leave-home-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 9.4-2.4"/><path d="M6 11h12a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 18 20H6a1.5 1.5 0 0 1-1.5-1.5v-6A1.5 1.5 0 0 1 6 11Z"/><path d="M12 15v2"/></svg>'}
 function notifyAdminFeatureUnlock(row={}){
   const staffName=String(row.name||state.user?.name||row.user||state.user?.username||'Staff');
   return notifyRockyAdmin(ROCKY_ADMIN_NOTIFY_UNLOCK_URL,{
@@ -2501,7 +2541,7 @@ function stopPrayerAyat(closePopup=true){
 }
 function prayerAyatModalBody(ayat){
   const loading=!ayat.loaded;
-  return `<div class="prayer-ayat-box"><div class="prayer-ayat-icon">P</div><div id="prayerAyatRef" class="prayer-ayat-ref">${esc(ayat.ref)}</div><div id="prayerAyatArabic" class="prayer-ayat-arabic">${esc(ayat.arabic)}</div><div id="prayerAyatTranslation" class="prayer-ayat-translation">“${esc(ayat.translation)}”</div><div id="prayerAyatStatus" class="prayer-ayat-status">${loading?'Memuat teks ayat harian...':'Klik Play untuk memutar tilawah'}</div><div class="prayer-ayat-controls"><button id="prayerAyatPlayBtn" type="button" class="btn primary" onclick="togglePrayerAyat()">▶ Play</button><button type="button" class="btn danger" onclick="stopPrayerAyat(true)">Close</button></div></div>`;
+  return `<div class="prayer-ayat-box"><div id="prayerAyatRef" class="prayer-ayat-ref">${esc(ayat.ref)}</div><div id="prayerAyatArabic" class="prayer-ayat-arabic">${esc(ayat.arabic)}</div><div id="prayerAyatTranslation" class="prayer-ayat-translation">“${esc(ayat.translation)}”</div><div id="prayerAyatStatus" class="prayer-ayat-status">${loading?'Memuat teks ayat harian...':'Klik Play untuk memutar tilawah'}</div><div class="prayer-ayat-controls"><button id="prayerAyatPlayBtn" type="button" class="btn primary" onclick="togglePrayerAyat()">▶ Play</button><button type="button" class="btn danger" onclick="stopPrayerAyat(true)">Close</button></div></div>`;
 }
 function updatePrayerAyatContent(ayat){
   const ref=$('prayerAyatRef'), ar=$('prayerAyatArabic'), tr=$('prayerAyatTranslation');
@@ -2573,7 +2613,8 @@ function belanjaSlug(v){return cleanBelanjaText(v).toLowerCase().replace(/\s+/g,
 function getBelanjakuBridgeQueue(){try{const raw=JSON.parse(localStorage.getItem(BELANJAKU_BRIDGE_KEY)||'[]');return Array.isArray(raw)?raw.filter(Boolean):[]}catch(e){return []}}
 function setBelanjakuBridgeQueue(list){try{localStorage.setItem(BELANJAKU_BRIDGE_KEY,JSON.stringify((list||[]).slice(-250)))}catch(e){}}
 function saveBelanjakuBridgeQueue(item){const list=getBelanjakuBridgeQueue().filter(x=>String(x.id)!==String(item.id));list.push(item);setBelanjakuBridgeQueue(list)}
-function stockEmptyQuickCard(){return `<div class="card stock-empty-card"><div class="stock-empty-left"><div class="stock-empty-icon">✘</div><div class="stock-empty-copy"><div class="label">Barang Kosong</div><div class="hint">Laporkan Segera Apabila Ada Stok Barang Yang Menipis Atau Kosong</div></div></div><button class="btn stock-empty-btn" type="button" onclick="openEmptyStock()">Laporkan</button></div>`}
+function stockEmptyIcon(){return '<svg class="stock-empty-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 12 4l8 4.5"/><path d="M4 8.5V17l8 4 8-4V8.5"/><path d="M12 12.5 4 8.5"/><path d="M12 12.5 20 8.5"/><path d="M12 12.5V21"/><path d="M8.5 16h7"/></svg>'}
+function stockEmptyQuickCard(){return `<div class="card stock-empty-card"><div class="stock-empty-left"><div class="stock-empty-icon">${stockEmptyIcon()}</div><div class="stock-empty-copy"><div class="label">Barang Kosong</div><div class="hint">Laporkan Segera Apabila Ada Stok Barang Yang Menipis Atau Kosong</div></div></div><button class="btn stock-empty-btn" type="button" onclick="openEmptyStock()">Laporkan</button></div>`}
 function normalizeEmptyStockVariants(list){
   const merged=[], seen=new Set();
   (Array.isArray(list)?list:[]).forEach(row=>{
@@ -2853,7 +2894,7 @@ function openTxPaymentChoice(draft){
     createdAtMs:Number(draft?.createdAtMs||0),
     paymentMethod:String(draft?.paymentMethod||'')
   };
-  modal('Pilih Pembayaran',`<div class="payment-simple-choices"><button type="button" data-payment-choice="cash" class="payment-simple-btn payment-simple-cash" onpointerdown="confirmTxPayment('cash',this,event)" ontouchstart="confirmTxPayment('cash',this,event)" onclick="confirmTxPayment('cash',this,event)"><span>🌟 Cash 🌟</span></button><button type="button" data-payment-choice="qris_transfer" class="payment-simple-btn payment-simple-qris" onpointerdown="confirmTxPayment('qris_transfer',this,event)" ontouchstart="confirmTxPayment('qris_transfer',this,event)" onclick="confirmTxPayment('qris_transfer',this,event)"><span>Qris / Transfer</span></button></div>`,``,'tx-modal payment-picker-modal')
+  modal('Pilih Pembayaran',`<div class="payment-simple-choices"><button type="button" data-payment-choice="cash" class="payment-simple-btn payment-simple-cash" onpointerdown="confirmTxPayment('cash',this,event)" ontouchstart="confirmTxPayment('cash',this,event)" onclick="confirmTxPayment('cash',this,event)"><span>Cash</span></button><button type="button" data-payment-choice="qris_transfer" class="payment-simple-btn payment-simple-qris" onpointerdown="confirmTxPayment('qris_transfer',this,event)" ontouchstart="confirmTxPayment('qris_transfer',this,event)" onclick="confirmTxPayment('qris_transfer',this,event)"><span>Qris / Transfer</span></button></div>`,``,'tx-modal payment-picker-modal')
 }
 
 function cancelTxPaymentChoice(){
