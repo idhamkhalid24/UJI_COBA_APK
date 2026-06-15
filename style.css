@@ -45,7 +45,7 @@
       --card2:#1a2438;
       --text:#e8edf8;
       --text2:#c8d3e8;
-      --muted:#7a8faa;
+      --muted:#a0aec0;
       --line:#243050;
       --line2:#1e2c44;
       --blue:#5c8af5;
@@ -603,6 +603,18 @@
       background:var(--blue-light);color:var(--blue);
       display:inline-flex;align-items:center;justify-content:center;
       font-size:17px;font-weight:800;
+    }
+    [data-theme="dark"] .avg-att-card .hint,
+    [data-theme="dark"] .avg-att-card .label {
+      color: #ffffff !important;
+      opacity: 1 !important;
+    }
+    [data-theme="dark"] .stat-label,
+    [data-theme="dark"] .stat-foot,
+    [data-theme="dark"] .item-sub,
+    [data-theme="dark"] .empty,
+    [data-theme="dark"] .hint:not(.stock-empty-card .hint) {
+      color: var(--text2) !important;
     }
     .avg-att-metric{min-width:86px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:5px}
     .avg-att-metric .stat-val{margin:0;line-height:1.05;letter-spacing:-.03em}
