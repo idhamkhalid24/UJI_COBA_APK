@@ -103,7 +103,8 @@ html[data-theme="neo"] body {
 [data-theme="neo"] .label,
 [data-theme="neo"] .stat-label,
 [data-theme="neo"] .kicker,
-[data-theme="neo"] .header-guide-title {
+[data-theme="neo"] .header-guide-title,
+[data-theme="neo"] .tx-detail-label {
   text-transform: uppercase;
   letter-spacing: .08em !important;
   font-weight: 800 !important;
@@ -327,8 +328,11 @@ html[data-theme="neo"] body {
 [data-theme="neo"] .pill.red { background: #ffe4ea !important; }
 [data-theme="neo"] .pill.blue,
 [data-theme="neo"] .tx-chip { background: #e8edff !important; }
-[data-theme="neo"] .pill.amber,
-[data-theme="neo"] .bonus-refresh-note { background: var(--neo-yellow) !important; }
+[data-theme="neo"] .pill.amber { background: var(--neo-yellow) !important; }
+
+[data-theme="neo"] .bonus-refresh-note {
+  background: var(--neo-teal) !important;
+}
 
 [data-theme="neo"] .icon,
 [data-theme="neo"] .staff-home-note-ico,
@@ -346,7 +350,10 @@ html[data-theme="neo"] body {
   color: var(--neo-ink) !important;
 }
 
-[data-theme="neo"] .tx-row-card-mini {
+[data-theme="neo"] .tx-row-card-mini,
+[data-theme="neo"] .tx-card-btn,
+[data-theme="neo"] .tx-detail-card,
+[data-theme="neo"] .modal.tx-admin-detail-modal {
   box-shadow: none !important;
 }
 
@@ -430,6 +437,29 @@ html[data-theme="neo"] body {
   background: var(--neo-yellow) !important;
   color: var(--neo-ink) !important;
   border: 2px solid var(--neo-ink) !important;
+}
+
+[data-theme="neo"] .modal.tx-admin-detail-modal .modal-head {
+  background: var(--neo-blue) !important;
+  color: #ffffff !important;
+  margin: -18px -18px 16px !important;
+  padding: 14px !important;
+  border-bottom: 2px solid var(--neo-ink) !important;
+  border-radius: 12px 12px 0 0 !important;
+  box-shadow: none !important;
+  align-items: center !important;
+}
+
+[data-theme="neo"] .modal.tx-admin-detail-modal .modal-title {
+  color: #ffffff !important;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+[data-theme="neo"] .modal.tx-admin-detail-modal .icon {
+  background: rgba(255,255,255,0.2) !important;
+  border: 1.5px solid rgba(255,255,255,0.4) !important;
+  color: #fff !important;
 }
 
 [data-theme="neo"] .modal.tx-modal .modal-actions {
