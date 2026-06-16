@@ -2503,6 +2503,7 @@
   line-height:1.05!important;
   font-weight:950!important;
   white-space:nowrap!important;
+  white-space:normal!important;
   font-variant-numeric:tabular-nums!important;
 }
 .tx-row-card-mini .tx-pay-badge{
@@ -2728,8 +2729,10 @@
   font-weight:950!important;
   line-height:1!important;
   white-space:nowrap!important;
+  white-space:normal!important;
   font-variant-numeric:tabular-nums!important;
   text-align:right!important;
+  text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.15)!important;
 }
 .tx-row-card-mini .tx-action-card-mini{
   min-width:0!important;
@@ -2835,7 +2838,7 @@
 }
 .tx-list{
   display:grid!important;
-  gap:8px!important;
+  gap:4px!important;
 }
 .tx-table .tx-head{
   display:none!important;
@@ -2847,7 +2850,7 @@
   gap:10px!important;
   width:100%!important;
   min-width:0!important;
-  padding:12px 14px!important;
+  padding:8px 14px!important;
   border-radius:16px!important;
   background:var(--card)!important;
   border:1.5px solid var(--line)!important;
@@ -2891,8 +2894,8 @@
   text-overflow:ellipsis!important;
 }
 .tx-row-card-mini .tx-card-info{
-  color:var(--text2)!important;
-  font-size:13.5px!important;
+  color:var(--text)!important;
+  font-size:12px!important;
   font-weight:800!important;
   line-height:1.2!important;
   margin-top:2px!important;
@@ -2910,8 +2913,8 @@
 }
 .tx-row-card-mini .tx-card-amount{
   color:var(--text)!important;
-  font-size:13.5px!important;
-  font-weight:900!important;
+  font-size:15px!important;
+  font-weight:950!important;
   line-height:1!important;
   white-space:nowrap!important;
   font-variant-numeric:tabular-nums!important;
@@ -3083,7 +3086,7 @@
   .tx-row.tx-row-card-mini{
     grid-template-columns:minmax(0,1fr) auto!important;
     gap:8px!important;
-    padding:10px 9px!important;
+    padding:6px 9px!important;
     border-radius:14px!important;
   }
   .tx-row-card-mini .tx-card-icon{
@@ -3101,7 +3104,8 @@
     gap:6px!important;
   }
   .tx-row-card-mini .tx-card-amount{
-    font-size:12px!important;
+    font-size:14px!important;
+    font-weight:950!important;
   }
   .tx-row-card-mini .tx-card-actions{
     gap:5px!important;
