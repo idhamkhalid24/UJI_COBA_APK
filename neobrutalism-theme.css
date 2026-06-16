@@ -1,0 +1,417 @@
+/* ===== NEO BRUTALISM THEME =====
+   Tema tambahan untuk tombol ganti tema staff.
+   Aktif saat <html data-theme="neo">.
+   Ciri utama: warna solid terang, border hitam tebal, shadow kotak tanpa blur.
+*/
+[data-theme="neo"]{
+  --bg:#fff7d6;
+  --bg2:#ffe04b;
+  --card:#fffdf4;
+  --card2:#fff0a8;
+  --text:#111111;
+  --text2:#1d1d1d;
+  --muted:#4b3f1f;
+  --line:#111111;
+  --line2:#111111;
+  --blue:#246bfe;
+  --blue-light:#99c7ff;
+  --blue-mid:#111111;
+  --green:#00c36b;
+  --green-light:#99f6c8;
+  --green-mid:#111111;
+  --red:#ff4d6d;
+  --red-light:#ffc1cf;
+  --red-mid:#111111;
+  --amber:#ffb000;
+  --amber-light:#ffe782;
+  --amber-mid:#111111;
+  --soft:#fff0a8;
+  --nav:#fffdf4;
+  --hero1:#ff4d6d;
+  --hero2:#ffe04b;
+  --majoo-teal:#246bfe;
+  --majoo-teal-light:#99c7ff;
+  --majoo-teal-dark:#111111;
+  --shadow:4px 4px 0 #111111;
+  --shadow-md:5px 5px 0 #111111;
+  --shadow-lg:7px 7px 0 #111111;
+  --radius-sm:9px;
+  --radius:12px;
+  --radius-lg:16px;
+  --radius-xl:18px;
+}
+
+[data-theme="neo"] html,
+[data-theme="neo"] body,
+[data-theme="neo"] .app{
+  background:var(--bg)!important;
+  color:var(--text)!important;
+}
+[data-theme="neo"] body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+[data-theme="neo"] .app::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(17,17,17,.045) 1px,transparent 1px),
+    linear-gradient(rgba(17,17,17,.045) 1px,transparent 1px);
+  background-size:28px 28px;
+  opacity:.75;
+  z-index:0;
+}
+[data-theme="neo"] .page,
+[data-theme="neo"] .top,
+[data-theme="neo"] .nav,
+[data-theme="neo"] .fab,
+[data-theme="neo"] .absen-fab,
+[data-theme="neo"] .modal-wrap,
+[data-theme="neo"] .toast,
+[data-theme="neo"] .loading{
+  position:relative;
+}
+
+/* Header */
+[data-theme="neo"] .top{
+  background:var(--card)!important;
+  border:2.5px solid #111!important;
+  border-radius:16px!important;
+  box-shadow:var(--shadow-md)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+[data-theme="neo"] .title,
+[data-theme="neo"] .label,
+[data-theme="neo"] .stat-label,
+[data-theme="neo"] .kicker{
+  color:var(--text)!important;
+  font-weight:950!important;
+  letter-spacing:.035em!important;
+}
+[data-theme="neo"] .sub,
+[data-theme="neo"] .item-title,
+[data-theme="neo"] .header-guide-title{
+  color:var(--text)!important;
+  font-weight:950!important;
+}
+[data-theme="neo"] .hint,
+[data-theme="neo"] .item-sub,
+[data-theme="neo"] .stat-foot,
+[data-theme="neo"] .bonus-note,
+[data-theme="neo"] .header-guide-desc{
+  color:var(--muted)!important;
+  font-weight:750!important;
+}
+
+/* Cards & containers */
+[data-theme="neo"] .card,
+[data-theme="neo"] .stat,
+[data-theme="neo"] .item,
+[data-theme="neo"] .syncbar,
+[data-theme="neo"] .header-guide-card,
+[data-theme="neo"] .header-guide-item,
+[data-theme="neo"] .staff-home-note-card,
+[data-theme="neo"] .stock-empty-card,
+[data-theme="neo"] .unlock-home-card,
+[data-theme="neo"] .manual-bonus-alert,
+[data-theme="neo"] .target-reached-alert,
+[data-theme="neo"] .closing-bonus-card,
+[data-theme="neo"] .avg-att-card,
+[data-theme="neo"] .daily-target-card,
+[data-theme="neo"] .prayer-stat-card,
+[data-theme="neo"] .prayer-daily-banner,
+[data-theme="neo"] .payment-simple-qris,
+[data-theme="neo"] .payment-method-card,
+[data-theme="neo"] .tx-detail-box,
+[data-theme="neo"] .tx-table,
+[data-theme="neo"] .tx-head,
+[data-theme="neo"] .tx-row,
+[data-theme="neo"] .empty{
+  background:var(--card)!important;
+  border:2.5px solid #111!important;
+  border-radius:var(--radius)!important;
+  box-shadow:var(--shadow)!important;
+}
+[data-theme="neo"] .card,
+[data-theme="neo"] .stat,
+[data-theme="neo"] .item{
+  overflow:visible!important;
+}
+[data-theme="neo"] .hero{
+  background:linear-gradient(135deg,#ff4d6d 0%,#ffe04b 100%)!important;
+  color:#111!important;
+  border:2.5px solid #111!important;
+  border-radius:18px!important;
+  box-shadow:var(--shadow-lg)!important;
+}
+[data-theme="neo"] .hero .big,
+[data-theme="neo"] .hero .kicker,
+[data-theme="neo"] .hero .sub,
+[data-theme="neo"] .hero-meta-line{
+  color:#111!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+[data-theme="neo"] .daily-income-hero{
+  background:linear-gradient(135deg,#00d084 0%,#ffe04b 100%)!important;
+}
+[data-theme="neo"] .bonus-plus-card{
+  background:#99c7ff!important;
+}
+[data-theme="neo"] .stock-empty-card{
+  background:#ffc1cf!important;
+}
+[data-theme="neo"] .staff-home-note-card{
+  background:#d9b8ff!important;
+}
+[data-theme="neo"] .avg-good,
+[data-theme="neo"] .stat.ok{
+  background:#99f6c8!important;
+}
+[data-theme="neo"] .avg-warn,
+[data-theme="neo"] .stat.wait,
+[data-theme="neo"] .warn{
+  background:#ffe782!important;
+}
+[data-theme="neo"] .stat.closed,
+[data-theme="neo"] .danger{
+  background:#ffc1cf!important;
+}
+
+/* Text angka */
+[data-theme="neo"] .big,
+[data-theme="neo"] .stat-val,
+[data-theme="neo"] .amount,
+[data-theme="neo"] .tx-nominal{
+  color:#111!important;
+  font-weight:1000!important;
+  text-shadow:1px 1px 0 rgba(255,255,255,.55);
+}
+[data-theme="neo"] .bonus-plus-card .big,
+[data-theme="neo"] .stat-val[style],
+[data-theme="neo"] [style*="color:var(--blue)"]{
+  color:#111!important;
+}
+
+/* Buttons */
+[data-theme="neo"] .btn,
+[data-theme="neo"] button,
+[data-theme="neo"] .hero-sync-btn,
+[data-theme="neo"] .refresh-icon-btn,
+[data-theme="neo"] .stock-empty-btn,
+[data-theme="neo"] .tx-action-btn,
+[data-theme="neo"] .top .top-icon-btn,
+[data-theme="neo"] .top-back-btn,
+[data-theme="neo"] .trx-head-status,
+[data-theme="neo"] .fab,
+[data-theme="neo"] .absen-fab{
+  border:2.5px solid #111!important;
+  border-radius:10px!important;
+  box-shadow:3px 3px 0 #111!important;
+  background:#fffdf4!important;
+  color:#111!important;
+  font-weight:950!important;
+  transition:transform .12s ease,box-shadow .12s ease!important;
+}
+[data-theme="neo"] .btn:active,
+[data-theme="neo"] button:active,
+[data-theme="neo"] .hero-sync-btn:active,
+[data-theme="neo"] .refresh-icon-btn:active,
+[data-theme="neo"] .stock-empty-btn:active,
+[data-theme="neo"] .tx-action-btn:active,
+[data-theme="neo"] .fab:active,
+[data-theme="neo"] .absen-fab:active{
+  transform:translate(3px,3px)!important;
+  box-shadow:0 0 0 #111!important;
+  opacity:1!important;
+}
+[data-theme="neo"] .primary,
+[data-theme="neo"] .top-refresh,
+[data-theme="neo"] .tx-print-all-btn,
+[data-theme="neo"] .hero-sync-btn{
+  background:#246bfe!important;
+  color:#fff!important;
+}
+[data-theme="neo"] .success,
+[data-theme="neo"] .trx-head-status.open,
+[data-theme="neo"] .absen-fab,
+[data-theme="neo"] .stock-empty-btn{
+  background:#00d084!important;
+  color:#111!important;
+}
+[data-theme="neo"] .danger,
+[data-theme="neo"] .top-logout,
+[data-theme="neo"] .trx-head-status.locked{
+  background:#ff4d6d!important;
+  color:#111!important;
+}
+[data-theme="neo"] .top-member,
+[data-theme="neo"] .top-theme,
+[data-theme="neo"] .fab{
+  background:#ffe04b!important;
+  color:#111!important;
+}
+[data-theme="neo"] .top-svg,
+[data-theme="neo"] .nav svg,
+[data-theme="neo"] .stock-empty-svg{
+  stroke-width:2.6!important;
+}
+
+/* Form */
+[data-theme="neo"] input,
+[data-theme="neo"] textarea,
+[data-theme="neo"] select{
+  background:#fffdf4!important;
+  color:#111!important;
+  border:2.5px solid #111!important;
+  border-radius:10px!important;
+  box-shadow:3px 3px 0 #111!important;
+  font-weight:850!important;
+}
+[data-theme="neo"] input:focus,
+[data-theme="neo"] textarea:focus,
+[data-theme="neo"] select:focus{
+  background:#fff!important;
+  border-color:#111!important;
+  box-shadow:0 0 0 3px #ffe04b,4px 4px 0 #111!important;
+}
+[data-theme="neo"] input::placeholder,
+[data-theme="neo"] textarea::placeholder{
+  color:#6b5b25!important;
+  opacity:1!important;
+}
+
+/* Pills, badges, icon box */
+[data-theme="neo"] .pill,
+[data-theme="neo"] .icon,
+[data-theme="neo"] .tx-chip,
+[data-theme="neo"] .manual-bonus-chip,
+[data-theme="neo"] .stock-empty-icon,
+[data-theme="neo"] .staff-home-note-ico,
+[data-theme="neo"] .prayer-daily-icon,
+[data-theme="neo"] .payment-simple-ico,
+[data-theme="neo"] .header-guide-ico{
+  background:#ffe04b!important;
+  color:#111!important;
+  border:2.5px solid #111!important;
+  box-shadow:2px 2px 0 #111!important;
+  font-weight:950!important;
+}
+[data-theme="neo"] .pill.green{background:#99f6c8!important;color:#111!important}
+[data-theme="neo"] .pill.red{background:#ffc1cf!important;color:#111!important}
+[data-theme="neo"] .pill.blue{background:#99c7ff!important;color:#111!important}
+[data-theme="neo"] .pill.amber{background:#ffe782!important;color:#111!important}
+
+/* Bottom nav */
+[data-theme="neo"] .nav{
+  background:#fffdf4!important;
+  border:2.5px solid #111!important;
+  border-radius:18px!important;
+  box-shadow:5px 5px 0 #111!important;
+}
+[data-theme="neo"] .nav button{
+  background:transparent!important;
+  color:#111!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:12px!important;
+}
+[data-theme="neo"] .nav button.active{
+  background:#ffe04b!important;
+  border:2.5px solid #111!important;
+  box-shadow:3px 3px 0 #111!important;
+  color:#111!important;
+}
+
+/* Modal / toast / loading */
+[data-theme="neo"] .modal-wrap{
+  background:rgba(17,17,17,.28)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+[data-theme="neo"] .modal,
+[data-theme="neo"] .modal-sheet,
+[data-theme="neo"] .modal-card,
+[data-theme="neo"] .payment-choice-modal,
+[data-theme="neo"] .prayer-ayat-modal{
+  background:#fffdf4!important;
+  color:#111!important;
+  border:2.5px solid #111!important;
+  border-radius:18px!important;
+  box-shadow:7px 7px 0 #111!important;
+}
+[data-theme="neo"] .modal-head,
+[data-theme="neo"] .modal-actions,
+[data-theme="neo"] .modal.tx-modal .modal-actions{
+  background:#fffdf4!important;
+  border-color:#111!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+[data-theme="neo"] .toast{
+  background:#111!important;
+  color:#fff!important;
+  border:2.5px solid #111!important;
+  box-shadow:5px 5px 0 #ffe04b!important;
+}
+[data-theme="neo"] .loading{
+  background:rgba(255,247,214,.72)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+[data-theme="neo"] .spin{
+  border:4px solid #111!important;
+  border-top-color:#ffe04b!important;
+  box-shadow:3px 3px 0 #111!important;
+}
+
+/* Tables / transaction list */
+[data-theme="neo"] .tx-table,
+[data-theme="neo"] .tx-list{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+[data-theme="neo"] .tx-head{
+  background:#ffe04b!important;
+  color:#111!important;
+}
+[data-theme="neo"] .tx-row,
+[data-theme="neo"] .tx-product-render-list li,
+[data-theme="neo"] .daily-target-grid div{
+  background:#fffdf4!important;
+  border:2.5px solid #111!important;
+  box-shadow:3px 3px 0 #111!important;
+}
+[data-theme="neo"] .tx-action-print{background:#99c7ff!important;color:#111!important}
+[data-theme="neo"] .tx-action-delete{background:#ffc1cf!important;color:#111!important}
+
+/* Small notices */
+[data-theme="neo"] .bonus-refresh-note,
+[data-theme="neo"] .header-guide-modal-note,
+[data-theme="neo"] .hero-sync,
+[data-theme="neo"] .syncbar{
+  background:#fffdf4!important;
+  border:2.5px solid #111!important;
+  border-radius:12px!important;
+  box-shadow:3px 3px 0 #111!important;
+  color:#111!important;
+}
+[data-theme="neo"] .note-alert-icon{
+  background:#ff4d6d!important;
+  color:#111!important;
+  border:2px solid #111!important;
+  box-shadow:2px 2px 0 #111!important;
+}
+
+@media(max-width:360px){
+  [data-theme="neo"] .card,
+  [data-theme="neo"] .stat,
+  [data-theme="neo"] .item{
+    box-shadow:3px 3px 0 #111!important;
+  }
+  [data-theme="neo"] .hero{
+    box-shadow:5px 5px 0 #111!important;
+  }
+}
