@@ -1809,34 +1809,32 @@ function render(){
   const periodExpenseReal=f.filter(isBusinessExpense).reduce((sum,t)=>sum+Number(t.amount||0),0);
   $('currentPeriodLabel').innerText=`${getPeriodLabel()} · ${formatRupiah(periodIncome-periodExpenseReal)}`;
   const visibleRows=f.slice(0,Math.max(HISTORY_PAGE_SIZE,historyVisibleCount));
-  list.innerHTML=visibleRows.map(t=>{
-    const co=isCashOut(t);
-    const debt=isDebtTx(t);
-    const emergency=isEmergencyFundTx(t);
-    const zakat=isZakatExpenseTx(t);
-    const gold=isGoldPurchaseTx(t);
-    const tp=co?getCashOutType(t):'';
-    const coLabel={qris:'QRIS',tabungan:'Tabungan',lainnya:'Lainnya'}[tp]||'';
-    const debtLabel=isDebtIn(t)?'Pinjam Uang':(isDebtPay(t)?'Bayar Hutang':'');
-    const icon=co?'💳':(debt?'H':(zakat?'Z':(gold?'Au':(emergency?'D':(t.type==='income'?'+':'-')))));
-    const iconClass=(co||isDebtIn(t))?'in':'out';
-    const iconStyle=co?'background:#e0f2fe;color:#0369a1':(debt?'background:#fffbeb;color:#92400e':(zakat?'background:#fef3d0;color:#a07820':(gold?'background:#fff3bd;color:#8a5b00':(emergency?'background:#dbeafe;color:#1d4ed8':''))));
-    const desc=co?cleanCashOutDesc(t.description)||coLabel:(debt?cleanDebtDesc(t.description):(zakat?cleanZakatDesc(t.description):(gold?cleanGoldDesc(t.description):(emergency?'Tabungan Dana Darurat':cleanFirebaseDesc(t.description)))));
-    const catLine=t.type==='expense'?getExpenseCategoryChip(t):(debt?`<span class="category-chip" style="background:#fef3c7;color:#92400e">${debtLabel}</span>`:'');
-    const amtColor=co?'#0369a1':(isDebtIn(t)?'#92400e':(isDebtPay(t)?'#15803d':(zakat?'#a07820':(gold?'#8a5b00':(emergency?'#1d4ed8':(t.type==='income'?'var(--green)':'var(--red)'))))));
-    const amtPrefix=co?'':'';
-    const amtSign=(t.type==='income'||isDebtIn(t))?'+':'-';
-    const badge=co?`<span class="cashout-badge ${tp}" style="font-size:9px;margin-left:4px">${coLabel}</span>`:
-      (debt?`<span class="cashout-badge tabungan" style="font-size:9px;margin-left:4px;background:#fef3c7;color:#92400e">${debtLabel}</span>`:(zakat?'<span class="lock-badge" style="background:#fef3d0;color:#a07820;border-color:#f2df9b">ZAKAT LOCK</span>':(gold?'<span class="lock-badge" style="background:#fff3bd;color:#8a5b00;border-color:#efd06c">EMAS</span>':(emergency?'<span class="lock-badge">DANA DARURAT</span>':(isFirebaseUploaded(t)?'<span class="lock-badge">SERVER LOCK</span>':'')))));
-    const ctrl=co
-      ? `<div class="small" style="color:#0369a1;font-weight:900;font-size:9px">CASH PINDAH</div>`
-      : (debt?`<div class="small" style="color:#92400e;font-weight:900;font-size:9px">NETRAL</div>`:(zakat?`<div class="small gold" style="font-weight:900;font-size:9px;margin-bottom:2px">ZAKAT</div>`:(emergency?`<div class="small blue" style="font-weight:900;font-size:9px;margin-bottom:2px">TABUNGAN</div><button class="x" onclick="deleteTransaction(${t.id})">×</button>`:(isFirebaseUploaded(t)?`<div class="small blue" style="font-weight:900">${t.__firebasePreview?'PREVIEW':'LOCK'}</div>`:`<button class="x" onclick="deleteTransaction(${t.id})">×</button>`))));
-    return `<div class="item" style="${co?'background:#f0f9ff;border-color:#bfdbfe':(debt?'background:#fffbeb;border-color:#fde68a':(zakat?'background:#fffaf0;border-color:#f2df9b':(gold?'background:#fff9df;border-color:#efd06c':(emergency?'background:#eff6ff;border-color:#bfdbfe':''))))}"><div class="left"><div class="icon ${iconClass}" style="${iconStyle}">${icon}</div><div class="desc"><b>${escapeHtml(desc)}${badge}</b><small>${t.date}</small>${catLine}</div></div><div class="right"><b class="num" style="color:${amtColor}">${amtSign}${formatRupiah(t.amount).replace('Rp','')}</b>${ctrl}</div></div>`;
-  }).join('');
+  list.innerHTML=visibleRows.map(t=>renderHistoryTransactionCard(t)).join('');
   if(more)more.innerHTML=f.length>visibleRows.length?`<button class="load-more-btn" type="button" onclick="loadMoreTransactions()">Muat lebih banyak (${visibleRows.length}/${f.length})</button>`:(f.length>HISTORY_PAGE_SIZE?`<div class="empty compact-empty">Semua ${f.length} data sudah tampil</div>`:'');
   renderFirebaseUploadCard();
 }
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function getTransactionDetailMeta(t={}){
+  const co=isCashOut(t),debt=isDebtTx(t),zakat=isZakatExpenseTx(t),gold=isGoldPurchaseTx(t),emergency=isEmergencyFundTx(t);
+  const desc=co?cleanCashOutDesc(t.description):(debt?cleanDebtDesc(t.description):(zakat?cleanZakatDesc(t.description):(gold?cleanGoldDesc(t.description):(emergency?'Tabungan Dana Darurat':cleanFirebaseDesc(t.description)))));
+  const label=t.type==='income'?(isFirebaseUploaded(t)||t.__firebasePreview?'Pendapatan Server Pusat':'Pendapatan Manual'):(debt?(isDebtIn(t)?'Pinjam Uang':'Bayar Pokok Hutang'):getExpenseCategoryName(t));
+  const isIn=t.type==='income'||isDebtIn(t);
+  const sign=isIn?'+':'-';
+  const color=t.type==='income'?'var(--green)':(co?'#0369a1':(isDebtIn(t)?'#92400e':(isDebtPay(t)?'#15803d':'var(--red)')));
+  const icon=debt?'H':(t.type==='income'?'+':'-');
+  const chipClass=t.type==='expense'&&!co?'redchip':'';
+  return {desc:desc||label,label,sign,color,icon,iconClass:isIn?'in':'out',chipClass};
+}
+function renderTransactionDetailCard(t={},opts={}){
+  const meta=getTransactionDetailMeta(t);
+  const action=opts.actionHtml||'';
+  const rightClass=action?'right history-action-stack':'right';
+  return `<div class="item transaction-detail-card"><div class="left"><div class="icon ${meta.iconClass}">${meta.icon}</div><div class="desc"><b>${escapeHtml(meta.desc)}</b><small>${escapeHtml(t.date||'')}</small><span class="category-chip ${meta.chipClass}">${escapeHtml(meta.label)}</span></div></div><div class="${rightClass}"><b class="num" style="color:${meta.color}">${meta.sign}${formatRupiah(t.amount).replace('Rp','')}</b>${action}</div></div>`;
+}
+function renderHistoryTransactionCard(t={}){
+  const action=`<button class="x history-delete-btn" onclick="deleteTransaction(${Number(t.id)})" type="button" title="Hapus transaksi" aria-label="Hapus transaksi">×</button>`;
+  return renderTransactionDetailCard(t,{actionHtml:action});
+}
 function normalizeCategoryForBackup(c,i){
   return {
     id:Number(c&&c.id)||Date.now()+i,
@@ -2449,12 +2447,7 @@ function renderFinanceReport(){
   }).join('');
   const list=$('reportDetailList');
   if(!rows.length){list.innerHTML='<div class="empty">Belum ada transaksi</div>';return;}
-  list.innerHTML=rows.slice(0,120).map(t=>{
-    const co=isCashOut(t),debt=isDebtTx(t);const desc=co?cleanCashOutDesc(t.description):(debt?cleanDebtDesc(t.description):cleanFirebaseDesc(t.description));
-    const label=t.type==='income'?(isFirebaseUploaded(t)||t.__firebasePreview?'Pendapatan Server Pusat':'Pendapatan Manual'):(debt?(isDebtIn(t)?'Pinjam Uang':'Bayar Pokok Hutang'):getExpenseCategoryName(t));
-    const sign=(t.type==='income'||isDebtIn(t))?'+':'-';const color=t.type==='income'?'var(--green)':(co?'#0369a1':(isDebtIn(t)?'#92400e':(isDebtPay(t)?'#15803d':'var(--red)')));
-    return `<div class="item"><div class="left"><div class="icon ${(t.type==='income'||isDebtIn(t))?'in':'out'}">${debt?'H':(t.type==='income'?'+':'-')}</div><div class="desc"><b>${escapeHtml(desc||label)}</b><small>${t.date}</small><span class="category-chip ${t.type==='expense'&&!co?'redchip':''}">${escapeHtml(label)}</span></div></div><div class="right"><b class="num" style="color:${color}">${sign}${formatRupiah(t.amount).replace('Rp','')}</b></div></div>`;
-  }).join('')+(rows.length>120?`<div class="empty">Ditampilkan 120 dari ${rows.length} data</div>`:'');
+  list.innerHTML=rows.slice(0,120).map(t=>renderTransactionDetailCard(t)).join('')+(rows.length>120?`<div class="empty">Ditampilkan 120 dari ${rows.length} data</div>`:'');
 }
 function downloadCsvReportFromFinancePage(){
   const p=getFinanceReportPeriod();
