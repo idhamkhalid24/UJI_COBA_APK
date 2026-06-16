@@ -11,7 +11,30 @@ let serverPusatClient=null;
 
 let supabaseClient=null,transactions=[],zakatHistory=[],emergencyFundHistory=[],expenseCategories=[],currentFilter='today',currentFinanceReportFilter='month',pendingAction=null,currentPage='home';
 let firebaseDb=null,firebaseUnsub=null,todayFirebaseUnsub=null,firebaseUploadDate='',firebaseIncomeRows=[],firebaseIncomeTotal=0,todayFirebaseIncomeRows=[],todayFirebaseIncomeTotal=0,pendingFirebaseUploads=[],monthValidityBusy=false,emergencyFundTableReady=false;
+const HISTORY_PAGE_SIZE=15;
+let historyVisibleCount=HISTORY_PAGE_SIZE,currentGoldHomeTab='buy';
 function $(id){return document.getElementById(id)}
+function resetHistoryPaging(){historyVisibleCount=HISTORY_PAGE_SIZE}
+function loadMoreTransactions(){historyVisibleCount+=HISTORY_PAGE_SIZE;render()}
+function toggleHomeSection(id){
+  const el=$(id);if(!el)return;
+  const collapsed=el.classList.toggle('is-collapsed');
+  el.querySelectorAll('.section-toggle').forEach(btn=>btn.innerText=collapsed?'Buka':'Tutup');
+}
+function setGoldHomeTab(tab='buy'){
+  currentGoldHomeTab=['buy','history','calc'].includes(tab)?tab:'buy';
+  ['buy','history','calc'].forEach(name=>{
+    const btn=$('goldHomeTab-'+name),panel=$('goldPanel-'+name);
+    if(btn)btn.classList.toggle('active',name===currentGoldHomeTab);
+    if(panel)panel.classList.toggle('active',name===currentGoldHomeTab);
+  });
+}
+function renderActiveFilterChip(){
+  const box=$('activeFilterChips');if(!box)return;
+  const label=typeof getPeriodLabel==='function'?getPeriodLabel():'Riwayat';
+  const clear=currentFilter==='all'?'':`<button type="button" onclick="changeFilter('all')" aria-label="Hapus filter aktif">x</button>`;
+  box.innerHTML=`<span class="active-filter-chip">${escapeHtml(label)}${clear}</span>`;
+}
 function isSupabaseConfigured(){return SUPABASE_URL&&SUPABASE_ANON_KEY&&!SUPABASE_URL.includes('ISI_')&&!SUPABASE_ANON_KEY.includes('ISI_')}
 function initSupabase(){if(!isSupabaseConfigured()){showToast('Supabase belum disetting');return false}supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);return true}
 function goPage(p){currentPage=p;['home','history','laporan','firebase'].forEach(x=>{ const page=$('page'+x[0].toUpperCase()+x.slice(1)); if(page)page.classList.toggle('active',x===p); const nav=$('nav-'+x); if(nav)nav.classList.toggle('active',x===p)}); render(); if(p==='firebase')startFirebaseWatch(firebaseUploadDate||getLocalDateString()); if(p==='laporan')renderFinanceReport()}
@@ -49,7 +72,7 @@ async function refreshKasApp(){
     kasRefreshBusy=false;
   }
 }
-function openTransactionModal(){$('inputDate').value=getLocalDateString();renderCategorySelects();updatePlaceholder();$('transactionModal').classList.remove('hidden');setTimeout(()=>$('amount').focus(),80)}
+function openTransactionModal(){$('inputDate').value=getLocalDateString();const adv=$('transactionAdvanced');if(adv)adv.open=false;renderCategorySelects();updatePlaceholder();$('transactionModal').classList.remove('hidden');setTimeout(()=>$('amount').focus(),80)}
 function closeTransactionModal(){$('transactionModal').classList.add('hidden')}
 
 const DEFAULT_CATEGORY_NAME='Lainnya';
@@ -1237,9 +1260,9 @@ async function refreshFirebaseRowsOnce(date,mode='selected'){
 }
 $('inputDate').value=getLocalDateString();$('filterStartDate').value=getLocalDateString();$('filterEndDate').value=getLocalDateString();if($('filterStartDateHistory'))$('filterStartDateHistory').value=getLocalDateString();if($('filterEndDateHistory'))$('filterEndDateHistory').value=getLocalDateString();if($('reportStartDate'))$('reportStartDate').value=getLocalDateString();if($('reportEndDate'))$('reportEndDate').value=getLocalDateString();firebaseUploadDate=getLocalDateString();setTimeout(()=>{if($('firebaseUploadDate'))$('firebaseUploadDate').value=firebaseUploadDate;setPendingThisMonth(false);updateMonthValidityIdle()},0);
 function openPasswordModal(cb){pendingAction=cb;$('passwordModal').classList.remove('hidden');$('confirmPasswordInput').value='';setTimeout(()=>$('confirmPasswordInput').focus(),80)}function closePasswordModal(){$('passwordModal').classList.add('hidden');pendingAction=null}$('confirmPasswordInput').addEventListener('input',()=>{$('confirmPasswordInput').value=$('confirmPasswordInput').value.replace(/\D/g,'')});$('confirmPasswordInput').addEventListener('keydown',(e)=>{if(e.key==='Enter')$('btnConfirmAction').click()});$('btnConfirmAction').addEventListener('click',()=>{if($('confirmPasswordInput').value===APP_PIN){const a=pendingAction;closePasswordModal();if(a)a()}else{showToast('PIN salah');$('confirmPasswordInput').value='';setTimeout(()=>$('confirmPasswordInput').focus(),80)}});
-async function addTransaction(){try{const dateVal=$('inputDate').value,type=$('type').value;let desc=$('description').value.trim();const amount=getActualAmount($('amount').value);let categoryPayload={};if(type==='income'&&!desc)desc='Omset';if(type==='expense'){if(!desc){showToast('Deskripsi pengeluaran wajib');return}const catId=$('expenseCategorySelect')?$('expenseCategorySelect').value:'';const cat=getCategoryById(catId);if(!cat){showToast('Kategori pengeluaran wajib dipilih');return}categoryPayload={category_id:Number(cat.id),category_name:cat.name};}if(!dateVal||amount<=0){showToast('Nominal tidak valid');return}await saveTransaction({id:Date.now(),date:dateVal,description:desc,amount,type,...categoryPayload});await loadTransactions();render();$('description').value='';$('amount').value='';$('liveAmountPreview').innerText='';$('inputDate').value=getLocalDateString();renderCategorySelects();closeTransactionModal();showToast('Transaksi tersimpan');goPage('home')}catch(e){showToast('Gagal simpan: '+e.message)}}
-function onHistoryRangeChange(){$('filterStartDate').value=$('filterStartDateHistory').value;$('filterEndDate').value=$('filterEndDateHistory').value;render();}
-function changeFilter(f){currentFilter=f;$('rangeSelector').classList.toggle('hidden',f!=='range');const rh=$('rangeSelectorHistory');if(rh)rh.classList.toggle('hidden',f!=='range');if(f==='range'){const s=$('filterStartDateHistory'),e=$('filterEndDateHistory');if(s&&!s.value)s.value=getLocalDateString();if(e&&!e.value)e.value=getLocalDateString();$('filterStartDate').value=s?s.value:getLocalDateString();$('filterEndDate').value=e?e.value:getLocalDateString();}updateFilterUI();render();updateMonthValidityIdle()}function updateFilterUI(){['today','month','range','all'].forEach(f=>{const el=$('filter-'+f);if(el)el.classList.toggle('active',f===currentFilter)})}
+async function addTransaction(){try{const dateVal=$('inputDate').value,type=$('type').value;let desc=$('description').value.trim();const amount=getActualAmount($('amount').value);let categoryPayload={};if(type==='income'&&!desc)desc='Omset';if(type==='expense'){const catId=$('expenseCategorySelect')?$('expenseCategorySelect').value:'';let cat=getCategoryById(catId)||getDefaultExpenseCategory()||expenseCategories[0];if(!cat){showToast('Kategori pengeluaran belum siap');return}if(!desc)desc=cat.name||'Pengeluaran';categoryPayload={category_id:Number(cat.id),category_name:cat.name};}if(!dateVal||amount<=0){showToast('Nominal tidak valid');return}await saveTransaction({id:Date.now(),date:dateVal,description:desc,amount,type,...categoryPayload});await loadTransactions();render();$('description').value='';$('amount').value='';$('liveAmountPreview').innerText='';$('inputDate').value=getLocalDateString();const adv=$('transactionAdvanced');if(adv)adv.open=false;renderCategorySelects();closeTransactionModal();showToast('Transaksi tersimpan');goPage('home')}catch(e){showToast('Gagal simpan: '+e.message)}}
+function onHistoryRangeChange(){resetHistoryPaging();$('filterStartDate').value=$('filterStartDateHistory').value;$('filterEndDate').value=$('filterEndDateHistory').value;render();}
+function changeFilter(f){currentFilter=f;resetHistoryPaging();$('rangeSelector').classList.toggle('hidden',f!=='range');const rh=$('rangeSelectorHistory');if(rh)rh.classList.toggle('hidden',f!=='range');if(f==='range'){const s=$('filterStartDateHistory'),e=$('filterEndDateHistory');if(s&&!s.value)s.value=getLocalDateString();if(e&&!e.value)e.value=getLocalDateString();$('filterStartDate').value=s?s.value:getLocalDateString();$('filterEndDate').value=e?e.value:getLocalDateString();}updateFilterUI();render();updateMonthValidityIdle()}function updateFilterUI(){['today','month','range','all'].forEach(f=>{const el=$('filter-'+f);if(el)el.classList.toggle('active',f===currentFilter)})}
 async function deleteEmergencyHistoryRowsForTransaction(t={}){
   // No-op: tidak ada riwayat Dana Darurat khusus yang perlu dibersihkan.
   emergencyFundHistory=[];
@@ -1733,6 +1756,7 @@ function render(){
   $('totalIncome').innerText=formatRupiah(totalInWithFirebase);
   $('totalExpense').innerText=formatRupiah(todayOut);   // hero: hari ini
   $('autoProfit').innerText=formatRupiah(profit);
+  if($('autoProfitHero'))$('autoProfitHero').innerText=formatRupiah(profit);
   $('netBalance').innerText=formatRupiah(net);
   // Card Sisa Operasional bawah disamakan dengan Ringkasan Laba.
   // Sebelumnya card ini memakai semua data/kumulatif, sedangkan Ringkasan Laba memakai filter
@@ -1773,15 +1797,19 @@ function render(){
   $('statusBadge').style.color=over?'#c0392b':'#176b43';
 
   // List Riwayat tetap mengikuti filter yang sedang dipilih.
+  renderActiveFilterChip();
   const f=getFilteredTransactions();
   const periodIncome=f.reduce((sum,t)=>t.type==='income'?sum+Number(t.amount||0):sum,0);
   // cashout (QRIS/Tabungan) tidak dihitung sebagai pengeluaran di summary
   const list=$('transactionList');
+  const more=$('transactionListMore');
   if(!list){renderFirebaseUploadCard();return}
+  if(more)more.innerHTML='';
   if(!f.length){list.innerHTML='<div class="empty">Belum ada transaksi</div>';renderFirebaseUploadCard();return}
   const periodExpenseReal=f.filter(isBusinessExpense).reduce((sum,t)=>sum+Number(t.amount||0),0);
   $('currentPeriodLabel').innerText=`${getPeriodLabel()} · ${formatRupiah(periodIncome-periodExpenseReal)}`;
-  list.innerHTML=f.slice(0,80).map(t=>{
+  const visibleRows=f.slice(0,Math.max(HISTORY_PAGE_SIZE,historyVisibleCount));
+  list.innerHTML=visibleRows.map(t=>{
     const co=isCashOut(t);
     const debt=isDebtTx(t);
     const emergency=isEmergencyFundTx(t);
@@ -1804,7 +1832,8 @@ function render(){
       ? `<div class="small" style="color:#0369a1;font-weight:900;font-size:9px">CASH PINDAH</div>`
       : (debt?`<div class="small" style="color:#92400e;font-weight:900;font-size:9px">NETRAL</div>`:(zakat?`<div class="small gold" style="font-weight:900;font-size:9px;margin-bottom:2px">ZAKAT</div>`:(emergency?`<div class="small blue" style="font-weight:900;font-size:9px;margin-bottom:2px">TABUNGAN</div><button class="x" onclick="deleteTransaction(${t.id})">×</button>`:(isFirebaseUploaded(t)?`<div class="small blue" style="font-weight:900">${t.__firebasePreview?'PREVIEW':'LOCK'}</div>`:`<button class="x" onclick="deleteTransaction(${t.id})">×</button>`))));
     return `<div class="item" style="${co?'background:#f0f9ff;border-color:#bfdbfe':(debt?'background:#fffbeb;border-color:#fde68a':(zakat?'background:#fffaf0;border-color:#f2df9b':(gold?'background:#fff9df;border-color:#efd06c':(emergency?'background:#eff6ff;border-color:#bfdbfe':''))))}"><div class="left"><div class="icon ${iconClass}" style="${iconStyle}">${icon}</div><div class="desc"><b>${escapeHtml(desc)}${badge}</b><small>${t.date}</small>${catLine}</div></div><div class="right"><b class="num" style="color:${amtColor}">${amtSign}${formatRupiah(t.amount).replace('Rp','')}</b>${ctrl}</div></div>`;
-  }).join('')+(f.length>80?`<div class="empty">Ditampilkan 80 dari ${f.length} data biar ringan</div>`:'');
+  }).join('');
+  if(more)more.innerHTML=f.length>visibleRows.length?`<button class="load-more-btn" type="button" onclick="loadMoreTransactions()">Muat lebih banyak (${visibleRows.length}/${f.length})</button>`:(f.length>HISTORY_PAGE_SIZE?`<div class="empty compact-empty">Semua ${f.length} data sudah tampil</div>`:'');
   renderFirebaseUploadCard();
 }
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
