@@ -63,14 +63,46 @@
   z-index:0;
 }
 [data-theme="neo"] .page,
-[data-theme="neo"] .top,
-[data-theme="neo"] .nav,
-[data-theme="neo"] .fab,
-[data-theme="neo"] .absen-fab,
+[data-theme="neo"] .top{
+  position:relative;
+}
+
+/* FIX: elemen floating harus tetap fixed.
+   Sebelumnya ikut rule position:relative, jadi FAB/nav bisa geser di tema Neo. */
+[data-theme="neo"] .nav{
+  position:fixed!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:calc(10px + var(--safe))!important;
+  transform:translateX(-50%)!important;
+  z-index:20!important;
+}
+[data-theme="neo"] .fab{
+  position:fixed!important;
+  right:max(16px,calc((100% - 480px)/2 + 16px))!important;
+  bottom:calc(96px + var(--safe))!important;
+  z-index:22!important;
+}
+[data-theme="neo"] .absen-fab{
+  position:fixed!important;
+  right:max(16px,calc((100% - 480px)/2 + 16px))!important;
+  bottom:calc(166px + var(--safe))!important;
+  z-index:23!important;
+}
 [data-theme="neo"] .modal-wrap,
 [data-theme="neo"] .toast,
 [data-theme="neo"] .loading{
-  position:relative;
+  position:fixed!important;
+}
+@media(max-width:360px){
+  [data-theme="neo"] .fab{
+    right:max(12px,calc((100% - 480px)/2 + 12px))!important;
+    bottom:calc(94px + var(--safe))!important;
+  }
+  [data-theme="neo"] .absen-fab{
+    right:max(12px,calc((100% - 480px)/2 + 12px))!important;
+    bottom:calc(160px + var(--safe))!important;
+  }
 }
 
 /* Header */
