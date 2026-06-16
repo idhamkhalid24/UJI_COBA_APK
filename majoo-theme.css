@@ -32,10 +32,12 @@
   --hero3: #00B1A0;
   
   --red: #ef4444;
+  --red-dark: #dc2626;
   --red-light: #fee2e2;
   --red-mid: #fca5a5;
   
   --green: #10b981;
+  --green-dark: #059669;
   --green-light: #d1fae5;
   --green-mid: #6ee7b7;
   
@@ -248,30 +250,4 @@ input:focus, textarea:focus {
 }
 .amount {
   color: var(--majoo-teal-dark);
-}
-
-/* Dark mode FAB needs its own teal tokens so it stays solid and readable. */
-[data-theme="dark"] {
-  --majoo-teal: #00c7b3;
-  --majoo-teal-light: rgba(0, 199, 179, 0.18);
-  --majoo-teal-dark: #00a392;
-}
-
-[data-theme="dark"] .fab {
-  background: linear-gradient(135deg, #00d4bf, #009d8e) !important;
-  border: 1.5px solid rgba(110, 255, 235, 0.72) !important;
-  color: #ffffff !important;
-  opacity: 1 !important;
-  box-shadow:
-    0 14px 32px rgba(0, 199, 179, 0.42),
-    0 0 0 4px rgba(0, 199, 179, 0.16),
-    0 0 0 1px rgba(255, 255, 255, 0.12) inset !important;
-}
-
-[data-theme="dark"] .fab:hover {
-  background: linear-gradient(135deg, #11e5cf, #00aa99) !important;
-  box-shadow:
-    0 16px 36px rgba(0, 199, 179, 0.48),
-    0 0 0 4px rgba(0, 199, 179, 0.2),
-    0 0 0 1px rgba(255, 255, 255, 0.14) inset !important;
 }
