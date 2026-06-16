@@ -346,6 +346,10 @@ html[data-theme="neo"] body {
   color: var(--neo-ink) !important;
 }
 
+[data-theme="neo"] .tx-row-card-mini {
+  box-shadow: none !important;
+}
+
 [data-theme="neo"] .nav {
   width: min(460px, calc(100% - 16px));
   bottom: calc(10px + var(--safe));
