@@ -675,3 +675,564 @@
     .gold-home-panel { display: none !important; }
     .gold-home-panel.active { display: block !important; }
     .gold-live-breakdown.gold-home-panel.active { display: grid !important; }
+
+/* =========================================================
+   NEO BRUTALISM UI OVERRIDE
+   Referensi visual: neo-brutalism-ui-library.vercel.app
+   Fokus: UI saja. Logika JS dan struktur HTML tidak diubah.
+   ========================================================= */
+:root {
+  --bg: #fff3c4;
+  --surface: #fffef7;
+  --surface2: #fff8db;
+  --ink: #111111;
+  --ink2: #242424;
+  --muted: #575757;
+  --line: #111111;
+  --green: #22c55e;
+  --green-light: #a7f3d0;
+  --green-dark: #111111;
+  --gold: #facc15;
+  --gold-light: #fde68a;
+  --red: #ff4d4d;
+  --red-light: #ffd1d1;
+  --blue: #3b82f6;
+  --blue-light: #bfdbfe;
+  --purple: #a855f7;
+  --purple-light: #ead5ff;
+  --orange: #fb923c;
+  --orange-light: #fed7aa;
+  --shadow-sm: 4px 4px 0 #111111;
+  --shadow: 5px 5px 0 #111111;
+  --shadow-lg: 7px 7px 0 #111111;
+  --r-sm: 8px;
+  --r: 10px;
+  --r-lg: 12px;
+  --r-xl: 14px;
+}
+
+html,
+body {
+  background: var(--bg) !important;
+  color: var(--ink) !important;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(17,17,17,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,17,17,.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.app {
+  padding-top: 14px !important;
+}
+
+/* Top bar */
+.top {
+  background: #ffdd3d !important;
+  border-bottom: 3px solid #111 !important;
+  box-shadow: 0 4px 0 #111 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.brand h1 {
+  color: #111 !important;
+  text-transform: uppercase;
+  letter-spacing: -.8px !important;
+  text-shadow: 1px 1px 0 #fff;
+}
+.brand small { color: #111 !important; font-weight: 900 !important; }
+.top-actions { gap: 8px !important; }
+
+/* Core brutal block style */
+.card,
+.stat,
+.hero,
+.gold-live-card,
+.cash-fisik-card,
+.debt-card,
+.zakat-card,
+.summary-net-card,
+.profit-summary-card,
+.report-kpi,
+.month-valid-card,
+.category-form-card,
+.firebase-upload-card,
+.ops-status-card,
+.gold-preview-card,
+.gold-buy-shell,
+.gold-buy-input-card,
+.gold-total-pay,
+.gold-fee-row,
+.gold-live-box,
+.summary-net-box,
+.ps-box,
+.audit-box,
+.pending-upload-row,
+.item {
+  border: 3px solid #111 !important;
+  border-radius: var(--r-lg) !important;
+  box-shadow: var(--shadow-sm) !important;
+  color: #111 !important;
+}
+
+.card,
+.stat,
+.summary-net-card,
+.report-kpi,
+.category-form-card,
+.pending-upload-row,
+.item {
+  background: #fffef7 !important;
+}
+
+.card,
+.gold-live-card,
+.cash-fisik-card,
+.debt-card,
+.zakat-card,
+.summary-net-card,
+.profit-summary-card,
+.month-valid-card,
+.firebase-upload-card,
+.ops-status-card {
+  margin-bottom: 12px !important;
+}
+
+.card:active,
+.stat:active,
+.gold-live-card:active,
+.cash-fisik-card:active,
+.debt-card:active,
+.zakat-card:active,
+.summary-net-card:active,
+.profit-summary-card:active,
+.report-kpi:active,
+.item:active,
+.btn:active,
+.tab:active,
+.mini-btn:active,
+.refresh-btn:active,
+.section-toggle:active,
+.gold-live-mini-btn:active,
+.cash-fisik-btn-small:active,
+.debt-mini-btn:active,
+.fab:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0 #111 !important;
+}
+
+/* Hero */
+.hero {
+  background: #48f08a !important;
+  color: #111 !important;
+  padding: 16px !important;
+  overflow: visible !important;
+}
+.hero .label,
+.hero .mini { opacity: 1 !important; color: #111 !important; }
+.hero .value {
+  color: #111 !important;
+  font-size: 25px !important;
+  text-shadow: 2px 2px 0 #fff !important;
+}
+.hero .mini span {
+  background: #fffef7 !important;
+  border: 2px solid #111 !important;
+  border-radius: var(--r) !important;
+  box-shadow: 2px 2px 0 #111 !important;
+}
+
+/* Color-tone cards */
+.tone-gold,
+.gold-live-card,
+.gold-preview-card,
+.gold-fee-row,
+.month-valid-card.warn,
+.audit-warn {
+  background: #ffe66d !important;
+  border-color: #111 !important;
+}
+.tone-cash,
+.cash-fisik-card,
+.firebase-upload-card,
+.month-valid-card.idle {
+  background: #9ed8ff !important;
+  border-color: #111 !important;
+}
+.tone-zakat,
+.zakat-card {
+  background: #d7b5ff !important;
+  border-color: #111 !important;
+}
+.tone-emergency,
+#emergencyFundTotalCard {
+  background: #bfdbfe !important;
+  border-color: #111 !important;
+}
+.tone-debt,
+.debt-card {
+  background: #ffd166 !important;
+  border-color: #111 !important;
+}
+.danger-card,
+.ops-status-card.danger,
+.audit-bad,
+.month-valid-card.bad {
+  background: #ffb3b3 !important;
+  border-color: #111 !important;
+}
+.safe-card,
+.ops-status-card.safe,
+.audit-ok,
+.month-valid-card.ok {
+  background: #b7f7c8 !important;
+  border-color: #111 !important;
+}
+.profit-summary-card {
+  background: #111 !important;
+  color: #fffef7 !important;
+}
+.profit-summary-card * { color: inherit !important; }
+.ps-box {
+  background: #fffef7 !important;
+  color: #111 !important;
+}
+
+/* Section divider */
+.section-divider {
+  color: #111 !important;
+  letter-spacing: .8px !important;
+}
+.section-divider span {
+  background: #fffef7;
+  border: 2px solid #111;
+  border-radius: 999px;
+  padding: 5px 10px;
+  box-shadow: 3px 3px 0 #111;
+}
+.section-divider::after {
+  height: 3px !important;
+  background: #111 !important;
+}
+.section-title,
+.cash-fisik-title,
+.debt-title,
+.gold-live-title,
+.firebase-label,
+.summary-net-box span,
+.report-kpi span,
+.stat span,
+.gold-total-pay span,
+.gold-live-box span {
+  color: #111 !important;
+  font-weight: 950 !important;
+}
+.small,
+.month-valid-desc,
+.desc small,
+.summary-net-head small,
+.breakdown-label {
+  color: #333 !important;
+  font-weight: 800 !important;
+}
+
+/* Buttons */
+.btn,
+.refresh-btn,
+.tab,
+.mini-btn,
+.load-more-btn,
+.section-toggle,
+.gold-live-mini-btn,
+.cash-fisik-btn-small,
+.debt-mini-btn,
+.gold-preset-btn,
+.cashout-type-btn,
+.ps-tab,
+.active-filter-chip,
+.active-filter-chip button,
+.x {
+  border: 3px solid #111 !important;
+  border-radius: var(--r) !important;
+  box-shadow: 3px 3px 0 #111 !important;
+  font-weight: 950 !important;
+  color: #111 !important;
+  transition: transform .08s ease, box-shadow .08s ease, background .12s ease !important;
+}
+
+.btn,
+.refresh-btn,
+.mini-btn,
+.load-more-btn,
+.section-toggle,
+.gold-live-mini-btn.buy,
+.cash-fisik-btn-small,
+.debt-mini-btn,
+.ps-tab.active {
+  background: #48f08a !important;
+}
+.btn.secondary,
+.tab,
+.gold-live-mini-btn,
+.gold-preset-btn,
+.cashout-type-btn,
+.ps-tab,
+.x {
+  background: #fffef7 !important;
+}
+.btn.gold {
+  background: #ffd447 !important;
+  color: #111 !important;
+}
+.btn.red {
+  background: #ff6b6b !important;
+  color: #111 !important;
+}
+.btn.whatsapp {
+  background: #25d366 !important;
+  color: #111 !important;
+}
+.btn[style*="background:var(--blue)"],
+.btn[style*="background: var(--blue)"],
+.btn[style*="background:#a16207"],
+.btn[style*="background:var(--orange)"],
+.btn[style*="background: var(--orange)"] {
+  background: #48f08a !important;
+  color: #111 !important;
+}
+.tab.active,
+.gold-home-tabs button.active,
+.gold-mode-toggle button.active,
+.cashout-type-btn.active,
+.gold-preset-btn.active,
+.nav button.active,
+.ps-tab.active {
+  background: #ffdd3d !important;
+  color: #111 !important;
+  border-color: #111 !important;
+  box-shadow: 3px 3px 0 #111 !important;
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+  background: #fffef7 !important;
+  border: 3px solid #111 !important;
+  border-radius: var(--r) !important;
+  color: #111 !important;
+  box-shadow: 3px 3px 0 #111 !important;
+  font-weight: 850 !important;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  background: #ffffff !important;
+  outline: 3px solid #ffdd3d !important;
+  outline-offset: 0 !important;
+}
+input::placeholder,
+textarea::placeholder { color: #595959 !important; opacity: 1 !important; }
+.advanced-fields,
+.gold-manual-details summary {
+  border: 3px dashed #111 !important;
+  background: #fff6b8 !important;
+  border-radius: var(--r-lg) !important;
+}
+.advanced-fields summary { color: #111 !important; font-weight: 950 !important; }
+.advanced-fields[open] summary { border-bottom: 3px solid #111 !important; }
+.preview { color: #111 !important; font-weight: 950 !important; }
+
+/* Badges/chips */
+.pill,
+.lock-badge,
+.firebase-status,
+.gold-live-badge,
+.cash-fisik-badge,
+.chip,
+.active-filter-chip {
+  background: #fffef7 !important;
+  color: #111 !important;
+  border: 3px solid #111 !important;
+  border-radius: 999px !important;
+  box-shadow: 3px 3px 0 #111 !important;
+  font-weight: 950 !important;
+}
+.st-uploaded { background: #b7f7c8 !important; }
+.st-pending { background: #ffe66d !important; }
+.st-update { background: #ffb3b3 !important; }
+
+/* Lists */
+.list { gap: 8px !important; }
+.item {
+  padding: 10px 12px !important;
+  align-items: flex-start !important;
+}
+.icon {
+  border: 2px solid #111 !important;
+  border-radius: var(--r-sm) !important;
+  box-shadow: 2px 2px 0 #111 !important;
+  color: #111 !important;
+}
+.icon.in { background: #b7f7c8 !important; }
+.icon.out { background: #ffb3b3 !important; }
+.desc b,
+.right b { color: #111 !important; font-weight: 950 !important; }
+.x {
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  background: #ff6b6b !important;
+  line-height: 1 !important;
+}
+
+/* Gold buy */
+.gold-buy-shell,
+.gold-total-pay {
+  background: #ffef99 !important;
+}
+.gold-buy-input-card,
+.gold-live-box,
+.summary-net-box {
+  background: #fffef7 !important;
+}
+.gold-main-input {
+  border: 3px solid #111 !important;
+  border-radius: var(--r) !important;
+  padding: 10px 12px !important;
+  box-shadow: 3px 3px 0 #111 !important;
+}
+.gold-mode-toggle,
+.gold-home-tabs {
+  background: #fffef7 !important;
+  border: 3px solid #111 !important;
+  border-radius: var(--r-lg) !important;
+  padding: 5px !important;
+  box-shadow: 3px 3px 0 #111 !important;
+}
+.gold-mode-toggle button,
+.gold-home-tabs button {
+  border-radius: var(--r-sm) !important;
+  color: #111 !important;
+  font-weight: 950 !important;
+}
+.gold-live-price,
+.cash-fisik-amount,
+.debt-amount,
+.gold-total-pay b,
+.gold-live-box b,
+.summary-net-box b,
+.report-kpi b,
+.stat b,
+.breakdown-val {
+  color: #111 !important;
+  font-weight: 950 !important;
+}
+
+/* Tabs/filter */
+.tabs {
+  gap: 8px !important;
+  padding-bottom: 8px !important;
+}
+.history-filter-panel {
+  background: #fff3c4 !important;
+  border-bottom: 3px solid #111 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.report-filter-row { gap: 8px !important; }
+
+/* Bottom nav & FAB */
+.nav {
+  background: #fffef7 !important;
+  border: 3px solid #111 !important;
+  border-bottom: 0 !important;
+  border-radius: 18px 18px 0 0 !important;
+  box-shadow: 0 -5px 0 #111 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  gap: 7px !important;
+}
+.nav button {
+  border: 3px solid transparent !important;
+  border-radius: var(--r) !important;
+  color: #111 !important;
+  font-weight: 950 !important;
+}
+.nav button.active {
+  border-color: #111 !important;
+}
+.fab {
+  background: #ff4d9d !important;
+  color: #111 !important;
+  border: 3px solid #111 !important;
+  border-radius: 16px !important;
+  box-shadow: 5px 5px 0 #111 !important;
+}
+
+/* Modal */
+.modal {
+  background: rgba(17,17,17,.55) !important;
+  align-items: flex-end !important;
+}
+.box {
+  background: #fffef7 !important;
+  border: 4px solid #111 !important;
+  border-bottom: 0 !important;
+  border-radius: 18px 18px 0 0 !important;
+  box-shadow: 0 -7px 0 #111 !important;
+  color: #111 !important;
+}
+.box h3 {
+  color: #111 !important;
+  font-weight: 950 !important;
+  letter-spacing: -.5px !important;
+}
+.toast {
+  background: #111 !important;
+  color: #fffef7 !important;
+  border: 3px solid #fffef7 !important;
+  border-radius: var(--r-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  font-weight: 950 !important;
+}
+
+/* Layout polish */
+.grid2 { gap: 10px !important; }
+.row { gap: 10px !important; }
+.compact-actions { gap: 10px !important; }
+.cash-fisik-breakdown,
+.gold-live-breakdown {
+  border-top: 3px solid #111 !important;
+  gap: 8px !important;
+}
+.breakdown-row,
+.debt-list-item {
+  border-bottom-color: #111 !important;
+}
+.empty {
+  color: #111 !important;
+  font-weight: 850 !important;
+}
+.green,
+.red,
+.gold,
+.blue {
+  color: #111 !important;
+}
+
+@media (max-width: 360px) {
+  .hero .mini { grid-template-columns: 1fr !important; }
+  .nav button { font-size: 10px !important; padding-left: 2px !important; padding-right: 2px !important; }
+}
