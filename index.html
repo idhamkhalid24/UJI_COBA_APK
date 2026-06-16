@@ -311,18 +311,21 @@
           </select>
         </div>
       </div>
-      <div id="expenseCategoryField" class="field hidden">
-        <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
-          <select id="expenseCategorySelect"></select>
-          <button class="mini-btn" style="min-width:80px" onclick="openCategoryModal()" type="button">+ Kategori</button>
-        </div>
-        <div class="small" style="margin-top:5px;color:var(--red);font-weight:700">Pengeluaran wajib pilih kategori.</div>
-      </div>
-      <div class="field"><input type="text" id="description" placeholder="Deskripsi"></div>
       <div class="field amount-wrap">
         <input type="number" id="amount" placeholder="Nominal" oninput="handleSmartAmount(this)">
         <span id="liveAmountPreview" class="preview"></span>
       </div>
+      <details id="transactionAdvanced" class="advanced-fields">
+        <summary>+ Detail lanjutan</summary>
+        <div id="expenseCategoryField" class="field hidden">
+          <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+            <select id="expenseCategorySelect"></select>
+            <button class="mini-btn" style="min-width:80px" onclick="openCategoryModal()" type="button">+ Kategori</button>
+          </div>
+          <div class="small" style="margin-top:5px;color:var(--red);font-weight:700">Kalau tidak dipilih, sistem pakai kategori default.</div>
+        </div>
+        <div class="field"><input type="text" id="description" placeholder="Catatan / deskripsi opsional"></div>
+      </details>
       <div class="row">
         <button class="btn secondary" onclick="closeTransactionModal()">Batal</button>
         <button class="btn" onclick="addTransaction()">Simpan</button>
@@ -355,12 +358,15 @@
         <div id="netBalance" class="value num">Rp 0</div>
         <div class="mini">
           <span>Masuk <b id="totalIncome">Rp 0</b></span>
-          <span>Keluar Hari Ini <b id="totalExpense" onclick="showExpenseListTodayModal()" style="cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px">Rp 0</b></span>
+          <span>Keluar <b id="totalExpense" onclick="showExpenseListTodayModal()" style="cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px">Rp 0</b></span>
+          <span>Laba 20% <b id="autoProfitHero">Rp 0</b></span>
         </div>
       </div>
 
+      <div class="section-divider"><span>Section Utama</span></div>
+
       <!-- Harga Emas Real-Time -->
-      <div id="goldLiveCard" class="gold-live-card">
+      <div id="goldLiveCard" class="gold-live-card home-section is-collapsed tone-gold">
         <div class="gold-live-head">
           <div style="min-width:0">
             <div class="gold-live-title">Harga Emas Indonesia</div>
@@ -369,19 +375,31 @@
           </div>
           <div class="gold-live-actions">
             <span id="goldPriceStatus" class="gold-live-badge">LIVE</span>
-            <div class="gold-live-btns">
-              <button class="gold-live-mini-btn" onclick="refreshGoldPrice(true)">Refresh</button>
-              <button class="gold-live-mini-btn buy" onclick="openGoldBuyModal()">Beli</button>
-            </div>
+            <button class="section-toggle" type="button" onclick="toggleHomeSection('goldLiveCard')">Buka</button>
           </div>
         </div>
-        <div class="gold-live-breakdown">
-          <div class="gold-live-box"><span>Gram Saat Ini</span><b id="goldCurrentGram">0 gr</b></div>
+        <div class="home-section-body">
+          <div class="gold-home-tabs">
+            <button id="goldHomeTab-buy" class="active" type="button" onclick="setGoldHomeTab('buy')">Beli</button>
+            <button id="goldHomeTab-history" type="button" onclick="setGoldHomeTab('history')">Riwayat</button>
+            <button id="goldHomeTab-calc" type="button" onclick="setGoldHomeTab('calc')">Kalkulasi</button>
+          </div>
+          <div id="goldPanel-buy" class="gold-home-panel active">
+            <div class="panel-action-row">
+              <button class="gold-live-mini-btn" onclick="refreshGoldPrice(true)" type="button">Refresh Harga</button>
+              <button class="gold-live-mini-btn buy" onclick="openGoldBuyModal()" type="button">Beli Emas</button>
+            </div>
+          </div>
+        <div id="goldPanel-history" class="gold-live-breakdown gold-home-panel">
           <div class="gold-live-box"><span>Total Beli Emas</span><b id="goldTotalAmount">Rp 0</b></div>
           <div class="gold-live-box"><span>Gram Tercatat</span><b id="goldTotalGram">0 gr</b></div>
           <div class="gold-live-box"><span>Total Terpotong</span><b id="goldTotalPaid">Rp 0</b></div>
         </div>
+          <div id="goldPanel-calc" class="gold-home-panel">
+            <div class="gold-live-box spotlight"><span>Gram Saat Ini</span><b id="goldCurrentGram">0 gr</b></div>
         <div id="goldGramCalcInfo" class="small" style="margin-top:8px;color:#8a5b00;font-weight:800">Gram Saat Ini = Total Beli Emas ÷ harga emas sekarang.</div>
+          </div>
+        </div>
       </div>
 
       <!-- Total Dana Darurat Terkumpul -->
@@ -391,7 +409,7 @@
       </div>
 
       <!-- Cash Fisik Card -->
-      <div class="cash-fisik-card">
+      <div id="cashFisikCard" class="cash-fisik-card home-section is-collapsed tone-cash">
         <div class="cash-fisik-header">
           <div>
             <div class="cash-fisik-title">Cash Fisik Hari Ini</div>
@@ -400,12 +418,14 @@
           </div>
           <div class="cash-fisik-actions">
             <span class="cash-fisik-badge">HARI INI</span>
+            <button class="section-toggle" type="button" onclick="toggleHomeSection('cashFisikCard')">Buka</button>
             <div class="cash-fisik-btns">
               <button onclick="openOpsModal()" class="cash-fisik-btn-small" style="background:var(--orange-light);color:var(--orange);border-color:#ffd7a0">+ Ops</button>
               <button onclick="openCashOutModal()" class="cash-fisik-btn-small" style="background:var(--blue-light);color:var(--blue);border-color:#bfdbfe">+ QRIS</button>
             </div>
           </div>
         </div>
+        <div class="home-section-body">
         <div class="cash-fisik-breakdown">
           <div class="breakdown-row">
             <span class="breakdown-label">Operasional Toko</span>
@@ -419,6 +439,7 @@
             <span class="breakdown-label">Tabungan</span>
             <b id="cashOutTabunganTotal" class="breakdown-val num" style="color:#854d0e" onclick="openCashOutModal()">Rp 0</b>
           </div>
+        </div>
         </div>
       </div>
       <!-- Hidden elements tetap ada agar JS tidak error -->
@@ -474,15 +495,19 @@
       </div>
 
       <!-- Zakat Mal -->
-      <div id="zakatMalCard" class="zakat-card">
+      <div id="zakatMalCard" class="zakat-card home-section is-collapsed tone-zakat">
         <div class="zakat-header">
           <div>
             <div class="section-title" style="margin:0 0 4px">Zakat Mal</div>
             <div id="zakatAmountLarge" class="num gold" style="font-size:20px;font-weight:500">Rp 0</div>
             <div id="zakatPaymentStatusText" class="small" style="margin-top:3px">Menunggu</div>
           </div>
-          <button id="payZakatBtn" class="btn gold" style="width:auto;min-width:90px;padding:10px" onclick="markZakatPaid()">Bayar</button>
+          <div class="section-action-stack">
+            <button id="payZakatBtn" class="btn gold" style="width:auto;min-width:90px;padding:10px" onclick="markZakatPaid()">Bayar</button>
+            <button class="section-toggle" type="button" onclick="toggleHomeSection('zakatMalCard')">Buka</button>
+          </div>
         </div>
+        <div class="home-section-body">
         <div class="zakat-grid">
           <div class="stat"><span>Laba 20% Final s.d H-1</span><b id="totalProfitDisplay" class="num">Rp 0</b></div>
           <div class="stat"><span>Belum Dizakatkan Final</span><b id="unpaidProfitDisplay" class="num">Rp 0</b></div>
@@ -493,28 +518,34 @@
           <div id="zakatHistoryMiniList" class="zakat-mini"></div>
           <button class="tab" onclick="showZakatHistoryModal()">Semua</button>
         </div>
+        </div>
       </div>
 
       <!-- Dana Darurat -->
-      <div id="emergencyFundCard" class="zakat-card" style="border-color:#bfdbfe;background:var(--blue-light)">
+      <div id="emergencyFundCard" class="zakat-card home-section is-collapsed tone-emergency" style="border-color:#bfdbfe;background:var(--blue-light)">
         <div class="zakat-header">
           <div>
             <div class="section-title" style="margin:0 0 4px;color:var(--blue)">Dana Darurat</div>
             <div id="emergencyFundAmountLarge" class="num blue" style="font-size:20px;font-weight:500">Rp 0</div>
             <div id="emergencyFundStatusText" class="small" style="margin-top:3px;color:var(--blue);font-weight:700">Menunggu</div>
           </div>
-          <button id="payEmergencyFundBtn" class="btn" style="width:auto;min-width:90px;padding:10px;background:var(--blue)" onclick="markEmergencyFundSaved()">Nabung</button>
+          <div class="section-action-stack">
+            <button id="payEmergencyFundBtn" class="btn" style="width:auto;min-width:90px;padding:10px;background:var(--blue)" onclick="markEmergencyFundSaved()">Nabung</button>
+            <button class="section-toggle" type="button" onclick="toggleHomeSection('emergencyFundCard')">Buka</button>
+          </div>
         </div>
+        <div class="home-section-body">
         <div class="zakat-grid">
           <div class="stat"><span>Cash Fisik Bulan Ini s.d H-1</span><b id="emergencyFundIncomeDisplay" class="num">Rp 0</b></div>
           <div class="stat"><span>Belum Ditabungkan</span><b id="emergencyFundUnpaidDisplay" class="num">Rp 0</b></div>
         </div>
         <div id="emergencyFundBasisInfo" class="small" style="margin-top:10px;padding-top:10px;border-top:1px solid #bfdbfe;color:var(--blue);font-weight:700">Dana Darurat = 5% × Cash Fisik bulan berjalan sampai kemarin. Cash Fisik hari ini masuk hitungan besok.</div>
+        </div>
       </div>
 
       <!-- Hutang Section Paling Bawah -->
       <!-- Hutang Card -->
-      <div class="debt-card">
+      <div id="debtHomeCard" class="debt-card home-section is-collapsed tone-debt">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
           <div style="min-width:0">
             <div class="debt-title">Hutang Uang Aktif</div>
@@ -522,10 +553,12 @@
             <div id="debtTodayInfo" class="small" style="margin-top:3px;color:#92400e;font-weight:700">Pinjaman menambah Saldo Bersih, bayar pokok mengurangi Saldo Bersih.</div>
           </div>
           <div class="debt-actions">
+            <button class="section-toggle" type="button" onclick="toggleHomeSection('debtHomeCard')">Buka</button>
             <button class="debt-mini-btn" onclick="openDebtModal('borrow')">+ Pinjam</button>
             <button class="debt-mini-btn pay" onclick="openDebtModal('pay')">Bayar</button>
           </div>
         </div>
+        <div class="home-section-body">
         <div class="cash-fisik-breakdown" style="border-color:#fde68a;margin-top:9px">
           <div class="breakdown-row">
             <span class="breakdown-label">Belum Dibayar</span>
@@ -537,9 +570,10 @@
           </div>
         </div>
         <div class="debt-note">Tidak masuk pendapatan, pengeluaran, laba, atau zakat. Hanya mutasi Saldo Bersih dan sisa hutang.</div>
+        </div>
       </div>
 
-      <div class="grid2">
+      <div class="grid2 debt-extra">
         <div class="stat" onclick="openDebtModal('list')" style="cursor:pointer;background:#fffbeb;border-color:#fde68a">
           <span>Total Pinjaman</span>
           <b id="debtTotalBorrowed" class="num" style="color:#92400e">Rp 0</b>
@@ -549,7 +583,7 @@
           <b id="debtTotalPaid" class="num" style="color:#15803d">Rp 0</b>
         </div>
       </div>
-      <div class="stat" onclick="openDebtModal('list')" style="cursor:pointer;background:#fff7ed;border-color:#fed7aa;margin-bottom:10px">
+      <div class="stat debt-extra" onclick="openDebtModal('list')" style="cursor:pointer;background:#fff7ed;border-color:#fed7aa;margin-bottom:10px">
         <span>Belum Dibayar</span>
         <b id="debtTotalUnpaid" class="num" style="color:#c2410c">Rp 0</b>
       </div>
@@ -575,6 +609,7 @@
         <div id="netSummaryNote" class="small" style="margin-top:10px;color:var(--blue);font-weight:700">Semua angka = pemasukan (Server Pusat + manual) <b>dikurangi pengeluaran</b> per periode.</div>
       </div>
 
+      <div class="history-filter-panel">
       <div class="tabs">
         <button onclick="changeFilter('today')" id="filter-today" class="tab active">Hari Ini</button>
         <button onclick="changeFilter('month')" id="filter-month" class="tab">Bulan Ini</button>
@@ -586,6 +621,8 @@
           <input type="date" id="filterStartDateHistory" onchange="onHistoryRangeChange()">
           <input type="date" id="filterEndDateHistory" onchange="onHistoryRangeChange()">
         </div>
+      </div>
+      <div id="activeFilterChips" class="active-filter-chips"></div>
       </div>
 
       <div class="grid2">
@@ -624,6 +661,7 @@
           <button class="tab" style="color:var(--red)" onclick="requestClearAll()">Reset Manual</button>
         </div>
         <div id="transactionList" class="list"></div>
+        <div id="transactionListMore"></div>
       </div>
     </section>
 
