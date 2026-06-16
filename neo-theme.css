@@ -346,6 +346,13 @@ html[data-theme="neo"] body {
   color: var(--neo-ink) !important;
 }
 
+[data-theme="neo"] .payment-simple-qris {
+  background: var(--neo-yellow) !important;
+  border-color: var(--neo-ink) !important;
+  color: var(--neo-ink) !important; /* Pastikan teks tetap hitam */
+  box-shadow: 3px 4px 0 var(--neo-ink) !important;
+}
+
 [data-theme="neo"] .payment-simple-qris span {
   color: var(--neo-ink) !important;
 }
