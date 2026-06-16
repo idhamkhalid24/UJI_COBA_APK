@@ -841,7 +841,7 @@ body::before {
 .hero .value {
   color: #111 !important;
   font-size: 25px !important;
-  text-shadow: 2px 2px 0 #fff !important;
+  text-shadow: none !important;
 }
 .hero .mini span {
   background: #fffef7 !important;
@@ -1235,4 +1235,20 @@ textarea::placeholder { color: #595959 !important; opacity: 1 !important; }
 @media (max-width: 360px) {
   .hero .mini { grid-template-columns: 1fr !important; }
   .nav button { font-size: 10px !important; padding-left: 2px !important; padding-right: 2px !important; }
+}
+
+/* Riwayat transaksi dibuat sama seperti Detail Transaksi laporan,
+   bedanya punya tombol hapus tepat di bawah nominal. */
+.transaction-detail-card .right.history-action-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  white-space: normal !important;
+  min-width: 74px !important;
+}
+.history-delete-btn {
+  margin-top: 0 !important;
+  font-size: 15px !important;
 }
