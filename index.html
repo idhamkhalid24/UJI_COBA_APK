@@ -3,22 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#ffd43b" />
+  <meta name="theme-color" content="#FFD84D" />
   <title>Rocky Hijab Staff Supabase - Sesuai Server Pusat</title>
-
   <!--
-    CACHE BUSTING / VERSI FILE - NEON BRUTALISM
-    Kalau update UI/CSS/JS di GitHub tapi tampilan di APK karyawan masih lama,
-    cukup naikkan angka versi di belakang file CSS/JS ini.
+  CACHE BUSTING / VERSI FILE
+  Kalau update UI/CSS/JS di GitHub tapi tampilan di APK karyawan masih lama,
+  cukup naikkan angka versi di belakang file CSS/JS ini.
 
-    Contoh:
-    v=20260616_neon01  ->  v=20260616_02
-
-    Jangan hapus ?v=... karena ini yang maksa Android WebView ambil file terbaru,
-    bukan file lama dari cache HP.
-  -->
-  <link rel="stylesheet" href="./style.css?v=20260616_neon01">
-  <link rel="stylesheet" href="./majoo-theme.css?v=20260616_neon01">
+  Patokan: JANGAN ulang versi lama.
+  Contoh:
+  v=20260616_neobru_lib01  ->  v=20260616_neobru_lib02
+-->
+  <link rel="stylesheet" href="./style.css?v=20260616_neobru_lib01">
+  <link rel="stylesheet" href="./majoo-theme.css?v=20260616_neobru_lib01">
 </head>
 <body>
 <div class="app">
@@ -34,11 +31,6 @@
     <button id="nav-history" onclick="go('history')" aria-label="Riwayat"><svg viewBox="0 0 24 24"><path d="M7 3h10a2 2 0 0 1 2 2v16l-3-2-2 2-2-2-2 2-2-2-3 2V5a2 2 0 0 1 2-2Z"/><path d="M9 8h6"/><path d="M9 12h6"/><path d="M9 16h4"/></svg><span>Trx</span></button>
   </nav>
 </div>
-<!--
-  APP JS UTAMA
-  Kalau app.js diupdate, naikkan juga versi di bawah ini.
-  Samakan versinya dengan CSS supaya gampang dicek. Jangan pakai versi lama lagi.
--->
-<script type="module" src="./app.js?v=20260616_neon01"></script>
+<script type="module" src="./app.js?v=20260616_neobru_lib01"></script>
 </body>
 </html>
