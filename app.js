@@ -1170,24 +1170,12 @@ function closeModal(force=false){
     if(!main||!main.contains(el))el.remove();
   });
 }
-const THEME_ORDER=['light','dark','neo'];
-const THEME_META={
-  light:{label:'Majoo terang',nextLabel:'Tema gelap',icon:'moon',color:'#00B1A0'},
-  dark:{label:'Majoo gelap',nextLabel:'Tema Neo Brutalism',icon:'palette',color:'#00c7b3'},
-  neo:{label:'Neo Brutalism',nextLabel:'Tema Majoo terang',icon:'sun',color:'#ffe04b'}
-};
-function normalizeTheme(t){return THEME_ORDER.includes(t)?t:'light'}
-function getTheme(){return normalizeTheme(localStorage.getItem('rocky_staff_theme')||'light')}
-function themeInfo(t=getTheme()){return THEME_META[normalizeTheme(t)]||THEME_META.light}
-function setTheme(t){
-  const next=normalizeTheme(t);
-  document.documentElement.setAttribute('data-theme',next);
-  localStorage.setItem('rocky_staff_theme',next);
-  const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta)meta.setAttribute('content',themeInfo(next).color);
-}
-function nextTheme(){const now=getTheme();return THEME_ORDER[(THEME_ORDER.indexOf(now)+1)%THEME_ORDER.length]}
-function toggleTheme(){setTheme(nextTheme());render()}
+const THEME_KEY='rocky_staff_theme';
+function normalizeTheme(t){return ['neo','neobrutalism','brutal','dark'].includes(String(t||'').toLowerCase())?'neo':'light'}
+function getTheme(){return normalizeTheme(localStorage.getItem(THEME_KEY)||'light')}
+function isNeoTheme(){return getTheme()==='neo'}
+function setTheme(t){const theme=normalizeTheme(t);document.documentElement.setAttribute('data-theme',theme);localStorage.setItem(THEME_KEY,theme)}
+function toggleTheme(){setTheme(isNeoTheme()?'light':'neo');render()}
 function pendingKey(){return PENDING_KEY+'_'+key(state.user?.username||'guest')}
 function getPending(){try{return JSON.parse(localStorage.getItem(pendingKey())||'[]')}catch(e){return []}}
 function setPending(list){localStorage.setItem(pendingKey(),JSON.stringify(list||[]))}
@@ -1211,7 +1199,7 @@ function applyPendingToState(){
 function syncTimeText(){if(!state.lastSyncMs)return 'Belum sync';const diff=Math.max(0,Math.round((Date.now()-state.lastSyncMs)/1000));if(diff<60)return 'baru saja';if(diff<3600)return `${Math.floor(diff/60)} menit lalu`;return timeID(state.lastSyncMs)}
 function syncBar(){const pc=pendingForUser().length, cls=pc?'syncbar sync-pending':'syncbar';const msg=pc?`<b>${pc} data belum terkirim</b><span> akan dicoba otomatis</span>`:`<span>Sync terakhir: <b>${syncTimeText()}</b></span>`;const err=state.syncError?`<div class="hint" style="color:var(--red);margin-top:2px">${esc(state.syncError)}</div>`:'';return `<div class="${cls}"><div>${msg}${err}</div><button class="btn sm" onclick="retrySync()">Sync</button></div>`}
 function syncHeroLine(){const pc=pendingForUser().length;const msg=pc?`<b>${pc} data belum terkirim</b><span> · dicoba otomatis</span>`:`<span>Sync terakhir: <b>${syncTimeText()}</b></span>`;const err=state.syncError?`<div class="hero-sync-error">${esc(state.syncError)}</div>`:'';return `<div class="hero-sync"><div>${msg}${err}</div><button class="hero-sync-btn" onclick="retrySync()" aria-label="Sync data">Sync</button></div>`}
-function top(title,sub){const info=themeInfo(),back=canAppBack()?'<button class="top-back-btn" onclick="appBack()" aria-label="Kembali">←</button>':'';return `<div class="top">${back}<div class="brand"><div class="title">${esc(title)}</div><div class="sub">${esc(sub||state.user?.name||'Staff')}</div></div><div class="row"><a class="btn sm member" href="${MEMBER_URL}" target="_blank" rel="noopener">Member</a>${headerTxStatus()}<button class="btn sm" onclick="refresh()">Refresh</button><button class="btn sm" onclick="toggleTheme()" aria-label="${esc(info.nextLabel)}" title="${esc(info.nextLabel)}">${esc(info.label)}</button><button class="btn sm danger" onclick="logout()">Keluar</button></div></div>`}
+function top(title,sub){const icon=isNeoTheme()?'M':'NB',back=canAppBack()?'<button class="top-back-btn" onclick="appBack()" aria-label="Kembali">←</button>':'';return `<div class="top">${back}<div class="brand"><div class="title">${esc(title)}</div><div class="sub">${esc(sub||state.user?.name||'Staff')}</div></div><div class="row"><a class="btn sm member" href="${MEMBER_URL}" target="_blank" rel="noopener">Member</a>${headerTxStatus()}<button class="btn sm" onclick="refresh()">Refresh</button><button class="btn sm" onclick="toggleTheme()">${icon}</button><button class="btn sm danger" onclick="logout()">Keluar</button></div></div>`}
 function headerGuideNoteText(){
   const note=String(state.data.headerGuideNote||'').trim();
   return note||DEFAULT_HEADER_GUIDE_NOTE;
@@ -1232,14 +1220,13 @@ function staffDailyNoteCard(){
   return `<div class="card staff-home-note-card"><div class="staff-home-note-main"><span class="staff-home-note-ico">📌</span><div style="min-width:0;flex:1"><div class="staff-home-note-title">PENTING</div><div class="staff-home-note-text">${linkText(data.note)}</div><div class="staff-home-note-meta">${esc(updated+by)}</div></div></div></div>`;
 }
 function headerGuideItems(){
-  const info=themeInfo();
-  const themeIcon=info.label;
+  const themeIcon=isNeoTheme()?'M':'NB';
   const lock=missedAttendanceLockForDate();
   const free=isAttendanceFreeUser();
   const locked=!!lock||isClosedToday()||(!free&&!todayAtt());
   const lockIcon=locked?'🔒':'🔓';
   const lockText=lock?`Transaksi terkunci karena tidak ada absen ${dateID(lock.missedDate)}.`:(locked?'Transaksi terkunci karena belum absen atau sudah closing.':(isRismaSpecialUser()?'Risma bebas absen dan siap transaksi.':'Transaksi terbuka dan siap digunakan.'));
-  return `<div class="header-guide-grid"><div class="header-guide-item"><span class="header-guide-ico">M</span><div><div class="header-guide-title">Member</div><div class="header-guide-desc">Membuka halaman kode khusus member.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${lockIcon}</span><div><div class="header-guide-title">Status Transaksi</div><div class="header-guide-desc">${lockText}</div></div></div><div class="header-guide-item"><span class="header-guide-ico">↻</span><div><div class="header-guide-title">Refresh</div><div class="header-guide-desc">Muat ulang data, sync pending, dan update bonus terbaru.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${themeIcon}</span><div><div class="header-guide-title">Tema</div><div class="header-guide-desc">Mode aktif: ${esc(info.label)}. Klik untuk ${esc(info.nextLabel).toLowerCase()}.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">⏻</span><div><div class="header-guide-title">Keluar</div><div class="header-guide-desc">Logout dari akun staff di perangkat ini.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">!</span><div><div class="header-guide-title">Catatan Refresh</div><div class="header-guide-desc">Pakai refresh saat data belum masuk, bonus belum berubah, atau transaksi gagal.</div></div></div></div>`;
+  return `<div class="header-guide-grid"><div class="header-guide-item"><span class="header-guide-ico">M</span><div><div class="header-guide-title">Member</div><div class="header-guide-desc">Membuka halaman kode khusus member.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${lockIcon}</span><div><div class="header-guide-title">Status Transaksi</div><div class="header-guide-desc">${lockText}</div></div></div><div class="header-guide-item"><span class="header-guide-ico">↻</span><div><div class="header-guide-title">Refresh</div><div class="header-guide-desc">Muat ulang data, sync pending, dan update bonus terbaru.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${themeIcon}</span><div><div class="header-guide-title">Tema</div><div class="header-guide-desc">Ganti tampilan Majoo atau Neo Brutalism.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">⏻</span><div><div class="header-guide-title">Keluar</div><div class="header-guide-desc">Logout dari akun staff di perangkat ini.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">!</span><div><div class="header-guide-title">Catatan Refresh</div><div class="header-guide-desc">Pakai refresh saat data belum masuk, bonus belum berubah, atau transaksi gagal.</div></div></div></div>`;
 }
 function openHeaderGuideDetail(){
   modal('Panduan Icon Header',`<div class="header-guide-modal-note">“${esc(headerGuideNoteText())}”</div>${headerGuideItems()}`,`<button class="btn primary" onclick="closeModal()">Tutup</button>`);
@@ -1256,7 +1243,7 @@ function headerTopIcon(name){
     refresh:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.2 6.5"/><path d="M3 12A9 9 0 0 1 18.2 5.5"/><path d="M18 2v4h-4"/><path d="M6 22v-4h4"/></svg>',
     sun:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.9 19.1 1.4-1.4"/><path d="m17.7 6.3 1.4-1.4"/></svg>',
     moon:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A7.5 7.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>',
-    palette:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18h1.2a1.8 1.8 0 0 0 1.4-2.9 1.8 1.8 0 0 1 1.4-2.9H18a6 6 0 0 0 0-12Z"/><circle cx="7.5" cy="10" r=".8"/><circle cx="10" cy="7.5" r=".8"/><circle cx="13.5" cy="7.8" r=".8"/><circle cx="8.8" cy="13.2" r=".8"/></svg>',
+    neo:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 16l3-8 2 8 3-8"/><path d="M7 12h10"/></svg>',
     logout:'<svg class="top-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M21 19V5a2 2 0 0 0-2-2h-6"/><path d="M13 21h6a2 2 0 0 0 2-2"/></svg>'
   };
   return icons[name]||'';
@@ -1275,17 +1262,17 @@ headerTxStatus=function(){
   return `<span class="trx-head-status ${locked?'locked':'open'}" aria-label="Status transaksi: ${esc(label)}" title="Status transaksi: ${esc(label)}"><span class="lock-ico">${headerTopIcon(locked?'lock':'unlock')}</span><span class="trx-head-label">${esc(label)}</span></span>`;
 }
 top=function(title,sub){
-  const info=themeInfo();
+  const neo=isNeoTheme();
   const back=canAppBack()?`<button class="top-back-btn" onclick="appBack()" aria-label="Kembali" title="Kembali">${headerTopIcon('back')}</button>`:'';
-  return `<div class="top">${back}<div class="brand"><div class="title">${esc(title)}</div><div class="sub">${esc(sub||state.user?.name||'Staff')}</div></div><div class="row top-actions">${headerTopLink('Member','member',MEMBER_URL,'member top-member')}${headerTxStatus()}${headerTopAction('Refresh','refresh','onclick="refresh()"','top-refresh')}${headerTopAction(info.nextLabel,info.icon,'onclick="toggleTheme()"','top-theme')}${headerTopAction('Keluar','logout','onclick="logout()"','danger top-logout')}</div></div>`;
+  return `<div class="top">${back}<div class="brand"><div class="title">${esc(title)}</div><div class="sub">${esc(sub||state.user?.name||'Staff')}</div></div><div class="row top-actions">${headerTopLink('Member','member',MEMBER_URL,'member top-member')}${headerTxStatus()}${headerTopAction('Refresh','refresh','onclick="refresh()"','top-refresh')}${headerTopAction(neo?'Tema Majoo':'Tema Neo',neo?'sun':'neo','onclick="toggleTheme()"','top-theme')}${headerTopAction('Keluar','logout','onclick="logout()"','danger top-logout')}</div></div>`;
 }
 headerGuideItems=function(){
-  const info=themeInfo();
+  const neo=isNeoTheme();
   const lock=missedAttendanceLockForDate();
   const free=isAttendanceFreeUser();
   const locked=!!lock||isClosedToday()||(!free&&!todayAtt());
   const lockText=lock?`Transaksi terkunci karena tidak ada absen ${dateID(lock.missedDate)}.`:(locked?'Transaksi terkunci karena belum absen atau sudah closing.':(isRismaSpecialUser()?'Risma bebas absen dan siap transaksi.':'Transaksi terbuka dan siap digunakan.'));
-  return `<div class="header-guide-grid"><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('member')}</span><div><div class="header-guide-title">Member</div><div class="header-guide-desc">Membuka halaman kode khusus member.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon(locked?'lock':'unlock')}</span><div><div class="header-guide-title">Status Transaksi</div><div class="header-guide-desc">${lockText}</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('refresh')}</span><div><div class="header-guide-title">Refresh</div><div class="header-guide-desc">Muat ulang data, sync pending, dan update bonus terbaru.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon(info.icon)}</span><div><div class="header-guide-title">Tema</div><div class="header-guide-desc">Mode aktif: ${esc(info.label)}. Klik untuk ${esc(info.nextLabel).toLowerCase()}.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('logout')}</span><div><div class="header-guide-title">Keluar</div><div class="header-guide-desc">Logout dari akun staff di perangkat ini.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('refresh')}</span><div><div class="header-guide-title">Catatan Refresh</div><div class="header-guide-desc">Pakai refresh saat data belum masuk, bonus belum berubah, atau transaksi gagal.</div></div></div></div>`;
+  return `<div class="header-guide-grid"><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('member')}</span><div><div class="header-guide-title">Member</div><div class="header-guide-desc">Membuka halaman kode khusus member.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon(locked?'lock':'unlock')}</span><div><div class="header-guide-title">Status Transaksi</div><div class="header-guide-desc">${lockText}</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('refresh')}</span><div><div class="header-guide-title">Refresh</div><div class="header-guide-desc">Muat ulang data, sync pending, dan update bonus terbaru.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon(neo?'sun':'neo')}</span><div><div class="header-guide-title">Tema</div><div class="header-guide-desc">Ganti tampilan Majoo atau Neo Brutalism.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('logout')}</span><div><div class="header-guide-title">Keluar</div><div class="header-guide-desc">Logout dari akun staff di perangkat ini.</div></div></div><div class="header-guide-item"><span class="header-guide-ico">${headerTopIcon('refresh')}</span><div><div class="header-guide-title">Catatan Refresh</div><div class="header-guide-desc">Pakai refresh saat data belum masuk, bonus belum berubah, atau transaksi gagal.</div></div></div></div>`;
 }
 function showStaffAbsenFab(){return !!state.user&&state.page==='home'&&!isAttendanceFreeUser()&&!todayAtt()&&!isClosedToday()&&!missedAttendanceLockForDate()}
 function nav(){const n=$('nav'),f=$('fab'),af=$('absenFab');if(!state.user){n.style.display='none';f.style.display='none';if(af)af.style.display='none';return}n.style.display='flex';f.style.display=state.page==='home'?'block':'none';if(af)af.style.display=showStaffAbsenFab()?'flex':'none';document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));$(`nav-${state.page}`)?.classList.add('active')}
