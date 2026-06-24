@@ -222,11 +222,11 @@
   const getDocsFromServer = getDocs;
 
   const CASH_FISIK_SUPABASE_URL="https://myxrvipyodadnldtomzs.supabase.co",CASH_FISIK_SUPABASE_ANON_KEY="sb_publishable_aG-kyasJNCEk2U9fN5T4qg_GfY0FpPH",CASH_FISIK_OWNER_ID="rocky-hijab",OPS_PREFIX="[OPS] ",CASHOUT_PREFIX="[CASHOUT:",CASH_DRAWER_TABLE="cash_drawer_audits",CASH_DRAWER_ADJ_PREFIX="[SELISIH_LACI:",CASH_DRAWER_MINUS_CATEGORY_NAME="Selisih Kas Minus",CASH_DRAWER_PLUS_CATEGORY_NAME="Selisih Kas Lebih",DEFAULT_TRANSACTION_BONUS_RATE=.015,DEFAULT_CLOSING_BONUS_PER_MINUTE=100,DEFAULT_CLOSING_DEADLINE_HOUR=18,DEFAULT_CLOSING_DEADLINE_MINUTE=0,DEFAULT_CLOSING_DEADLINE_TIME="18:00",SESSION_KEY="rocky_admin_lite_supabase_session_v1",THEME_KEY="rocky_admin_lite_theme_v1";
-  const STAFF_DAILY_NOTE_DOC_ID="__staff_daily_home_note",DEFAULT_STAFF_DAILY_NOTE="Semangat bekerja hari ini. Pastikan transaksi dicatat dengan benar dan refresh jika data belum masuk.",RISMA_MANUAL_CLOSING_DOC_ID="__risma_manual_closing",RISMA_MANUAL_CLOSING_COLLECTION="closings",STAFF_UNLOCK_TABLE="staff_leave_requests";
+  const STAFF_DAILY_NOTE_DOC_ID="__staff_daily_home_note",DEFAULT_STAFF_DAILY_NOTE="Semangat bekerja hari ini. Pastikan transaksi dicatat dengan benar dan refresh jika data belum masuk.",RISMA_MANUAL_CLOSING_DOC_ID="__risma_manual_closing",RISMA_MANUAL_CLOSING_COLLECTION="closings",STAFF_UNLOCK_TABLE="staff_leave_requests",RECEIPT_TEXT_DOC_ID="__receipt_text_settings",DEFAULT_RECEIPT_TEXT_SETTINGS={storeName:"ROCKY HIJAB",storeSubtext:"",dailyTitle:"TRANSAKSI HARI INI",dateLabel:"Tanggal",cashierLabel:"Kasir",productLabel:"Produk",totalLabel:"Total",countLabel:"Jumlah",footerText:"Terima kasih",bottomFeedLines:6};
   const BONUS_WITHDRAWAL_TYPE="bonus_withdrawal";
   const cashDb=createSupabaseClient(CASH_FISIK_SUPABASE_URL,CASH_FISIK_SUPABASE_ANON_KEY),$=id=>document.getElementById(id);
   const esc=s=>String(s??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c])),cleanUser=s=>String(s||"").trim().toLowerCase().replace(/[^a-z0-9_.-]/g,""),now=()=>new Date(),dateKey=(d=now())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`,monthKey=(d=now())=>dateKey(d).slice(0,7),rupiah=n=>new Intl.NumberFormat("id-ID").format(Math.round(Number(n||0))),rp=n=>`Rp ${rupiah(n)}`;
-  const state={page:"home",user:null,users:[],tx:[],att:[],closing:[],manual:[],unlockRequests:[],bonusSettings:{transactionBonusRate:DEFAULT_TRANSACTION_BONUS_RATE,transactionBonusPercent:1.5,closingBonusPerMinute:DEFAULT_CLOSING_BONUS_PER_MINUTE,closingDeadlineTime:DEFAULT_CLOSING_DEADLINE_TIME,closingDeadlineHour:DEFAULT_CLOSING_DEADLINE_HOUR,closingDeadlineMinute:DEFAULT_CLOSING_DEADLINE_MINUTE,closingDeadlineMinutes:(DEFAULT_CLOSING_DEADLINE_HOUR*60)+DEFAULT_CLOSING_DEADLINE_MINUTE},cashRows:[],cashAuditRows:[],lastRefresh:0,closingTarget:"global",attendanceDate:dateKey(),monthlyLoaded:false,monthlyLoadedAtMs:0,dayLoadedKey:"",loadedAttendanceDates:{},staffDailyHomeNote:{id:STAFF_DAILY_NOTE_DOC_ID,note:DEFAULT_STAFF_DAILY_NOTE,enabled:true,updatedAtMs:0,updatedBy:"",updatedByName:""},rismaManualClosing:{id:RISMA_MANUAL_CLOSING_DOC_ID,enabled:true,allowedUsers:[],allowedNames:{},updatedAtMs:0,updatedBy:"",updatedByName:""},cloudflareNotifySettings:{mode:"admin",adminEnabled:true,serverEnabled:false,cloudflareEnabled:true,updatedAtMs:0,updatedByName:""}};
+  const state={page:"home",user:null,users:[],tx:[],att:[],closing:[],manual:[],unlockRequests:[],bonusSettings:{transactionBonusRate:DEFAULT_TRANSACTION_BONUS_RATE,transactionBonusPercent:1.5,closingBonusPerMinute:DEFAULT_CLOSING_BONUS_PER_MINUTE,closingDeadlineTime:DEFAULT_CLOSING_DEADLINE_TIME,closingDeadlineHour:DEFAULT_CLOSING_DEADLINE_HOUR,closingDeadlineMinute:DEFAULT_CLOSING_DEADLINE_MINUTE,closingDeadlineMinutes:(DEFAULT_CLOSING_DEADLINE_HOUR*60)+DEFAULT_CLOSING_DEADLINE_MINUTE},cashRows:[],cashAuditRows:[],lastRefresh:0,closingTarget:"global",attendanceDate:dateKey(),monthlyLoaded:false,monthlyLoadedAtMs:0,dayLoadedKey:"",loadedAttendanceDates:{},staffDailyHomeNote:{id:STAFF_DAILY_NOTE_DOC_ID,note:DEFAULT_STAFF_DAILY_NOTE,enabled:true,updatedAtMs:0,updatedBy:"",updatedByName:""},rismaManualClosing:{id:RISMA_MANUAL_CLOSING_DOC_ID,enabled:true,allowedUsers:[],allowedNames:{},updatedAtMs:0,updatedBy:"",updatedByName:""},cloudflareNotifySettings:{mode:"admin",adminEnabled:true,serverEnabled:false,cloudflareEnabled:true,updatedAtMs:0,updatedByName:""},receiptSettings:{id:RECEIPT_TEXT_DOC_ID,...DEFAULT_RECEIPT_TEXT_SETTINGS,updatedAtMs:0,updatedBy:"",updatedByName:""}};
   /* === FIREBASE READ SAVER PATCH === */
   function nextMonthStartKey(mk=monthKey()){const[y,m]=String(mk||monthKey()).split("-").map(Number),d=new Date(y||new Date().getFullYear(),m||new Date().getMonth()+1,1);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-01`}
   function localSortKey(r){return Number(r?.closedAtMs||r?.createdAtMs||r?.updatedAtMs||r?.deletedAtMs||0)||0}
@@ -345,7 +345,7 @@ Masukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))ret
       const manualQ=query(collection(db,"manualBonuses"),where("dateKey","==",dk),limit(120));
       const usersQ=query(collection(db,"users"),limit(80));
       const unlockQ=query(collection(db,STAFF_UNLOCK_TABLE),where("requestKind","==","unlock"),limit(160));
-      const[txSnap,attSnap,closingSnap,manualSnap,userSnap,unlockSnap,bonusSnap,staffNoteSnap,rismaManualSnap]=await Promise.all([
+      const[txSnap,attSnap,closingSnap,manualSnap,userSnap,unlockSnap,bonusSnap,staffNoteSnap,rismaManualSnap,receiptSnap]=await Promise.all([
         getDocsFromServer(txQ).catch(()=>getDocs(txQ)),
         getDocsFromServer(attQ).catch(()=>getDocs(attQ)),
         getDocsFromServer(closingQ).catch(()=>getDocs(closingQ)),
@@ -355,6 +355,7 @@ Masukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))ret
         getDocFromServer(doc(db,"closings","__bonus_settings")).catch(()=>null),
         getDocFromServer(doc(db,"closings",STAFF_DAILY_NOTE_DOC_ID)).catch(()=>null),
         getDocFromServer(doc(db,RISMA_MANUAL_CLOSING_COLLECTION,RISMA_MANUAL_CLOSING_DOC_ID)).catch(()=>null),
+        getDocFromServer(doc(db,"closings",RECEIPT_TEXT_DOC_ID)).catch(()=>null),
         fetchCashFisik()
       ]);
       warnLargeSnapshot("transactions_today",txSnap,180);
@@ -375,6 +376,7 @@ Masukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))ret
       }
       state.staffDailyHomeNote=staffNoteSnap?.exists()?{id:STAFF_DAILY_NOTE_DOC_ID,note:DEFAULT_STAFF_DAILY_NOTE,enabled:true,updatedAtMs:0,updatedBy:"",updatedByName:"",...(staffNoteSnap.data()||{})}:{id:STAFF_DAILY_NOTE_DOC_ID,note:DEFAULT_STAFF_DAILY_NOTE,enabled:true,updatedAtMs:0,updatedBy:"",updatedByName:""};
       state.rismaManualClosing=rismaManualSnap?.exists()?{id:RISMA_MANUAL_CLOSING_DOC_ID,enabled:true,allowedUsers:[],allowedNames:{},updatedAtMs:0,updatedBy:"",updatedByName:"",...(rismaManualSnap.data()||{})}:{id:RISMA_MANUAL_CLOSING_DOC_ID,enabled:true,allowedUsers:[],allowedNames:{},updatedAtMs:0,updatedBy:"",updatedByName:""};
+      state.receiptSettings=receiptSnap?.exists()?{id:RECEIPT_TEXT_DOC_ID,...DEFAULT_RECEIPT_TEXT_SETTINGS,updatedAtMs:0,updatedBy:"",updatedByName:"",...(receiptSnap.data()||{})}:{id:RECEIPT_TEXT_DOC_ID,...DEFAULT_RECEIPT_TEXT_SETTINGS,updatedAtMs:0,updatedBy:"",updatedByName:""};
       await loadCloudflareNotifySettings(false);
       state.dayLoadedKey=dk;
       state.monthlyLoaded=false;
@@ -638,7 +640,7 @@ Masukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))ret
   window.resetUserDevice=async(username)=>{const safeUsername=cleanUser(username);if(!safeUsername)return toast("Pilih user dulu!",true);const user=userBy(safeUsername);if(!user)return toast("User tidak ditemukan!",true);if(userDeviceExempt(user))return toast("Karyawan harian bebas login di perangkat mana saja");if(!userDeviceLocked(user))return toast("Device user ini belum terkunci");const pin=await askPin(`Reset device untuk ${user.name||safeUsername} (@${safeUsername})?\n\nSetelah direset, session staff di HP lama akan otomatis keluar, lalu staff bisa login ulang di perangkat barunya.\n\nMasukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))return toast("PIN admin salah!",true);setBusy(true);try{const payload={deviceId:"",deviceLocked:false,deviceUser:"",deviceApp:"",deviceLabel:"",deviceUserAgent:"",devicePlatform:"",deviceLockedAt:null,deviceLockedAtMs:0,deviceLastLoginAt:null,deviceLastLoginAtMs:0,deviceResetAt:serverTimestamp(),deviceResetAtMs:Date.now(),deviceResetBy:state.user.username,deviceResetByName:state.user.name||state.user.username};await setDoc(doc(db,"users",safeUsername),payload,{merge:true});localMerge("users",safeUsername,payload);finishLocalWrite();closeModal("userModal");render();toast("âœ“ Device user direset")}catch(e){console.error(e);toast("Gagal reset device user",true)}finally{setBusy(false)}};
   function renderTeam(){const list=state.users.slice().sort((a,b)=>String(a.name||a.username).localeCompare(String(b.name||b.username)));return`<div class="wrap">${header("User","Manajemen user simple")}<button class="btn primary full mb" onclick="openUserModal()"><i class="fas fa-user-plus"></i> Tambah User</button><div class="list">${list.map(u=>`<div class="item"><div class="ico"><i class="fas fa-user"></i></div><div class="grow"><div class="name">${esc(u.name||u.username)}</div><div class="meta">@${esc(u.username)} - ${esc(u.role||"staff")}${isDummyUser(u)?" - TRIAL":""}</div></div><span class="chip ${isActive(u)?"ok":"bad"}">${isActive(u)?"Aktif":"Off"}</span>${isDummyUser(u)?`<span class="chip warn">Dummy</span>`:""}<button class="btn" onclick="editUser('${esc(u.username)}')"><i class="fas fa-pen"></i></button></div>`).join("")||`<div class="empty">Belum ada user</div>`}</div></div>`}window.openUserModal=()=>{$("userTitle").textContent="Tambah User";$("uUsername").disabled=false;$("uUsername").value="";$("uName").value="";$("uPin").value="";$("uRole").value="staff";$("uActive").value="true";if($("uDummy"))$("uDummy").checked=false;if($("uDeviceLockContainer"))$("uDeviceLockContainer").innerHTML="";modal("userModal")};window.editUser=username=>{const u=userBy(username);if(!u)return;$("userTitle").textContent="Edit User";$("uUsername").value=u.username;$("uUsername").disabled=true;$("uName").value=u.name||"";$("uPin").value=u.pin||"";$("uRole").value=u.role||"staff";$("uActive").value=String(isActive(u));if($("uDummy"))$("uDummy").checked=isDummyUser(u);if($("uDeviceLockContainer")){if(String(u.role||"staff").toLowerCase()==="admin"){$("uDeviceLockContainer").innerHTML=""}else{const exempt=userDeviceExempt(u);const locked=userDeviceLocked(u);const statusColor=exempt?"var(--primary)":(locked?"var(--success)":"var(--warning)");const statusIcon=exempt?"fa-person-walking-arrow-right":(locked?"fa-lock":"fa-unlock");$("uDeviceLockContainer").innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;border:1px solid var(--border);border-radius:12px;background:rgba(245,158,11,.10);margin-top:12px"><div style="min-width:0;flex:1"><div style="font-size:12px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Kunci Perangkat</div><div style="font-size:10px;color:${statusColor};margin-top:3px"><i class="fas ${statusIcon}"></i> ${esc(userDeviceStatusText(u))}</div></div><button type="button" onclick="resetUserDevice('${esc(username)}')" class="btn ${locked?'red':''}" style="padding:8px 10px;font-size:10.5px;border-radius:11px;white-space:nowrap" ${locked?"":"disabled"}><i class="fas ${exempt?'fa-check':'fa-rotate-left'}"></i> ${exempt?'Bebas':'Reset'}</button></div>`}}modal("userModal")};window.saveUser=async()=>{const username=cleanUser($("uUsername").value),name=String($("uName").value||username).trim(),pin=String($("uPin").value||"").trim(),role=$("uRole").value,active=$("uActive").value==="true",dummyMode=$("uDummy")?.checked===true;if(!username||!pin)return toast("Username & PIN wajib",true);setBusy(true);try{const existing=userBy(username)||{};const userPayload={username,name,pin,role,active,isDummy:dummyMode,trialMode:dummyMode,accountType:dummyMode?"dummy":"normal",excludeFromReports:dummyMode,trialTargetAmount:dummyMode?Number(existing.trialTargetAmount||10000):0,trialBonusAmount:dummyMode?Number(existing.trialBonusAmount||1000):0,updatedAt:serverTimestamp(),updatedAtMs:Date.now(),updatedBy:state.user.username};await setDoc(doc(db,"users",username),userPayload,{merge:true});localUpsert("users",{id:username,...existing,...userPayload});closeModal("userModal");finishLocalWrite();toast(dummyMode?"User dummy tersimpan":"User tersimpan")}catch(e){toast(e.message||"Gagal simpan user",true)}finally{setBusy(false)}};
   function renderClosingStatusList(){const global=getTodayGlobalClosing(),globalSelected=state.closingTarget==="global",users=realActiveUsers().filter(u=>String(u.role||"").toLowerCase()!=="admin");const globalRow=`<div class="closing-option-row ${globalSelected?"selected":""}" onclick="setClosingTarget('global')"><div class="grow"><div class="closing-title">Semua / Global</div><div class="closing-meta">${global?"SUDAH CLOSING":"PILIH UNTUK CLOSING SEMUA USER VALID"}</div></div><div class="closing-right"><span class="chip ${global?"ok":"warn"}">${global?"Sudah Closing":"Global"}</span><span class="closing-radio ${globalSelected?"on":""}"></span></div></div>`;const userRows=users.map(u=>{const selected=cleanUser(state.closingTarget)===cleanUser(u.username),status=closingStatusLabelForUser(u),chip=closingStatusChipClass(u);return`<div class="closing-option-row ${selected?"selected":""}" onclick="setClosingTarget('${esc(u.username)}')"><div class="grow"><div class="closing-title">${esc(u.name||u.username)} (@${esc(u.username)})</div><div class="closing-meta">${esc(status)}</div></div><div class="closing-right"><span class="chip ${chip}">${esc(status.replace("HARIAN - ",""))}</span><span class="closing-radio ${selected?"on":""}"></span></div></div>`}).join("");return`<div class="closing-status-list">${globalRow}${userRows||`<div class="empty">Belum ada user closing</div>`}</div>`}
-  function renderOps(){const target=closingTargetUser(),targetUsername=target?cleanUser(target.username):null,userClosing=targetUsername?getTodayUserClosing(targetUsername):null,globalClosing=getTodayGlobalClosing(),lockedByGlobal=!!(targetUsername&&!userClosing&&globalClosing&&!isClosingCanceledForUser(globalClosing,targetUsername)),activeClosing=targetUsername?(userClosing||(lockedByGlobal?globalClosing:null)):globalClosing,deadlineSnapshot=getClosingDeadlineSnapshot(),delay=activeClosing?Number(activeClosing.delayMinutes||0):closingDelayMinutes(now(),deadlineSnapshot),built=activeClosing?buildClosingBonusByUserForEdit(activeClosing,delay,targetUsername):buildClosingBonusByUser(delay,targetUsername),attList=state.att.filter(a=>!isDeleted(a)&&!isTrialRecord(a)&&extractDateKey(a)===state.attendanceDate),deadlineText=activeClosing?`Deadline snapshot data ini: ${formatClosingDeadline(activeClosing)}`:`Deadline closing baru: ${deadlineSnapshot.deadline}`;return`<div class="wrap">${header("Ops","Closing & absen seperti admin")}${renderClosingDeadlineSettingsCard()}<div class="card pad mb"><div class="row" style="justify-content:space-between"><div><div class="title">Closing</div><div class="meta">Target bisa Global / per user</div></div><span class="chip ${activeClosing?"ok":"warn"}">${activeClosing?"Sudah Closing":"Belum Closing"}</span></div><div class="sep"></div><select class="input mb" onchange="setClosingTarget(this.value)">${optionClosingUsers()}</select><div class="meta" style="margin:-4px 0 10px">${deadlineText}</div><div class="ops-hero mb"><div class="grid3"><div><div class="tiny">Lewat</div><div class="amt num">${delay} mnt</div></div><div><div class="tiny">Target</div><div class="amt num">${built.targetUsers.length}</div></div><div><div class="tiny">Bonus</div><div class="amt num">${rp(activeClosing?.totalBonus??built.totalBonus)}</div></div></div><div class="meta" style="margin-top:8px">${targetUsername?`Target: ${esc(target?.name||targetUsername)}${lockedByGlobal?" - terkunci global":""}`:"Global: staff yang sudah absen + harian"}</div></div><div class="grid2 mb"><button class="btn primary full" ${activeClosing?"disabled":""} onclick="handleClosingToday()"><i class="fas fa-lock"></i> Closing</button><button class="btn amber full" ${activeClosing?"":"disabled"} onclick="handleEditClosingTime()"><i class="fas fa-clock"></i> Edit Jam</button></div><button class="btn red full" ${activeClosing?"":"disabled"} onclick="handleCancelClosingToday()"><i class="fas fa-unlock"></i> Batal Closing</button></div>${renderRismaManualClosingShortcut()}<div class="card pad"><div class="row" style="justify-content:space-between"><div><div class="title">Absen</div><div class="meta">Tambah, edit, hapus absen pakai PIN</div></div><button class="btn green" onclick="openAdminAttendanceModal()"><i class="fas fa-plus"></i> Tambah</button></div><div class="sep"></div><div class="filter-row mb"><input class="input" type="date" value="${esc(state.attendanceDate)}" onchange="setAttendanceDate(this.value)"><button class="btn" onclick="setAttendanceDate('${dateKey()}')">Hari Ini</button></div>${renderAttendanceList(attList)}</div></div>`}window.setClosingTarget=val=>{state.closingTarget=val||"global";render()};window.setAttendanceDate=val=>{const dk=String(val||dateKey()).slice(0,10);state.attendanceDate=dk;loadAttendanceForDate(dk)};function renderAttendanceList(list){if(!list.length)return`<div class="empty">Belum ada absen di tanggal ini</div>`;return`<div class="list">${list.map(a=>`<div class="item"><div class="ico"><i class="fas fa-user-clock"></i></div><div class="grow"><div class="name">${esc(a.name||userName(a.user))}</div><div class="meta">@${esc(a.user||"")} - ${extractDateKey(a)} - ${formatAttendanceTime(a)} WIB ${a.manual?"- manual":""}</div></div><div class="att-actions"><button class="btn" onclick="openAdminAttendanceModal('${esc(a.id)}')"><i class="fas fa-pen"></i></button><button class="btn red" onclick="deleteAdminAttendance('${esc(a.id)}')"><i class="fas fa-trash"></i></button></div></div>`).join("")}</div>`}window.openAdminAttendanceModal=(id="")=>{const rec=id?state.att.find(a=>String(a.id)===String(id)):null;$("attTitle").textContent=rec?"Edit Absen":"Tambah Absen";$("attId").value=rec?.id||"";$("attUser").innerHTML=optionUsers(rec?.user||state.user?.username);$("attDate").value=rec?extractDateKey(rec):state.attendanceDate||dateKey();$("attTime").value=rec?formatAttendanceTime(rec):currentWibTimeLabel();modal("attendanceModal")};window.saveAdminAttendance=async()=>{const id=String($("attId").value||""),username=cleanUser($("attUser").value),u=userBy(username),dk=String($("attDate").value||"").slice(0,10),tm=String($("attTime").value||"").slice(0,5);if(!username||!u)return toast("User tidak valid",true);if(!/^\d{4}-\d{2}-\d{2}$/.test(dk))return toast("Tanggal tidak valid",true);if(!/^\d{2}:\d{2}$/.test(tm))return toast("Jam tidak valid",true);const pin=await askPin(`${id?"Simpan edit":"Tambah"} absen untuk ${u.name||username}?\n${dk} ${tm} WIB\n\nMasukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))return toast("PIN salah",true);const createdAtMs=Date.parse(`${dk}T${tm}:00+07:00`);if(!Number.isFinite(createdAtMs))return toast("Jam absen tidak valid",true);const docId=id||getAttendanceDocId(username,dk),payload={...trialFlagsForUser(u),user:username,name:u.name||username,dateKey:dk,monthKey:dk.slice(0,7),createdAt:Timestamp.fromMillis(createdAtMs),createdAtMs,manual:true,deleted:false,updatedAt:serverTimestamp(),updatedAtMs:Date.now(),updatedBy:state.user.username,updatedByName:state.user.name||state.user.username};if(!id){payload.createdBy=state.user.username;payload.createdByName=state.user.name||state.user.username}setBusy(true);try{await setDoc(doc(db,"attendance",docId),payload,{merge:true});localUpsert("att",{id:docId,...payload});closeModal("attendanceModal");state.attendanceDate=dk;finishLocalWrite();toast("Absen tersimpan")}catch(e){toast(e.message||"Gagal simpan absen",true)}finally{setBusy(false)}};window.deleteAdminAttendance=async id=>{const rec=state.att.find(a=>String(a.id)===String(id));if(!rec)return toast("Data absen tidak ditemukan",true);const pin=await askPin(`Hapus absen ${rec.name||rec.user||""}?\n${extractDateKey(rec)} ${formatAttendanceTime(rec)} WIB\n\nMasukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))return toast("PIN salah",true);setBusy(true);try{const patch={deleted:true,deletedAt:serverTimestamp(),deletedAtMs:Date.now(),deletedBy:state.user.username,deletedByName:state.user.name};await setDoc(doc(db,"attendance",id),patch,{merge:true});localMerge("att",id,patch);finishLocalWrite();toast("Absen dihapus")}catch(e){toast(e.message||"Gagal hapus absen",true)}finally{setBusy(false)}};
+  function renderOps(){const target=closingTargetUser(),targetUsername=target?cleanUser(target.username):null,userClosing=targetUsername?getTodayUserClosing(targetUsername):null,globalClosing=getTodayGlobalClosing(),lockedByGlobal=!!(targetUsername&&!userClosing&&globalClosing&&!isClosingCanceledForUser(globalClosing,targetUsername)),activeClosing=targetUsername?(userClosing||(lockedByGlobal?globalClosing:null)):globalClosing,deadlineSnapshot=getClosingDeadlineSnapshot(),delay=activeClosing?Number(activeClosing.delayMinutes||0):closingDelayMinutes(now(),deadlineSnapshot),built=activeClosing?buildClosingBonusByUserForEdit(activeClosing,delay,targetUsername):buildClosingBonusByUser(delay,targetUsername),attList=state.att.filter(a=>!isDeleted(a)&&!isTrialRecord(a)&&extractDateKey(a)===state.attendanceDate),deadlineText=activeClosing?`Deadline snapshot data ini: ${formatClosingDeadline(activeClosing)}`:`Deadline closing baru: ${deadlineSnapshot.deadline}`;return`<div class="wrap">${header("Ops","Closing & absen seperti admin")}${renderClosingDeadlineSettingsCard()}<div class="card pad mb"><div class="row" style="justify-content:space-between"><div><div class="title">Closing</div><div class="meta">Target bisa Global / per user</div></div><span class="chip ${activeClosing?"ok":"warn"}">${activeClosing?"Sudah Closing":"Belum Closing"}</span></div><div class="sep"></div><select class="input mb" onchange="setClosingTarget(this.value)">${optionClosingUsers()}</select><div class="meta" style="margin:-4px 0 10px">${deadlineText}</div><div class="ops-hero mb"><div class="grid3"><div><div class="tiny">Lewat</div><div class="amt num">${delay} mnt</div></div><div><div class="tiny">Target</div><div class="amt num">${built.targetUsers.length}</div></div><div><div class="tiny">Bonus</div><div class="amt num">${rp(activeClosing?.totalBonus??built.totalBonus)}</div></div></div><div class="meta" style="margin-top:8px">${targetUsername?`Target: ${esc(target?.name||targetUsername)}${lockedByGlobal?" - terkunci global":""}`:"Global: staff yang sudah absen + harian"}</div></div><div class="grid2 mb"><button class="btn primary full" ${activeClosing?"disabled":""} onclick="handleClosingToday()"><i class="fas fa-lock"></i> Closing</button><button class="btn amber full" ${activeClosing?"":"disabled"} onclick="handleEditClosingTime()"><i class="fas fa-clock"></i> Edit Jam</button></div><button class="btn red full" ${activeClosing?"":"disabled"} onclick="handleCancelClosingToday()"><i class="fas fa-unlock"></i> Batal Closing</button></div>${renderRismaManualClosingShortcut()}<div class="card pad"><div class="row" style="justify-content:space-between"><div><div class="title">Absen</div><div class="meta">Tambah, edit, hapus absen pakai PIN</div></div><button class="btn green" onclick="openAdminAttendanceModal()"><i class="fas fa-plus"></i> Tambah</button></div><div class="sep"></div><div class="filter-row mb"><input class="input" type="date" value="${esc(state.attendanceDate)}" onchange="setAttendanceDate(this.value)"><button class="btn" onclick="setAttendanceDate('${dateKey()}')">Hari Ini</button></div>${renderAttendanceList(attList)}</div>${renderReceiptTextSettingsBody()}</div>`}window.setClosingTarget=val=>{state.closingTarget=val||"global";render()};window.setAttendanceDate=val=>{const dk=String(val||dateKey()).slice(0,10);state.attendanceDate=dk;loadAttendanceForDate(dk)};function renderAttendanceList(list){if(!list.length)return`<div class="empty">Belum ada absen di tanggal ini</div>`;return`<div class="list">${list.map(a=>`<div class="item"><div class="ico"><i class="fas fa-user-clock"></i></div><div class="grow"><div class="name">${esc(a.name||userName(a.user))}</div><div class="meta">@${esc(a.user||"")} - ${extractDateKey(a)} - ${formatAttendanceTime(a)} WIB ${a.manual?"- manual":""}</div></div><div class="att-actions"><button class="btn" onclick="openAdminAttendanceModal('${esc(a.id)}')"><i class="fas fa-pen"></i></button><button class="btn red" onclick="deleteAdminAttendance('${esc(a.id)}')"><i class="fas fa-trash"></i></button></div></div>`).join("")}</div>`}window.openAdminAttendanceModal=(id="")=>{const rec=id?state.att.find(a=>String(a.id)===String(id)):null;$("attTitle").textContent=rec?"Edit Absen":"Tambah Absen";$("attId").value=rec?.id||"";$("attUser").innerHTML=optionUsers(rec?.user||state.user?.username);$("attDate").value=rec?extractDateKey(rec):state.attendanceDate||dateKey();$("attTime").value=rec?formatAttendanceTime(rec):currentWibTimeLabel();modal("attendanceModal")};window.saveAdminAttendance=async()=>{const id=String($("attId").value||""),username=cleanUser($("attUser").value),u=userBy(username),dk=String($("attDate").value||"").slice(0,10),tm=String($("attTime").value||"").slice(0,5);if(!username||!u)return toast("User tidak valid",true);if(!/^\d{4}-\d{2}-\d{2}$/.test(dk))return toast("Tanggal tidak valid",true);if(!/^\d{2}:\d{2}$/.test(tm))return toast("Jam tidak valid",true);const pin=await askPin(`${id?"Simpan edit":"Tambah"} absen untuk ${u.name||username}?\n${dk} ${tm} WIB\n\nMasukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))return toast("PIN salah",true);const createdAtMs=Date.parse(`${dk}T${tm}:00+07:00`);if(!Number.isFinite(createdAtMs))return toast("Jam absen tidak valid",true);const docId=id||getAttendanceDocId(username,dk),payload={...trialFlagsForUser(u),user:username,name:u.name||username,dateKey:dk,monthKey:dk.slice(0,7),createdAt:Timestamp.fromMillis(createdAtMs),createdAtMs,manual:true,deleted:false,updatedAt:serverTimestamp(),updatedAtMs:Date.now(),updatedBy:state.user.username,updatedByName:state.user.name||state.user.username};if(!id){payload.createdBy=state.user.username;payload.createdByName=state.user.name||state.user.username}setBusy(true);try{await setDoc(doc(db,"attendance",docId),payload,{merge:true});localUpsert("att",{id:docId,...payload});closeModal("attendanceModal");state.attendanceDate=dk;finishLocalWrite();toast("Absen tersimpan")}catch(e){toast(e.message||"Gagal simpan absen",true)}finally{setBusy(false)}};window.deleteAdminAttendance=async id=>{const rec=state.att.find(a=>String(a.id)===String(id));if(!rec)return toast("Data absen tidak ditemukan",true);const pin=await askPin(`Hapus absen ${rec.name||rec.user||""}?\n${extractDateKey(rec)} ${formatAttendanceTime(rec)} WIB\n\nMasukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))return toast("PIN salah",true);setBusy(true);try{const patch={deleted:true,deletedAt:serverTimestamp(),deletedAtMs:Date.now(),deletedBy:state.user.username,deletedByName:state.user.name};await setDoc(doc(db,"attendance",id),patch,{merge:true});localMerge("att",id,patch);finishLocalWrite();toast("Absen dihapus")}catch(e){toast(e.message||"Gagal hapus absen",true)}finally{setBusy(false)}};
   window.handleClosingToday=async()=>{const target=closingTargetUser(),targetUsername=target?cleanUser(target.username):null,today=dateKey(),existingUser=targetUsername?getTodayUserClosing(targetUsername):null,existingGlobal=getTodayGlobalClosing(),existing=targetUsername?(existingUser||(existingGlobal&&!isClosingCanceledForUser(existingGlobal,targetUsername)?existingGlobal:null)):existingGlobal;if(existing)return toast(targetUsername?"User ini sudah closing / terkunci global hari ini":"Global hari ini sudah closing",true);const pin=await askPin(`Closing transaksi ${targetUsername?"untuk "+(target.name||targetUsername):"SEMUA USER"} tanggal ${today}?\n${targetUsername?"Hanya user ini yang terkunci.":"Hanya user yang sudah absen atau karyawan harian yang masuk target closing."}\nMasukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))return toast("PIN salah",true);const currentClosingTime=currentWibTimeLabel(),deadlineSnapshot=getClosingDeadlineSnapshot(),delay=closingDelayMinutes(now(),deadlineSnapshot),built=buildClosingBonusByUser(delay,targetUsername);if(targetUsername&&!built.targetUsers.length)return toast("User belum absen / bukan harian, jadi tidak perlu closing",true);if(!targetUsername&&!built.targetUsers.length)return toast("Belum ada user yang sudah absen atau karyawan harian untuk closing",true);if(!confirm(`Yakin closing ${targetUsername?(target.name||targetUsername):"SEMUA USER"} sekarang?\nDeadline: ${deadlineSnapshot.deadline}\nLewat deadline: ${delay} menit\nTarget closing valid: ${built.targetUsers.length}\nTotal bonus closing: ${rp(built.totalBonus)}`))return;setBusy(true);try{const docId=getClosingDocId(today,targetUsername),payload={id:docId,closed:true,scope:targetUsername?"user":"global",user:targetUsername||null,name:target?.name||null,dateKey:today,monthKey:monthKey(),closedAt:serverTimestamp(),closedAtMs:Date.now(),closedBy:state.user.username,closedByName:state.user.name,actualClosingTime:currentClosingTime,closingTime:currentClosingTime,manualClosingTime:currentClosingTime,canceled:false,canceledAtMs:null,editedAtMs:null,...deadlineSnapshot,delayMinutes:delay,bonusPerMinute:state.bonusSettings.closingBonusPerMinute,bonusPerMinuteByUser:built.bonusPerMinuteByUser,bonusPerUser:built.bonusPerUser,bonusByUser:built.bonusByUser,bonusLogicVersion:3,totalUsers:built.targetUsers.length,totalBonus:built.totalBonus};await setDoc(doc(db,"closings",docId),payload,{merge:true});localUpsert("closing",payload);finishLocalWrite();toast(delay?`Closing berhasil - bonus ${rp(built.totalBonus)}`:"Closing berhasil")}catch(e){toast(e.message||"Gagal closing",true)}finally{setBusy(false)}};window.handleEditClosingTime=async()=>{const target=closingTargetUser(),targetUsername=target?cleanUser(target.username):null,closing=targetUsername?getTodayUserClosing(targetUsername):getTodayGlobalClosing();if(!closing)return toast(targetUsername?"User ini belum closing hari ini":"Closing global hari ini belum ada",true);const current=closing.manualClosingTime||closing.closingTime||currentWibTimeLabel(),input=prompt(`Edit jam closing tanggal ${closing.dateKey||dateKey()}\nFormat HH:MM WIB. Contoh 18:10`,current);if(!input)return;const clean=String(input).trim().replace(".",":").slice(0,5);if(!/^\d{1,2}:\d{2}$/.test(clean))return toast("Format jam tidak valid",true);const delay=delayFromTimeLabel(clean,closing);if(delay===null)return toast("Format jam tidak valid",true);const pin=await askPin("Masukkan PIN admin untuk simpan edit jam closing:");if(!pin)return;if(String(pin)!==String(state.user.pin))return toast("PIN salah",true);const built=buildClosingBonusByUserForEdit(closing,delay,targetUsername);if(!confirm(`Simpan jam closing ${clean} WIB?\nDeadline snapshot data ini: ${formatClosingDeadline(closing)}\nLewat deadline: ${delay} menit\nTotal user: ${built.targetUsers.length}\nTotal bonus closing: ${rp(built.totalBonus)}`))return;setBusy(true);try{const docId=closing.id||getClosingDocId(closing.dateKey||dateKey(),targetUsername);const patch={manualClosingTime:clean,closingTime:clean,delayMinutes:delay,bonusPerMinute:state.bonusSettings.closingBonusPerMinute,bonusPerMinuteByUser:built.bonusPerMinuteByUser,bonusPerUser:built.bonusPerUser,bonusByUser:built.bonusByUser,bonusLogicVersion:3,totalUsers:built.targetUsers.length,totalBonus:built.totalBonus,editedAt:serverTimestamp(),editedAtMs:Date.now(),editedBy:state.user.username,editedByName:state.user.name};await setDoc(doc(db,"closings",docId),patch,{merge:true});localMerge("closing",docId,patch);finishLocalWrite();toast("Jam closing diperbarui")}catch(e){toast(e.message||"Gagal edit jam closing",true)}finally{setBusy(false)}};window.handleCancelClosingToday=async()=>{const target=closingTargetUser(),targetUsername=target?cleanUser(target.username):null,userClosing=targetUsername?getTodayUserClosing(targetUsername):null,globalClosing=getTodayGlobalClosing(),lockedByGlobal=!!(targetUsername&&!userClosing&&globalClosing&&!isClosingCanceledForUser(globalClosing,targetUsername)),closing=targetUsername?(userClosing||(lockedByGlobal?globalClosing:null)):globalClosing;if(!closing)return toast(targetUsername?"User ini belum closing hari ini":"Belum ada closing global hari ini",true);const dk=closing.dateKey||dateKey(),pin=await askPin(`Batal closing ${targetUsername?"untuk "+(target?.name||targetUsername):"GLOBAL"} tanggal ${dk}?\n${lockedByGlobal?"User ini akan dibuka dari closing global. User lain tetap terkunci.":"Bonus closing target ini tidak akan dihitung."}\nMasukkan PIN admin:`);if(!pin)return;if(String(pin)!==String(state.user.pin))return toast("PIN salah",true);if(!confirm(`Yakin batal closing ${targetUsername?(target?.name||targetUsername):"GLOBAL"}?`))return;setBusy(true);try{const docId=closing.id||getClosingDocId(dk,targetUsername);if(lockedByGlobal){const canceledUsers={...(closing.canceledUsers||{}),[targetUsername]:true};const patch={canceledUsers,editedAt:serverTimestamp(),editedAtMs:Date.now(),editedBy:state.user.username,editedByName:state.user.name};await setDoc(doc(db,"closings",docId),patch,{merge:true});localMerge("closing",docId,patch)}else{const patch={closed:false,canceled:true,canceledAt:serverTimestamp(),canceledAtMs:Date.now(),canceledBy:state.user.username,canceledByName:state.user.name};await setDoc(doc(db,"closings",docId),patch,{merge:true});localMerge("closing",docId,patch)}finishLocalWrite();toast("Closing dibatalkan")}catch(e){toast(e.message||"Gagal batal closing",true)}finally{setBusy(false)}};
 
 
@@ -1319,7 +1321,7 @@ window.openAdminDailyTargetSettings=async function(){
   <div class="card pad mb" style="box-shadow:none">
     <div class="tiny">Bonus per Staff Hadir</div>
     <input id="adminTargetBonusInput" class="input" value="${rupiah(s.bonusAmount)}" inputmode="numeric" placeholder="Bonus target">
-  </div>${renderAdminTargetScheduleList()}`;
+  </div>`;
   const footer=`<div class="grid2"><button class="btn" onclick="closeDynamicSheet('adminDailyTargetSettingsModal')"><i class="fas fa-xmark"></i> Batal</button><button class="btn primary" onclick="saveAdminDailyTargetSettingsFromForm()"><i class="fas fa-check"></i> Simpan</button></div>`;
   openDynamicSheet('adminDailyTargetSettingsModal','Atur Target Harian','Bisa dijadwalkan untuk tanggal tertentu',body,footer);
   setTimeout(()=>$("adminTargetEffectiveDate")?.focus?.(),80);
@@ -1412,7 +1414,7 @@ window.deleteAdminTargetSchedule=async function(rawDate,rawId=''){
 };
 renderAdminDailyTargetCard=function(){
   const s=adminDailyTargetSummary(),pct=Math.max(0,Math.min(100,s.progressPercent||0)),pctText=(Math.round((s.progressPercent||0)*10)/10).toLocaleString('id-ID'),reached=!!s.reached,unread=reached&&state.targetNotification?.read===false;
-  return`<div class="card pad admin-target-card" style="margin:14px 0 18px;padding:14px 14px;border-color:${reached?'rgba(16,185,129,.32)':'rgba(79,124,255,.28)'};background:linear-gradient(135deg,${reached?'rgba(16,185,129,.14)':'rgba(79,124,255,.12)'},var(--surface));border-radius:20px"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px"><div class="grow"><div class="tiny">${reached?'Target omzet harian tercapai':'Target omzet harian'}</div><div class="amt num" style="margin-top:6px">${rp(s.totalAmount)}</div><div class="meta" style="margin-top:6px;line-height:1.35">Target ${rp(s.targetAmount)} - Bonus ${rp(s.bonusAmount)} - Berlaku sejak ${displayDateKey(s.targetSettingDate)} - ${reached?'status tercapai':'sisa '+rp(s.remainingAmount)}</div></div><span class="chip ${reached?'ok':'warn'}">${unread?'Baru':(reached?'Tercapai':pctText+'%')}</span></div><div style="height:9px;border-radius:999px;background:rgba(148,163,184,.24);overflow:hidden;margin-top:14px"><span style="display:block;height:100%;width:${pct}%;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--success))"></span></div><div class="grid2" style="margin-top:12px"><button class="btn full" onclick="openAdminDailyTargetSettings()"><i class="fas fa-sliders"></i> Atur Target</button>${unread?`<button class="btn green full" onclick="markAdminDailyTargetRead()"><i class="fas fa-check"></i> Tandai dibaca</button>`:`<button class="btn full" onclick="refreshAll(true)"><i class="fas fa-rotate"></i> Refresh</button>`}</div></div>`;
+  return`<div class="card pad admin-target-card" style="margin:14px 0 18px;padding:14px 14px;border-color:${reached?'rgba(16,185,129,.32)':'rgba(79,124,255,.28)'};background:linear-gradient(135deg,${reached?'rgba(16,185,129,.14)':'rgba(79,124,255,.12)'},var(--surface));border-radius:20px"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px"><div class="grow"><div class="tiny">${reached?'Target omzet harian tercapai':'Target omzet harian'}</div><div class="amt num" style="margin-top:6px">${rp(s.totalAmount)}</div><div class="meta" style="margin-top:6px;line-height:1.35">Target ${rp(s.targetAmount)} - Bonus ${rp(s.bonusAmount)} - Berlaku sejak ${displayDateKey(s.targetSettingDate)} - ${reached?'status tercapai':'sisa '+rp(s.remainingAmount)}</div></div><span class="chip ${reached?'ok':'warn'}">${unread?'Baru':(reached?'Tercapai':pctText+'%')}</span></div><div style="height:9px;border-radius:999px;background:rgba(148,163,184,.24);overflow:hidden;margin-top:14px"><span style="display:block;height:100%;width:${pct}%;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--success))"></span></div><div class="grid2" style="margin-top:12px;margin-bottom:8px"><button class="btn full" onclick="openAdminDailyTargetSettings()"><i class="fas fa-sliders"></i> Atur Target</button><button class="btn full" onclick="openAdminTargetScheduleModal()"><i class="fas fa-calendar-alt"></i> Jadwal Target</button></div>${unread?`<button class="btn green full" onclick="markAdminDailyTargetRead()"><i class="fas fa-check"></i> Tandai dibaca</button>`:`<button class="btn full" onclick="refreshAll(true)"><i class="fas fa-rotate"></i> Refresh</button>`}</div>`;
 };
 const __baseRenderHomeDailyTargetPatch=renderHome;
 renderHome=function(){
@@ -1431,3 +1433,200 @@ refreshAll=async function(force=false){
 window.refreshAll=refreshAll;
 
   async function boot(){applyTheme(initialTheme());const saved=localStorage.getItem(SESSION_KEY);if(saved){try{state.user=JSON.parse(saved);await refreshAll(true);setAppPage("home",{push:true});syncThemeUi();return}catch(e){localStorage.removeItem(SESSION_KEY)}}showLogin();syncThemeUi()}boot();
+
+
+
+  function receiptCleanLine(value, fallback = '', max = 42) {
+    const out = String(value ?? '').replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!out) return fallback;
+    return String(out || '').slice(0, max);
+  }
+  function receiptCleanMultiline(value, fallback = '', maxLines = 4, maxEach = 42) {
+    const lines = String(value ?? '').split(/\r?\n/).map(v => receiptCleanLine(v, '', maxEach)).filter(Boolean).slice(0, maxLines);
+    return lines.length ? lines.join('\n') : fallback;
+  }
+  function normalizeReceiptTextSettings(raw = {}) {
+    const merged = { ...DEFAULT_RECEIPT_TEXT_SETTINGS, ...(raw || {}) };
+    const feed = Math.round(Number(merged.bottomFeedLines ?? DEFAULT_RECEIPT_TEXT_SETTINGS.bottomFeedLines));
+    const bottomFeedLines = Math.max(0, Math.min(20, Number.isFinite(feed) ? feed : DEFAULT_RECEIPT_TEXT_SETTINGS.bottomFeedLines));
+    return {
+      id: RECEIPT_TEXT_DOC_ID,
+      storeName: receiptCleanLine(merged.storeName, DEFAULT_RECEIPT_TEXT_SETTINGS.storeName),
+      storeSubtext: receiptCleanMultiline(merged.storeSubtext, '', 4),
+      dailyTitle: receiptCleanLine(merged.dailyTitle, DEFAULT_RECEIPT_TEXT_SETTINGS.dailyTitle),
+      dateLabel: receiptCleanLine(merged.dateLabel, DEFAULT_RECEIPT_TEXT_SETTINGS.dateLabel, 12),
+      cashierLabel: receiptCleanLine(merged.cashierLabel, DEFAULT_RECEIPT_TEXT_SETTINGS.cashierLabel, 12),
+      productLabel: receiptCleanLine(merged.productLabel, DEFAULT_RECEIPT_TEXT_SETTINGS.productLabel, 12),
+      totalLabel: receiptCleanLine(merged.totalLabel, DEFAULT_RECEIPT_TEXT_SETTINGS.totalLabel, 12),
+      countLabel: receiptCleanLine(merged.countLabel, DEFAULT_RECEIPT_TEXT_SETTINGS.countLabel, 12),
+      footerText: receiptCleanMultiline(merged.footerText, DEFAULT_RECEIPT_TEXT_SETTINGS.footerText, 3),
+      bottomFeedLines,
+      updatedAtMs: Number(merged.updatedAtMs || 0),
+      updatedBy: merged.updatedBy || '',
+      updatedByName: merged.updatedByName || ''
+    };
+  }
+  function getReceiptTextSettings() {
+    return normalizeReceiptTextSettings(state.receiptSettings || DEFAULT_RECEIPT_TEXT_SETTINGS);
+  }
+  function receiptSettingInputValue(id) {
+    return String(document.getElementById(id)?.value || '');
+  }
+  function collectReceiptTextSettingsFromForm() {
+    return normalizeReceiptTextSettings({
+      storeName: receiptSettingInputValue('receipt-store-name'),
+      storeSubtext: receiptSettingInputValue('receipt-store-subtext'),
+      dailyTitle: receiptSettingInputValue('receipt-daily-title'),
+      dateLabel: receiptSettingInputValue('receipt-date-label'),
+      cashierLabel: receiptSettingInputValue('receipt-cashier-label'),
+      productLabel: receiptSettingInputValue('receipt-product-label'),
+      totalLabel: receiptSettingInputValue('receipt-total-label'),
+      countLabel: receiptSettingInputValue('receipt-count-label'),
+      footerText: receiptSettingInputValue('receipt-footer-text'),
+      bottomFeedLines: receiptSettingInputValue('receipt-bottom-feed-lines')
+    });
+  }
+  function receiptPreviewLabel(label, width = 8) {
+    const s = receiptCleanLine(label, '-', 12);
+    return `${s.length < width ? s.padEnd(width, ' ') : s} :`;
+  }
+  function receiptPreviewSummaryLabel(label) {
+    return receiptPreviewLabel(label, 11);
+  }
+  function buildReceiptSettingsPreview(settings = getReceiptTextSettings()) {
+    const s = normalizeReceiptTextSettings(settings);
+    const width = 32;
+    const center = (text) => {
+      const lines = String(text || '').split('\n').filter(Boolean);
+      return lines.map(line => {
+        const str = String(line || '').trim();
+        if (str.length >= width) return str.slice(0, width);
+        const pad = Math.floor((width - str.length) / 2);
+        return ' '.repeat(pad) + str;
+      }).join('\n');
+    };
+    
+    let out = '';
+    if (s.storeName) out += center(s.storeName) + '\n';
+    if (s.storeSubtext) out += center(s.storeSubtext) + '\n';
+    if (s.storeName || s.storeSubtext) out += receiptLine() + '\n';
+    
+    out += center(s.dailyTitle) + '\n';
+    out += receiptLine() + '\n';
+    
+    out += `${receiptPreviewLabel(s.dateLabel)} 24/06/2026 12:34\n`;
+    out += `${receiptPreviewLabel(s.cashierLabel)} RISMA\n`;
+    out += receiptLine() + '\n';
+    
+    out += `> KERUDUNG BELLA SQUARE\n`;
+    out += `${receiptPreviewSummaryLabel(s.countLabel)} 2\n`;
+    out += `${receiptPreviewSummaryLabel(s.totalLabel)} Rp 40.000\n`;
+    
+    if (s.footerText) {
+      out += receiptLine() + '\n';
+      out += center(s.footerText) + '\n';
+    }
+    
+    if (s.bottomFeedLines > 0) {
+      out += '\n'.repeat(s.bottomFeedLines);
+    }
+    
+    return out;
+  }
+  window.updateReceiptSettingsPreview = function() {
+    const el = document.getElementById('receipt-settings-preview');
+    if (!el) return;
+    el.textContent = buildReceiptSettingsPreview(collectReceiptTextSettingsFromForm());
+  };
+  window.resetReceiptTextSettingsForm = function() {
+    const s = normalizeReceiptTextSettings(DEFAULT_RECEIPT_TEXT_SETTINGS);
+    const set = (id, value) => { const el = document.getElementById(id); if (el) el.value = value; };
+    set('receipt-store-name', s.storeName);
+    set('receipt-store-subtext', s.storeSubtext);
+    set('receipt-daily-title', s.dailyTitle);
+    set('receipt-date-label', s.dateLabel);
+    set('receipt-cashier-label', s.cashierLabel);
+    set('receipt-product-label', s.productLabel);
+    set('receipt-total-label', s.totalLabel);
+    set('receipt-count-label', s.countLabel);
+    set('receipt-footer-text', s.footerText);
+    set('receipt-bottom-feed-lines', s.bottomFeedLines);
+    updateReceiptSettingsPreview();
+  };
+  window.saveReceiptTextSettings = async function() {
+    if (isBusy) return toast('Tunggu proses selesai', true);
+    const next = collectReceiptTextSettingsFromForm();
+    const pin = await askPin('Simpan setting tulisan struk?\nMasukkan PIN admin:');
+    if (!pin) return;
+    if (String(pin) !== String(state.user.pin)) return toast('PIN salah', true);
+    setBusy(true);
+    try {
+      const payload = {
+        ...next,
+        id: RECEIPT_TEXT_DOC_ID,
+        dateKey: RECEIPT_TEXT_DOC_ID,
+        closed: false,
+        type: 'receipt_text_settings',
+        updatedAt: serverTimestamp(),
+        updatedAtMs: Date.now(),
+        updatedBy: state.user.username,
+        updatedByName: state.user.name || state.user.username
+      };
+      await setDoc(doc(db, 'closings', RECEIPT_TEXT_DOC_ID), payload, { merge: true });
+      state.receiptSettings = normalizeReceiptTextSettings(payload);
+      toast('Setting tulisan struk disimpan');
+      render();
+    } catch (e) {
+      console.error(e);
+      toast('Gagal simpan setting struk: ' + (e.code || e.message || 'cek Supabase'), true);
+    }
+    setBusy(false);
+  };
+  function renderReceiptTextSettingsBody() {
+    const s = getReceiptTextSettings();
+    const updatedAtMs = Number(s.updatedAtMs || 0);
+    const updatedBy = s.updatedByName || s.updatedBy || '-';
+    return `<div class="card pad" style="margin-top:16px;">
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <div class="title">Setting Tulisan Struk</div>
+            <div class="meta">Ubah nama toko, label, footer, dll.</div>
+          </div>
+          <span class="chip ok" style="white-space:nowrap"><i class="fas fa-receipt"></i> Admin</span>
+        </div>
+        <div class="sep"></div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><p class="label-xs">Nama Toko/Header</p><input id="receipt-store-name" class="input" maxlength="42" value="${esc(s.storeName)}" oninput="updateReceiptSettingsPreview()"></div>
+            <div><p class="label-xs">Judul Struk Harian</p><input id="receipt-daily-title" class="input" maxlength="42" value="${esc(s.dailyTitle)}" oninput="updateReceiptSettingsPreview()"></div>
+          </div>
+          <div><p class="label-xs">Teks Kecil di Bawah Header</p><textarea id="receipt-store-subtext" class="input" rows="3" maxlength="180" style="min-height:74px;resize:vertical" placeholder="Opsional" oninput="updateReceiptSettingsPreview()">${esc(s.storeSubtext)}</textarea></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><p class="label-xs">Label Tanggal</p><input id="receipt-date-label" class="input" maxlength="12" value="${esc(s.dateLabel)}" oninput="updateReceiptSettingsPreview()"></div>
+            <div><p class="label-xs">Label Kasir</p><input id="receipt-cashier-label" class="input" maxlength="12" value="${esc(s.cashierLabel)}" oninput="updateReceiptSettingsPreview()"></div>
+            <div><p class="label-xs">Label Produk</p><input id="receipt-product-label" class="input" maxlength="12" value="${esc(s.productLabel)}" oninput="updateReceiptSettingsPreview()"></div>
+            <div><p class="label-xs">Label Total</p><input id="receipt-total-label" class="input" maxlength="12" value="${esc(s.totalLabel)}" oninput="updateReceiptSettingsPreview()"></div>
+            <div><p class="label-xs">Label Jumlah</p><input id="receipt-count-label" class="input" maxlength="12" value="${esc(s.countLabel)}" oninput="updateReceiptSettingsPreview()"></div>
+            <div><p class="label-xs">Jarak Bawah Sobek</p><input id="receipt-bottom-feed-lines" type="number" inputmode="numeric" min="0" max="20" class="input" value="${Number(s.bottomFeedLines || 6)}" oninput="updateReceiptSettingsPreview()"></div>
+          </div>
+          <div><p class="label-xs">Footer / Penutup Struk</p><textarea id="receipt-footer-text" class="input" rows="3" maxlength="120" style="min-height:74px;resize:vertical" oninput="updateReceiptSettingsPreview()">${esc(s.footerText)}</textarea></div>
+          <div style="border:1px dashed var(--line);border-radius:14px;background:var(--bg);padding:10px 11px">
+            <p class="label-xs" style="margin-bottom:6px">Preview Struk</p>
+            <pre id="receipt-settings-preview" style="font-family:'Courier New',monospace;font-size:11px;line-height:1.35;white-space:pre-wrap;color:var(--text);max-height:230px;overflow:auto">${esc(buildReceiptSettingsPreview(s))}</pre>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+            <button onclick="resetReceiptTextSettingsForm()" class="btn"><i class="fas fa-rotate-left"></i> Default</button>
+            <button onclick="saveReceiptTextSettings()" class="btn primary"><i class="fas fa-save"></i> Simpan Setting</button>
+          </div>
+          <p class="meta" style="margin-top:4px">Terakhir update: ${updatedAtMs ? new Date(updatedAtMs).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }) : '-'} - ${esc(updatedBy)}</p>
+        </div>
+      </div>`;
+  }
+  
+  window.openAdminTargetScheduleModal = async function() {
+  await adminLoadTargetSettings().catch(e=>console.warn('refresh jadwal target gagal',e?.code||e?.message||e));
+  const body = renderAdminTargetScheduleList();
+  const footer = `<button class="btn full" onclick="closeDynamicSheet('adminTargetScheduleModal')"><i class="fas fa-xmark"></i> Tutup</button>`;
+  openDynamicSheet('adminTargetScheduleModal', 'Jadwal Target Tersimpan', 'Daftar target yang dijadwalkan', body, footer);
+};
+
