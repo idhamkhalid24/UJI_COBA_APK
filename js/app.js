@@ -1,4 +1,4 @@
-  import { createClient as createSupabaseClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+﻿  import { createClient as createSupabaseClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
   const CASHIER_STAFF_URL = 'https://idhamkhalid24.github.io/Aplikasi_KASIR_STAF_ROCKY/';
   const ROCKY_ADMIN_NOTIFY_WORKER_BASE_URL = 'https://rocky-notif-worker.alfajrihanif24.workers.dev';
@@ -715,6 +715,8 @@ renderHome=function(){
     ['Closing','Risma','fa-route',"go('rismaClosing')"],
     ['Printer','Pengaturan','fa-print',"openPrinterSettingsModal()"],
     [loaded?'Reload':'Load','Bulanan','fa-cloud-arrow-down',`loadMonthlyLite(${loaded?'true':'false'})`],
+    ['Atur Target','Harian','fa-sliders',"openAdminDailyTargetSettings()"],
+    ['Jadwal Target','Harian','fa-calendar-alt',"openAdminTargetScheduleModal()"],
     ['Tema',currentTheme()==='dark'?'Terang':'Gelap',currentTheme()==='dark'?'fa-sun':'fa-moon',"toggleTheme();render()"],
     ['Keluar','Akun','fa-right-from-bracket',"logout()"]
   ];
@@ -1414,7 +1416,7 @@ window.deleteAdminTargetSchedule=async function(rawDate,rawId=''){
 };
 renderAdminDailyTargetCard=function(){
   const s=adminDailyTargetSummary(),pct=Math.max(0,Math.min(100,s.progressPercent||0)),pctText=(Math.round((s.progressPercent||0)*10)/10).toLocaleString('id-ID'),reached=!!s.reached,unread=reached&&state.targetNotification?.read===false;
-  return`<div class="card pad admin-target-card" style="margin:14px 0 18px;padding:14px 14px;border-color:${reached?'rgba(16,185,129,.32)':'rgba(79,124,255,.28)'};background:linear-gradient(135deg,${reached?'rgba(16,185,129,.14)':'rgba(79,124,255,.12)'},var(--surface));border-radius:20px"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px"><div class="grow"><div class="tiny">${reached?'Target omzet harian tercapai':'Target omzet harian'}</div><div class="amt num" style="margin-top:6px">${rp(s.totalAmount)}</div><div class="meta" style="margin-top:6px;line-height:1.35">Target ${rp(s.targetAmount)} - Bonus ${rp(s.bonusAmount)} - Berlaku sejak ${displayDateKey(s.targetSettingDate)} - ${reached?'status tercapai':'sisa '+rp(s.remainingAmount)}</div></div><span class="chip ${reached?'ok':'warn'}">${unread?'Baru':(reached?'Tercapai':pctText+'%')}</span></div><div style="height:9px;border-radius:999px;background:rgba(148,163,184,.24);overflow:hidden;margin-top:14px"><span style="display:block;height:100%;width:${pct}%;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--success))"></span></div><div class="grid2" style="margin-top:12px;margin-bottom:8px"><button class="btn full" onclick="openAdminDailyTargetSettings()"><i class="fas fa-sliders"></i> Atur Target</button><button class="btn full" onclick="openAdminTargetScheduleModal()"><i class="fas fa-calendar-alt"></i> Jadwal Target</button></div>${unread?`<button class="btn green full" onclick="markAdminDailyTargetRead()"><i class="fas fa-check"></i> Tandai dibaca</button>`:`<button class="btn full" onclick="refreshAll(true)"><i class="fas fa-rotate"></i> Refresh</button>`}</div>`;
+  return`<div class="card pad admin-target-card" style="margin:14px 0 18px;padding:14px 14px;border-color:${reached?'rgba(16,185,129,.32)':'rgba(79,124,255,.28)'};background:linear-gradient(135deg,${reached?'rgba(16,185,129,.14)':'rgba(79,124,255,.12)'},var(--surface));border-radius:20px"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px"><div class="grow"><div class="tiny">${reached?'Target omzet harian tercapai':'Target omzet harian'}</div><div class="amt num" style="margin-top:6px">${rp(s.totalAmount)}</div><div class="meta" style="margin-top:6px;line-height:1.35">Target ${rp(s.targetAmount)} - Bonus ${rp(s.bonusAmount)} - Berlaku sejak ${displayDateKey(s.targetSettingDate)} - ${reached?'status tercapai':'sisa '+rp(s.remainingAmount)}</div></div><span class="chip ${reached?'ok':'warn'}">${unread?'Baru':(reached?'Tercapai':pctText+'%')}</span></div><div style="height:9px;border-radius:999px;background:rgba(148,163,184,.24);overflow:hidden;margin-top:14px"><span style="display:block;height:100%;width:${pct}%;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--success))"></span></div>${unread?`<button class="btn green full" style="margin-top:12px" onclick="markAdminDailyTargetRead()"><i class="fas fa-check"></i> Tandai dibaca</button>`:`<button class="btn full" style="margin-top:12px" onclick="refreshAll(true)"><i class="fas fa-rotate"></i> Refresh</button>`}</div>`;
 };
 const __baseRenderHomeDailyTargetPatch=renderHome;
 renderHome=function(){
