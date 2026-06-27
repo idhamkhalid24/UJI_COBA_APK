@@ -528,12 +528,21 @@ async function fetchGoldPrice(){
   for(const route of PEGADAIAN_GOLD_FETCH_ROUTES){
     try{
       const res=await fetchGoldUrl(route.url);
-      if(!res.ok)throw new Error('HTTP '+res.status);
       const json=await res.json();
+      // Kalau proxy bilang harga_tersedia:false → semua sumber mati, jangan pakai cache
+      if(json.harga_tersedia===false){
+        throw Object.assign(new Error(json.message||'Harga tidak tersedia. Semua sumber sedang tidak dapat diakses.'),{semua_gagal:true});
+      }
+      if(!res.ok)throw new Error('HTTP '+res.status);
       const picked=parsePegadaianProxyGold(json,route.url);
       if(picked&&picked.price>0){goldPriceState=picked;saveGoldPriceCache();return picked;}
       throw new Error(json.message||'Format harga Pegadaian tidak cocok');
-    }catch(e){lastErr=e;console.warn('Harga emas Pegadaian gagal dari proxy '+(route.url||''),e);}
+    }catch(e){
+      lastErr=e;
+      console.warn('Harga emas Pegadaian gagal dari proxy '+(route.url||''),e);
+      // Kalau semua sumber proxy mati, langsung lempar error tanpa coba cache
+      if(e.semua_gagal)throw e;
+    }
   }
   const cached=restoreGoldPriceCache();
   if(cached&&cached.price)return cached;
