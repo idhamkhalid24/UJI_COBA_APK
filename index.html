@@ -261,10 +261,52 @@
         @media (min-width: 601px) {
             /* Empty or keep for other potential desktop styles in the future */
         }
+        /* NEW FEATURES CSS */
+        .habit-section { margin-bottom: 1rem; }
+        .habit-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+        .habit-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.5rem; }
+        .habit-item { background-color: white; border: var(--border); border-radius: var(--radius); padding: 0.5rem 0.75rem; display: flex; align-items: center; gap: 0.5rem; box-shadow: var(--shadow); }
+        .dark-mode .habit-item { background-color: #2A2A2A; }
+        .habit-item.completed { opacity: 0.6; background-color: var(--light); }
+        .add-habit-form { display: flex; gap: 0.4rem; margin-top: 0.5rem; }
+        .add-habit-input { flex: 1; padding: 0.4rem; border: var(--border); border-radius: var(--radius); font-size: var(--font-sm); font-family: inherit; }
+        
+        .pomodoro-btn { background: none; border: none; cursor: pointer; color: var(--dark); font-size: 1.1rem; padding: 0 4px; display: flex; align-items: center; justify-content: center; transition: transform 0.15s ease; }
+        .pomodoro-btn:active { transform: scale(0.9); }
+        .pomodoro-btn.active { color: #e63946; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        .pomodoro-timer-display { font-size: 0.75rem; font-weight: bold; background: var(--secondary); padding: 2px 6px; border-radius: 4px; margin-left: 4px; color: var(--dark); display: none; }
+        .pomodoro-btn.active + .pomodoro-timer-display { display: inline-block; }
+
+        .stats-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95); background: white; border: var(--border); border-radius: 14px; padding: 1.5rem; width: 90vw; max-width: 350px; z-index: 1100; opacity: 0; pointer-events: none; transition: all 0.2s ease; box-shadow: 0 4px 24px rgba(0,0,0,0.18); text-align: center; }
+        .dark-mode .stats-modal { background: #2A2A2A; }
+        .stats-modal.visible { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+        .stats-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1099; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .stats-backdrop.visible { opacity: 1; pointer-events: auto; }
+        .stats-number { font-size: 3rem; font-weight: 800; color: var(--primary); margin: 0.5rem 0; }
+        
+        .badge-popup { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #FFD700; color: #000; padding: 1rem; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); z-index: 1200; display: flex; align-items: center; gap: 1rem; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .badge-popup.show { transform: translateX(-50%) translateY(0); }
+        .badge-icon { font-size: 2.5rem; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <div class="celebration-overlay" id="celebration-overlay"></div>
+    <div class="stats-backdrop" id="stats-backdrop"></div>
+    <div class="stats-modal" id="stats-modal">
+        <h2>Statistik Mingguan</h2>
+        <div class="stats-number" id="stats-weekly-count">0</div>
+        <p>Tugas diselesaikan dalam 7 hari terakhir.</p>
+        <button id="close-stats-btn" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Tutup</button>
+    </div>
+    <div class="badge-popup" id="badge-popup">
+        <div class="badge-icon">🏅</div>
+        <div>
+            <h3 style="margin-bottom:0.2rem;">Luar Biasa!</h3>
+            <p style="font-size:0.8rem;">Kamu menyelesaikan 50 tugas minggu ini.</p>
+        </div>
+    </div>
 
     <div class="container">
         <div class="header">
@@ -273,6 +315,7 @@
                 <div id="username-display" data-i18n="appName">Tugas Saya</div>
             </div>
             <div class="header-controls">
+                <button class="stats-btn" id="stats-btn" style="background-color: var(--accent); color: var(--dark); border: var(--border); padding: 0.35rem; font-size: var(--font-xs); font-weight: 600; cursor: pointer; box-shadow: var(--shadow); border-radius: var(--radius); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chart-bar"></i></button>
                 <button class="search-btn" id="search-btn"><i class="fas fa-search"></i></button>
                 <button class="hamburger-menu" id="hamburger-menu"><i class="fas fa-bars"></i></button>
             </div>
@@ -301,6 +344,15 @@
                 </select>
             </div>
             <button id="filter-completed" data-i18n="completed">Selesai</button>
+        </div>
+
+        <div id="habit-section" class="habit-section" style="display:none;">
+            <h2 class="habit-title"><i class="fas fa-leaf"></i> <span data-i18n="habitsTitle">Habits Hari Ini</span></h2>
+            <ul class="habit-list" id="habit-list"></ul>
+            <form id="add-habit-form" class="add-habit-form">
+                <input type="text" id="new-habit-input" class="add-habit-input" placeholder="Tambah rutinitas..." required>
+                <button type="submit" class="btn btn-primary" style="padding: 0.4rem 0.6rem;"><i class="fas fa-plus"></i></button>
+            </form>
         </div>
 
         <ul class="task-list" id="task-list"></ul>
@@ -759,6 +811,8 @@
                 <input type="checkbox" class="task-checkbox"${task.completed ? ' checked' : ''}>
                 <div class="task-title${task.completed ? ' completed' : ''}">${task.title}</div>
                 <div class="task-actions">
+                    <button class="pomodoro-btn" data-id="${task.id}" title="Mulai Fokus (Pomodoro)"><i class="fas fa-stopwatch"></i></button>
+                    <span class="pomodoro-timer-display" id="pomodoro-display-${task.id}">25:00</span>
                     <button class="task-btn edit-btn" data-id="${task.id}"><i class="fas fa-edit"></i></button>
                     <button class="task-btn delete-btn" data-id="${task.id}"><i class="fas fa-trash"></i></button>
                 </div>
@@ -850,6 +904,13 @@
                 handleToggleComplete(taskId);
             };
         });
+        document.querySelectorAll('.pomodoro-btn').forEach(btn => {
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                const taskId = btn.dataset.id;
+                togglePomodoro(taskId, btn);
+            };
+        });
         document.querySelectorAll('.task-header').forEach(header => {
             header.onclick = (e) => {
                 if (e.target.closest('button') || e.target.tagName === 'INPUT') return;
@@ -899,7 +960,12 @@
         if (!task) return;
         const updated = { ...task, completed: !task.completed };
         await putTask(updated);
-        if (updated.completed) showCelebration();
+        
+        if (updated.completed) {
+            triggerConfetti();
+            logTaskCompletion();
+            // showCelebration(); // using confetti now
+        }
         await loadAndRender();
     }
 
@@ -1087,6 +1153,125 @@
 
 
     // ============================================================
+    // NEW FEATURES (Habits, Pomodoro, Stats)
+    // ============================================================
+    
+    // Confetti
+    function triggerConfetti() {
+        if (typeof confetti === 'function') {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+    }
+
+    // Pomodoro
+    let activePomodoros = {}; // { taskId: intervalId }
+    function togglePomodoro(taskId, btnElement) {
+        const display = document.getElementById(`pomodoro-display-${taskId}`);
+        if (activePomodoros[taskId]) {
+            // Stop
+            clearInterval(activePomodoros[taskId]);
+            delete activePomodoros[taskId];
+            btnElement.classList.remove('active');
+            display.innerText = "25:00";
+        } else {
+            // Start
+            btnElement.classList.add('active');
+            let timeLeft = 25 * 60; // 25 mins
+            activePomodoros[taskId] = setInterval(() => {
+                timeLeft--;
+                const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                const s = (timeLeft % 60).toString().padStart(2, '0');
+                display.innerText = `${m}:${s}`;
+                if (timeLeft <= 0) {
+                    clearInterval(activePomodoros[taskId]);
+                    delete activePomodoros[taskId];
+                    btnElement.classList.remove('active');
+                    display.innerText = "Selesai!";
+                    triggerConfetti();
+                    alert("Waktu Pomodoro selesai! Waktunya istirahat 5 menit.");
+                }
+            }, 1000);
+        }
+    }
+
+    // Stats & Badges
+    function logTaskCompletion() {
+        const today = new Date().toISOString().split('T')[0];
+        let stats = JSON.parse(localStorage.getItem('todo_stats') || '{}');
+        stats[today] = (stats[today] || 0) + 1;
+        localStorage.setItem('todo_stats', JSON.stringify(stats));
+        checkBadges();
+    }
+
+    function checkBadges() {
+        let stats = JSON.parse(localStorage.getItem('todo_stats') || '{}');
+        let weeklyTotal = 0;
+        const today = new Date();
+        for(let i=0; i<7; i++) {
+            const d = new Date(today);
+            d.setDate(d.getDate() - i);
+            const ds = d.toISOString().split('T')[0];
+            weeklyTotal += (stats[ds] || 0);
+        }
+        if (weeklyTotal >= 50 && !localStorage.getItem('badge_50_awarded')) {
+            localStorage.setItem('badge_50_awarded', 'true');
+            const popup = document.getElementById('badge-popup');
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 5000);
+        }
+        return weeklyTotal;
+    }
+
+    // Habits
+    let habits = JSON.parse(localStorage.getItem('todo_habits') || '[]');
+    function saveHabits() { localStorage.setItem('todo_habits', JSON.stringify(habits)); }
+    
+    function checkHabitReset() {
+        const today = new Date().toISOString().split('T')[0];
+        const lastReset = localStorage.getItem('todo_habit_last_reset');
+        if (lastReset !== today) {
+            habits.forEach(h => h.completed = false);
+            saveHabits();
+            localStorage.setItem('todo_habit_last_reset', today);
+        }
+    }
+
+    function renderHabits() {
+        const container = document.getElementById('habit-section');
+        const list = document.getElementById('habit-list');
+        list.innerHTML = '';
+        if (habits.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+        container.style.display = 'block';
+        habits.forEach(h => {
+            const li = document.createElement('li');
+            li.className = `habit-item${h.completed ? ' completed' : ''}`;
+            li.innerHTML = `
+                <input type="checkbox" class="task-checkbox" ${h.completed ? 'checked' : ''}>
+                <div style="flex:1; font-weight:600; font-size:var(--font-sm); ${h.completed ? 'text-decoration:line-through' : ''}">${h.name}</div>
+                <button class="task-btn text-danger" onclick="deleteHabit('${h.id}')" style="color:#e63946;"><i class="fas fa-trash"></i></button>
+            `;
+            const cb = li.querySelector('input');
+            cb.onchange = () => {
+                h.completed = cb.checked;
+                saveHabits();
+                renderHabits();
+                if(h.completed) triggerConfetti();
+            };
+            list.appendChild(li);
+        });
+    }
+
+    window.deleteHabit = function(id) {
+        habits = habits.filter(h => h.id !== id);
+        saveHabits();
+        renderHabits();
+    };
+
+
+    // ============================================================
     // Boot
     // ============================================================
     document.addEventListener('DOMContentLoaded', async () => {
@@ -1099,6 +1284,33 @@
 
         // Set default deadline
         document.getElementById('task-deadline').value = new Date().toISOString().split('T')[0];
+
+        // Initialize Habits
+        checkHabitReset();
+        renderHabits();
+        document.getElementById('add-habit-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('new-habit-input');
+            const name = input.value.trim();
+            if(name) {
+                habits.push({ id: Date.now().toString(), name, completed: false });
+                saveHabits();
+                input.value = '';
+                renderHabits();
+            }
+        });
+
+        // Initialize Stats Modal
+        document.getElementById('stats-btn').addEventListener('click', () => {
+            const weeklyCount = checkBadges();
+            document.getElementById('stats-weekly-count').innerText = weeklyCount;
+            document.getElementById('stats-modal').classList.add('visible');
+            document.getElementById('stats-backdrop').classList.add('visible');
+        });
+        document.getElementById('close-stats-btn').addEventListener('click', () => {
+            document.getElementById('stats-modal').classList.remove('visible');
+            document.getElementById('stats-backdrop').classList.remove('visible');
+        });
 
         // Load tasks
         try {
