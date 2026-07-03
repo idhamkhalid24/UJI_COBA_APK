@@ -309,15 +309,12 @@
                 </div>
             </div>
             <div class="task-meta">
-                <div class="task-priority priority-${task.priority}">${task.priority.toUpperCase()}</div>
                 <div class="task-deadline${overdue ? ' overdue' : ''}">
                     <i class="fas fa-calendar-alt"></i> ${formatDate(task.deadline)}${overdue ? ' ' + t('overdueLabel') : ''}
                 </div>
-                ${task.category ? `<div class="task-category"><i class="fas fa-tag"></i> ${task.category}</div>` : ''}
             </div>
             <div class="task-details">
                 <div class="task-details-content">
-                    ${task.brief ? `<div class="task-details-text">${task.brief}</div>` : ''}
                     ${renderRevisions(task.revisions)}
                 </div>
             </div>`;
@@ -450,9 +447,9 @@
         const newTask = {
             id: Date.now().toString(),
             title,
-            brief: document.getElementById('task-brief').value.trim(),
-            category: document.getElementById('task-category').value.trim(),
-            priority: document.getElementById('task-priority').value,
+            brief: '',
+            category: '',
+            priority: 'medium',
             deadline,
             completed: false,
             createdAt: new Date().toISOString(),
@@ -500,9 +497,9 @@
         const updatedTask = {
             ...currentEditingTask,
             title,
-            brief: document.getElementById('edit-task-brief').value.trim(),
-            category: document.getElementById('edit-task-category').value.trim(),
-            priority: document.getElementById('edit-task-priority').value,
+            brief: currentEditingTask.brief || '',
+            category: currentEditingTask.category || '',
+            priority: currentEditingTask.priority || 'medium',
             deadline,
         };
         if (revisionNote) {
@@ -566,10 +563,9 @@
     }
 
     function resetAddForm() {
-        ['task-title','task-brief','task-category'].forEach(id => {
+        ['task-title'].forEach(id => {
             document.getElementById(id).value = '';
         });
-        document.getElementById('task-priority').value = 'medium';
         document.getElementById('task-deadline').value = new Date().toISOString().split('T')[0];
         const taskHasTime = document.getElementById('task-has-time');
         const taskTimeInput = document.getElementById('task-time');
@@ -585,9 +581,6 @@
         document.getElementById('add-task-form').classList.remove('visible');
         document.getElementById('add-task-backdrop').classList.add('visible');
         document.getElementById('edit-task-title').value = task.title;
-        document.getElementById('edit-task-brief').value = task.brief || '';
-        document.getElementById('edit-task-category').value = task.category || '';
-        document.getElementById('edit-task-priority').value = task.priority;
         // Parse deadline
         const dl = task.deadline || '';
         const hasT = dl.includes('T') && dl.length > 10;
@@ -937,16 +930,5 @@
             if (e.target.checked) ti.focus();
         });
 
-        // Category autocomplete
-        const taskCat = document.getElementById('task-category');
-        const taskSug = document.getElementById('category-suggestions');
-        taskCat.addEventListener('input', () => showCategorySuggestions(taskCat, taskSug, 'add'));
-        taskCat.addEventListener('focus', () => showCategorySuggestions(taskCat, taskSug, 'add'));
-        taskCat.addEventListener('blur', () => setTimeout(() => taskSug.classList.remove('visible'), 200));
 
-        const editCat = document.getElementById('edit-task-category');
-        const editSug = document.getElementById('edit-category-suggestions');
-        editCat.addEventListener('input', () => showCategorySuggestions(editCat, editSug, 'edit'));
-        editCat.addEventListener('focus', () => showCategorySuggestions(editCat, editSug, 'edit'));
-        editCat.addEventListener('blur', () => setTimeout(() => editSug.classList.remove('visible'), 200));
     });

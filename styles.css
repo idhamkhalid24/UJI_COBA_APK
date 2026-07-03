@@ -154,11 +154,11 @@
         }
         .add-task-backdrop.visible { opacity: 1; pointer-events: auto; }
         .add-task {
-            background-color: white; padding: 0.75rem 1rem;
+            background-color: white; padding: 1.25rem 1.5rem;
             border: var(--border); border-radius: 14px;
             box-shadow: 0 4px 24px rgba(0,0,0,0.18);
             position: fixed; left: 0; right: 0; top: 5vh; bottom: auto; margin: 0 auto;
-            width: min(92vw, 420px); height: fit-content; max-height: 85vh; overflow-y: auto;
+            width: min(96vw, 480px); height: fit-content; max-height: 85vh; overflow-y: auto;
             z-index: 1100;
             transform: scale(0.95);
             opacity: 0; pointer-events: none;
@@ -171,10 +171,10 @@
         }
         .dark-mode .add-task .sheet-handle { display: none; }
         .form-group { margin-bottom: 0.5rem; position: relative; }
-        .form-label { display: block; margin-bottom: 0.2rem; font-weight: 600; font-size: var(--font-xs); }
+        .form-label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: var(--font-sm); }
         .form-input {
-            width: 100%; padding: 0.45rem 0.6rem; border: 2px solid var(--dark);
-            border-radius: 7px; font-size: var(--font-sm); font-family: inherit;
+            width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--dark);
+            border-radius: 10px; font-size: 1rem; font-family: inherit;
             background-color: white; color: var(--dark);
         }
         .dark-mode .form-input { background-color: #333333; color: var(--dark); }
@@ -182,18 +182,18 @@
         .form-row .form-group { flex: 1; margin-bottom: 0; }
         .form-actions { display: flex; gap: 0.4rem; margin-top: 0.6rem; }
         .form-actions .btn { flex: 1; }
-        .btn { padding: 0.5rem 0.75rem; border-radius: 7px; border: 2px solid var(--dark); font-size: var(--font-sm); font-weight: 600; cursor: pointer; box-shadow: var(--shadow); transition: all 0.15s ease; }
+        .btn { padding: 0.65rem 1rem; border-radius: 9px; border: 2px solid var(--dark); font-size: 0.95rem; font-weight: 600; cursor: pointer; box-shadow: var(--shadow); transition: all 0.15s ease; }
         .btn-primary { background-color: var(--primary); color: var(--dark); }
         .btn-secondary { background-color: var(--secondary); color: var(--dark); }
         .btn:active { transform: translate(2px, 2px); box-shadow: none; }
         .empty-state { text-align: center; padding: 1.5rem; background-color: white; border: var(--border); box-shadow: var(--shadow); border-radius: var(--radius); font-size: var(--font-sm); }
         .dark-mode .empty-state { background-color: #2A2A2A; }
         .edit-task {
-            background-color: white; padding: 0.75rem 1rem;
+            background-color: white; padding: 1.25rem 1.5rem;
             border: var(--border); border-radius: 14px;
             box-shadow: 0 4px 24px rgba(0,0,0,0.18);
             position: fixed; left: 0; right: 0; top: 5vh; bottom: auto; margin: 0 auto;
-            width: min(92vw, 420px); height: fit-content; max-height: 85vh; overflow-y: auto;
+            width: min(96vw, 480px); height: fit-content; max-height: 85vh; overflow-y: auto;
             z-index: 1100;
             transform: scale(0.95);
             opacity: 0; pointer-events: none; display: block;
