@@ -238,7 +238,7 @@
     let tasks = [];
     let allCategories = [];
     let currentEditingTask = null;
-    let currentFilter = 'active';
+    let currentFilter = 'all';
     let currentSort = 'filter';
     let currentActiveSort = 'default';
     let currentSearch = '';
