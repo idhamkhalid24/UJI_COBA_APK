@@ -273,6 +273,6 @@
         .stats-backdrop.visible { opacity: 1; pointer-events: auto; }
         .stats-number { font-size: 3rem; font-weight: 800; color: var(--primary); margin: 0.5rem 0; }
         
-        .badge-popup { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #FFD700; color: #000; padding: 1rem; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); z-index: 1200; display: flex; align-items: center; gap: 1rem; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .badge-popup { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-150px); background: #FFD700; color: #000; padding: 1rem; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); z-index: 1200; display: flex; align-items: center; gap: 1rem; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .badge-popup.show { transform: translateX(-50%) translateY(0); }
         .badge-icon { font-size: 2.5rem; }

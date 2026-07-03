@@ -80,13 +80,15 @@
             deadline: 'Tenggat',
             priority: 'Prioritas',
             searchPlaceholder: 'Cari tugas...',
-            allTasks: 'Semua',
-            active: 'Aktif',
+            allTasks: 'Jadwal Hari Ini',
+            active: 'Semua Tugas',
             sortDefault: 'Default',
             byCategory: 'Per Kategori',
             completed: 'Selesai',
             noTasks: 'Belum ada tugas',
             noTasksHint: 'Ketuk tombol + untuk mulai!',
+            noCompletedTasks: 'Belum ada tugas yang selesai',
+            noCompletedTasksHint: 'Tugas yang diselesaikan akan muncul di sini.',
             taskTitle: 'Judul Tugas*',
             briefDetails: 'Detail Singkat (Opsional)',
             briefPlaceholder: 'Tambahan info tentang tugas ini...',
@@ -139,13 +141,15 @@
             deadline: 'Deadline',
             priority: 'Priority',
             searchPlaceholder: 'Search tasks...',
-            allTasks: 'All Tasks',
-            active: 'Active',
+            allTasks: 'Today\'s Schedule',
+            active: 'All Tasks',
             sortDefault: 'Default',
             byCategory: 'By Category',
             completed: 'Completed',
             noTasks: 'No tasks found',
             noTasksHint: 'Tap the + button to get started!',
+            noCompletedTasks: 'No completed tasks yet',
+            noCompletedTasksHint: 'Tasks you complete will appear here.',
             taskTitle: 'Task Title*',
             briefDetails: 'Brief Details (Optional)',
             briefPlaceholder: 'Any additional details about this task...',
@@ -323,6 +327,19 @@
     function renderTasks() {
         const taskList = document.getElementById('task-list');
         const emptyState = document.getElementById('empty-state');
+        
+        const showEmptyState = () => {
+            const p = emptyState.querySelector('p');
+            const small = emptyState.querySelector('small');
+            if (currentFilter === 'completed') {
+                p.textContent = t('noCompletedTasks');
+                small.textContent = t('noCompletedTasksHint');
+            } else {
+                p.textContent = t('noTasks');
+                small.textContent = t('noTasksHint');
+            }
+            emptyState.style.display = 'block';
+        };
         taskList.innerHTML = '';
 
         let filtered = [...tasks];
@@ -336,8 +353,14 @@
             );
         }
 
-        if (currentFilter === 'active') filtered = filtered.filter(t => !t.completed);
-        else if (currentFilter === 'completed') filtered = filtered.filter(t => t.completed);
+        const todayStr = new Date().toISOString().split('T')[0];
+        if (currentFilter === 'all') {
+            filtered = filtered.filter(t => t.deadline && t.deadline.startsWith(todayStr));
+        } else if (currentFilter === 'active') {
+            filtered = filtered.filter(t => !t.completed);
+        } else if (currentFilter === 'completed') {
+            filtered = filtered.filter(t => t.completed);
+        }
 
         const sortFn = currentSort === 'deadline'
             ? (a, b) => new Date(a.deadline || '9999') - new Date(b.deadline || '9999')
@@ -352,7 +375,7 @@
                 if (!byCategory[cat]) byCategory[cat] = [];
                 byCategory[cat].push(t);
             });
-            if (!Object.keys(byCategory).length) { emptyState.style.display = 'block'; return; }
+            if (!Object.keys(byCategory).length) { showEmptyState(); return; }
             emptyState.style.display = 'none';
             Object.keys(byCategory).sort().forEach(cat => {
                 const h = document.createElement('h2');
@@ -363,7 +386,7 @@
             });
         } else {
             filtered.sort(sortFn);
-            if (!filtered.length) { emptyState.style.display = 'block'; return; }
+            if (!filtered.length) { showEmptyState(); return; }
             emptyState.style.display = 'none';
             filtered.forEach(t => renderTaskItem(t, taskList));
         }
@@ -448,9 +471,10 @@
         const updated = { ...task, completed: !task.completed };
         await putTask(updated);
         
+        logTaskCompletion(updated.completed);
+        
         if (updated.completed) {
             triggerConfetti();
-            logTaskCompletion();
             // showCelebration(); // using confetti now
         }
         await loadAndRender();
@@ -682,12 +706,20 @@
     }
 
     // Stats & Badges
-    function logTaskCompletion() {
+    function logTaskCompletion(isCompleting) {
         const today = new Date().toISOString().split('T')[0];
         let stats = JSON.parse(localStorage.getItem('todo_stats') || '{}');
-        stats[today] = (stats[today] || 0) + 1;
+        if (isCompleting) {
+            stats[today] = (stats[today] || 0) + 1;
+        } else {
+            stats[today] = Math.max(0, (stats[today] || 0) - 1);
+        }
         localStorage.setItem('todo_stats', JSON.stringify(stats));
-        checkBadges();
+        
+        const weeklyCount = checkBadges();
+        if (document.getElementById('stats-modal').classList.contains('visible')) {
+            document.getElementById('stats-weekly-count').innerText = weeklyCount;
+        }
     }
 
     function checkBadges() {
@@ -814,7 +846,6 @@
             document.getElementById('filter-all').classList.add('active');
             document.getElementById('filter-active').classList.remove('active');
             document.getElementById('filter-completed').classList.remove('active');
-            document.getElementById('active-sort-select').style.display = 'none';
             renderTasks();
         });
         document.getElementById('filter-active').addEventListener('click', async () => {
@@ -822,7 +853,6 @@
             document.getElementById('filter-active').classList.add('active');
             document.getElementById('filter-all').classList.remove('active');
             document.getElementById('filter-completed').classList.remove('active');
-            document.getElementById('active-sort-select').style.display = 'block';
             renderTasks();
         });
         document.getElementById('filter-completed').addEventListener('click', async () => {
@@ -830,7 +860,6 @@
             document.getElementById('filter-completed').classList.add('active');
             document.getElementById('filter-all').classList.remove('active');
             document.getElementById('filter-active').classList.remove('active');
-            document.getElementById('active-sort-select').style.display = 'none';
             renderTasks();
         });
 
@@ -839,10 +868,7 @@
             currentSort = e.target.value;
             renderTasks();
         });
-        document.getElementById('active-sort-select').addEventListener('change', (e) => {
-            currentActiveSort = e.target.value;
-            renderTasks();
-        });
+
 
         // Search
         document.getElementById('search-btn').addEventListener('click', () => {
