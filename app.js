@@ -299,6 +299,7 @@
         const overdue = isOverdue(task.deadline) && !task.completed;
         li.innerHTML = `
             <div class="task-header">
+                <i class="fas fa-grip-vertical drag-handle" title="Tahan dan geser"></i>
                 <input type="checkbox" class="task-checkbox"${task.completed ? ' checked' : ''}>
                 <div class="task-title${task.completed ? ' completed' : ''}">${task.title}</div>
                 <div class="task-actions">
@@ -359,11 +360,21 @@
             filtered = filtered.filter(t => t.completed);
         }
 
+        let savedOrder = [];
+        try { savedOrder = JSON.parse(localStorage.getItem('task_order') || '[]'); } catch(e) {}
+        
         const sortFn = currentSort === 'deadline'
             ? (a, b) => new Date(a.deadline || '9999') - new Date(b.deadline || '9999')
             : currentSort === 'priority'
             ? (a, b) => ({ high:1, medium:2, low:3 }[a.priority] - { high:1, medium:2, low:3 }[b.priority])
-            : (a, b) => new Date(b.createdAt) - new Date(a.createdAt);
+            : (a, b) => {
+                const idxA = savedOrder.indexOf(a.id);
+                const idxB = savedOrder.indexOf(b.id);
+                if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+                if (idxA !== -1) return -1;
+                if (idxB !== -1) return 1;
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            };
 
         if (currentFilter === 'active' && currentActiveSort === 'category') {
             const byCategory = {};
@@ -389,6 +400,17 @@
         }
 
         attachTaskListeners();
+        
+        if (window.Sortable && currentSort === 'filter') {
+            Sortable.create(taskList, {
+                handle: '.drag-handle',
+                animation: 150,
+                onEnd: function () {
+                    const order = Array.from(taskList.children).map(li => li.dataset.id).filter(id => id);
+                    localStorage.setItem('task_order', JSON.stringify(order));
+                }
+            });
+        }
     }
 
     function attachTaskListeners() {
@@ -692,10 +714,30 @@
                     btnElement.classList.remove('active');
                     display.innerText = "Selesai!";
                     triggerConfetti();
+                    playPomodoroChime();
+                    logFocusTime(25);
                     alert("Waktu Pomodoro selesai! Waktunya istirahat 5 menit.");
                 }
             }, 1000);
         }
+    }
+
+    function playPomodoroChime() {
+        try {
+            const audio = new Audio();
+            audio.src = 'https://actions.google.com/sounds/v1/alarms/beep_short.ogg';
+            audio.play();
+        } catch (e) { console.log('Audio error:', e); }
+    }
+
+    function logFocusTime(minutes) {
+        const today = new Date().toISOString().split('T')[0];
+        let focusStats = JSON.parse(localStorage.getItem('todo_focus_stats') || '{}');
+        focusStats[today] = (focusStats[today] || 0) + minutes;
+        localStorage.setItem('todo_focus_stats', JSON.stringify(focusStats));
+        
+        const focusTodayEl = document.getElementById('focus-time-today');
+        if (focusTodayEl) focusTodayEl.innerText = focusStats[today];
     }
 
     // Stats & Badges
@@ -816,6 +858,12 @@
         document.getElementById('stats-btn').addEventListener('click', () => {
             const weeklyCount = checkBadges();
             document.getElementById('stats-weekly-count').innerText = weeklyCount;
+            
+            const today = new Date().toISOString().split('T')[0];
+            let focusStats = JSON.parse(localStorage.getItem('todo_focus_stats') || '{}');
+            const focusTodayEl = document.getElementById('focus-time-today');
+            if (focusTodayEl) focusTodayEl.innerText = focusStats[today] || 0;
+            
             document.getElementById('stats-modal').classList.add('visible');
             document.getElementById('stats-backdrop').classList.add('visible');
         });
